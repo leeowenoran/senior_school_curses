@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>初中数学乐园 - 初一数学学习平台</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+    <!-- KaTeX for math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <header class="topbar">
+        <div class="topbar-inner">
+            <div class="logo" onclick="goHome()">
+                <span class="logo-icon">📐</span>
+                <span class="logo-text">初中数学乐园</span>
+            </div>
+            <nav class="top-nav">
+                <button class="nav-btn active" data-view="home" onclick="goHome()">首页</button>
+                <button class="nav-btn" data-view="up" onclick="showSemester('up')">初一上册</button>
+                <button class="nav-btn" data-view="down" onclick="showSemester('down')">初一下册</button>
+                <button class="nav-btn" data-view="progress" onclick="showProgress()">学习进度</button>
+            </nav>
+            <div class="topbar-right">
+                <div class="progress-ring" id="progressRing">
+                    <svg width="44" height="44">
+                        <circle cx="22" cy="22" r="18" fill="none" stroke="#e0e0e0" stroke-width="4"/>
+                        <circle cx="22" cy="22" r="18" fill="none" stroke="#4CAF50" stroke-width="4"
+                            stroke-dasharray="113.1" stroke-dashoffset="113.1" id="progressCircle"
+                            transform="rotate(-90 22 22)"/>
+                    </svg>
+                    <span class="progress-text" id="progressText">0%</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="main-content" id="mainContent">
+        <!-- 首页 -->
+        <div class="view view-home active" id="viewHome">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1 class="hero-title">欢迎来到初中数学乐园！🎉</h1>
+                    <p class="hero-subtitle">在这里，数学不再枯燥——每一课都有趣、有料、有挑战</p>
+                    <div class="hero-features">
+                        <div class="feature-chip"><span>📚</span> 详细知识点</div>
+                        <div class="feature-chip"><span>🎨</span> 图文并茂</div>
+                        <div class="feature-chip"><span>✏️</span> 课后练习</div>
+                        <div class="feature-chip"><span>💡</span> 详细解析</div>
+                    </div>
+                </div>
+                <div class="hero-decoration">
+                    <div class="floating-shape shape1">➕</div>
+                    <div class="floating-shape shape2">📏</div>
+                    <div class="floating-shape shape3">📐</div>
+                    <div class="floating-shape shape4">✖️</div>
+                    <div class="floating-shape shape5">➗</div>
+                </div>
+            </div>
+
+            <div class="semester-cards">
+                <div class="semester-card card-up" onclick="showSemester('up')">
+                    <div class="semester-icon">📖</div>
+                    <h2>初一数学 · 上册</h2>
+                    <p class="semester-desc">有理数、整式的加减、一元一次方程、几何图形初步</p>
+                    <div class="semester-stats">
+                        <span><strong>4</strong> 章</span>
+                        <span><strong id="upLessonCount">15</strong> 课时</span>
+                        <span><strong id="upExerciseCount">75</strong> 道题</span>
+                    </div>
+                    <button class="btn-start">开始学习 →</button>
+                </div>
+                <div class="semester-card card-down" onclick="showSemester('down')">
+                    <div class="semester-icon">📗</div>
+                    <h2>初一数学 · 下册</h2>
+                    <p class="semester-desc">相交线与平行线、实数、平面直角坐标系、二元一次方程组、不等式、数据收集</p>
+                    <div class="semester-stats">
+                        <span><strong>6</strong> 章</span>
+                        <span><strong id="downLessonCount">19</strong> 课时</span>
+                        <span><strong id="downExerciseCount">95</strong> 道题</span>
+                    </div>
+                    <button class="btn-start">开始学习 →</button>
+                </div>
+            </div>
+
+            <div class="subjects-preview">
+                <h2 class="section-title">📋 全科目规划</h2>
+                <p class="section-desc">本站目前上线<strong>数学</strong>科目，后续将陆续上线语文、英语、道德与法治、历史、地理、生物等科目，敬请期待！</p>
+                <div class="subject-grid">
+                    <div class="subject-item active-subject"><span>🔢</span> 数学</div>
+                    <div class="subject-item coming-soon"><span>📝</span> 语文</div>
+                    <div class="subject-item coming-soon"><span>🔤</span> 英语</div>
+                    <div class="subject-item coming-soon"><span>⚖️</span> 道德与法治</div>
+                    <div class="subject-item coming-soon"><span>📜</span> 历史</div>
+                    <div class="subject-item coming-soon"><span>🗺️</span> 地理</div>
+                    <div class="subject-item coming-soon"><span>🧬</span> 生物</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 学科章节列表 -->
+        <div class="view view-semester" id="viewSemester">
+            <div class="semester-header" id="semesterHeader"></div>
+            <div class="chapter-list" id="chapterList"></div>
+        </div>
+
+        <!-- 课时详情 -->
+        <div class="view view-lesson" id="viewLesson">
+            <div class="lesson-nav-bar">
+                <button class="btn-back" onclick="goBackToSemester()">← 返回章节列表</button>
+                <div class="lesson-nav-arrows">
+                    <button class="btn-prev-lesson" id="btnPrevLesson" onclick="goPrevLesson()">← 上一课</button>
+                    <button class="btn-next-lesson" id="btnNextLesson" onclick="goNextLesson()">下一课 →</button>
+                </div>
+            </div>
+            <div class="lesson-content-wrapper" id="lessonContent"></div>
+        </div>
+
+        <!-- 学习进度 -->
+        <div class="view view-progress" id="viewProgress">
+            <h2 class="section-title">📊 我的学习进度</h2>
+            <div class="progress-overview" id="progressOverview"></div>
+            <div class="progress-details" id="progressDetails"></div>
+        </div>
+    </main>
+
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">↑</button>
+
+    <footer class="footer">
+        <p>初中数学乐园 · 为准初中生打造的学习平台 · 不需要登录，打开即学</p>
+    </footer>
+
+    <script src="js/data-up-1.js"></script>
+    <script src="js/data-up-2.js"></script>
+    <script src="js/data-down-1.js"></script>
+    <script src="js/data-down-2.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
