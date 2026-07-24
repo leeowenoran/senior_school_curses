@@ -1,0 +1,81 @@
+(function () {
+  var v = gzGetVolume('chinese', 'zt3');
+  if (!v) return;
+  v.points.push(
+
+    /* ===================== 考点一 · 正确使用词语（包括熟语） ===================== */
+
+    { id: 'zt3-u1-l1', name: '语言文字运用（一）：正确使用词语（包括熟语）', author: '高考复习', chapter: '考点一 · 正确使用词语', difficulty: '中等',
+      content: [
+        { type: 'heading', text: '一、近义实词辨析' },
+        { type: 'paragraph', text: '近义实词是指意义相近但不完全相同的实词，如“截止／截至”“化装／化妆”“反映／反应”。高考常以语段选词填空的形式考查，要求在具体语境中选出最恰当的一个。' },
+        { type: 'keypoint', label: '辨析三大角度', text: '近义实词辨析要从三个角度入手：<strong>词义</strong>（范围大小、程度轻重、侧重点不同）；<strong>色彩</strong>（感情色彩的褒贬中性、语体色彩的书面与口语）；<strong>用法</strong>（搭配对象、词性功能、适用范围）。三个角度逐一比对，再代入语境检验。' },
+        { type: 'list', items: ['范围大小：“边疆”范围大，“边境”范围小', '程度轻重：“渴望”重于“希望”，“蔑视”重于“轻视”', '侧重点不同：“反映”侧重表达呈现，“反应”侧重回应变化', '感情色彩：“成果”（褒）／“结果”（中）／“后果”（贬）', '语体色彩：“商榷”用于书面语，“商量”用于口语'] },
+        { type: 'table', headers: ['辨析角度', '具体内容与示例'], rows: [['词义范围', '“时代”大于“时期”，“边疆”大于“边境”'], ['程度轻重', '“损坏”轻，“毁坏”重；“批评”轻，“批判”重'], ['侧重点', '“熟悉”侧重知道得清楚，“熟习”侧重技能熟练'], ['感情色彩', '成果（褒）、结果（中）、后果（贬）'], ['语体色彩', '诞辰（书面）／生日（口语）；商榷（书面）／商量（口语）'], ['搭配用法', '“交流”思想经验，“交换”礼物意见']] },
+        { type: 'svg', svg: '<svg viewBox="0 0 680 230" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="230" fill="#eef5f7"/><text x="340" y="26" text-anchor="middle" font-size="17" font-weight="bold" fill="#1f5f8b">近义实词辨析三角度</text><rect x="50" y="60" width="170" height="60" rx="8" fill="#1f5f8b"/><text x="135" y="86" text-anchor="middle" font-size="13" fill="#fff">词义</text><text x="135" y="108" text-anchor="middle" font-size="11" fill="#fff">范围·轻重·侧重</text><rect x="255" y="60" width="170" height="60" rx="8" fill="#4a8fa8"/><text x="340" y="86" text-anchor="middle" font-size="13" fill="#fff">色彩</text><text x="340" y="108" text-anchor="middle" font-size="11" fill="#fff">感情·语体</text><rect x="460" y="60" width="170" height="60" rx="8" fill="#7aa05a"/><text x="545" y="86" text-anchor="middle" font-size="13" fill="#fff">用法</text><text x="545" y="108" text-anchor="middle" font-size="11" fill="#fff">搭配·词性·范围</text><text x="340" y="180" text-anchor="middle" font-size="13" fill="#555">三角度逐一比对，最后代入语境检验是否贴切</text></svg>', caption: '近义实词辨析从词义、色彩、用法三个角度切入，最终以语境适配为准。' },
+        { type: 'heading', text: '二、近义虚词辨析' },
+        { type: 'paragraph', text: '近义虚词主要指副词、介词、连词等，如“进而／从而”“对／对于”“不但……而且／虽然……但是”。虚词本身意义虚化，辨析重点在语法功能与关联搭配。' },
+        { type: 'example', label: '虚词辨析示范', text: '“进而”与“从而”：<strong>“进而”表递进</strong>，指在已有基础上进一步行动（先攻克难点，进而扩大战果）；<strong>“从而”表因果或目的</strong>，指由前面的原因、方法引出结果（改进了工艺，从而提高了质量）。关联词须成套使用：“不但……而且”表递进，“虽然……但是”表转折，“只有……才”表必要条件，“只要……就”表充分条件，不能交叉混搭。' },
+        { type: 'warn', label: '易错提醒', text: '关联词搭配是<strong>固定的</strong>，最常见错误是“只有……就”“只要……才”的交叉误配：“只有”必须配“才”（必要条件），“只要”必须配“就”（充分条件）。另需注意关联词位置：两个分句主语相同时，关联词放主语后；主语不同时，关联词放主语前。' },
+        { type: 'heading', text: '三、正确使用熟语（以成语为主）' },
+        { type: 'paragraph', text: '熟语包括成语、惯用语、歇后语、谚语、格言等，高考以成语为主要考查对象。命题形式有判断加点成语使用正误、语段填入成语等，重点考查在具体语境中的使用是否恰当。' },
+        { type: 'keypoint', label: '成语误用六大类型', text: '<strong>望文生义</strong>（只按字面理解，如“文不加点”误解为不加标点）；<strong>褒贬误用</strong>（如把贬义的“无所不为”当褒义用）；<strong>对象误用</strong>（如“豆蔻年华”只指十三四岁少女）；<strong>重复赘余</strong>（如“忍俊不禁地笑起来”）；<strong>搭配不当</strong>（成语与句中成分不能搭配）；<strong>谦敬错位</strong>（如谦辞“抛砖引玉”用于对方）。' },
+        { type: 'table', headers: ['误用类型', '典型示例'], rows: [['望文生义', '“文不加点”指写文章一气呵成，非“不加标点”'], ['褒贬误用', '“无所不为”是贬义，不能形容人多才多艺'], ['对象误用', '“豆蔻年华”只用于十三四岁少女，不能指青年男子'], ['重复赘余', '“忍俊不禁地笑起来”，“忍俊不禁”已含“笑”'], ['搭配不当', '“津津乐道地说”，“乐道”已含“说”且不作状语'], ['谦敬错位', '“抛砖引玉”是谦辞，只能用于自己']] },
+        { type: 'list', items: ['望文生义高频成语：文不加点、不刊之论、首当其冲、差强人意、万人空巷', '对象误用高频成语：豆蔻年华（少女）、相敬如宾（夫妻）、汗牛充栋（书籍）、鳞次栉比（房屋）', '谦辞类：抛砖引玉、蓬荜生辉、不情之请、忝列门墙（用于己方）', '敬辞类：鼎力相助、大驾光临、高抬贵手、不吝赐教（用于对方）'] },
+        { type: 'svg', svg: '<svg viewBox="0 0 680 250" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="250" fill="#eef5f7"/><text x="340" y="26" text-anchor="middle" font-size="17" font-weight="bold" fill="#1f5f8b">成语误用六大类型</text><rect x="40" y="55" width="190" height="42" rx="6" fill="#1f5f8b"/><text x="135" y="81" text-anchor="middle" font-size="12" fill="#fff">望文生义</text><rect x="250" y="55" width="190" height="42" rx="6" fill="#4a8fa8"/><text x="345" y="81" text-anchor="middle" font-size="12" fill="#fff">褒贬误用</text><rect x="460" y="55" width="190" height="42" rx="6" fill="#c07f4e"/><text x="555" y="81" text-anchor="middle" font-size="12" fill="#fff">对象误用</text><rect x="40" y="115" width="190" height="42" rx="6" fill="#7aa05a"/><text x="135" y="141" text-anchor="middle" font-size="12" fill="#fff">重复赘余</text><rect x="250" y="115" width="190" height="42" rx="6" fill="#7a6fae"/><text x="345" y="141" text-anchor="middle" font-size="12" fill="#fff">搭配不当</text><rect x="460" y="115" width="190" height="42" rx="6" fill="#b04a4a"/><text x="555" y="141" text-anchor="middle" font-size="12" fill="#fff">谦敬错位</text><text x="340" y="200" text-anchor="middle" font-size="13" fill="#555">判断成语先查本义与适用对象，再看语境褒贬与搭配</text></svg>', caption: '成语误用六大类型：望文生义、褒贬误用、对象误用、重复赘余、搭配不当、谦敬错位。' },
+        { type: 'example', label: '成语辨析示范', text: '句子：“他的发言抛砖引玉，为大家打开了思路。”<br>“抛砖引玉”是<strong>谦辞</strong>，比喻用自己粗浅的意见引出别人高明的见解，<strong>只能用于自己</strong>。此句若是本人自述则正确；若是他人评价其发言，则犯了“谦敬错位”的错误，应改为“他的发言富有启发性”。' },
+        { type: 'heading', text: '四、词语题解题策略' },
+        { type: 'paragraph', text: '词语题的解题核心是“语境优先”：先通读语段把握话题与感情倾向，再逐空比对备选词语的词义、色彩、用法差异，最后代入检验，选最贴合语境的一项。' },
+        { type: 'svg', svg: '<svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="200" fill="#eef5f7"/><text x="340" y="26" text-anchor="middle" font-size="17" font-weight="bold" fill="#1f5f8b">词语题解题四步</text><rect x="30" y="70" width="150" height="50" rx="8" fill="#7aa05a"/><text x="105" y="100" text-anchor="middle" font-size="13" fill="#fff">通读语段</text><rect x="195" y="70" width="150" height="50" rx="8" fill="#4a8fa8"/><text x="270" y="100" text-anchor="middle" font-size="13" fill="#fff">比对差异</text><rect x="360" y="70" width="150" height="50" rx="8" fill="#c07f4e"/><text x="435" y="100" text-anchor="middle" font-size="13" fill="#fff">代入检验</text><rect x="525" y="70" width="150" height="50" rx="8" fill="#1f5f8b"/><text x="600" y="100" text-anchor="middle" font-size="13" fill="#fff">排除定答</text><path d="M180 95 L193 95" stroke="#1f5f8b" stroke-width="3"/><path d="M345 95 L358 95" stroke="#1f5f8b" stroke-width="3"/><path d="M510 95 L523 95" stroke="#1f5f8b" stroke-width="3"/><text x="340" y="165" text-anchor="middle" font-size="13" fill="#555">语境优先：以语段话题与感情倾向为最终裁判</text></svg>', caption: '词语题四步：通读语段→比对差异→代入检验→排除定答，语境是最终裁判。' },
+        { type: 'tip', label: '学习提示', text: '成语积累要“建错题账本”：把练习中误判的成语按六大误用类型归类登记，标注本义、适用对象与感情色彩。高考高频误用成语大约两百个，反复滚动记忆即可覆盖绝大部分考点。' },
+        { type: 'reading', text: '延伸思考：“差强人意”常被误用为“不能令人满意”，其本义却是“大体上还能使人满意”。请再找出三个类似“词义被大众误用反转”的成语，并思考语境判断中应以词典义还是流行义为准。' }
+      ],
+      exercises: [
+        { type: 'choice', question: '下列句子中加点成语属于“望文生义”误用的一项是？', options: ['他写文章文不加点，从不使用标点符号', '这部小说情节跌宕起伏，引人入胜', '他虚怀若谷，善于听取意见', '大家同心协力，终于渡过难关'], answer: '他写文章文不加点，从不使用标点符号', explanation: '“文不加点”形容写文章一气呵成，无须修改，“点”指涂改，并非“标点符号”。该句把“点”误解为标点，正是只按字面理解的“望文生义”。其余三句中“引人入胜”“虚怀若谷”“同心协力”均使用正确，故选第一项。' },
+        { type: 'fill', question: '近义实词辨析要从词义、色彩、__三个角度入手，再代入语境检验。', answer: '用法', explanation: '本题考查近义实词辨析的三大角度。词义角度看范围大小、程度轻重、侧重点；色彩角度看感情色彩与语体色彩；用法角度看搭配对象、词性功能与适用范围。三者比对后代入语境检验，故填“用法”。' },
+        { type: 'choice', question: '“他多才多艺，琴棋书画无所不为。”这句话中成语的误用类型是？', options: ['对象误用', '褒贬误用', '重复赘余', '谦敬错位'], answer: '褒贬误用', explanation: '“无所不为”意为没有什么坏事不干，是典型的贬义成语。该句想表达“样样都会”的褒扬之意，却使用了贬义词，感情色彩与语境相悖，属于“褒贬误用”。此处应改用褒义的“无所不能”。其余选项与本句错误性质不符，故选“褒贬误用”。' },
+        { type: 'fill', question: '“抛砖引玉”“不情之请”等成语属于__辞，只能用于自己，不能用于对方。', answer: '谦', explanation: '本题考查成语的谦敬色彩。“抛砖引玉”比喻用自己粗浅的意见引出别人高明的见解，“不情之请”指自己提出的不合情理的请求，二者都是说话人自谦的用语，属于谦辞。若用于对方就犯了“谦敬错位”的错误，故填“谦”。' },
+        { type: 'choice', question: '下列关联词搭配正确的一项是？', options: ['只有努力学习，就能取得好成绩', '只要坚持锻炼，才会拥有健康', '不但成绩优秀，而且乐于助人', '虽然天气晴朗，因此我们去郊游'], answer: '不但成绩优秀，而且乐于助人', explanation: '关联词搭配是固定的：“不但……而且”表递进，搭配正确。“只有”表必要条件须配“才”，不能配“就”；“只要”表充分条件须配“就”，不能配“才”；“虽然”表转折须配“但是”，不能配表因果的“因此”。故选“不但成绩优秀，而且乐于助人”。' }
+      ]
+    },
+
+    /* ===================== 考点二 · 辨析并修改病句 ===================== */
+
+    { id: 'zt3-u1-l2', name: '语言文字运用（二）：辨析并修改病句', author: '高考复习', chapter: '考点二 · 辨析并修改病句', difficulty: '中等',
+      content: [
+        { type: 'heading', text: '一、病句六大类型总览' },
+        { type: 'paragraph', text: '《考试大纲》规定的病句类型共六种：语序不当、搭配不当、成分残缺或赘余、结构混乱、表意不明、不合逻辑。前四种属于语法性语病，后两种属于语义与逻辑性语病。' },
+        { type: 'keypoint', label: '六大病句类型', text: '<strong>语序不当</strong>（定语状语错位、多层定语次序、关联词位置）；<strong>搭配不当</strong>（主谓、动宾、主宾、修饰语与中心语）；<strong>成分残缺或赘余</strong>（缺主语谓语宾语、堆砌重复）；<strong>结构混乱</strong>（句式杂糅、中途易辙）；<strong>表意不明</strong>（指代不明、歧义）；<strong>不合逻辑</strong>（自相矛盾、否定失当、主客倒置）。' },
+        { type: 'svg', svg: '<svg viewBox="0 0 680 250" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="250" fill="#eef5f7"/><text x="340" y="26" text-anchor="middle" font-size="17" font-weight="bold" fill="#1f5f8b">病句六大类型</text><rect x="40" y="55" width="190" height="42" rx="6" fill="#1f5f8b"/><text x="135" y="81" text-anchor="middle" font-size="12" fill="#fff">语序不当</text><rect x="250" y="55" width="190" height="42" rx="6" fill="#4a8fa8"/><text x="345" y="81" text-anchor="middle" font-size="12" fill="#fff">搭配不当</text><rect x="460" y="55" width="190" height="42" rx="6" fill="#c07f4e"/><text x="555" y="81" text-anchor="middle" font-size="12" fill="#fff">成分残缺或赘余</text><rect x="40" y="115" width="190" height="42" rx="6" fill="#7aa05a"/><text x="135" y="141" text-anchor="middle" font-size="12" fill="#fff">结构混乱</text><rect x="250" y="115" width="190" height="42" rx="6" fill="#7a6fae"/><text x="345" y="141" text-anchor="middle" font-size="12" fill="#fff">表意不明</text><rect x="460" y="115" width="190" height="42" rx="6" fill="#b04a4a"/><text x="555" y="141" text-anchor="middle" font-size="12" fill="#fff">不合逻辑</text><text x="340" y="200" text-anchor="middle" font-size="13" fill="#555">前四类为语法病，后两类为语义逻辑病，须分类掌握典型标志</text></svg>', caption: '病句六大类型：语序不当、搭配不当、成分残缺赘余、结构混乱、表意不明、不合逻辑。' },
+        { type: 'heading', text: '二、语序不当与搭配不当' },
+        { type: 'paragraph', text: '语序不当指句子成分排列次序错误，常见于多层定语、多层状语、关联词位置与逻辑顺序；搭配不当指句子成分之间在语义或语法上不能组合，是高考出现频率最高的病句类型。' },
+        { type: 'table', headers: ['语序不当子类', '典型示例与修改'], rows: [['多层定语错位', '“一位优秀的有二十年教龄的语文教师”应为“一位有二十年教龄的优秀的语文教师”'], ['多层状语错位', '“我们再也不是任意被列强欺侮的国家了”应为“任意”移至“欺侮”前'], ['关联词位置不当', '主语相同，关联词放主语后；主语不同，放主语前'], ['逻辑顺序不当', '“发现问题、解决问题、分析问题”应按“发现→分析→解决”排列']] },
+        { type: 'example', label: '搭配不当示范', text: '病句：“他的革命精神时刻浮现在我眼前。”<br>主语“精神”与谓语“浮现”<strong>主谓搭配不当</strong>——“精神”是抽象概念，不能“浮现”，能浮现的是“形象”“面容”。修改：把“精神”改为“形象”，或把“浮现”改为“激励着我”。' },
+        { type: 'list', items: ['主谓搭配不当：“他的精神浮现在眼前”（精神不能浮现）', '动宾搭配不当：“提高了同学们的写作兴趣”（兴趣宜配“激发”，“提高”配“水平”）', '主宾搭配不当：“秋天的北京是美丽的季节”（“北京”不是“季节”）', '修饰语与中心语搭配不当：“十分惨重的教训”（“惨重”配“损失”，“教训”配“深刻”）', '一面与两面搭配不当：“能否成功，关键在于努力”（“能否”两面对“努力”一面）'] },
+        { type: 'heading', text: '三、成分残缺赘余与结构混乱' },
+        { type: 'paragraph', text: '成分残缺指句子缺少必要成分（主语、谓语、宾语或必要的修饰限制成分）；成分赘余指成分堆砌重复；结构混乱主要表现为句式杂糅与中途易辙，即两种说法糅在一句或半路更换主语。' },
+        { type: 'example', label: '成分残缺示范', text: '病句：“通过这次社会实践活动，使我们开阔了眼界。”<br>“通过……”是介宾短语，“使……”又把后句变成兼语结构，两者叠加导致<strong>全句没有主语</strong>。修改办法二选一：删去“通过”（让“这次社会实践活动”作主语），或删去“使”（让“我们”作主语）。' },
+        { type: 'warn', label: '易错提醒', text: '句首出现<strong>“通过、经过、由于、随着、在……中”</strong>等介词结构时，要立即检查全句是否还有主语——介词结构不能作主语，“介词+使／让”连用是高考最高频的“缺主语”陷阱。' },
+        { type: 'table', headers: ['结构混乱类型', '典型示例与分析'], rows: [['句式杂糅', '“本书的作者是一位盲人写的”糅合了“作者是盲人”与“书是盲人写的”两种句式'], ['中途易辙', '“中国人民自从接受了马克思主义之后，中国的革命面貌就焕然一新”前句主语“中国人民”未说完便换成“革命面貌”'], ['藕断丝连', '把前一句的宾语强行当作后一句的主语连写，两句纠缠不清'], ['成分赘余', '“大约二十人左右”中“大约”与“左右”重复，删其一']] },
+        { type: 'heading', text: '四、表意不明与不合逻辑' },
+        { type: 'paragraph', text: '表意不明包括指代不明（“他”“这”所指不清）与歧义（停顿、多义词、修饰范围造成两种以上理解）；不合逻辑指句子在事理上讲不通，须借助逻辑常识判断。' },
+        { type: 'list', items: ['自相矛盾：“他是众多死难者中幸免的一个”（“死难者”与“幸免”矛盾）', '概念并列不当：“出席会议的有教师、学生和青年”（“青年”与前两者交叉）', '否定失当：“为了防止此类事故不再发生”（“防止”与“不再”双重否定致意思相反）', '主客倒置：“焦裕禄这个名字对青年人可能有些陌生”（应为“青年人对焦裕禄这个名字陌生”）', '一面对两面：“学习成绩的提高，取决于学生是否努力”（“提高”一面对“是否”两面）'] },
+        { type: 'svg', svg: '<svg viewBox="0 0 680 230" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="230" fill="#eef5f7"/><text x="340" y="26" text-anchor="middle" font-size="17" font-weight="bold" fill="#1f5f8b">病句诊断高频标志词</text><rect x="40" y="55" width="290" height="46" rx="8" fill="#c07f4e"/><text x="185" y="83" text-anchor="middle" font-size="12" fill="#fff">句首介词：通过·经过·由于·随着</text><rect x="350" y="55" width="290" height="46" rx="8" fill="#7a6fae"/><text x="495" y="83" text-anchor="middle" font-size="12" fill="#fff">两面词：能否·是否·好坏·成败</text><rect x="40" y="115" width="290" height="46" rx="8" fill="#b04a4a"/><text x="185" y="143" text-anchor="middle" font-size="12" fill="#fff">否定词连用：防止·避免·切忌+不</text><rect x="350" y="115" width="290" height="46" rx="8" fill="#7aa05a"/><text x="495" y="143" text-anchor="middle" font-size="12" fill="#fff">并列短语：和·与·及（查搭配歧义）</text><text x="340" y="200" text-anchor="middle" font-size="13" fill="#555">见到标志词先“对号入座”排查对应病因，可大幅提速</text></svg>', caption: '病句诊断标志词：句首介词查缺主语，两面词查一面两面，否定连用查否定失当，并列短语查搭配与歧义。' },
+        { type: 'heading', text: '五、辨析与修改的方法' },
+        { type: 'paragraph', text: '辨析病句常用三法：语感审读法（通读察觉别扭处）、紧缩主干法（提取主谓宾检查搭配与残缺）、逻辑分析法（检查概念、判断、推理是否合事理）。三法配合，先易后难。' },
+        { type: 'keypoint', label: '修改病句的原则', text: '修改病句遵循“<strong>保留原意、多就少改、改动最小</strong>”三原则：能调序不增删，能改一字不改一句；修改后务必复读检验，确认既消除了语病，又没有改变句子原来要表达的意思。' },
+        { type: 'svg', svg: '<svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="200" fill="#eef5f7"/><text x="340" y="26" text-anchor="middle" font-size="17" font-weight="bold" fill="#1f5f8b">病句辨析三法流程</text><rect x="30" y="70" width="180" height="50" rx="8" fill="#7aa05a"/><text x="120" y="94" text-anchor="middle" font-size="13" fill="#fff">语感审读</text><text x="120" y="112" text-anchor="middle" font-size="11" fill="#fff">通读找别扭</text><rect x="250" y="70" width="180" height="50" rx="8" fill="#4a8fa8"/><text x="340" y="94" text-anchor="middle" font-size="13" fill="#fff">紧缩主干</text><text x="340" y="112" text-anchor="middle" font-size="11" fill="#fff">查搭配残缺</text><rect x="470" y="70" width="180" height="50" rx="8" fill="#1f5f8b"/><text x="560" y="94" text-anchor="middle" font-size="13" fill="#fff">逻辑分析</text><text x="560" y="112" text-anchor="middle" font-size="11" fill="#fff">查事理矛盾</text><path d="M210 95 L248 95" stroke="#1f5f8b" stroke-width="3"/><path d="M430 95 L468 95" stroke="#1f5f8b" stroke-width="3"/><text x="340" y="165" text-anchor="middle" font-size="13" fill="#555">语感初筛→主干细查→逻辑终审，修改时多就少改</text></svg>', caption: '辨析三法：语感审读初筛、紧缩主干细查、逻辑分析终审；修改遵循“多就少改”。' },
+        { type: 'tip', label: '学习提示', text: '病句复习最有效的方法是“标志词敏感训练”：整理句首介词、两面词、否定词连用、并列短语、数量词（约／左右）、关联词等高频标志，做题时先扫标志词再定位病因，正确率与速度都会显著提升。' },
+        { type: 'reading', text: '延伸思考：“防止此类事故不再发生”这类否定失当的句子，日常口语中却常被大家“听懂”而不觉其误。请思考：语言的“约定俗成”与语法规范发生冲突时，高考辨析病句应以什么为标准？' }
+      ],
+      exercises: [
+        { type: 'choice', question: '“通过这次主题班会，使同学们增强了安全意识。”本句的病因是？', options: ['语序不当', '成分残缺（缺主语）', '表意不明', '不合逻辑'], answer: '成分残缺（缺主语）', explanation: '句首“通过……”是介宾短语不能作主语，后面“使……”又将“同学们”变成兼语，导致全句没有主语，属于成分残缺中最典型的“介词+使”缺主语病。修改办法是删去“通过”或删去“使”，二者去其一即可，故选“成分残缺（缺主语）”。' },
+        { type: 'fill', question: '辨析病句的“__主干法”，是指提取句子的主谓宾，检查成分之间是否搭配、有无残缺。', answer: '紧缩', explanation: '本题考查病句辨析三法。紧缩主干法即把附加成分（定语、状语、补语）暂时去掉，压缩出主谓宾主干，先查主干是否搭配得当、有无残缺，再逐层检查修饰语与中心语的搭配，是辨析搭配不当与成分残缺的核心方法，故填“紧缩”。' },
+        { type: 'choice', question: '“能否养成良好的学习习惯，是提高成绩的关键。”本句的病因是？', options: ['句式杂糅', '一面与两面搭配不当', '成分赘余', '语序不当'], answer: '一面与两面搭配不当', explanation: '“能否”包含“能”与“不能”两面，而“提高成绩的关键”只说了“提高”一面，两面对一面，前后不对应，属于搭配不当（不合逻辑）中的“一面对两面”。修改时可删去“能否”，或在后句补上“能否”对应的两面表述，故选“一面与两面搭配不当”。' },
+        { type: 'fill', question: '“为了防止此类事故不再发生，学校加强了安全管理。”句中“防止”与“不再”连用造成__失当，应删去“不再”改为“再”或直接说“防止此类事故再次发生”。', answer: '否定', explanation: '本题考查不合逻辑中的否定失当。“防止”本身含有否定意味，与“不再”连用构成双重否定，句意变成“让事故再发生”，与本意恰好相反。类似陷阱还有“避免不”“切忌不要”等，见到否定词连用要立即检查句意方向，故填“否定”。' },
+        { type: 'choice', question: '“这本书的作者是一位深受学生喜爱的特级教师写的。”本句的病因是？', options: ['句式杂糅', '表意不明', '成分残缺', '主客倒置'], answer: '句式杂糅', explanation: '该句把“这本书的作者是一位特级教师”与“这本书是一位特级教师写的”两种说法糅合在一起，主语“作者”与句尾“写的”不能搭配，属于结构混乱中的句式杂糅。修改时保留其中一种句式即可：删去“写的”，或把“的作者”删去，故选“句式杂糅”。' }
+      ]
+    }
+
+  );
+})();
