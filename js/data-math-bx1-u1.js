@@ -24,6 +24,7 @@
         { type: 'heading', text: '二、集合中元素的特性' },
         { type: 'paragraph', text: '一个对象能否作为集合的元素、集合如何区分不同元素，取决于集合元素的三条基本特性，它们是判断一组对象能否构成集合、以及求参数取值的关键依据。' },
         { type: 'keypoint', label: '重点·三大特性', text: '<strong>确定性</strong>：给定一个集合，任何一个对象是不是它的元素，结果是明确的，要么属于、要么不属于，不能模棱两可。<br><strong>互异性</strong>：集合中的元素<strong>互不相同</strong>，相同对象看作一个整体时只算作一个元素。<br><strong>无序性</strong>：集合中的元素<strong>没有先后顺序</strong>，{1, 2, 3} 与 {3, 2, 1} 表示同一个集合。' },
+        { type: 'list', items: ['确定性：判断“能不能构成集合”，就看元素归属是否明确', '互异性：求出参数后务必回代，剔除造成元素重复的值', '无序性：{1, 2, 3} 与 {3, 2, 1} 表示同一个集合'] },
         { type: 'warn', label: '易错', text: '利用集合元素的<strong>互异性</strong>求参数时，求出参数后<strong>必须回代检验</strong>：若所得元素出现重复，则该值应舍去。这是考试中最常见的失分点。' },
         { type: 'example', label: '例题1', text: '已知集合 A = {2, x, x²}，若 3 ∈ A，求实数 x 的值。<br><br><strong>解</strong>：由 3 ∈ A 可知，3 等于集合 A 中的某一个元素，故 x = 3 或 x² = 3。<br>① 当 x = 3 时，A = {2, 3, 9}，元素互异，符合；<br>② 当 x² = 3 时，x = √3 或 x = -√3，A 分别为 {2, √3, 3} 与 {2, -√3, 3}，元素互异，符合。<br>综上，x = 3 或 x = ±√3。' },
         { type: 'heading', text: '三、集合的表示方法' },
@@ -52,6 +53,47 @@
         { type: 'choice', question: '集合 A = {x | x² - x = 0} 用列举法表示为？', options: ['{0}', '{1}', '{0, 1}', '{0, 1, -1}'], answer: '{0, 1}', explanation: '解方程 x² - x = 0，即 x(x - 1) = 0，得 x = 0 或 x = 1，故集合 A 的元素为 0 和 1，用列举法表示为 {0, 1}。选项 {0}、{1} 各漏一个元素，{0, 1, -1} 多出了 -1，均不正确。' },
         { type: 'fill', question: '用列举法表示集合 M = {x ∈ N | x < 4} = ____。', answer: '{0,1,2,3}|{0, 1, 2, 3}|0,1,2,3', explanation: 'x ∈ N 表示 x 是非负整数（自然数，含 0），且 x < 4，所以 x 可取 0、1、2、3。用列举法把元素一一写在花括号内，得 M = {0, 1, 2, 3}。注意 N 包含 0，切勿漏写。' }
       ]
+    },
+
+    /* ---------------- 第2课时 集合间的基本关系 ---------------- */
+    {
+      id: 'bx1-u1-l2',
+      name: '集合间的基本关系',
+      chapter: '第一章 集合与常用逻辑用语 · 1.2',
+      difficulty: '基础',
+      content: [
+        { type: 'heading', text: '一、子集' },
+        { type: 'paragraph', text: '研究集合，不仅要会表示一个集合，还要能刻画两个集合之间的关系。最基础的关系是“包含”：当一个集合的所有元素都属于另一个集合时，前者就是后者的子集。' },
+        { type: 'keypoint', label: '重点·子集', text: '对于两个集合 A、B，如果<strong>集合 A 中任意一个元素都是集合 B 中的元素</strong>，就说 A 是 B 的<strong>子集</strong>，记作 <strong>A ⊆ B</strong>（读作“A 含于 B”）。符号化表述：A ⊆ B ⇔ 对任意 x∈A，都有 x∈B。' },
+        { type: 'svg', svg: '<svg viewBox="0 0 680 230" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="230" fill="#eef4fc"/><ellipse cx="400" cy="120" rx="210" ry="90" fill="#cfe0f7" stroke="#4a7de0" stroke-width="2.5"/><ellipse cx="350" cy="120" rx="120" ry="55" fill="#7eb0e6" stroke="#2b5b9e" stroke-width="2.5"/><text x="400" y="46" font-size="18" fill="#2b5b9e" font-weight="bold" text-anchor="middle">B</text><text x="350" y="126" font-size="18" fill="#1a3a5c" font-weight="bold" text-anchor="middle">A</text><circle cx="315" cy="105" r="5" fill="#2b5b9e"/><circle cx="370" cy="135" r="5" fill="#2b5b9e"/><text x="340" y="212" font-size="15" fill="#33536e" text-anchor="middle">A ⊆ B：A 完全在 B 内部（也可与 B 重合）</text></svg>', caption: '图1　子集 A ⊆ B：集合 A 的整个区域都落在集合 B 之内。' },
+        { type: 'list', items: ['自反性：任何集合都是它本身的子集，即 A ⊆ A', '传递性：若 A ⊆ B 且 B ⊆ C，则 A ⊆ C', '若 A ⊈ B，说明 A 中至少有一个元素不在 B 中'] },
+        { type: 'heading', text: '二、真子集' },
+        { type: 'keypoint', label: '重点·真子集', text: '如果 A ⊆ B，并且<strong> B 中至少有一个元素不属于 A</strong>（即 B 比 A“多出”一些元素），就说 A 是 B 的<strong>真子集</strong>，记作 <strong>A ⫋ B</strong>（读作“A 真含于 B”）。真子集一定是子集，但子集未必是真子集。' },
+        { type: 'example', label: '例题1', text: '已知集合 A = {1, 2}，B = {1, 2, 3}，C = {1, 2}。<br><strong>判断</strong>：A 与 B、A 与 C 分别是什么关系？<br><br><strong>解</strong>：A 的元素 1、2 都在 B 中，且 B 中的元素 3 不在 A 中，故 <strong>A ⫋ B</strong>；A 与 C 的元素完全相同（都是 1、2），故 <strong>A = C</strong>，此时 A ⊆ C 且 C ⊆ A（相等关系，不是真子集）。' },
+        { type: 'svg', svg: '<svg viewBox="0 0 680 230" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="230" fill="#eef4fc"/><ellipse cx="400" cy="120" rx="210" ry="90" fill="#cfe0f7" stroke="#4a7de0" stroke-width="2.5"/><ellipse cx="340" cy="120" rx="115" ry="52" fill="#7eb0e6" stroke="#2b5b9e" stroke-width="2.5"/><text x="400" y="46" font-size="18" fill="#2b5b9e" font-weight="bold" text-anchor="middle">B</text><text x="340" y="126" font-size="18" fill="#1a3a5c" font-weight="bold" text-anchor="middle">A</text><circle cx="520" cy="120" r="6" fill="#e05d44"/><text x="534" y="125" font-size="14" fill="#c0392b">∉A</text><text x="340" y="212" font-size="15" fill="#33536e" text-anchor="middle">A ⫋ B：A 在 B 内，且 B 有元素（红点）不在 A 中</text></svg>', caption: '图2　真子集 A ⫋ B：A 严格在 B 内部，B 多出红色元素不属于 A。' },
+        { type: 'heading', text: '三、集合相等' },
+        { type: 'keypoint', label: '重点·集合相等', text: '如果<strong> A ⊆ B 且 B ⊆ A</strong>，那么集合 A 与集合 B 的元素完全相同，称这两个集合<strong>相等</strong>，记作 <strong>A = B</strong>。集合相等是判断两个集合“实为同一”的根本依据。' },
+        { type: 'example', label: '例题2', text: '已知集合 A = {x | x² - 1 = 0}，B = {-1, 1}，判断 A 与 B 的关系。<br><br><strong>解</strong>：解方程 x² - 1 = 0 得 x = ±1，故 A = {-1, 1}。又 B = {-1, 1}，两集合元素完全相同，因此 <strong>A = B</strong>。' },
+        { type: 'svg', svg: '<svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="200" fill="#eef4fc"/><ellipse cx="340" cy="100" rx="170" ry="72" fill="#7eb0e6" stroke="#2b5b9e" stroke-width="2.5"/><text x="340" y="44" font-size="18" fill="#2b5b9e" font-weight="bold" text-anchor="middle">A = B</text><text x="340" y="106" font-size="16" fill="#1a3a5c" text-anchor="middle">同一圆表示同一集合</text><text x="340" y="178" font-size="15" fill="#33536e" text-anchor="middle">A ⊆ B 且 B ⊆ A ⇒ 元素完全相同</text></svg>', caption: '图3　集合相等 A = B：两个集合对应同一个圆，元素完全相同。' },
+        { type: 'heading', text: '四、空集' },
+        { type: 'keypoint', label: '重点·空集', text: '<strong>不含任何元素</strong>的集合叫做<strong>空集</strong>，记作 <strong>∅</strong>。例如 {x ∈ R | x² + 1 = 0} = ∅（实数范围内无解）。空集是客观存在且唯一的集合。' },
+        { type: 'warn', label: '易错', text: '关于空集有两处高频失分：①<strong>空集是任何集合的子集</strong>（∅ ⊆ A 恒成立），但<strong>空集不是任何集合的真子集</strong>——∅ ⫋ ∅ 不成立；②<strong>∅ 与 {∅} 不同</strong>：∅ 没有元素，而 {∅} 含有一个元素“空集”，故 ∅ ∈ {∅} 但 ∅ ≠ {∅}。' },
+        { type: 'list', items: ['∅ ⊆ A 对任意集合 A 都成立', '∅ ⫋ A 仅当 A 非空时成立', '若 A ⊆ ∅，则必有 A = ∅（只有空集是空集的子集）'] },
+        { type: 'example', label: '例题3', text: '若集合 A = {x | x² + a = 0, x ∈ R} = ∅，求实数 a 的取值范围。<br><br><strong>解</strong>：A = ∅ 表示方程 x² + a = 0 在实数范围内无解，即 x² = -a 无实数解，需 -a &lt; 0，故 <strong>a &gt; 0</strong>。当 a = 0 时 x = 0 有解（A = {0} ≠ ∅）；当 a &lt; 0 时有两个解。综上 a &gt; 0。' },
+        { type: 'heading', text: '五、三种关系对比' },
+        { type: 'table', headers: ['关系', '符号', '成立条件', 'Venn 特征'], rows: [['子集', 'A ⊆ B', '∀x∈A ⇒ x∈B', 'A 的圆在 B 内或重合'], ['真子集', 'A ⫋ B', 'A ⊆ B 且 B 有元素∉A', 'A 严格在 B 内部'], ['相等', 'A = B', 'A ⊆ B 且 B ⊆ A', 'A 与 B 同一个圆']] },
+        { type: 'tip', label: '记忆', text: '判断集合关系可按“先相等、再真包含、最后包含”的顺序：先看元素是否完全相同（相等），否则看是否严格小（真子集），否则看是否包含（子集）。含参数时，<strong>切勿遗漏空集 ∅ 这一特殊情况</strong>。' },
+        { type: 'heading', text: '六、本课小结' },
+        { type: 'list', items: ['子集 A ⊆ B：A 中元素全都在 B 中', '真子集 A ⫋ B：A ⊆ B 且 B 比 A 多出元素', '集合相等 A = B：A ⊆ B 且 B ⊆ A', '空集 ∅：不含任何元素；∅ ⊆ A 恒成立', '含参数求子集/真子集时，务必检验空集情形'] }
+      ],
+      exercises: [
+        { type: 'choice', question: '已知集合 A = {1, 2}，B = {1, 2, 3}，则 A 与 B 的关系是？', options: ['A = B', 'A ⫋ B', 'B ⫋ A', 'A ⊈ B'], answer: 'A ⫋ B', explanation: 'A 的元素 1、2 都在 B 中，且 B 中含有元素 3 不在 A 中，故 A 是 B 的真子集，即 A ⫋ B。A≠B 因为元素不同；B⫋A 与事实相反；A⊆B 成立故 A⊈B 错误。' },
+        { type: 'fill', question: '空集是______集合的子集。（填“任何”或“非空”）', answer: '任何', explanation: '根据集合论规定，空集 ∅ 是任意一个集合的子集，即对任意集合 A 都有 ∅ ⊆ A 恒成立。注意空集不是任意集合的真子集（∅⫋∅ 不成立），但“子集”表述对任意集合都成立，故填“任何”。' },
+        { type: 'choice', question: '下列命题中，错误的是？', options: ['∅ ⊆ {1}', '∅ ⫋ {1}', '∅ ∈ {∅}', '∅ ⫋ ∅'], answer: '∅ ⫋ ∅', explanation: '真子集要求前者是后者的子集且后者有元素不属于前者。对 ∅⫋∅，两者相等，不存在“B 有元素不在 A 中”，故该式不成立，命题错误。其余：∅⊆{1} 恒成立；∅⫋{1}（{1} 非空）成立；∅∈{∅}（{∅} 的元素是空集）成立。' },
+        { type: 'fill', question: '若 A ⊆ B 且 B ⊆ A，则 A ____ B。', answer: '=', explanation: '集合相等的定义：若 A 是 B 的子集且 B 也是 A 的子集，则两集合元素完全相同，记作 A = B。因此由 A ⊆ B 且 B ⊆ A 可推出 A = B，故填“=”。' },
+        { type: 'choice', question: '集合 {x ∈ R | x² + 1 = 0} 是？', options: ['{1}', '{-1}', '∅', 'R'], answer: '∅', explanation: '方程 x² + 1 = 0 在实数范围内无解，因为对任意实数 x 都有 x² ≥ 0，从而 x² + 1 ≥ 1 > 0。满足该条件的 x 不存在，故该集合为空集 ∅。{1}、{-1} 是方程 x² - 1 = 0 的解，R 是所有实数，均不正确。' }
+      ]
     }
+
   );
 })();

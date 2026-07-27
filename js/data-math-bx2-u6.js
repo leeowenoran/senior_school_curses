@@ -1,0 +1,100 @@
+/* ============================================================
+ * 高一数学 · 必修 第二册 · 第八章 立体几何初步
+ * 第1课时：空间点、直线、平面之间的位置关系（人教A版 §8.4）
+ * 第2课时：空间直线、平面的平行（人教A版 §8.5）
+ * 数据注入：math.bx2.points
+ * ============================================================ */
+(function () {
+  var v = gzGetVolume('math', 'bx2');
+  if (!v) return;
+  v.points.push(
+
+    /* ---------------- 第1课时 空间点、直线、平面之间的位置关系 ---------------- */
+    {
+      id: 'bx2-u6-l1',
+      name: '空间点、直线、平面之间的位置关系',
+      chapter: '第八章 立体几何初步 · 8.4',
+      difficulty: '中等',
+      content: [
+        { type: 'heading', text: '一、平面的概念与表示' },
+        { type: 'paragraph', text: '平面是立体几何中最基本的原始概念之一，与点和直线一样，平面也是一个不加定义而只描述其性质的原始概念。我们常把桌面、黑板面、平静的水面等想象成平面的一部分。几何中的平面是无限延展的，没有厚度、没有边界。' },
+        { type: 'keypoint', label: '重点·平面的表示', text: '平面通常用希腊字母 <strong>α、β、γ</strong> 等表示，也可由表示平行四边形的四个顶点或相对的两个顶点来表示，如平面 ABCD 或平面 AC。画平面时，通常画成一个<strong>平行四边形</strong>，并约定它代表一个无限延展的平面。' },
+        { type: 'heading', text: '二、平面的基本性质（三个公理）' },
+        { type: 'keypoint', label: '公理1·直线在平面内', text: '如果一条直线上的<strong>两点</strong>在一个平面内，那么这条直线<strong>在此平面内</strong>（即直线上所有的点都在这个平面内）。符号表示：<strong>A ∈ l，B ∈ l，A ∈ α，B ∈ α ⇒ l ⊂ α</strong>。它说明平面是“平”的，直线可以完整地落在平面内。' },
+        { type: 'svg', svg: '<svg viewBox="0 0 680 360" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="360" fill="#eef4fc"/><text x="340" y="28" font-size="17" font-weight="bold" fill="#2b5b9e" text-anchor="middle">平面的三个公理</text><text x="115" y="58" font-size="15" fill="#33536e" text-anchor="middle">公理1　直线在平面内</text><polygon points="45,80 195,80 215,180 65,180" fill="#cfe0f7" stroke="#4a7de0" stroke-width="2.5"/><line x1="80" y1="150" x2="180" y2="110" stroke="#2b5b9e" stroke-width="3"/><circle cx="95" cy="144" r="4" fill="#c0392b"/><circle cx="165" cy="119" r="4" fill="#c0392b"/><text x="95" y="166" font-size="13" fill="#c0392b" text-anchor="middle">A</text><text x="165" y="110" font-size="13" fill="#c0392b" text-anchor="middle">B</text><text x="115" y="205" font-size="13" fill="#33536e" text-anchor="middle">两点在面内 ⇒ 整条直线在面内</text><text x="340" y="58" font-size="15" fill="#33536e" text-anchor="middle">公理2　三点定一面</text><polygon points="265,80 415,80 435,180 285,180" fill="#cfe0f7" stroke="#4a7de0" stroke-width="2.5"/><circle cx="300" cy="120" r="4" fill="#5a7a2a"/><circle cx="370" cy="105" r="4" fill="#5a7a2a"/><circle cx="340" cy="165" r="4" fill="#5a7a2a"/><text x="300" y="112" font-size="13" fill="#5a7a2a" text-anchor="middle">A</text><text x="378" y="98" font-size="13" fill="#5a7a2a" text-anchor="middle">B</text><text x="340" y="185" font-size="13" fill="#5a7a2a" text-anchor="middle">C</text><text x="340" y="205" font-size="13" fill="#33536e" text-anchor="middle">不共线三点 ⇒ 唯一一个平面</text><text x="565" y="58" font-size="15" fill="#33536e" text-anchor="middle">公理3　两平面交线</text><polygon points="500,180 630,65 670,65 540,180" fill="#cfe0f7" stroke="#4a7de0" stroke-width="2.5"/><polygon points="500,180 630,65 590,65 460,180" fill="#eef4fc" stroke="#4a7de0" stroke-width="2.5"/><line x1="500" y1="180" x2="630" y2="65" stroke="#2b5b9e" stroke-width="3"/><circle cx="565" y="123" r="4" fill="#7a5aa0"/><text x="565" y="116" font-size="13" fill="#7a5aa0" text-anchor="middle">P</text><text x="565" y="205" font-size="13" fill="#33536e" text-anchor="middle">公共点 ⇒ 唯一公共直线</text><text x="340" y="260" font-size="14" fill="#33536e" text-anchor="middle">公理1：直线与平面的包含；公理2：平面的确定；公理3：平面的相交</text><text x="340" y="300" font-size="13" fill="#33536e" text-anchor="middle">三大公理是研究空间位置关系的基础，由此可推出若干推论</text></svg>', caption: '图1　平面的三个公理：直线在平面内、不共线三点确定一个平面、两平面交于一条过公共点的直线。' },
+        { type: 'keypoint', label: '公理2·三点确定一个平面', text: '过<strong>不在一条直线上</strong>的三点，<strong>有且只有一个</strong>平面，即不共线的三点确定一个平面。由此可得三个推论：① 直线与直线外一点确定一个平面；② 两条相交直线确定一个平面；③ 两条平行直线确定一个平面。' },
+        { type: 'keypoint', label: '公理3·两平面相交', text: '如果两个<strong>不重合</strong>的平面有一个公共点，那么它们<strong>有且只有一条</strong>过该点的公共直线。符号表示：<strong>P ∈ α 且 P ∈ β ⇒ α ∩ β = l 且 P ∈ l</strong>。它给出了两个平面相交的必然结果——交线。' },
+        { type: 'example', label: '例题1', text: '用集合符号表示：点 A、B 在直线 l 上，直线 l 在平面 α 内。<br><br><strong>解</strong>：点与直线的关系用“∈”，直线与平面的包含关系用“⊂”，可记作 <strong>A ∈ l，B ∈ l，且 l ⊂ α</strong>。' },
+        { type: 'heading', text: '三、空间中直线与直线的位置关系' },
+        { type: 'keypoint', label: '重点·两直线的位置关系', text: '在同一平面内，两直线只有相交与平行两种关系；在空间中还多了<strong>异面</strong>。共面时：<strong>相交</strong>（有且只有一个公共点）、<strong>平行</strong>（没有公共点且共面）；<strong>异面直线</strong>指不同在任何一个平面内的两条直线，它们既不平行也不相交。' },
+        { type: 'svg', svg: '<svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="300" fill="#eef4fc"/><text x="340" y="30" font-size="17" font-weight="bold" fill="#2b5b9e" text-anchor="middle">异面直线：不同在任何一个平面内</text><line x1="120" y1="240" x2="320" y2="90" stroke="#2b5b9e" stroke-width="3"/><line x1="380" y1="80" x2="560" y2="250" stroke="#c0392b" stroke-width="3"/><text x="180" y="262" font-size="14" fill="#2b5b9e" text-anchor="middle">直线 a</text><text x="500" y="74" font-size="14" fill="#c0392b" text-anchor="middle">直线 b</text><text x="340" y="148" font-size="14" fill="#33536e" text-anchor="middle">a 与 b 既不平行，也不相交</text><text x="340" y="176" font-size="14" fill="#33536e" text-anchor="middle">它们不能同在任何一个平面内</text><rect x="90" y="200" width="500" height="62" rx="8" fill="#cfe0f7" stroke="#4a7de0" stroke-width="1.5"/><text x="340" y="225" font-size="13" fill="#33536e" text-anchor="middle">判定：平面 α 内一点 A 与平面外一点 B 的连线 AB，</text><text x="340" y="248" font-size="13" fill="#33536e" text-anchor="middle">与平面 α 内不经过 A 的直线 c 是异面直线</text><text x="340" y="288" font-size="13" fill="#33536e" text-anchor="middle">异面直线所成角：平移至相交，所成锐角或直角即为夹角</text></svg>', caption: '图2　异面直线：不同在任何一个平面内，既不平行也不相交，是空间特有的位置关系。' },
+        { type: 'list', items: ['相交直线：同一平面内，有且只有一个公共点', '平行直线：同一平面内，没有公共点', '异面直线：不同在任何一个平面内，既不平行也不相交', '异面直线判定：平面内一点与平面外一点的连线，和平面内不经过该点的直线异面'] },
+        { type: 'example', label: '例题2', text: '在正方体 ABCD-A₁B₁C₁D₁ 中，指出哪些棱与棱 AB 是异面直线。<br><br><strong>解</strong>：AB 在底面 ABCD 内。棱 CC₁ 垂直于底面，C 在底面内但 CC₁ 不经过 AB 上任意一点，由判定可知 <strong>AB 与 CC₁ 异面</strong>；同理 AB 与 B₁C₁、DD₁、A₁D₁ 等也异面。而 AB 与 CD、A₁B₁ 平行，与 BC、AD 相交。' },
+        { type: 'heading', text: '四、空间中直线与平面的位置关系' },
+        { type: 'keypoint', label: '重点·直线与平面的位置关系', text: '直线与平面的位置关系有且只有三种：<strong>直线在平面内</strong>（有无数个公共点，记作 l ⊂ α）；<strong>直线与平面相交</strong>（有且只有一个公共点，记作 l ∩ α = P）；<strong>直线与平面平行</strong>（没有公共点，记作 l ∥ α）。' },
+        { type: 'list', items: ['直线在平面内：l ⊂ α（直线上的所有点都在平面内）', '直线与平面相交：l ∩ α = P（唯一公共点）', '直线与平面平行：l ∥ α（无公共点）', '平行与相交统称直线在平面外，记作 l ⊄ α'] },
+        { type: 'heading', text: '五、空间中平面与平面的位置关系' },
+        { type: 'keypoint', label: '重点·平面与平面的位置关系', text: '两个平面的位置关系只有两种：<strong>平行</strong>（没有公共点，记作 α ∥ β）和<strong>相交</strong>（有一条公共直线，记作 α ∩ β = l）。不存在“只有一个公共点”的两平面情形，因为由公理3，有公共点就必交于一条过该点的直线。' },
+        { type: 'svg', svg: '<svg viewBox="0 0 680 380" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="380" fill="#eef4fc"/><text x="340" y="28" font-size="17" font-weight="bold" fill="#2b5b9e" text-anchor="middle">直线与平面的位置关系 · 平面与平面的位置关系</text><polygon points="45,70 195,70 215,150 65,150" fill="#cfe0f7" stroke="#4a7de0" stroke-width="2.5"/><line x1="80" y1="125" x2="190" y2="105" stroke="#2b5b9e" stroke-width="3"/><text x="120" y="172" font-size="13" fill="#33536e" text-anchor="middle">l ⊂ α（无数公共点）</text><polygon points="265,70 415,70 435,150 285,150" fill="#cfe0f7" stroke="#4a7de0" stroke-width="2.5"/><line x1="300" y1="185" x2="385" y2="55" stroke="#c0392b" stroke-width="3"/><circle cx="345" y="112" r="4" fill="#c0392b"/><text x="350" y="172" font-size="13" fill="#33536e" text-anchor="middle">l ∩ α = P（一个公共点）</text><polygon points="485,70 635,70 655,150 505,150" fill="#cfe0f7" stroke="#4a7de0" stroke-width="2.5"/><line x1="510" y1="52" x2="630" y2="38" stroke="#5a7a2a" stroke-width="3"/><text x="570" y="172" font-size="13" fill="#33536e" text-anchor="middle">l ∥ α（无公共点）</text><polygon points="90,210 250,210 270,255 110,255" fill="#cfe0f7" stroke="#4a7de0" stroke-width="2.5"/><polygon points="130,285 300,285 320,330 150,330" fill="#eef4fc" stroke="#4a7de0" stroke-width="2.5"/><text x="200" y="355" font-size="13" fill="#33536e" text-anchor="middle">α ∥ β（无公共点）</text><line x1="490" y1="215" x2="490" y2="330" stroke="#2b5b9e" stroke-width="3"/><polygon points="490,215 490,330 370,310 370,235" fill="#cfe0f7" stroke="#4a7de0" stroke-width="2.5"/><polygon points="490,215 490,330 610,310 610,235" fill="#eef4fc" stroke="#4a7de0" stroke-width="2.5"/><text x="490" y="355" font-size="13" fill="#33536e" text-anchor="middle">α ∩ β = l（一条公共直线）</text></svg>', caption: '图3　直线与平面的三种位置关系（在内、相交、平行）与平面与平面的两种位置关系（平行、相交）。' },
+        { type: 'table', headers: ['位置关系', '图形特征', '公共点个数', '符号表示'], rows: [['直线与平面·在内', '直线全部落在平面中', '无数个', 'l ⊂ α'], ['直线与平面·相交', '直线与平面交于一点', '一个', 'l ∩ α = P'], ['直线与平面·平行', '直线与平面无交点', '0 个', 'l ∥ α'], ['平面与平面·平行', '两平面无公共点', '0 个', 'α ∥ β'], ['平面与平面·相交', '两平面交于一条直线', '无数个（一条直线上）', 'α ∩ β = l']] },
+        { type: 'example', label: '例题3', text: '判断下列说法：① 分别在两个平面内的两条直线是异面直线；② 两条异面直线无公共点。哪个正确？<br><br><strong>解</strong>：① 错误，分别在两个平面内的两直线也可能平行或相交（例如两平面相交，交线两侧的直线可共面）；② 正确，<strong>异面直线既不平行也不相交，当然没有公共点</strong>。故只有②正确。' },
+        { type: 'tip', label: '记忆', text: '判断位置关系先看<strong>公共点个数</strong>：无公共点 → 平行（线面平行、面面平行）；一个公共点 → 线面相交；无数个且共线 → 面面相交；无数个且不成线 → 线在面内。异面直线则“<strong>既不平行也不相交</strong>”，是空间特有的关系。' },
+        { type: 'warn', label: '易错', text: '三类高频失误：①<strong>误以为分别在两平面内的直线一定异面</strong>，其实它们可能平行或相交；②<strong>混淆“直线在平面内”与“直线平行于平面”</strong>，前者有无数公共点、后者零个；③<strong>忘记公理3</strong>，以为两平面能只交于一点，实际有公共点就必交于一条过该点的直线。' },
+        { type: 'heading', text: '六、本课小结' },
+        { type: 'list', items: ['平面的三个公理：直线在平面内、三点定面、两平面交线', '两直线：相交、平行、异面（空间特有）', '线面：在内、相交、平行三种', '面面：平行、相交两种', '异面直线判定：平面内一点与平面外一点连线，与平面内不过该点直线异面', '判断位置关系先数公共点，再看是否共线'] }
+      ],
+      exercises: [
+        { type: 'choice', question: '关于公理2，下列说法正确的是？', options: ['任意三点确定一个平面', '不在一条直线上的三点确定一个平面', '一条直线和一点确定一个平面', '两条平行直线不能确定平面'], answer: '不在一条直线上的三点确定一个平面', explanation: '公理2指出过不在一条直线上的三点有且只有一个平面，即不共线的三点确定一个平面。任意三点若共线则不能确定唯一平面，故第一项错误；直线与直线外一点可确定一个平面，但仅说“一点”未说明在直线外，表述不严谨；两条平行直线可以确定一个平面（推论），故第四项错误。因此选“不在一条直线上的三点确定一个平面”。' },
+        { type: 'choice', question: '空间中两直线的位置关系分类中，不包括下列哪一项？', options: ['相交', '平行', '异面', '重合'], answer: '重合', explanation: '空间中两直线的位置关系分为共面与异面：共面时包括相交（一个公共点）与平行（无公共点），此外还有异面直线（不同在任一平面内）。若两条直线所有点重合则视为同一条直线，重合不属于两条不同直线的位置关系分类，教材讨论的是不同直线。因此“重合”不在标准分类中。' },
+        { type: 'choice', question: '下列命题中，正确的是？', options: ['分别在两个平面内的两直线一定异面', '异面直线没有公共点', '两平面可以只交于一点', '直线在平面内记作 l ∥ α'], answer: '异面直线没有公共点', explanation: '异面直线指不同在任何一个平面内的两条直线，它们既不平行也不相交，自然没有公共点，故该说法正确。分别在两平面内的两直线可能平行或相交，不一定异面；由公理3，两平面若有公共点必交于一条直线，不可能只交于一点；直线在平面内记作 l ⊂ α，l ∥ α 表示直线与平面平行。故其余三项错误。' },
+        { type: 'fill', question: '两条异面直线的定义是：不同在__________内的两条直线。', answer: '任何一个平面', explanation: '异面直线指不同在任何一个平面内的两条直线，它们既不平行也不相交。填空应写“任何一个平面”。注意关键词是“任何一个”，强调不存在同时包含这两条直线的平面，而非仅某个特定平面。' },
+        { type: 'fill', question: '公理3：若两个不重合的平面有一个公共点 P，则它们有且只有一条过该点的__________。', answer: '公共直线|公共的直线', explanation: '公理3说明两个不重合的平面若有一个公共点，则它们有且只有一条过该点的公共直线，即交线。可记作 α ∩ β = l 且 P ∈ l。填空写“公共直线”或“公共的直线”，强调交线是过公共点 P 的唯一直线。' }
+      ]
+    },
+
+    /* ---------------- 第2课时 空间直线、平面的平行 ---------------- */
+    {
+      id: 'bx2-u6-l2',
+      name: '空间直线、平面的平行',
+      chapter: '第八章 立体几何初步 · 8.5',
+      difficulty: '中等',
+      content: [
+        { type: 'heading', text: '一、直线与平面平行的判定定理' },
+        { type: 'keypoint', label: '重点·线面平行判定', text: '<strong>判定定理</strong>：如果<strong>平面外</strong>一条直线与此平面内的一条直线<strong>平行</strong>，那么该直线与此平面平行。符号表示：<strong>a ⊄ α，b ⊂ α，且 a ∥ b ⇒ a ∥ α</strong>。核心是把“线面平行”转化为“线线平行”。' },
+        { type: 'svg', svg: '<svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="320" fill="#eef4fc"/><text x="340" y="30" font-size="17" font-weight="bold" fill="#2b5b9e" text-anchor="middle">线面平行判定：平面外一直线与面内一直线平行</text><polygon points="120,70 520,70 560,250 160,250" fill="#cfe0f7" stroke="#4a7de0" stroke-width="2.5"/><text x="470" y="95" font-size="16" fill="#2b5b9e" font-weight="bold" text-anchor="middle">α</text><line x1="200" y1="190" x2="430" y2="150" stroke="#5a7a2a" stroke-width="3"/><text x="330" y="212" font-size="14" fill="#5a7a2a" text-anchor="middle">b ⊂ α</text><line x1="180" y1="110" x2="410" y2="70" stroke="#2b5b9e" stroke-width="3"/><text x="250" y="95" font-size="14" fill="#2b5b9e" text-anchor="middle">a（平面 α 外）</text><text x="300" y="45" font-size="14" fill="#33536e" text-anchor="middle">a ∥ b</text><text x="340" y="292" font-size="14" fill="#33536e" text-anchor="middle">判定：a ⊄ α，b ⊂ α，且 a ∥ b  ⇒  a ∥ α</text></svg>', caption: '图1　线面平行判定：平面外直线与平面内一条直线平行，则该直线平行于这个平面。' },
+        { type: 'paragraph', text: '判定定理的精髓在于“降维”：要证明一条直线和一个平面平行，不必直接证明它们无公共点，只需在平面内找到一条与已知直线平行的直线即可。这也是立体几何中“转化思想”的典型体现——把空间问题转化为平面问题来处理。' },
+        { type: 'example', label: '例题1', text: '在正方体 ABCD-A₁B₁C₁D₁ 中，证明棱 A₁B₁ 平行于平面 ABCD。<br><br><strong>解</strong>：在底面 ABCD 中，A₁B₁ ∥ AB，且 AB ⊂ 平面 ABCD；又 A₁B₁ 不在平面 ABCD 内（A₁、B₁ 均在平面外）。由判定定理，<strong>A₁B₁ ∥ 平面 ABCD</strong>。' },
+        { type: 'list', items: ['先在平面内找（或作）一条与已知直线平行的直线', '必须验证已知直线“在平面外”（a ⊄ α 是必备前提）', '若平面内直接找不到平行线，可过已知直线作辅助平面', '判定定理只说明平行，无需讨论公共点，也不要求直线穿过平面'] },
+        { type: 'heading', text: '二、直线与平面平行的性质定理' },
+        { type: 'keypoint', label: '重点·线面平行性质', text: '<strong>性质定理</strong>：如果一条直线和一个平面平行，经过这条直线的<strong>任一平面</strong>与此平面的<strong>交线</strong>与该直线平行。符号表示：<strong>a ∥ α，a ⊂ β，α ∩ β = b ⇒ a ∥ b</strong>。它把“线面平行”转化回“线线平行”，常用于证明线线平行。' },
+        { type: 'svg', svg: '<svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="320" fill="#eef4fc"/><text x="340" y="30" font-size="17" font-weight="bold" fill="#2b5b9e" text-anchor="middle">线面平行性质：过该直线的平面与已知平面的交线平行于该直线</text><polygon points="120,120 520,120 560,260 160,260" fill="#cfe0f7" stroke="#4a7de0" stroke-width="2.5"/><text x="470" y="145" font-size="16" fill="#2b5b9e" font-weight="bold" text-anchor="middle">α</text><line x1="200" y1="210" x2="470" y2="160" stroke="#2b5b9e" stroke-width="3"/><text x="330" y="232" font-size="14" fill="#2b5b9e" text-anchor="middle">交线 b = α ∩ β</text><line x1="200" y1="170" x2="470" y2="120" stroke="#c0392b" stroke-width="3"/><text x="320" y="100" font-size="14" fill="#c0392b" text-anchor="middle">a（a ∥ α，a ⊂ β）</text><text x="300" y="45" font-size="14" fill="#33536e" text-anchor="middle">a ∥ b</text><text x="340" y="295" font-size="14" fill="#33536e" text-anchor="middle">性质：a ∥ α，a ⊂ β，α ∩ β = b  ⇒  a ∥ b</text></svg>', caption: '图2　线面平行性质：直线 a 平行于平面 α，过 a 的平面 β 与 α 的交线 b 平行于 a。' },
+        { type: 'paragraph', text: '性质定理告诉我们：一条与平面平行的直线，不会“悬空”，它总会和它所在的任一平面与该已知平面的交线平行。这一结论在作辅助线、证明平行关系时极为常用，体现了“平行关系在空间中的传递表现”。' },
+        { type: 'example', label: '例题2', text: '已知直线 a ∥ 平面 α，直线 a ⊂ 平面 β，且 α ∩ β = b。求证 a ∥ b。<br><br><strong>解</strong>：由已知 a ∥ α 且 a ⊂ β，根据线面平行的性质定理，经过 a 的平面 β 与 α 的交线 b 必与 a 平行，故 <strong>a ∥ b</strong>。' },
+        { type: 'list', items: ['性质定理前提是“直线已平行于平面”', '交线 b 是平面 β 与 α 的公共直线', '结论 a ∥ b 是线线平行，可用于后续证明', '注意：a 与 b 一定共面（同在 β 内），它们是共面平行线'] },
+        { type: 'heading', text: '三、平面与平面平行的判定定理' },
+        { type: 'keypoint', label: '重点·面面平行判定', text: '<strong>判定定理</strong>：如果一个平面内有<strong>两条相交直线</strong>都平行于另一个平面，那么这两个平面平行。符号表示：<strong>a ⊂ α，b ⊂ α，a ∩ b = P，a ∥ β，b ∥ β ⇒ α ∥ β</strong>。强调“两条相交”，只用一条不够，两条平行也不够。' },
+        { type: 'svg', svg: '<svg viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="340" fill="#eef4fc"/><text x="340" y="30" font-size="17" font-weight="bold" fill="#2b5b9e" text-anchor="middle">面面平行：判定（面内两相交直线平行于另一平面）</text><text x="340" y="55" font-size="14" fill="#33536e" text-anchor="middle">性质（两平行平面被第三平面所截，交线平行）</text><polygon points="100,200 580,200 620,300 140,300" fill="#cfe0f7" stroke="#4a7de0" stroke-width="2.5"/><text x="520" y="225" font-size="16" fill="#2b5b9e" font-weight="bold" text-anchor="middle">β</text><polygon points="100,90 580,90 620,190 140,190" fill="#eef4fc" stroke="#4a7de0" stroke-width="2.5"/><text x="520" y="115" font-size="16" fill="#2b5b9e" font-weight="bold" text-anchor="middle">α</text><line x1="180" y1="150" x2="380" y2="120" stroke="#5a7a2a" stroke-width="3"/><line x1="240" y1="180" x2="430" y2="150" stroke="#7a5aa0" stroke-width="3"/><text x="220" y="135" font-size="13" fill="#5a7a2a" text-anchor="middle">m</text><text x="345" y="172" font-size="13" fill="#7a5aa0" text-anchor="middle">n（m∩n=P）</text><text x="340" y="325" font-size="14" fill="#33536e" text-anchor="middle">判定：m,n ⊂ α，m∩n=P，m∥β，n∥β ⇒ α∥β；性质：α∥β，γ∩α=a，γ∩β=b ⇒ a∥b</text></svg>', caption: '图3　面面平行：面内两条相交直线平行于另一平面则两平面平行（判定）；被第三平面所截得交线平行（性质）。' },
+        { type: 'paragraph', text: '判定定理的要点是“两条相交直线”，因为一条或两条平行线只能确定平面内的一个方向，无法约束整个平面的朝向；只有两条相交直线的方向都被另一个平面“接纳”（平行），才能锁死两个平面平行。这也是立体几何中由“线面平行”推出“面面平行”的关键步骤。' },
+        { type: 'example', label: '例题3', text: '在正方体中，证明平面 ABB₁A₁ 平行于平面 DCC₁D₁。<br><br><strong>解</strong>：在面 ABB₁A₁ 内，AB 与 BB₁ 是相交直线。AB ∥ DC，DC ⊂ 平面 DCC₁D₁，故 AB ∥ 平面 DCC₁D₁；同理 BB₁ ∥ CC₁，CC₁ ⊂ 平面 DCC₁D₁，故 BB₁ ∥ 平面 DCC₁D₁。面内两条相交直线都平行于另一平面，由判定定理 <strong>平面 ABB₁A₁ ∥ 平面 DCC₁D₁</strong>。' },
+        { type: 'list', items: ['必须是“两条相交”直线，缺一不可', '这两条直线都要平行于另一个平面', '可由“线面平行”反推“面面平行”', '推论：垂直于同一直线的两个平面互相平行'] },
+        { type: 'heading', text: '四、平面与平面平行的性质定理' },
+        { type: 'keypoint', label: '重点·面面平行性质', text: '<strong>性质定理</strong>：如果两个平行平面同时和第三个平面相交，那么它们的<strong>交线平行</strong>。符号表示：<strong>α ∥ β，α ∩ γ = a，β ∩ γ = b ⇒ a ∥ b</strong>。它说明平行平面被同一平面所截，截得的两条交线互相平行。' },
+        { type: 'paragraph', text: '面面平行的性质是“平行传递”在空间中的延伸：两个平行平面就像两页平行的书页，用一把刀（第三个平面 γ）同时切过它们，切痕（交线 a、b）必然平行。这一结论常用于把“面面平行”转化为“线线平行”来完成证明。' },
+        { type: 'example', label: '例题4', text: '已知平面 α ∥ β，平面 γ 分别交 α、β 于直线 a、b。求证 a ∥ b。<br><br><strong>解</strong>：由 α ∥ β，且 γ 与两平面相交得交线 a、b。根据面面平行的性质定理，两平行平面被第三平面所截，交线平行，故 <strong>a ∥ b</strong>。' },
+        { type: 'table', headers: ['定理', '条件', '结论', '转化方向'], rows: [['线面平行判定', 'a⊄α，b⊂α，a∥b', 'a∥α', '线线平行→线面平行'], ['线面平行性质', 'a∥α，a⊂β，α∩β=b', 'a∥b', '线面平行→线线平行'], ['面面平行判定', 'a,b⊂α，a∩b=P，a∥β，b∥β', 'α∥β', '线面平行→面面平行'], ['面面平行性质', 'α∥β，α∩γ=a，β∩γ=b', 'a∥b', '面面平行→线线平行']] },
+        { type: 'tip', label: '记忆', text: '四大平行定理可串成一条链：<strong>线线平行 ⇄ 线面平行 ⇄ 面面平行</strong>。判定的箭头是“低维推高维”（线线→线面→面面），性质的箭头是“高维落低维”（面面→线面→线线）。证明平行时，先看目标是什么，再沿链找“上游”条件去构造。' },
+        { type: 'warn', label: '易错', text: '三类高频失误：①<strong>判定线面平行忘写“直线在平面外”</strong>（a ⊄ α 是必备前提）；②<strong>面面平行判定只用一条或两条平行线</strong>，必须是两条相交直线；③<strong>混淆性质与判定</strong>，把“a ∥ α，a ⊂ β ⇒ α∩β 与 a 平行”误写成“α ∥ β”，性质只能在已知平行时推出交线平行，不能反推面面平行。' },
+        { type: 'heading', text: '五、本课小结' },
+        { type: 'list', items: ['线面平行判定：a⊄α，b⊂α，a∥b ⇒ a∥α', '线面平行性质：a∥α，a⊂β，α∩β=b ⇒ a∥b', '面面平行判定：面内两相交直线都平行于另一平面 ⇒ 面面平行', '面面平行性质：α∥β，被γ所截 ⇒ 交线 a∥b', '转化思想：线线 ⇄ 线面 ⇄ 面面，证明平行沿链构造'] }
+      ],
+      exercises: [
+        { type: 'choice', question: '直线与平面平行的判定定理的条件是？', options: ['a⊂α，b⊂α，a∥b', 'a⊄α，b⊂α，a∥b', 'a∥α，a⊂β，α∩β=b', 'α∥β，α∩γ=a，β∩γ=b'], answer: 'a⊄α，b⊂α，a∥b', explanation: '直线与平面平行的判定定理为：平面外一条直线与此平面内的一条直线平行，则该直线与此平面平行，符号条件是 a⊄α，b⊂α，且 a∥b，推出 a∥α。第一项把直线放在平面内，是线在面内而非平行；第三项是线面平行的性质定理；第四项是面面平行的性质定理。故正确条件是第二项。' },
+        { type: 'choice', question: '关于线面平行的性质定理，下列说法正确的是？', options: ['a∥α 且 a⊂β，则 α∥β', 'a∥α，a⊂β，α∩β=b，则 a∥b', 'a⊂α，b⊂α，a∥b，则 a∥α', 'α∥β，α∩γ=a，β∩γ=b，则 a∥b'], answer: 'a∥α，a⊂β，α∩β=b，则 a∥b', explanation: '线面平行的性质定理指出：一条直线与一个平面平行，则过该直线的任一平面与此平面的交线与该直线平行，符号为 a∥α，a⊂β，α∩β=b ⇒ a∥b，故第二项正确。第一项由 a⊂β 与 a∥α 不能推出 α∥β；第三项是判定定理但缺 a⊄α 前提；第四项是面面平行的性质定理。故选第二项。' },
+        { type: 'choice', question: '平面与平面平行的判定定理要求平面内有几条相交直线平行于另一平面？', options: ['一条', '两条', '三条', '四条'], answer: '两条', explanation: '平面与平面平行的判定定理要求：一个平面内的两条相交直线都平行于另一个平面，则这两个平面平行。必须强调“两条相交”，仅一条或两条平行线都不足以确定两平面平行。故需要两条相交直线，选“两条”。' },
+        { type: 'fill', question: '面面平行的性质定理：若 α ∥ β，且 γ 与 α、β 分别交于直线 a、b，则 a 与 b 的关系是__________。', answer: '平行|a∥b', explanation: '平面与平面平行的性质定理说明：两个平行平面同时和第三个平面相交，那么它们的交线平行。因此 α∥β，γ∩α=a，γ∩β=b 时，必有 a∥b。填空写“平行”或“a∥b”，强调两条交线互相平行。' },
+        { type: 'fill', question: '用符号写出线面平行判定定理：a ⊄ α，b ⊂ α，且 ________，则 a ∥ α。', answer: 'a∥b', explanation: '直线与平面平行的判定定理符号表示为：a⊄α，b⊂α，且 a∥b，则 a∥α。填空处应为“a∥b”，即平面外直线与平面内一条直线平行。注意前提是直线在平面外，这一条件不能遗漏。' }
+      ]
+    }
+
+  );
+})();

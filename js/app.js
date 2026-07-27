@@ -85,6 +85,16 @@
     else renderHome();
     document.body.classList.remove('sidebar-open');
     window.scrollTo(0, 0);
+    // 滚动监听：控制「返回顶部」按钮
+    if (!window.__scrollBound) {
+      window.addEventListener('scroll', function () {
+        var btn = document.getElementById('toTop');
+        if (!btn) return;
+        if (window.scrollY > 400) btn.classList.add('show');
+        else btn.classList.remove('show');
+      }, { passive: true });
+      window.__scrollBound = true;
+    }
   }
 
   /* ---------- 侧边栏 ---------- */
@@ -103,33 +113,53 @@
     setOpenSids(arr);
   }
 
-  function renderSidebar(r) {
+  function renderSidebar(r, opts) {
     var sb = document.getElementById('sidebar');
     if (!sb) return;
     var cur = (r && r.route === 'subject') ? r.param
       : (r && (r.route === 'vol' || r.route === 'lesson')) ? r.param : null;
     var openSet = getOpenSids();
-    // 当前页所属科目自动展开
-    if (cur && openSet.indexOf(cur) < 0) { openSet.unshift(cur); setOpenSids(openSet); }
+    // 当前页所属科目自动展开（除非用户刚手动切换过）
+    if (!opts || !opts.manualToggle) {
+      if (cur && openSet.indexOf(cur) < 0) { openSet.unshift(cur); setOpenSids(openSet); }
+    }
 
     var items = GZ_SUBJECTS.map(function (s) {
       var isOpen = openSet.indexOf(s.id) >= 0;
       var isCurrent = (cur === s.id);
       var vols = s.volumes.map(function (v) {
         var pts = v.points || [];
-        var right = pts.length > 0 ? (pts.length + ' 课时') : '建设中';
+        if (pts.length === 0) {
+          return '' +
+            '<div class="sb-vol is-empty" onclick="window.__volClick(\'' + esc(s.id) + '\',\'' + esc(v.id) + '\')">' +
+              '<span><i class="sb-grade">' + esc(v.grade || '') + '</i>' + esc(v.name) + '</span><span class="n">建设中</span>' +
+            '</div>';
+        }
+        var prog = lsGet('gz_progress', {});
+        var doneN = 0;
+        for (var pi = 0; pi < pts.length; pi++) {
+          if (prog[lessonKey(s.id, v.id, pi)]) doneN++;
+        }
+        var pct = Math.round(doneN / pts.length * 100);
+        var bar = doneN > 0
+          ? '<div class="sb-vol-bar"><i style="width:' + pct + '%"></i></div>'
+          : '';
+        var nClass = doneN >= pts.length ? ' is-done' : (doneN > 0 ? ' is-progress' : '');
         return '' +
-          '<div class="sb-vol" onclick="window.__volClick(\'' + esc(s.id) + '\',\'' + esc(v.id) + '\')">' +
-            '<span><i class="sb-grade">' + esc(v.grade || '') + '</i>' + esc(v.name) + '</span><span class="n">' + right + '</span>' +
+          '<div class="sb-vol' + nClass + '" onclick="window.__volClick(\'' + esc(s.id) + '\',\'' + esc(v.id) + '\')">' +
+            '<div class="sb-vol-top"><span><i class="sb-grade">' + esc(v.grade || '') + '</i>' + esc(v.name) + '</span><span class="n">' + (doneN > 0 ? doneN + '/' + pts.length : pts.length + ' 课时') + '</span></div>' +
+            bar +
           '</div>';
       }).join('');
 
       return '' +
         '<li class="sb-subject' + (isOpen ? ' open' : '') + (isCurrent ? ' current' : '') + '" style="--sc:' + esc(s.color) + '" data-sid="' + esc(s.id) + '">' +
-          '<div class="sb-subj-head" onclick="window.__sbHead(\'' + esc(s.id) + '\')" data-tip="' + esc(s.name) + '">' +
-            '<span class="sb-icon">' + esc(s.icon) + '</span>' +
-            '<span class="sb-name">' + esc(s.name) + '</span>' +
-            '<span class="sb-arrow">▶</span>' +
+          '<div class="sb-subj-head">' +
+            '<div class="sb-subj-nav" onclick="window.__sbNav(\'' + esc(s.id) + '\')" data-tip="' + esc(s.name) + '">' +
+              '<span class="sb-icon">' + esc(s.icon) + '</span>' +
+              '<span class="sb-name">' + esc(s.name) + '</span>' +
+            '</div>' +
+            '<span class="sb-arrow" onclick="window.__sbToggle(\'' + esc(s.id) + '\')" title="展开/收起">▶</span>' +
           '</div>' +
           '<div class="sb-vols">' + vols + '</div>' +
         '</li>';
@@ -172,14 +202,21 @@
   }
   window.__toggleSidebarCollapse = toggleSidebarCollapse;
 
-  window.__sbHead = function (sid) {
+  // 点击科目导航区：进入科目页（同时确保已展开）
+  window.__sbNav = function (sid) {
+    var arr = getOpenSids();
+    if (arr.indexOf(sid) < 0) {
+      arr.unshift(sid);
+      setOpenSids(arr);
+    }
+    navigate('subject', sid);
+  };
+
+  // 点击小三角形：仅展开/收起，不导航
+  window.__sbToggle = function (sid) {
     toggleOpenSid(sid);
     var r = parseHash();
-    if (r.route !== 'subject' || r.param !== sid) {
-      navigate('subject', sid);
-    } else {
-      renderSidebar(r);
-    }
+    renderSidebar(r, { manualToggle: true });
   };
 
   window.__toggleSidebar = function (force) {
@@ -244,7 +281,25 @@
   /* ---------- 学科卡片 ---------- */
   function subjectCardHTML(s) {
     var c = volCounts(s);
+    var totalPts = 0;
+    s.volumes.forEach(function (v) {
+      if (v.grade !== '高三') totalPts += (v.points || []).length;
+    });
     var meta = c.books + ' 册教材' + (c.topics ? ' · ' + c.topics + ' 个高三专题' : '');
+    var badge;
+    if (totalPts === 0) {
+      badge = '<span class="badge-coming">内容建设中</span>';
+    } else {
+      var done = countSubjectProgress(s.id);
+      var pct = Math.round(done / totalPts * 100);
+      if (done === 0) {
+        badge = '<span class="badge-count">' + totalPts + ' 个课时</span>';
+      } else if (done >= totalPts) {
+        badge = '<span class="badge-done-sm">✓ 已学完 ' + done + '/' + totalPts + '</span>';
+      } else {
+        badge = '<span class="badge-progress-sm">已学 ' + done + '/' + totalPts + '</span>';
+      }
+    }
     return '' +
       '<div class="subject-card" style="--sc:' + esc(s.color) + '" onclick="navigate(\'subject\',\'' + esc(s.id) + '\')">' +
         '<div class="subject-head">' +
@@ -254,7 +309,7 @@
         '</div>' +
         '<div class="subject-desc">' + esc(s.desc) + '</div>' +
         '<div class="subject-foot">' +
-          '<span class="badge-coming">内容建设中</span>' +
+          badge +
           '<span class="go-arrow">查看 →</span>' +
         '</div>' +
       '</div>';
@@ -310,13 +365,81 @@
                  '</div>';
       }
     }
+    // [换一批] 按钮
+    var refreshBtn = '<button class="home-refresh" onclick="window.__refreshHome()">🔄 换一批</button>';
     return '<section class="home-section">' +
              '<div class="home-section-head">' +
                '<span class="home-section-title">' + esc(title) + '</span>' +
                '<span class="home-section-sub">' + esc(sub) + '</span>' +
+               refreshBtn +
              '</div>' +
              '<div class="lesson-grid">' + cards + '</div>' +
            '</section>';
+  }
+  // 今日推荐：从没学过的课时里随机挑选 N 个，学科尽量分散
+  function pickRecommended(pool, n) {
+    if (!pool || !pool.length) return [];
+    var prog = lsGet('gz_progress', {});
+
+    // 1. 筛掉已完成的课时，只保留未学过的
+    var unfinished = pool.filter(function (l) {
+      var m = /#\/lesson\/([^\/]+)\/([^\/]+)\/(\d+)/.exec(l.hash || '');
+      if (!m) return true;
+      return !prog[m[1] + '/' + m[2] + '/' + m[3]];
+    });
+
+    // 2. Fisher-Yates 洗牌
+    function shuffle(arr) {
+      var a = arr.slice();
+      for (var i = a.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = a[i]; a[i] = a[j]; a[j] = t;
+      }
+      return a;
+    }
+
+    // 3. 按学科分组，每组内随机打乱
+    var bySubject = {};
+    unfinished.forEach(function (l) {
+      var k = l.subjectId || '_';
+      if (!bySubject[k]) bySubject[k] = [];
+      bySubject[k].push(l);
+    });
+    Object.keys(bySubject).forEach(function (k) { bySubject[k] = shuffle(bySubject[k]); });
+
+    // 4. 学科 key 也随机打乱，确保每次轮询的学科顺序不同
+    var subjKeys = shuffle(Object.keys(bySubject));
+
+    // 5. 轮询取每个学科的第一道题，保证学科尽量分散
+    var picks = [];
+    var idxs = {};
+    subjKeys.forEach(function (k) { idxs[k] = 0; });
+    while (picks.length < n) {
+      var added = false;
+      for (var i = 0; i < subjKeys.length && picks.length < n; i++) {
+        var k = subjKeys[i];
+        if (idxs[k] < bySubject[k].length) {
+          picks.push(bySubject[k][idxs[k]++]);
+          added = true;
+        }
+      }
+      if (!added) break;
+    }
+
+    // 6. 不够 N 道时，从已学课时中随机补足
+    if (picks.length < n) {
+      var seen = {};
+      picks.forEach(function (l) { seen[l.hash] = true; });
+      var remaining = pool.filter(function (l) { return !seen[l.hash]; });
+      picks = picks.concat(shuffle(remaining).slice(0, n - picks.length));
+    }
+
+    return picks;
+  }
+  window.__refreshHome = function () {
+    // 真正的随机推荐：直接重新渲染即可得到新结果
+    renderHome();
+    window.scrollTo(0, 400);
   }
   function lessonCardHTML(l) {
     return '<a class="lesson-card" style="--sc:' + esc(l.color || '') + '" href="' + esc(l.hash || '#/home') + '">' +
@@ -344,6 +467,59 @@
       if (f) out.push({ subjectId: r.sid, subjectName: f.subject.name, color: f.subject.color, volName: f.vol.name, name: f.point.name, chapter: f.point.chapter, hash: lessonUrl(r.sid, r.vid, r.idx) });
     });
     return out;
+  }
+
+  // 找到下一节要学的课（最近学科 + 最近册次的下一个未完成课时；没有则取最近学科第一课）
+  function nextUnfinishedLesson() {
+    var prog = lsGet('gz_progress', {});
+    var recent = lsGet('gz_recent', []);
+    // 1) 从最近学习里挑：同册次的下一节
+    if (recent.length > 0) {
+      var top = recent[0];
+      var subj = gzGetSubject(top.sid);
+      if (subj) {
+        var vol = null;
+        for (var i = 0; i < subj.volumes.length; i++) {
+          if (subj.volumes[i].id === top.vid) { vol = subj.volumes[i]; break; }
+        }
+        if (vol && (vol.points || []).length > 0) {
+          // 找 top.idx 之后第一个未完成的
+          for (var j = top.idx; j < vol.points.length; j++) {
+            if (!prog[lessonKey(top.sid, top.vid, j)]) {
+              return { sid: top.sid, vid: top.vid, idx: j, f: findLesson(top.sid, top.vid, j) };
+            }
+          }
+        }
+      }
+    }
+    // 2) 取最近学科第一卷的第一节（仍未完成）
+    if (recent.length > 0) {
+      var subj2 = gzGetSubject(recent[0].sid);
+      if (subj2) {
+        for (var vi = 0; vi < subj2.volumes.length; vi++) {
+          var vv = subj2.volumes[vi];
+          if (vv.grade === '高三') continue;
+          if (!(vv.points || []).length) continue;
+          for (var pi = 0; pi < vv.points.length; pi++) {
+            if (!prog[lessonKey(subj2.id, vv.id, pi)]) {
+              return { sid: subj2.id, vid: vv.id, idx: pi, f: findLesson(subj2.id, vv.id, pi) };
+            }
+          }
+        }
+      }
+    }
+    // 3) 没有任何 recent → 找全局第一个有内容的课时
+    for (var si = 0; si < GZ_SUBJECTS.length; si++) {
+      var s3 = GZ_SUBJECTS[si];
+      for (var vi2 = 0; vi2 < s3.volumes.length; vi2++) {
+        var v3 = s3.volumes[vi2];
+        if (v3.grade === '高三') continue;
+        if ((v3.points || []).length > 0) {
+          return { sid: s3.id, vid: v3.id, idx: 0, f: findLesson(s3.id, v3.id, 0) };
+        }
+      }
+    }
+    return null;
   }
 
   /* ---------- 每日签到 ---------- */
@@ -536,6 +712,24 @@
     var st = gzStats();
     var q = dailyQuote();
     var pool = allLessons();
+    var nxt = nextUnfinishedLesson();
+    var nextHtml = '';
+    if (nxt && nxt.f) {
+      var f = nxt.f;
+      var doneCount = Object.keys(lsGet('gz_progress', {})).filter(function (k) { return lsGet('gz_progress', {})[k]; }).length;
+      var hasStarted = doneCount > 0;
+      nextHtml = '<a class="continue-cta" style="--sc:' + esc(f.subject.color) + '" href="' + esc(lessonUrl(nxt.sid, nxt.vid, nxt.idx)) + '">' +
+        '<div class="cc-left">' +
+          '<div class="cc-icon">' + esc(f.subject.icon) + '</div>' +
+          '<div class="cc-info">' +
+            '<div class="cc-eyebrow">' + (hasStarted ? '🎯 继续学习' : '🚀 开始你的第一课') + '</div>' +
+            '<div class="cc-name">' + esc(f.point.name) + '</div>' +
+            '<div class="cc-meta">' + esc(f.subject.name) + ' · ' + esc(f.vol.name) + (f.point.chapter ? ' · ' + esc(f.point.chapter) : '') + '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="cc-go">继续 →</div>' +
+      '</a>';
+    }
     var html = '' +
       '<div class="home-top">' +
         '<section class="hero">' +
@@ -555,13 +749,15 @@
         '</section>' +
         '<aside class="checkin-section">' + renderCheckinCard() + '</aside>' +
       '</div>' +
+      (nextHtml ? '<div class="home-continue">' + nextHtml + '</div>' : '') +
       '<section class="quote-bar">' +
         '<span class="quote-bar-label">📖 每日一言</span>' +
         '<span class="quote-bar-text">' + esc(q.text) + '</span>' +
         '<span class="quote-bar-line"></span>' +
         '<span class="quote-bar-who">' + esc(q.who) + '</span>' +
       '</section>' +
-      makeHomeSection('⭐ 今日推荐', '为你精选的预习课时', pool.length ? pool.slice(0, 3) : []) +
+      makeHomeSection('⭐ 今日推荐', '从未学过的课时里随机推荐 · 跨学科',
+        pickRecommended(pool, 3)) +
       makeHomeSection('🕒 最近学习', '继续上次的进度', pool.length ? recentLessons() : []);
     view.innerHTML = html;
   }
@@ -580,14 +776,27 @@
     function volCardHTML(v) {
       var n = (v.points || []).length;
       if (n > 0) {
+        var doneN = 0;
+        var prog = lsGet('gz_progress', {});
+        for (var pi = 0; pi < n; pi++) {
+          if (prog[lessonKey(s.id, v.id, pi)]) doneN++;
+        }
+        var pct = n > 0 ? Math.round(doneN / n * 100) : 0;
+        var doneClass = doneN === n ? ' is-all-done' : (doneN > 0 ? ' is-part-done' : '');
+        var badge = doneN === n
+          ? '<span class="badge-done">✓ 已学完 ' + doneN + '/' + n + '</span>'
+          : (doneN > 0
+            ? '<span class="badge-progress">已学 ' + doneN + '/' + n + '</span>'
+            : '<span class="badge-building">' + n + ' 个课时</span>');
         return '' +
-          '<div class="volume-card has-content" onclick="window.__volClick(\'' + esc(s.id) + '\',\'' + esc(v.id) + '\')">' +
-            '<div class="volume-top"><div class="volume-name">' + esc(v.name) + '</div><span class="badge-building">' + n + ' 个课时</span></div>' +
+          '<div class="volume-card has-content' + doneClass + '" onclick="window.__volClick(\'' + esc(s.id) + '\',\'' + esc(v.id) + '\')">' +
+            '<div class="volume-top"><div class="volume-name">' + esc(v.name) + '</div>' + badge + '</div>' +
             '<div class="volume-desc">' + esc(v.desc) + '</div>' +
+            '<div class="volume-progress"><i style="width:' + pct + '%"></i></div>' +
           '</div>';
       }
       return '' +
-        '<div class="volume-card" onclick="window.__volClick(\'' + esc(s.id) + '\',\'' + esc(v.id) + '\')">' +
+        '<div class="volume-card is-empty" onclick="window.__volClick(\'' + esc(s.id) + '\',\'' + esc(v.id) + '\')">' +
           '<div class="volume-top"><div class="volume-name">' + esc(v.name) + '</div><span class="badge-building">内容建设中</span></div>' +
           '<div class="volume-desc">' + esc(v.desc) + '</div>' +
         '</div>';
@@ -641,33 +850,78 @@
         '<div class="empty-tip">📦 「' + esc(v.name) + '」内容建设中，敬请期待。</div>';
       return;
     }
-    // 按章节分组
+    // 按章节（单元）分组
     var groups = [];
     var map = {};
     pts.forEach(function (p, i) {
-      var ch = p.chapter || '课时';
+      var ch = p.chapter || '单元课时';
       if (!map[ch]) { map[ch] = []; groups.push(ch); }
       map[ch].push({ p: p, i: i });
     });
-    var body = groups.map(function (ch) {
-      var items = map[ch].map(function (o) {
+    var prog = lsGet('gz_progress', {});
+    var volDone = 0;
+    pts.forEach(function (p, i) { if (prog[lessonKey(sid, vid, i)]) volDone++; });
+
+    // 单元展开状态（默认第一个展开；持久化到 localStorage）
+    var volKey = sid + '/' + vid;
+    var openArr;
+    try { openArr = JSON.parse(localStorage.getItem('gz_vol_open') || '{}'); } catch (e) { openArr = {}; }
+    if (!openArr[volKey]) {
+      // 第一次访问：展开第一个单元
+      openArr[volKey] = [groups[0]];
+      try { localStorage.setItem('gz_vol_open', JSON.stringify(openArr)); } catch (e) {}
+    }
+    var isOpen = function (ch) { return (openArr[volKey] || []).indexOf(ch) >= 0; };
+
+    var body = groups.map(function (ch, gi) {
+      var items = map[ch];
+      var chDone = 0;
+      items.forEach(function (o) { if (prog[lessonKey(sid, vid, o.i)]) chDone++; });
+      var chPct = items.length > 0 ? Math.round(chDone / items.length * 100) : 0;
+      var open = isOpen(ch);
+      // 单元头部（可点击展开/折叠）
+      var unitHead = '<div class="vol-unit-head" onclick="window.__toggleVolUnit(\'' + esc(sid) + '\',\'' + esc(vid) + '\',\'' + esc(ch).replace(/'/g, "\\'") + '\')">' +
+        '<span class="vol-unit-chevron ' + (open ? 'is-open' : '') + '">▶</span>' +
+        '<div class="vol-unit-info">' +
+          '<div class="vol-unit-title">' + esc(ch) + '</div>' +
+          '<div class="vol-unit-meta">共 ' + items.length + ' 课时 · 已学 ' + chDone + ' / ' + items.length + (chDone >= items.length && items.length > 0 ? ' · ✅ 完成' : '') + '</div>' +
+        '</div>' +
+        '<div class="vol-unit-bar"><i style="width:' + chPct + '%"></i></div>' +
+      '</div>';
+      // 课时列表（长条单列）
+      var unitBody = open ? '<div class="vol-unit-body">' + items.map(function (o) {
         var p = o.p;
-        var tags = '<span class="lp-chapter">' + esc(p.chapter || '') + '</span>';
-        if (p.difficulty) tags += '<span class="lp-diff lp-diff-' + esc(p.difficulty) + '">' + esc(p.difficulty) + '</span>';
+        var k = lessonKey(sid, vid, o.i);
+        var done = !!prog[k];
+        var diff = p.difficulty || '基础';
         var exN = (p.exercises || []).length;
-        return '' +
-          '<a class="lesson-pill" href="' + lessonUrl(sid, vid, o.i) + '">' +
-            '<div class="lp-main"><div class="lp-name">' + esc(p.name) + '</div>' + tags + '</div>' +
-            '<div class="lp-meta">' + (exN ? (exN + ' 题练习') : '图文讲解') + ' <span class="lp-go">→</span></div>' +
-          '</a>';
-      }).join('');
-      return '<div class="chapter-block"><div class="chapter-title">' + esc(ch) + '</div><div class="lesson-list">' + items + '</div></div>';
+        var diffColor = diff === '难点' ? '#ef4444' : (diff === '重点' ? '#f59e0b' : '#10b981');
+        return '<a class="lesson-row' + (done ? ' is-done' : '') + '" href="' + lessonUrl(sid, vid, o.i) + '">' +
+          '<span class="lr-circle' + (done ? ' is-done' : '') + '">' + (done ? '✓' : '') + '</span>' +
+          '<span class="lr-name">' + esc(p.name) + '</span>' +
+          '<span class="lr-info">' +
+            (exN ? '<span class="lr-meta-item">📝 ' + exN + ' 题</span>' : '<span class="lr-meta-item">📖 图文</span>') +
+            '<span class="lr-diff" style="--dc:' + diffColor + '">' + esc(diff) + '</span>' +
+          '</span>' +
+          '<span class="lr-arrow">' + (done ? '↻' : '→') + '</span>' +
+        '</a>';
+      }).join('') + '</div>' : '';
+      return '<div class="vol-unit' + (open ? ' is-open' : '') + (chDone >= items.length && items.length > 0 ? ' is-done' : '') + '">' + unitHead + unitBody + '</div>';
     }).join('');
+
+    // 卷级进度条
+    var volPct = pts.length > 0 ? Math.round(volDone / pts.length * 100) : 0;
+    var volProgressBar = '<div class="vol-progress">' +
+      '<div class="vol-progress-head"><span>本册进度</span><b>' + volDone + ' / ' + pts.length + ' 课时 · ' + volPct + '%</b></div>' +
+      '<div class="vol-progress-bar"><i style="width:' + volPct + '%"></i></div>' +
+      '</div>';
 
     view.innerHTML = '<div class="crumb">' + crumb + '</div>' +
       '<div class="subject-hero" style="--sc:' + esc(s.color) + '"><div class="subject-icon">' + esc(s.icon) + '</div>' +
         '<div><h2>' + esc(v.name) + '</h2><p>' + esc(v.desc) + ' · 共 ' + pts.length + ' 课时</p></div></div>' +
-      '<h2 class="section-title">📑 课时目录</h2>' + body;
+      volProgressBar +
+      '<div class="vol-units-head"><h2 class="section-title">📑 单元目录</h2><span class="vol-units-count">共 <b>' + groups.length + '</b> 个单元 · <b>' + pts.length + '</b> 个课时</span></div>' +
+      '<div class="vol-units">' + body + '</div>';
   }
 
   /* ---------- 课时详情 ---------- */
@@ -681,6 +935,12 @@
     var blocks = (p.content || []).map(renderContentBlock).join('');
     var exHTML = renderExercises(p, sid, vid, idx);
 
+    // 标记已读按钮（看完内容但不做题也能算完成）
+    var isDone = !!lsGet('gz_progress', {})[lessonKey(sid, vid, idx)];
+    var readBtn = isDone
+      ? '<span class="read-toggle is-done">✓ 已学完</span>'
+      : '<button class="read-toggle" onclick="window.__markLessonRead(\'' + esc(sid) + '\',\'' + esc(vid) + '\',' + idx + ')">我已读完，标记为完成</button>';
+
     // 上一课 / 下一课
     var pts = v.points || [];
     var prev = idx > 0 ? '<a class="nav-prev" href="' + lessonUrl(sid, vid, idx - 1) + '">← ' + esc(pts[idx - 1].name) + '</a>' : '<span class="nav-prev disabled">← 已是第一课</span>';
@@ -693,6 +953,7 @@
           '<h1 class="lesson-title">' + esc(p.name) + '</h1>' +
           (p.author ? '<div class="lesson-author">' + esc(p.author) + '</div>' : '') +
           (p.difficulty ? '<span class="lp-diff lp-diff-' + esc(p.difficulty) + '">难度：' + esc(p.difficulty) + '</span>' : '') +
+          '<div class="lesson-read">' + readBtn + '</div>' +
         '</header>' +
         '<div class="lesson-body">' + blocks + '</div>' +
         '<section class="exercises" id="exercises"><h2 class="ex-title">📝 课后练习（' + (p.exercises || []).length + ' 题）</h2>' + exHTML + '</section>' +
@@ -760,39 +1021,67 @@
     if (!box) return;
     var fb = document.getElementById('fb-' + qi);
     var exp = document.getElementById('exp-' + qi);
-    var correct;
+    var correct, myAnswer = '';
     if (q.type === 'choice') {
       var sel = box.querySelector('.opt.sel');
       if (!sel) { toast('请先选择一个选项'); return; }
-      correct = (sel.getAttribute('data-val') === String(q.answer));
+      myAnswer = sel.getAttribute('data-val');
+      correct = (myAnswer === String(q.answer));
+      // 高亮正确选项
+      var keys = box.querySelectorAll('.opt');
+      for (var kk = 0; kk < keys.length; kk++) {
+        var optEl = keys[kk];
+        if (optEl.getAttribute('data-val') === String(q.answer)) optEl.classList.add('is-correct-opt');
+        else if (optEl.classList.contains('sel') && !correct) optEl.classList.add('is-wrong-opt');
+      }
     } else {
       var inp = document.getElementById('fill-' + qi);
       var val = (inp.value || '').trim();
       if (!val) { toast('请先填写答案'); return; }
+      myAnswer = val;
       var ans = String(q.answer).trim();
       correct = (val === ans || (ans.indexOf('|') >= 0 && ans.split('|').map(function (x) { return x.trim(); }).indexOf(val) >= 0));
     }
     box.classList.add(correct ? 'is-correct' : 'is-wrong');
-    var keys = box.querySelectorAll('.opt');
-    for (var k = 0; k < keys.length; k++) keys[k].classList.add('disabled');
+    var keys2 = box.querySelectorAll('.opt');
+    for (var k = 0; k < keys2.length; k++) keys2[k].classList.add('disabled');
     var inpt = box.querySelector('.fill-input');
     if (inpt) inpt.disabled = true;
     var sb = box.querySelector('.quiz-submit'); if (sb) sb.disabled = true;
-    fb.textContent = correct ? '✓ 回答正确' : '✗ 回答错误';
+    // 大图标 + 答案对比
+    var bigIcon = correct
+      ? '<div class="quiz-result-icon ok">✓</div>'
+      : '<div class="quiz-result-icon no">✗</div>';
+    var answerCompare = correct
+      ? '<div class="quiz-result-text ok">回答正确，干得漂亮！</div>'
+      : '<div class="quiz-result-text no">回答错误</div>' +
+        '<div class="quiz-compare">' +
+          '<div class="qc-row"><span class="qc-label">你的答案</span><span class="qc-val mine">' + esc(myAnswer) + '</span></div>' +
+          '<div class="qc-row"><span class="qc-label">正确答案</span><span class="qc-val right">' + esc(String(q.answer)) + '</span></div>' +
+        '</div>';
+    var wrongBadge = '';
+    fb.innerHTML = bigIcon + answerCompare;
     fb.className = 'quiz-feedback ' + (correct ? 'ok' : 'no');
-    exp.innerHTML = '<div class="quiz-exp-label">解析</div><div>' + esc(q.explanation || '') + '</div>' +
-      (correct ? '' : '<div class="quiz-ans">正确答案：' + esc(q.answer) + '</div>');
+    exp.innerHTML = '<div class="quiz-exp-label">📝 解析</div><div class="quiz-exp-body">' + esc(q.explanation || '') + '</div>';
     if (!correct) {
       var wrong = lsGet('gz_wrongbook', []);
       var key = lessonKey(sid, vid, idx);
       var dup = wrong.some(function (w) { return w.key === key && w.qi === qi; });
-      if (!dup) wrong.push({ key: key, qi: qi, question: q.question, answer: q.answer, subjectName: f.subject.name, lessonName: f.point.name, type: q.type });
+      if (!dup) {
+        wrong.push({ key: key, qi: qi, question: q.question, answer: q.answer, myAnswer: myAnswer, subjectName: f.subject.name, lessonName: f.point.name, type: q.type });
+        wrongBadge = '<div class="quiz-wrongbook-note">📕 已加入错题本，<a onclick="navigate(\'wrongbook\')">去查看</a></div>';
+      } else {
+        wrongBadge = '<div class="quiz-wrongbook-note">📕 已在错题本中</div>';
+      }
       lsSet('gz_wrongbook', wrong);
       toast('已加入错题本');
     }
-    // 标记课时完成（提交全部题后）
+    if (wrongBadge) exp.insertAdjacentHTML('beforeend', wrongBadge);
+    // 标记课时完成（提交后即记录）
     markProgress(sid, vid, idx);
     renderProgressSideNote();
+    // 自动滚动到题目顶部
+    try { box.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) {}
   };
 
   function markProgress(sid, vid, idx) {
@@ -800,6 +1089,13 @@
     prog[lessonKey(sid, vid, idx)] = true;
     lsSet('gz_progress', prog);
   }
+  window.__markLessonRead = function (sid, vid, idx) {
+    markProgress(sid, vid, idx);
+    toast('✓ 已标记为完成');
+    // 重新渲染当前页（按钮变为"已学完"）
+    renderLesson(sid, vid, idx);
+    window.scrollTo(0, 0);
+  };
   function renderProgressSideNote() { /* 进度在「学习进度」页实时读取，无需在此刷新 */ }
 
   // 选项点击高亮（事件委托）
@@ -1281,86 +1577,294 @@
 
   function renderBankHome() {
     var favs = getFavs();
+    var wrong = lsGet('gz_wrongbook', []);
+    var done = lsGet('gz_done_count', 0);
+    var streak = (lsGet('gz_checkin', {}) || {}).streak || 0;
     var favCount = favs.length;
+    var wrongCount = wrong.length;
+    var today = new Date();
+    var hours = today.getHours();
+    var greet = hours < 6 ? '凌晨好' : hours < 11 ? '早上好' : hours < 14 ? '中午好' : hours < 18 ? '下午好' : '晚上好';
+
+    // 学科题量统计（基于常考题型库）
+    var subjectKeys = Object.keys(GZ_COMMON_TYPES);
+    var totalCats = subjectKeys.reduce(function (n, k) { return n + GZ_COMMON_TYPES[k].cats.length; }, 0);
+
+    // 最近收藏 3 条
+    var recent = favs.slice(-3).reverse();
+
+    var stats = [
+      { num: favCount, label: '我的收藏', icon: '⭐', tone: 'amber',
+        grad: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
+        sub: favCount > 0 ? '持续巩固中' : '去收藏第一题' },
+      { num: done, label: '累计答题', icon: '✍️', tone: 'blue',
+        grad: 'linear-gradient(135deg, #60a5fa 0%, #4a7de0 100%)',
+        sub: done > 0 ? '坚持就是胜利' : '开始第一次练习' },
+      { num: wrongCount, label: '错题', icon: '📕', tone: 'red',
+        grad: 'linear-gradient(135deg, #f87171 0%, #ef4444 100%)',
+        sub: wrongCount > 0 ? '及时查漏补缺' : '暂无错题' },
+      { num: streak, label: '连续学习', icon: '🔥', tone: 'purple',
+        grad: 'linear-gradient(135deg, #c084fc 0%, #9c56d4 100%)',
+        sub: streak > 0 ? '保持节奏 ✨' : '今日还未签到' }
+    ];
+
+    var statsHtml = '<div class="bank-stats">' + stats.map(function (s) {
+      return '<div class="bank-stat ' + s.tone + '" style="--grad:' + s.grad + ';">' +
+        '<div class="bank-stat-icon">' + s.icon + '</div>' +
+        '<div class="bank-stat-body">' +
+          '<div class="bank-stat-num">' + s.num + '</div>' +
+          '<div class="bank-stat-label">' + s.label + '</div>' +
+          '<div class="bank-stat-sub">' + esc(s.sub) + '</div>' +
+        '</div>' +
+      '</div>';
+    }).join('') + '</div>';
+
+    var recentHtml = '';
+    if (recent.length) {
+      recentHtml = '<div class="bank-section">' +
+        '<div class="bank-section-head">' +
+          '<h3>🕒 最近收藏</h3>' +
+          '<a class="bank-section-more" onclick="navigate(\'bank\', \'fav\')">查看全部 →</a>' +
+        '</div>' +
+        '<div class="bank-recent-grid">' + recent.map(function (f) {
+          // 老数据兼容：缺字段时从 lesson 补
+          if (!f.question || !f.sName) {
+            var fS = f.sid, fV = f.vid, fI = f.idx;
+            if ((!fS || !fV) && f.key) {
+              var fParts = f.key.split('/');
+              if (fParts.length === 3) { fS = fS || fParts[0]; fV = fV || fParts[1]; fI = fI != null ? fI : parseInt(fParts[2], 10); }
+            }
+            var lf = findLesson(fS, fV, fI);
+            if (lf) {
+              f.sName = f.sName || lf.subject.name;
+              f.vName = f.vName || lf.vol.name;
+              var fq = (lf.point.exercises || [])[f.qi];
+              if (fq) {
+                f.question = f.question || fq.question;
+                f.type = f.type || fq.type;
+              }
+            }
+          }
+          var subj = f.sid ? GZ_COMMON_TYPES[f.sid] : null;
+          var color = (subj && subj.color) || '#6b7280';
+          var icon = (subj && subj.icon) || '📝';
+          var sName = f.sName || f.sid || '未知学科';
+          var vName = f.vName || f.vid || '';
+          var qText = f.question || '（题目内容已丢失）';
+          return '<div class="bank-recent-card" onclick="navigate(\'bank\', \'fav\')">' +
+            '<div class="bank-recent-meta" style="--sc:' + color + ';">' +
+              '<span class="bank-recent-ico">' + icon + '</span>' +
+              '<span>' + esc(sName) + ' · ' + esc(vName) + '</span>' +
+            '</div>' +
+            '<div class="bank-recent-text">' + esc(qText.length > 50 ? qText.slice(0, 50) + '…' : qText) + '</div>' +
+            '<div class="bank-recent-foot">' +
+              '<span class="bank-recent-tag">' + (f.type === 'choice' ? '选择' : '填空') + '</span>' +
+              '<span class="bank-recent-time">' + timeAgo(f.addedAt) + '</span>' +
+            '</div>' +
+          '</div>';
+        }).join('') + '</div>' +
+      '</div>';
+    }
+
+    var subjGrid = '<div class="bank-section">' +
+      '<div class="bank-section-head">' +
+        '<h3>📚 高中常考题型 · 学科分类</h3>' +
+        '<span class="bank-section-tip">共 ' + subjectKeys.length + ' 个学科 · ' + totalCats + ' 个题型</span>' +
+      '</div>' +
+      '<div class="bank-subj-grid">' + subjectKeys.map(function (k) {
+        var s = GZ_COMMON_TYPES[k];
+        return '<div class="bank-subj-card" style="--sc:' + esc(s.color) + ';" onclick="navigate(\'bank\', \'common\')">' +
+          '<div class="bank-subj-card-bg"></div>' +
+          '<div class="bank-subj-icon">' + s.icon + '</div>' +
+          '<div class="bank-subj-name">' + esc(s.name) + '</div>' +
+          '<div class="bank-subj-cats">' + s.cats.map(function (c) { return '<span>' + esc(c.icon) + ' ' + esc(c.name) + '</span>'; }).join('') + '</div>' +
+          '<div class="bank-subj-foot">' + s.cats.length + ' 个常考题型 →</div>' +
+        '</div>';
+      }).join('') + '</div>' +
+    '</div>';
+
     view.innerHTML = '' +
       '<div class="crumb"><a onclick="navigate(\'home\')">首页</a> / 题库</div>' +
       '<div class="panel">' +
-        '<h2>📝 题库</h2>' +
-        '<p>题目都来自你的收藏和高中常考题型，做错的题会自动进入错题本。</p>' +
+        '<div class="bank-hero">' +
+          '<div class="bank-hero-text">' +
+            '<div class="bank-hero-greet">' + esc(greet) + ' 👋</div>' +
+            '<h2 class="bank-hero-title">题库 · 你的私人练习场</h2>' +
+            '<p class="bank-hero-desc">收藏你做过的题目，按学科分类练习高中常考题型，做错的题自动归集到错题本。</p>' +
+          '</div>' +
+          '<div class="bank-hero-deco">📝</div>' +
+        '</div>' +
+
+        '<h3 class="bank-block-title">📊 我的学习数据</h3>' +
+        statsHtml +
+
+        '<h3 class="bank-block-title">🚀 快速进入</h3>' +
         '<div class="bank-modes">' +
           '<div class="bank-mode" onclick="navigate(\'bank\', \'fav\')">' +
             '<div class="bank-mode-icon" style="background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);">⭐</div>' +
             '<div class="bank-mode-body">' +
               '<div class="bank-mode-title">我的收藏 <span class="bank-mode-count">' + favCount + '</span></div>' +
-              '<div class="bank-mode-desc">收录你从课时练习中收藏的题目，便于集中复习。</div>' +
+              '<div class="bank-mode-desc">收录你从课时练习中收藏的题目，便于集中复习、考前冲刺。</div>' +
             '</div>' +
             '<div class="bank-mode-arrow">›</div>' +
           '</div>' +
           '<div class="bank-mode" onclick="navigate(\'bank\', \'common\')">' +
             '<div class="bank-mode-icon" style="background: linear-gradient(135deg, #4a7de0 0%, #9c56d4 100%);">📚</div>' +
             '<div class="bank-mode-body">' +
-              '<div class="bank-mode-title">高中常考题型</div>' +
-              '<div class="bank-mode-desc">按学科与题型分类整理的高中常考题，可在线作答。</div>' +
+              '<div class="bank-mode-title">高中常考题型 <span class="bank-mode-count bank-mode-count-blue">' + totalCats + '</span></div>' +
+              '<div class="bank-mode-desc">按学科与题型分类整理的高中常考题，可在线作答、即时反馈。</div>' +
             '</div>' +
             '<div class="bank-mode-arrow">›</div>' +
           '</div>' +
         '</div>' +
+
+        subjGrid +
+        recentHtml +
       '</div>';
+  }
+
+  // 简单的"x 分钟前" 时间显示
+  function timeAgo(ts) {
+    if (!ts) return '';
+    var diff = Date.now() - ts;
+    if (diff < 60000) return '刚刚';
+    if (diff < 3600000) return Math.floor(diff / 60000) + ' 分钟前';
+    if (diff < 86400000) return Math.floor(diff / 3600000) + ' 小时前';
+    if (diff < 7 * 86400000) return Math.floor(diff / 86400000) + ' 天前';
+    var d = new Date(ts);
+    return (d.getMonth() + 1) + '-' + d.getDate();
   }
 
   function renderBankFav() {
     var favs = getFavs();
+    var filterSid = (window.__bankFavFilter) || 'all';
+    var filtered = filterSid === 'all' ? favs : favs.filter(function (f) { return f.sid === filterSid; });
     var body;
     if (!favs.length) {
       body = '<div class="empty-tip">⭐ 收藏夹是空的。在课时练习中点击题目右上角的☆按钮即可收藏。</div>';
+    } else if (!filtered.length) {
+      body = '<div class="empty-tip">该学科下暂无收藏题目。</div>';
     } else {
-      body = '<div class="bank-q-list">' + favs.map(function (f, i) {
-        return '<div class="bank-q">' +
+      body = '<div class="bank-q-list">' + filtered.map(function (f) {
+        var subj = f.sid ? GZ_COMMON_TYPES[f.sid] : null;
+        var color = (subj && subj.color) || '#6b7280';
+        // 兼容老数据：缺字段时尝试从 lesson 数据补
+        var sName = f.sName, vName = f.vName, pName = f.pName, question = f.question, answer = f.answer, options = f.options, explanation = f.explanation, type = f.type;
+        if (!question || !answer) {
+          // 老 fav 可能没有 sid/vid/idx，尝试从 key 解析
+          var sId = f.sid, vId = f.vid, idx = f.idx;
+          if ((!sId || !vId) && f.key) {
+            var kp = f.key.split('/');
+            if (kp.length === 3) { sId = sId || kp[0]; vId = vId || kp[1]; idx = idx != null ? idx : parseInt(kp[2], 10); }
+          }
+          var lessonF = findLesson(sId, vId, idx);
+          if (lessonF) {
+            sName = sName || lessonF.subject.name;
+            vName = vName || lessonF.vol.name;
+            pName = pName || lessonF.point.name;
+            var q = (lessonF.point.exercises || [])[f.qi];
+            if (q) {
+              type = type || q.type;
+              question = question || q.question;
+              answer = answer || q.answer;
+              options = options || q.options || [];
+              explanation = explanation || q.explanation || '';
+            }
+          }
+        }
+        var typeLabel = type === 'choice' ? '选择' : (type === 'fill' ? '填空' : '题目');
+        var safeSubj = sName || f.sid || '未知学科';
+        var safeVol = vName || f.vid || '';
+        var safeP = pName || '课时 ' + ((f.idx || 0) + 1);
+        return '<div class="bank-q" style="--sc:' + color + ';">' +
           '<div class="bank-q-head">' +
-            '<div class="bank-q-meta">' + esc(f.sName) + ' · ' + esc(f.vName) + ' · ' + esc(f.pName) + '</div>' +
+            '<div class="bank-q-meta"><span class="bank-q-subj">' + esc(safeSubj) + '</span> · ' + esc(safeVol) + ' · ' + esc(safeP) + '</div>' +
             '<button class="quiz-fav is-fav" title="取消收藏" onclick="window.__toggleFav(\'' + esc(f.sid) + '\',\'' + esc(f.vid) + '\',' + f.idx + ',' + f.qi + ')">★</button>' +
           '</div>' +
-          '<div class="bank-q-text">【' + (f.type === 'choice' ? '选择' : '填空') + '】' + esc(f.question) + '</div>' +
-          (f.type === 'choice' ? '<div class="bank-q-opts">' + (f.options || []).map(function (o) { return '<span>' + esc(o) + '</span>'; }).join('') + '</div>' : '') +
-          '<div class="bank-q-ans">答案：' + esc(f.answer) + '</div>' +
-          (f.explanation ? '<div class="bank-q-exp">💡 ' + esc(f.explanation) + '</div>' : '') +
+          '<div class="bank-q-text">【' + typeLabel + '】' + esc(question || '（题目内容已丢失，建议重新收藏）') + '</div>' +
+          (options && options.length ? '<div class="bank-q-opts">' + options.map(function (o) { return '<span>' + esc(o) + '</span>'; }).join('') + '</div>' : '') +
+          '<div class="bank-q-ans">答案：' + esc(answer || '—') + '</div>' +
+          (explanation ? '<div class="bank-q-exp">💡 ' + esc(explanation) + '</div>' : '') +
         '</div>';
       }).join('') + '</div>';
     }
+
+    // 学科筛选芯片
+    var filterChips = '<span class="bank-cat-chip' + (filterSid === 'all' ? ' active' : '') + '" onclick="window.__setBankFavFilter(\'all\')">全部（' + favs.length + '）</span>' +
+      Object.keys(GZ_COMMON_TYPES).map(function (k) {
+        var s = GZ_COMMON_TYPES[k];
+        var n = favs.filter(function (f) { return f.sid === k; }).length;
+        return '<span class="bank-cat-chip' + (filterSid === k ? ' active' : '') + '" style="--sc:' + s.color + ';" onclick="window.__setBankFavFilter(\'' + k + '\')">' + s.icon + ' ' + s.name + '（' + n + '）</span>';
+      }).join('');
+
     view.innerHTML = '' +
       '<div class="crumb"><a onclick="navigate(\'home\')">首页</a> / <a onclick="navigate(\'bank\', \'home\')">题库</a> / 我的收藏</div>' +
       '<div class="panel">' +
         '<h2>⭐ 我的收藏 <span class="bank-mode-count">' + favs.length + '</span></h2>' +
-        '<p>共收录 ' + favs.length + ' 道题目。可点击右上角★取消收藏。</p>' +
+        '<p>共收录 ' + favs.length + ' 道题目。可按学科筛选，点击右上角★取消收藏。</p>' +
+        '<div class="bank-cat-list" style="margin-top:14px;">' + filterChips + '</div>' +
         body +
       '</div>';
   }
+  window.__setBankFavFilter = function (sid) {
+    window.__bankFavFilter = sid;
+    renderBankFav();
+  };
 
   function renderBankCommon() {
-    // 取已加载学科的常考题型分类
     var keys = Object.keys(GZ_COMMON_TYPES);
-    var cards = keys.map(function (k) {
+    var totalCats = keys.reduce(function (n, k) { return n + GZ_COMMON_TYPES[k].cats.length; }, 0);
+
+    // 学科横向 tab
+    var tabs = keys.map(function (k) {
       var s = GZ_COMMON_TYPES[k];
-      var catsHtml = s.cats.map(function (c) {
-        return '<span class="bank-cat-chip" onclick="toast(\'' + esc(c.name) + ' 题目正在建设中…\')">' + esc(c.icon) + ' ' + esc(c.name) + '</span>';
+      return '<span class="bank-subj-tab" style="--sc:' + esc(s.color) + ';" onclick="window.__bankCommonSubject(\'' + k + '\')">' +
+        esc(s.icon) + ' ' + esc(s.name) +
+      '</span>';
+    }).join('');
+
+    // 每个学科一个分类块
+    var blocks = keys.map(function (k) {
+      var s = GZ_COMMON_TYPES[k];
+      var cats = s.cats.map(function (c, i) {
+        var hot = (i === 0) ? '<span class="bank-cat-hot">热门</span>' : '';
+        return '<div class="bank-cat-card" style="--sc:' + esc(s.color) + ';" onclick="toast(\'' + esc(c.name) + ' 题目正在建设中…\')">' +
+          '<div class="bank-cat-card-icon">' + c.icon + '</div>' +
+          '<div class="bank-cat-card-name">' + esc(c.name) + hot + '</div>' +
+          '<div class="bank-cat-card-arrow">→</div>' +
+        '</div>';
       }).join('');
-      return '<div class="bank-mode" style="cursor:default;">' +
-        '<div class="bank-mode-icon" style="background:' + esc(s.color) + '22; color:' + esc(s.color) + ';">' + esc(s.icon) + '</div>' +
-        '<div class="bank-mode-body" style="width:100%;">' +
-          '<div class="bank-mode-title">' + esc(s.name) + '常考题型</div>' +
-          '<div class="bank-cat-list">' + catsHtml + '</div>' +
-        '</div>' +
-      '</div>';
+      return '<section class="bank-common-block" data-sid="' + esc(k) + '" style="--sc:' + esc(s.color) + ';">' +
+        '<header class="bank-common-block-head">' +
+          '<div class="bank-common-block-icon">' + s.icon + '</div>' +
+          '<div>' +
+            '<div class="bank-common-block-title">' + esc(s.name) + '常考题型</div>' +
+            '<div class="bank-common-block-tip">共 ' + s.cats.length + ' 个常考题型 · 点击进入练习</div>' +
+          '</div>' +
+        '</header>' +
+        '<div class="bank-cat-grid">' + cats + '</div>' +
+      '</section>';
     }).join('');
 
     view.innerHTML = '' +
       '<div class="crumb"><a onclick="navigate(\'home\')">首页</a> / <a onclick="navigate(\'bank\', \'home\')">题库</a> / 高中常考题型</div>' +
       '<div class="panel">' +
-        '<h2>📚 高中常考题型</h2>' +
-        '<p>按学科与题型分类整理的高中常考题，可在线作答。点击下方分类查看。</p>' +
-        '<div class="bank-modes">' + cards + '</div>' +
+        '<div class="bank-hero" style="background: linear-gradient(120deg, #f0f4ff 0%, #f7eaff 100%);">' +
+          '<div class="bank-hero-text">' +
+            '<div class="bank-hero-greet">📚 高考备考</div>' +
+            '<h2 class="bank-hero-title">高中常考题型</h2>' +
+            '<p class="bank-hero-desc">按学科与题型分类整理的高中常考题，可在线作答、即时反馈。<br>目前已上线 ' + keys.length + ' 个学科 · ' + totalCats + ' 个常考题型。</p>' +
+          '</div>' +
+          '<div class="bank-hero-deco">📚</div>' +
+        '</div>' +
+        '<div class="bank-subj-tabs">' + tabs + '</div>' +
+        blocks +
       '</div>';
   }
+  window.__bankCommonSubject = function (sid) {
+    var block = document.querySelector('.bank-common-block[data-sid="' + sid + '"]');
+    if (block) block.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   function renderBank(mode) {
     if (mode === 'fav') renderBankFav();
@@ -1369,31 +1873,205 @@
   }
 
   /* ---------- 错题本 ---------- */
+  function removeWrong(idx) {
+    var wrong = lsGet('gz_wrongbook', []);
+    if (idx < 0 || idx >= wrong.length) return;
+    wrong.splice(idx, 1);
+    lsSet('gz_wrongbook', wrong);
+    toast('已从错题本移除');
+    renderWrongbook();
+  }
+  window.__removeWrong = removeWrong;
+
   function renderWrongbook() {
     var wrong = lsGet('gz_wrongbook', []);
+    // 数据残缺时从 lesson 数据补全
+    wrong.forEach(function (w) {
+      if (!w.question || !w.answer) {
+        var parts = (w.key || '').split('/');
+        if (parts.length === 3) {
+          var f = findLesson(parts[0], parts[1], parseInt(parts[2], 10));
+          if (f) {
+            w.subjectName = w.subjectName || f.subject.name;
+            w.lessonName = w.lessonName || f.point.name;
+            var q = (f.point.exercises || [])[w.qi];
+            if (q) {
+              w.question = w.question || q.question;
+              w.answer = w.answer || q.answer;
+              w.type = w.type || q.type;
+              w.options = w.options || q.options || [];
+            }
+          }
+        }
+      }
+    });
+    // 按学科筛选
+    var filterSid = (window.__wrongFilter) || 'all';
+    var filtered = filterSid === 'all' ? wrong : wrong.filter(function (w) { return w.key && w.key.split('/')[0] === filterSid; });
+    // 统计各学科
+    var subjCount = {};
+    wrong.forEach(function (w) {
+      var sid = w.key ? w.key.split('/')[0] : '_';
+      subjCount[sid] = (subjCount[sid] || 0) + 1;
+    });
+    var subjChips = '<span class="bank-cat-chip' + (filterSid === 'all' ? ' active' : '') + '" onclick="window.__setWrongFilter(\'all\')">全部（' + wrong.length + '）</span>' +
+      Object.keys(subjCount).map(function (k) {
+        if (k === '_') return '';
+        var subj = GZ_SUBJECTS.find(function (s) { return s.id === k; });
+        if (!subj) return '';
+        return '<span class="bank-cat-chip' + (filterSid === k ? ' active' : '') + '" style="--sc:' + subj.color + ';" onclick="window.__setWrongFilter(\'' + k + '\')">' + subj.icon + ' ' + esc(subj.name) + '（' + subjCount[k] + '）</span>';
+      }).join('');
+
     var body;
     if (!wrong.length) {
       body = '<div class="empty-tip">🎉 错题本是空的。开始做题后，答错的题目会自动收录到这里，方便反复巩固。</div>';
+    } else if (!filtered.length) {
+      body = '<div class="empty-tip">该学科下暂无错题。</div>';
     } else {
-      body = wrong.map(function (w, idx) {
-        return '<div class="wrong-item"><div class="wrong-q">' + esc(w.question || '') + '</div>' +
-               '<div class="wrong-meta">' + esc(w.subjectName || '') + ' · ' + esc(w.lessonName || '') + ' · 答案：' + esc(w.answer || '') + '</div>' +
-               (w.key ? '<button class="wrong-go" onclick="navigate(\'lesson\',\'' + esc(w.key.split('/')[0]) + '\',\'' + esc(w.key.split('/')[1]) + '\',' + esc(w.key.split('/')[2]) + ')">去重做 →</button>' : '') +
-               '</div>';
+      body = filtered.map(function (w) {
+        var realIdx = wrong.indexOf(w);
+        var redo = '';
+        if (w.key) {
+          var parts = w.key.split('/');
+          redo = '<button class="wrong-go" onclick="navigate(\'lesson\',\'' + esc(parts[0]) + '\',\'' + esc(parts[1]) + '\',' + esc(parts[2]) + ')">去重做 →</button>';
+        }
+        return '<div class="wrong-item">' +
+          '<button class="wrong-remove" title="从错题本移除" onclick="window.__removeWrong(' + realIdx + ')">✕</button>' +
+          '<div class="wrong-q">' + esc(w.question || '（题目内容已丢失，请到对应课时页重做）') + '</div>' +
+          '<div class="wrong-meta">' + esc(w.subjectName || w.key || '') + (w.lessonName ? ' · ' + esc(w.lessonName) : '') + ' · 答案：' + esc(w.answer || '—') + '</div>' +
+          (w.myAnswer ? '<div class="wrong-mine">你的答案：' + esc(w.myAnswer) + '</div>' : '') +
+          redo +
+        '</div>';
       }).join('');
     }
     view.innerHTML = '' +
       '<div class="crumb"><a onclick="navigate(\'home\')">首页</a> / 错题本</div>' +
       '<div class="panel">' +
         '<h2>📕 错题本</h2>' +
-        '<p>收录你做错的题目，重做巩固、逐个消灭。（' + wrong.length + ' 题）</p>' + body +
+        '<p>收录你做错的题目，重做巩固、逐个消灭。（共 ' + wrong.length + ' 题）</p>' +
+        (wrong.length > 1 ? '<div class="wrong-toolbar"><button class="btn-plain" onclick="window.__redoAllWrong()">⚡ 全部去重做</button>' +
+          (wrong.length > 0 ? '<button class="btn-plain wrong-clear-btn" onclick="window.__clearAllWrong()">🗑️ 清空错题本</button>' : '') + '</div>' : '') +
+        (wrong.length > 0 ? '<div class="bank-cat-list" style="margin-top:14px;">' + subjChips + '</div>' : '') +
+        body +
       '</div>';
+  }
+  window.__setWrongFilter = function (sid) {
+    window.__wrongFilter = sid;
+    renderWrongbook();
+  };
+  window.__redoAllWrong = function () {
+    var wrong = lsGet('gz_wrongbook', []);
+    if (!wrong.length) return;
+    // 取第一道去重做（连续点会一道道做）
+    var first = wrong[0];
+    if (!first.key) { toast('无有效错题可重做'); return; }
+    var p = first.key.split('/');
+    toast('正在重做第 1 / ' + wrong.length + ' 题…');
+    navigate('lesson', p[0], p[1], p[2]);
+  };
+  window.__clearAllWrong = function () {
+    if (!confirm('确定清空错题本？此操作不可恢复。')) return;
+    lsSet('gz_wrongbook', []);
+    renderWrongbook();
+    toast('错题本已清空');
+  };
+
+  /* ---------- 勋章系统 ---------- */
+  function countTotalProgress() {
+    var prog = lsGet('gz_progress', {});
+    var n = 0;
+    Object.keys(prog).forEach(function (k) { if (prog[k]) n++; });
+    return n;
+  }
+  function countSubjectProgress(sid) {
+    var prog = lsGet('gz_progress', {});
+    var n = 0;
+    Object.keys(prog).forEach(function (k) { if (prog[k] && k.split('/')[0] === sid) n++; });
+    return n;
+  }
+  function countTotalLessons() { return gzStats().points; }
+
+  // 勋章定义：每个勋章有 id / icon / name / desc / tier(bronze/silver/gold) / target / current()
+  // current() 返回当前进度，target 是达成目标
+  var MEDAL_CATEGORIES = {
+    study:   { name: '学习成就', icon: '🎓' },
+    persist: { name: '坚持打卡', icon: '🔥' },
+    subject: { name: '学科精进', icon: '📘' },
+    wrong:   { name: '错题修炼', icon: '📕' }
+  };
+  var MEDAL_TIERS = {
+    bronze: { name: '青铜', color: '#cd7f32', glow: 'rgba(205,127,50,.4)' },
+    silver: { name: '白银', color: '#9ea7b8', glow: 'rgba(158,167,184,.4)' },
+    gold:   { name: '黄金', color: '#e5a82e', glow: 'rgba(229,168,46,.5)' }
+  };
+  var MEDALS = [
+    // 📘 学习成就
+    { id:'m_start',    cat:'study',   tier:'bronze', icon:'🎓', name:'启程',     desc:'完成第 1 节课',         target:1,                current:countTotalProgress },
+    { id:'m_novice',   cat:'study',   tier:'bronze', icon:'📚', name:'入门学子', desc:'累计完成 10 节课',      target:10,               current:countTotalProgress },
+    { id:'m_appr',     cat:'study',   tier:'silver', icon:'🏃', name:'进阶学徒', desc:'累计完成 50 节课',      target:50,               current:countTotalProgress },
+    { id:'m_expert',   cat:'study',   tier:'silver', icon:'🎯', name:'百炼成钢', desc:'累计完成 100 节课',     target:100,              current:countTotalProgress },
+    { id:'m_master',   cat:'study',   tier:'gold',   icon:'🏆', name:'登堂入室', desc:'累计完成 200 节课',     target:200,              current:countTotalProgress },
+    { id:'m_all',      cat:'study',   tier:'gold',   icon:'👑', name:'学海无涯', desc:'学完全部课时',          target:'all',            current:countTotalProgress },
+
+    // 🔥 坚持打卡
+    { id:'m_c1',       cat:'persist', tier:'bronze', icon:'☀️', name:'初来乍到', desc:'累计签到 1 天',         target:1,                current:function(){ return getCheckin().total; } },
+    { id:'m_c10',      cat:'persist', tier:'bronze', icon:'🗓️', name:'签到达人', desc:'累计签到 10 天',        target:10,               current:function(){ return getCheckin().total; } },
+    { id:'m_c50',      cat:'persist', tier:'silver', icon:'📅', name:'签到王者', desc:'累计签到 50 天',        target:50,               current:function(){ return getCheckin().total; } },
+    { id:'m_c100',     cat:'persist', tier:'gold',   icon:'🎊', name:'签到之神', desc:'累计签到 100 天',       target:100,              current:function(){ return getCheckin().total; } },
+    { id:'m_s3',       cat:'persist', tier:'bronze', icon:'🔥', name:'三日不辍', desc:'连续签到 3 天',         target:3,                current:function(){ return getCheckin().streak; } },
+    { id:'m_s7',       cat:'persist', tier:'silver', icon:'⚡', name:'一周不断', desc:'连续签到 7 天',         target:7,                current:function(){ return getCheckin().streak; } },
+    { id:'m_s15',      cat:'persist', tier:'silver', icon:'🌙', name:'半月毅力', desc:'连续签到 15 天',        target:15,               current:function(){ return getCheckin().streak; } },
+    { id:'m_s30',      cat:'persist', tier:'gold',   icon:'💎', name:'百日筑基', desc:'连续签到 30 天',        target:30,               current:function(){ return getCheckin().streak; } },
+
+    // 📘 学科精进（2 门主学科 × 2 档）
+    { id:'m_math5',    cat:'subject', tier:'bronze', icon:'🔢', name:'数学小新', desc:'完成 5 节数学课',       target:5,                current:function(){ return countSubjectProgress('math'); } },
+    { id:'m_math25',   cat:'subject', tier:'silver', icon:'🔢', name:'数学能手', desc:'完成 25 节数学课',      target:25,               current:function(){ return countSubjectProgress('math'); } },
+    { id:'m_ch5',      cat:'subject', tier:'bronze', icon:'📖', name:'语文才子', desc:'完成 5 节语文课',       target:5,                current:function(){ return countSubjectProgress('chinese'); } },
+    { id:'m_ch25',     cat:'subject', tier:'silver', icon:'📖', name:'语文大家', desc:'完成 25 节语文课',      target:25,               current:function(){ return countSubjectProgress('chinese'); } },
+    { id:'m_en5',      cat:'subject', tier:'bronze', icon:'🔤', name:'英语新秀', desc:'完成 5 节英语课',       target:5,                current:function(){ return countSubjectProgress('english'); } },
+    { id:'m_en25',     cat:'subject', tier:'silver', icon:'🔤', name:'英语高手', desc:'完成 25 节英语课',      target:25,               current:function(){ return countSubjectProgress('english'); } },
+
+    // 📕 错题修炼
+    { id:'m_clean',    cat:'wrong',   tier:'bronze', icon:'🧹', name:'清扫者',   desc:'错题本清零',           target:'zero',          current:function(){ return lsGet('gz_wrongbook', []).length; } },
+    { id:'m_w5',       cat:'wrong',   tier:'bronze', icon:'📕', name:'错题起步', desc:'错题本收录 5 题',       target:5,                current:function(){ return lsGet('gz_wrongbook', []).length; } },
+    { id:'m_w20',      cat:'wrong',   tier:'silver', icon:'📚', name:'错题学者', desc:'错题本收录 20 题',      target:20,               current:function(){ return lsGet('gz_wrongbook', []).length; } },
+    { id:'m_w50',      cat:'wrong',   tier:'gold',   icon:'🗃️', name:'错题大牛', desc:'错题本收录 50 题',      target:50,               current:function(){ return lsGet('gz_wrongbook', []).length; } }
+  ];
+
+  // 检测勋章解锁（首次解锁时记录时间戳），返回当前所有已解锁的勋章
+  function checkMedals() {
+    var unlocked = lsGet('gz_medals', {}); // { id: timestamp }
+    var now = Date.now();
+    var total = countTotalLessons();
+    MEDALS.forEach(function (m) {
+      var cur = m.current();
+      var tgt = m.target === 'all' ? total : m.target;
+      var ok = m.target === 'zero' ? (cur === 0) : (cur >= tgt);
+      if (ok && !unlocked[m.id]) unlocked[m.id] = now;
+    });
+    lsSet('gz_medals', unlocked);
+    return unlocked;
+  }
+  // 给勋章计算实际目标（处理动态 target="all"）
+  function medalTarget(m) {
+    return m.target === 'all' ? countTotalLessons() : m.target;
+  }
+  function medalState(m, unlocked) {
+    var cur = m.current();
+    var tgt = medalTarget(m);
+    var ok = m.target === 'zero' ? (cur === 0) : (cur >= tgt);
+    var unlockedAt = unlocked[m.id];
+    return {
+      current: cur, target: tgt,
+      pct: tgt > 0 ? Math.min(100, Math.round(cur / tgt * 100)) : (ok ? 100 : 0),
+      unlocked: ok || !!unlockedAt,
+      unlockedAt: unlockedAt || 0
+    };
   }
 
   /* ---------- 学习进度 ---------- */
   function renderProgress() {
     var prog = lsGet('gz_progress', {});
-    var recent = lsGet('gz_recent', []);
     var wrong = lsGet('gz_wrongbook', []);
     var checkin = lsGet('gz_checkin', { history: [] });
     var history = checkin.history || [];
@@ -1425,7 +2103,8 @@
         if (subjStats[sid]) subjStats[sid].wrongCount++;
       }
     });
-    recent.forEach(function (r) {
+    var gzRecent = lsGet('gz_recent', []);
+    gzRecent.forEach(function (r) {
       if (subjStats[r.sid] && !subjStats[r.sid].lastStudy) {
         subjStats[r.sid].lastStudy = { name: r.name };
       }
@@ -1535,27 +2214,56 @@
         '</div>';
     }).join('');
 
-    // 渲染：最近活动
-    var recentHtml = recent.slice(0, 7).map(function (r) {
-      var f = findLesson(r.sid, r.vid, r.idx);
-      var subj = f ? f.subject : null;
-      var vol = f ? f.vol : null;
-      var color = subj ? subj.color : 'var(--text-3)';
-      var icon = subj ? subj.icon : '📘';
-      var subjName = subj ? subj.name : r.sid;
-      var volName = vol ? vol.name : '';
-      var url = lessonUrl(r.sid, r.vid, r.idx);
+    // 渲染：勋章墙
+    var unlocked = checkMedals();
+    var unlockedCount = 0;
+    var medalCats = {};
+    Object.keys(MEDAL_CATEGORIES).forEach(function (k) { medalCats[k] = []; });
+    MEDALS.forEach(function (m) {
+      var s = medalState(m, unlocked);
+      if (s.unlocked) unlockedCount++;
+      medalCats[m.cat].push({ m: m, s: s });
+    });
+    function medalCardHTML(o) {
+      var m = o.m, s = o.s;
+      var tier = MEDAL_TIERS[m.tier];
+      var isUnlocked = s.unlocked;
+      var isAll = m.target === 'all';
+      var daysAgo = isUnlocked && s.unlockedAt ? Math.floor((Date.now() - s.unlockedAt) / 86400000) : null;
+      var dateLabel = daysAgo === null ? '' : (daysAgo === 0 ? '今日解锁' : (daysAgo + ' 天前解锁'));
       return '' +
-        '<a class="ptime-item" href="' + esc(url) + '" style="--sc:' + esc(color) + '">' +
-          '<div class="ptime-dot">' + esc(icon) + '</div>' +
-          '<div class="ptime-body">' +
-            '<div class="ptime-name">' + esc(r.name) + '</div>' +
-            '<div class="ptime-meta">' + esc(subjName) + (volName ? ' · ' + esc(volName) : '') + '</div>' +
-          '</div>' +
-          '<div class="ptime-go">→</div>' +
-        '</a>';
+        '<div class="medal-card' + (isUnlocked ? ' is-unlocked' : ' is-locked') + (s.pct > 0 && !isUnlocked ? ' is-progress' : '') + '" style="--tier:' + tier.color + '; --tier-glow:' + tier.glow + '">' +
+          '<div class="medal-tier-badge">' + (m.tier === 'gold' ? '🥇' : (m.tier === 'silver' ? '🥈' : '🥉')) + '</div>' +
+          '<div class="medal-icon">' + m.icon + '</div>' +
+          '<div class="medal-name">' + esc(m.name) + '</div>' +
+          '<div class="medal-desc">' + esc(m.desc) + '</div>' +
+          (isUnlocked
+            ? '<div class="medal-foot ok">✓ 已解锁' + (dateLabel ? ' · ' + dateLabel : '') + '</div>'
+            : (s.pct > 0
+                ? '<div class="medal-foot"><div class="medal-prog"><i style="width:' + s.pct + '%"></i></div><span>' + s.current + ' / ' + s.target + (isAll ? '+' : '') + '</span></div>'
+                : '<div class="medal-foot muted">未解锁</div>')) +
+        '</div>';
+    }
+    var medalSections = Object.keys(MEDAL_CATEGORIES).map(function (cat) {
+      var arr = medalCats[cat];
+      if (!arr || !arr.length) return '';
+      var catInfo = MEDAL_CATEGORIES[cat];
+      var catUnlocked = arr.filter(function (o) { return o.s.unlocked; }).length;
+      return '<div class="medal-section">' +
+        '<div class="medal-cat-head"><span class="mch-icon">' + catInfo.icon + '</span><span class="mch-name">' + esc(catInfo.name) + '</span><span class="mch-count">' + catUnlocked + ' / ' + arr.length + '</span></div>' +
+        '<div class="medal-grid">' + arr.map(medalCardHTML).join('') + '</div>' +
+      '</div>';
     }).join('');
-    if (!recentHtml) recentHtml = '<div class="prog-empty-mini">还没有学习记录，<a onclick="navigate(\'subjects\')">去选一节课</a> 开始吧～</div>';
+    var medalWallHtml = '<div class="medal-wall">' +
+      '<div class="medal-wall-head">' +
+        '<h4>🏅 勋章墙</h4>' +
+        '<div class="mwh-stats">' +
+          '<span class="mwh-progress"><b>' + unlockedCount + '</b> / ' + MEDALS.length + ' 已解锁</span>' +
+          '<div class="mwh-bar"><i style="width:' + Math.round(unlockedCount / MEDALS.length * 100) + '%"></i></div>' +
+        '</div>' +
+      '</div>' +
+      medalSections +
+    '</div>';
 
     // 顶部 4 个汇总卡
     var overviewHtml = '<div class="prog-overview">' +
@@ -1573,10 +2281,7 @@
       '<div class="crumb"><a onclick="navigate(\'home\')">首页</a> / 学习进度</div>' +
       '<div class="panel">' +
         '<h2>📊 学习进度</h2>' +
-        '<p>总览你的学习情况：各学科完成度、最近 7 天节奏、难度攻克分布、最近活动一目了然。</p>' +
-        overviewHtml +
-        '<h3 class="prog-section-title">📚 各学科完成度</h3>' +
-        subjEmpty +
+        '<p>总览你的学习情况：最近 7 天节奏、难度攻克分布、各学科完成度、勋章成就。</p>' +
         '<div class="prog-charts">' +
           '<div class="prog-chart-card">' +
             '<div class="pcc-head"><h4>📅 最近 7 天学习节奏</h4><span class="pcc-sub">已学 ' + last7Studied + ' / 7 天' + (streakText > 0 ? ' · 连续 ' + streakText + ' 天 🔥' : '') + '</span></div>' +
@@ -1587,8 +2292,11 @@
             '<div class="pdiff">' + diffHtml + '</div>' +
           '</div>' +
         '</div>' +
-        '<h3 class="prog-section-title">🕒 最近活动</h3>' +
-        '<div class="ptime">' + recentHtml + '</div>' +
+        overviewHtml +
+        '<h3 class="prog-section-title">📚 各学科完成度</h3>' +
+        subjEmpty +
+        '<h3 class="prog-section-title">🏅 勋章墙</h3>' +
+        medalWallHtml +
       '</div>';
 
     // 错题卡点击跳转
@@ -1599,7 +2307,7 @@
   }
   function overviewCard(icon, label, val, sub, flag) {
     var attrs = '';
-    if (flag === 'navigate-wrong') attrs = ' onclick="navigate(\'wrong\')" style="cursor:pointer"';
+    if (flag === 'navigate-wrong') attrs = ' onclick="navigate(\'wrongbook\')" style="cursor:pointer"';
     return '<div class="prog-ov-card"' + attrs + '>' +
       '<div class="pov-icon">' + icon + '</div>' +
       '<div class="pov-info"><div class="pov-val">' + val + '</div><div class="pov-lbl">' + esc(label) + '</div><div class="pov-sub">' + esc(sub) + '</div></div>' +
@@ -1660,7 +2368,7 @@
         '</div>' +
         '<h3 class="setting-section">ℹ️ 关于</h3>' +
         '<div class="setting-row">' +
-          '<div><b>高中预习网站</b><p>数据保存在本机浏览器中。注册账号后可在多设备间同步（需手动导出/导入）。</p></div>' +
+          '<div><b>高中预习网站</b><p>数据保存在本机浏览器中，无需登录即开即用。注册账号后可在本机多账号间切换。</p></div>' +
           '<button class="btn-plain" onclick="navigate(\'about\')">查看</button>' +
         '</div>' +
       '</div>';
