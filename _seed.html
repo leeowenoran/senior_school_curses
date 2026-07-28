@@ -21,11 +21,7 @@
   for (var i = 0; i < 7; i++) hist.push(dateStr(new Date(now.getFullYear(), now.getMonth(), now.getDate() - (6 - i))));
   localStorage.setItem('gz_checkin', JSON.stringify({ lastDate: dateStr(now), streak: 7, total: 7, history: hist, todayLuck: null, luckDate: '' }));
   localStorage.setItem('gz_theme', 'light');
-  // 跳转到 progress 页后，注入一次 hover
-  location.replace('/index.html#/progress');
-  // 这个 setTimeout 不会跑（页面已经跳转），但留个 hook 备用
-  setTimeout(function () {
-    try { window.__weekHover && window.__weekHover(2); } catch(e){}
-  }, 1500);
+  var q = location.search || '';
+  location.replace('/index.html' + q + '#/progress');
 })();
 </script></body></html>
