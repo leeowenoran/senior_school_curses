@@ -14,7 +14,7 @@
     {
       id: 'bx1-u6-l1',
       name: 'Unit 5 核心词汇与常用短语',
-      chapter: 'Unit 5 Languages Around the World · 核心词汇与常用短语',
+      chapter: 'Unit 5 Languages Around the World',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、单元导入与学习目标' },
@@ -56,7 +56,7 @@
     {
       id: 'bx1-u6-l2',
       name: 'Unit 5 重点句型与定语从句关系副词',
-      chapter: 'Unit 5 Languages Around the World · 重点句型与定语从句关系副词',
+      chapter: 'Unit 5 Languages Around the World',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、单元重点句型回顾' },

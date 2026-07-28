@@ -13,7 +13,7 @@
     {
       id: 'bx1-u2-l1',
       name: '核心词汇与名词短语',
-      chapter: 'Unit 1 Teenage Life · 核心词汇与名词短语',
+      chapter: 'Unit 1 Teenage Life',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、Unit 1 核心词汇概览' },
@@ -94,7 +94,7 @@
     {
       id: 'bx1-u2-l2',
       name: '重点句型与形容词/副词短语',
-      chapter: 'Unit 1 Teenage Life · 重点句型与形容词/副词短语',
+      chapter: 'Unit 1 Teenage Life',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、Unit 1 重点句型' },

@@ -13,7 +13,7 @@
     {
       id: 'xb1-u3-l1',
       name: '核心词汇与动词-ing形式作主语',
-      chapter: 'Unit 3 Fascinating Parks · 核心词汇与动词-ing形式作主语',
+      chapter: 'Unit 3 Fascinating Parks',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、Unit 3 核心词汇（形容词与动词）' },
@@ -57,7 +57,7 @@
     {
       id: 'xb1-u3-l2',
       name: '重点句型与-ing形式主语运用',
-      chapter: 'Unit 3 Fascinating Parks · 重点句型与-ing形式主语运用',
+      chapter: 'Unit 3 Fascinating Parks',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、Unit 3 重点句型（一）：it 作形式宾语' },

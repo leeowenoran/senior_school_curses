@@ -13,7 +13,7 @@
     {
       id: 'bx1-u1-l1',
       name: '核心词汇与句子成分',
-      chapter: 'Welcome Unit · 核心词汇与句子成分',
+      chapter: 'Welcome Unit',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、Welcome Unit 核心词汇概览' },
@@ -58,7 +58,7 @@
     {
       id: 'bx1-u1-l2',
       name: '重点句型与五大基本句型',
-      chapter: 'Welcome Unit · 重点句型与五大基本句型',
+      chapter: 'Welcome Unit',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、自我介绍与推荐表达' },

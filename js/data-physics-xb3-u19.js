@@ -1,0 +1,44 @@
+/* 物理 · 选择性必修 第三册 · 第五章 原子核 · 课时：核裂变与核聚变 */
+(function () {
+  var v = gzGetVolume('physics', 'xb3');
+  if (!v) return;
+
+  v.points.push({
+    id: 'xb3-u19',
+    name: '核裂变与核聚变',
+    chapter: '选择性必修 第三册 · 第五章 原子核',
+    difficulty: '基础',
+    content: [
+      { type: 'heading', text: '一、重核裂变：重核裂成中等核' },
+      { type: 'paragraph', text: '上一课说过，重核的比结合能比中等核小，所以重核"比较松"。如果用中子去轰击一个很重的核（比如铀235），它会吸收中子后分裂成两个中等质量的核，同时放出 2 到 3 个新的中子，并释放出很大的能量。这个过程就叫<strong>重核裂变</strong>。打个比方：像一个被压得很满、内部很"松"的大仓库，被撞了一下就塌成两个结实的小仓库，塌的过程中蹦出能量和几颗可以继续撞别的仓库的"弹珠"（中子）。' },
+      { type: 'keypoint', label: '重点·裂变与链式反应', text: '<strong>重核裂变是一个重核分裂成两个中等核，并放出中子和能量。</strong>放出的新中子如果又去轰击别的重核，就会引发一连串裂变，这叫<strong>链式反应</strong>。只要每次平均有 1 个以上的中子继续引发裂变，反应就能自己维持并越来越剧烈。' },
+      { type: 'paragraph', text: '链式反应能不能持续，关键看"产出的中子数"够不够。如果每次裂变放出的中子平均少于 1 个能继续引发下一次裂变，反应就会慢慢停；如果多于 1 个，反应就越来越快。核电站通过"控制棒"吸收多余的中子，让链式反应稳稳地、不快不慢地进行，好用来烧水发电。' },
+      { type: 'list', items: ['裂变原料：常用铀235（或钚239）这类重核', '裂变产物：两个中等质量的核 + 2~3个中子 + 大量能量', '链式反应：新中子再轰击别的重核，一变二、二变四……', '控制方式：用控制棒吸收中子，使反应平稳可控'] },
+      { type: 'example', label: '例题·裂变与链式反应', text: '铀235 吸收一个中子后裂变成两个中等核，同时放出 2 个中子。<br>问：如果这 2 个中子都被别的铀235 吸收并各自再裂变，下一"代"会多出几个中子？<br><br><strong>解析</strong>：<br>第 1 次裂变放出 2 个中子，引发 2 次新裂变。<br>这 2 次裂变各又放出 2 个中子，共 2 × 2 ＝ 4 个中子。<br>所以下一代会多出 4 个中子，呈倍增趋势——这就是链式反应能持续放能的原因。' },
+      { type: 'warn', label: '易错', text: '裂变放出的能量来自<strong>比结合能变大</strong>，不是来自中子本身的动能。另外，<strong>不是随便一个中子都能引发铀235 裂变</strong>，需要能量合适（慢中子更容易被吸收）。还有人把"铀235 裂变"和"衰变"搞混：裂变是重核被中子撞击而裂开，衰变（如 α 衰变）是原子核自己变，二者触发方式不同。' },
+      { type: 'heading', text: '二、轻核聚变：轻核抱成稍重的核' },
+      { type: 'paragraph', text: '和裂变相反，<strong>轻核聚变</strong>是把两个很轻的核（比如氘和氚，都是氢的同位素）聚到一起，合成一个稍重一点的核（比如氦），同时放出能量。因为产物的比结合能变大了，所以同样释放巨大能量。聚变有个大难题：两个原子核都带正电，会互相排斥，要让它们靠得足够近"抱在一起"，必须让它们运动得极快、温度极高。所以聚变又叫<strong>热核反应</strong>——需要上亿度的"超高温"才能发生。' },
+      { type: 'keypoint', label: '重点·聚变与热核反应', text: '<strong>轻核聚变是轻核结合成较重核并放能的过程。</strong>因为原子核间存在静电排斥，必须加热到极高温度（上亿度）才能让它们靠近并结合，所以聚变又称<strong>热核反应</strong>。太阳等恒星的能量就来自内部的聚变。' },
+      { type: 'tip', label: '提示·裂变和聚变的对比', text: '<strong>裂变</strong>用重核（如铀），靠中子撞击，相对容易控制，已用于核电站和原子弹；<strong>聚变</strong>用轻核（如氘、氚），需要极高温度、很难长时间控制，目前主要见于氢弹和太阳，和平利用（人造"小太阳"）还在攻关中。两者都因比结合能变大而放能。' },
+      { type: 'table', headers: ['对比项', '重核裂变', '轻核聚变'], rows: [['原料', '重核（铀235等）', '轻核（氘、氚等）'], ['条件', '中子轰击即可', '需极高温度（热核反应）'], ['能量来源', '比结合能变大', '比结合能变大'], ['是否易控制', '较易控制（核电站）', '很难长时间控制'], ['典型例子', '核电站、原子弹', '太阳、氢弹']] },
+      { type: 'heading', text: '三、太阳与核能：天然的聚变工厂' },
+      { type: 'paragraph', text: '我们头顶的太阳，就是一个巨大的聚变反应堆。太阳核心温度极高、压力极大，氢核（质子）在那里不断聚变成氦核，每时每刻放出惊人的能量，这些能量穿过太空照到地球上，成为几乎一切生命和天气的能量来源。可以说，我们白天感受到的阳光，本质上就是"轻核聚变"产生的光和热。' },
+      { type: 'keypoint', label: '重点·太阳的能量', text: '<strong>太阳的能量来自内部的轻核聚变（热核反应）。</strong>氢核在高温高压下聚变成氦核，质量略有亏损，按 E ＝ m c² 转化为源源不断的能量辐射出来。' },
+      { type: 'heading', text: '四、核能的利用与核安全' },
+      { type: 'paragraph', text: '核裂变已经被人类驯服：在核电站里，链式反应被控制棒稳稳按住，缓慢放出的热量用来烧开水、推动汽轮机发电。这样发电几乎不排二氧化碳，能量密度极高（一小块铀放出的能量顶好几吨煤）。但核能也有风险：裂变产生的废料带有放射性，需要妥善、长久地封存；如果控制失灵，可能发生事故泄漏。所以<strong>核安全</strong>极其重要——要有多重保险、严格操作和废料管理。' },
+      { type: 'tip', label: '提示·和平利用核医学', text: '核技术不只是发电。放射性同位素在医学上用途很大：用放射性药剂给身体"拍照"找病灶（如 PET 检查），或用射线杀死癌细胞做放疗。关键是要专业人员规范操作、做好防护，让核技术造福人而不是伤人。' },
+      { type: 'warn', label: '易错', text: '核电站发电<strong>不是把核能直接变成电</strong>，而是先用核裂变放热烧水成蒸汽，再用蒸汽推动发电机——中间多了"热→机械能"一步，和火电站只是"烧什么"不同。另外，<strong>原子弹靠不可控的链式反应瞬间爆炸，核电站靠控制棒让链式反应平稳可控</strong>，二者原理同源但目的和控制方式完全不同，不能混为一谈。' },
+      { type: 'list', items: ['安全发电：用控制棒稳住链式反应，不让它失控', '废料处理：裂变产物带放射性，需深埋和长久封存', '严格操作：多重保险、规范流程，防止泄漏事故', '辐射防护：专业人员穿防护服、定期监测剂量'] },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="300" fill="#e6f4f1"/><text x="340" y="34" font-size="17" font-weight="bold" fill="#1f7a6e" text-anchor="middle">重核裂变与链式反应</text><circle cx="160" cy="150" r="42" fill="#d6ece8" stroke="#2e9e8f" stroke-width="2"/><text x="160" y="155" font-size="12" fill="#234b45" text-anchor="middle">铀235</text><circle cx="232" cy="150" r="12" fill="#4fb3a5"/><text x="232" y="128" font-size="11" fill="#234b45" text-anchor="middle">中子</text><polygon points="204,150 230,142 230,158" fill="#234b45"/><circle cx="380" cy="120" r="28" fill="#4fb3a5"/><circle cx="430" cy="180" r="28" fill="#4fb3a5"/><text x="380" y="125" font-size="11" fill="#234b45" text-anchor="middle">中等核</text><text x="430" y="185" font-size="11" fill="#234b45" text-anchor="middle">中等核</text><circle cx="350" cy="170" r="8" fill="#234b45"/><circle cx="470" cy="140" r="8" fill="#234b45"/><text x="470" y="120" font-size="11" fill="#234b45" text-anchor="middle">新中子</text><text x="240" y="250" font-size="12" fill="#234b45" text-anchor="middle">中子撞入 → 裂成两半 + 放出新中子</text><text x="240" y="272" font-size="12" fill="#234b45" text-anchor="middle">新中子再去撞别的铀核，链式反应持续放大</text></svg>', caption: '图1　铀235 被中子轰击后裂成两个中等核并放出新中子；新中子继续引发裂变，形成链式反应。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="300" fill="#e6f4f1"/><text x="340" y="34" font-size="17" font-weight="bold" fill="#1f7a6e" text-anchor="middle">轻核聚变（热核反应）：两个轻核抱成氦</text><circle cx="180" cy="160" r="26" fill="#4fb3a5"/><text x="180" y="165" font-size="12" fill="#234b45" text-anchor="middle">氘</text><circle cx="250" cy="160" r="26" fill="#4fb3a5"/><text x="250" y="165" font-size="12" fill="#234b45" text-anchor="middle">氚</text><text x="215" y="120" font-size="11" fill="#234b45" text-anchor="middle">极高温下靠近</text><polygon points="276,160 320,150 320,170" fill="#234b45"/><circle cx="430" cy="160" r="34" fill="#d6ece8" stroke="#2e9e8f" stroke-width="2"/><text x="430" y="165" font-size="13" fill="#234b45" text-anchor="middle">氦核</text><circle cx="500" cy="120" r="10" fill="#234b45"/><text x="500" y="100" font-size="11" fill="#234b45" text-anchor="middle">放出中子+能量</text><text x="340" y="250" font-size="12" fill="#234b45" text-anchor="middle">克服排斥需要上亿度高温，故称"热核反应"</text><text x="340" y="272" font-size="12" fill="#234b45" text-anchor="middle">太阳内部的能量就来自这种聚变</text></svg>', caption: '图2　在极高温度下，氘核和氚核克服静电排斥聚合成氦核并放出中子与能量，这就是轻核聚变（热核反应）。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="300" fill="#e6f4f1"/><text x="340" y="34" font-size="17" font-weight="bold" fill="#1f7a6e" text-anchor="middle">核电站：核能 → 热 → 电 的平稳利用</text><rect x="60" y="120" width="120" height="100" rx="10" fill="#4fb3a5"/><text x="120" y="160" font-size="13" fill="#234b45" text-anchor="middle">反应堆</text><text x="120" y="182" font-size="12" fill="#234b45" text-anchor="middle">裂变放热</text><polygon points="180,170 215,160 215,180" fill="#234b45"/><rect x="225" y="120" width="120" height="100" rx="10" fill="#d6ece8" stroke="#2e9e8f" stroke-width="2"/><text x="285" y="160" font-size="13" fill="#234b45" text-anchor="middle">烧水成蒸汽</text><text x="285" y="182" font-size="12" fill="#234b45" text-anchor="middle">热→机械能</text><polygon points="345,170 380,160 380,180" fill="#234b45"/><rect x="390" y="120" width="120" height="100" rx="10" fill="#4fb3a5"/><text x="450" y="160" font-size="13" fill="#234b45" text-anchor="middle">发电机</text><text x="450" y="182" font-size="12" fill="#234b45" text-anchor="middle">发电</text><text x="340" y="258" font-size="12" fill="#234b45" text-anchor="middle">控制棒稳住链式反应，让裂变缓慢可控地放热</text><text x="340" y="280" font-size="12" fill="#234b45" text-anchor="middle">与原子弹的"不可控爆炸"本质区别在于是否可控</text></svg>', caption: '图3　核电站用控制棒使链式反应平稳可控，核裂变的热用于烧水发电，与原子弹的不可控爆炸有本质区别。' }
+    ],
+    exercises: [
+      { type: 'choice', question: '关于重核裂变，下列说法正确的是？', options: ['裂变是一个重核分裂成两个中等核并放出中子', '裂变产物比结合能变小', '裂变不需要外界触发，会自己发生', '裂变放出的能量来自中子本身的动能'], answer: '裂变是一个重核分裂成两个中等核并放出中子', explanation: '重核裂变是指一个重核（如铀235）被中子轰击后分裂成两个中等质量的核，同时放出 2 到 3 个中子和大量能量。产物比结合能变大，所以释放能量；裂变需要中子触发（不同于自发衰变）；能量来自比结合能增大而非中子动能。因此只有"分裂成两个中等核并放出中子"这一项正确。' },
+      { type: 'choice', question: '轻核聚变又被称为"热核反应"，主要是因为？', options: ['聚变需要在极低温度下发生', '原子核带正电互相排斥，需极高温度才能使它们靠近并结合', '聚变会放出热量使温度升高', '聚变原料是热水'], answer: '原子核带正电互相排斥，需极高温度才能使它们靠近并结合', explanation: '轻核聚变中，两个轻核都带正电，彼此存在静电排斥力，很难靠近。要让它们克服排斥、靠得足够近并"抱在一起"，必须把它们加热到极高温度（上亿度）使其高速运动，所以聚变又称热核反应。太阳和氢弹的能量都来自这种聚变。' },
+      { type: 'choice', question: '核电站与原子弹的主要区别是？', options: ['核电站用聚变，原子弹用裂变', '核电站让链式反应平稳可控，原子弹是不可控的链式反应', '二者原理完全不同', '原子弹不释放能量'], answer: '核电站让链式反应平稳可控，原子弹是不可控的链式反应', explanation: '核电站和原子弹都基于重核裂变的链式反应，本质原理相同；区别在于控制方式：核电站用控制棒吸收多余中子，使链式反应平稳可控、缓慢放能用来发电，原子弹则是让链式反应不受控地急剧放大、瞬间释放巨大能量。两者并非原理不同，也都不是用聚变。' },
+      { type: 'fill', question: '太阳内部的能量来自轻核的___（填"聚变"或"裂变"）反应。', answer: '聚变', explanation: '太阳核心温度极高、压力极大，氢核（质子）在其中不断聚变成氦核，质量略有亏损并按 E＝m c² 转化为巨大能量辐射出来。这种轻核结合成较重核的过程是轻核聚变（热核反应），不是重核裂变。地球上的阳光本质上就来自太阳的聚变。' },
+      { type: 'fill', question: '在核电站中，用来吸收多余中子、使链式反应保持平稳可控的部件叫___。', answer: '控制棒', explanation: '核电站通过插入或抽出"控制棒"来吸收反应堆中多余的中子，从而调节每次裂变后能继续引发下一次裂变的中子数量，使链式反应维持在平稳、可控的速率上，持续稳定地放出热量用于发电，避免像原子弹那样失控爆炸。' }
+    ]
+  });
+})();

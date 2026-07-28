@@ -15,7 +15,7 @@
     {
       id: 'bx2-u2-l1',
       name: '核心词汇与现在进行时的被动语态',
-      chapter: 'Unit 2 Wildlife Protection · 核心词汇与现在进行时的被动语态',
+      chapter: 'Unit 2 Wildlife Protection',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、Unit 2 核心词汇（名词与形容词）' },
@@ -92,7 +92,7 @@
     {
       id: 'bx2-u2-l2',
       name: '重点句型与被动语态运用',
-      chapter: 'Unit 2 Wildlife Protection · 重点句型与被动语态运用',
+      chapter: 'Unit 2 Wildlife Protection',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、重点句型 It is reported that...' },

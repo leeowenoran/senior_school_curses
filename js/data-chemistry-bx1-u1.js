@@ -1,0 +1,52 @@
+/* ============================================================
+ * 高一化学 · 必修 第一册 · 第一章 物质及其变化
+ * 课时1：物质的分类及转化
+ * 数据注入：chemistry.bx1.points
+ * ============================================================ */
+(function () {
+  var v = gzGetVolume('chemistry', 'bx1');
+  if (!v) return;
+
+  v.points.push({
+    id: 'bx1-u1',
+    name: '物质的分类及转化',
+    chapter: '必修 第一册 · 第一章 物质及其变化',
+    difficulty: '基础',
+    content: [
+      { type: 'heading', text: '一、为什么要给物质分类' },
+      { type: 'paragraph', text: '我们周围的物质数也数不清：水、空气、食盐、铁、蔗糖、酒精……如果一种一种去记，根本记不过来。化学家想了个聪明的办法：把性质相似的物质归成一类，只要掌握了"这一类"的规律，这一类里所有成员的特点就都知道了。这就像图书馆把书分成文学、科学、历史一样，找起来、学起来都方便。' },
+      { type: 'keypoint', label: '重点·分类的意义', text: '<strong>分类能帮我们在"大量零散知识"中找出规律。</strong>同一类物质往往有相似的组成和相似的化学性质，记住一类就等于记住了一大片，这是学习化学最重要的思维方法之一。' },
+      { type: 'paragraph', text: '初中我们已经用过很多分类：把物质分成混合物和纯净物，纯净物又分成单质和化合物。高中会把这套方法用得更细、更活，还会从多个角度同时给同一种物质"贴标签"。' },
+      { type: 'list', items: ['分类能把零散的物质变得有条理，方便记忆和查找', '同一类物质性质相似，记住一类就掌握了一大片', '分类是贯穿整个高中化学的基本思维方法'] },
+      { type: 'heading', text: '二、树状分类法——像大树一样一层层分' },
+      { type: 'paragraph', text: '树状分类法，就是按照某种标准，把一类物质再分成若干小类，小类还能继续往下分，像一棵倒着长的树，根在上面，枝叶在下面。最常用的一棵"树"就是把"物质"按组成分成混合物和纯净物，纯净物再分单质和化合物。' },
+      { type: 'keypoint', label: '重点·树状分类（物质）', text: '<strong>物质先分为混合物和纯净物；纯净物再分为单质和化合物。</strong>单质按性质分金属单质和非金属单质；化合物按组成分酸、碱、盐、氧化物等。每一层只用一个标准，分完一层再分下一层。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="320" fill="#f7ecdc"/><text x="340" y="34" font-size="17" font-weight="bold" fill="#b5651d" text-anchor="middle">树状分类法：从"物质"出发一层层往下分</text><rect x="290" y="54" width="100" height="40" rx="8" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="340" y="79" font-size="15" fill="#4a3724" text-anchor="middle" font-weight="bold">物质</text><line x1="340" y1="94" x2="180" y2="120" stroke="#b5651d" stroke-width="2"/><line x1="340" y1="94" x2="500" y2="120" stroke="#b5651d" stroke-width="2"/><rect x="130" y="120" width="100" height="40" rx="8" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="180" y="145" font-size="14" fill="#4a3724" text-anchor="middle">混合物</text><rect x="450" y="120" width="100" height="40" rx="8" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="500" y="145" font-size="14" fill="#4a3724" text-anchor="middle">纯净物</text><line x1="500" y1="160" x2="430" y2="186" stroke="#b5651d" stroke-width="2"/><line x1="500" y1="160" x2="570" y2="186" stroke="#b5651d" stroke-width="2"/><rect x="380" y="186" width="100" height="40" rx="8" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="430" y="211" font-size="14" fill="#4a3724" text-anchor="middle">单质</text><rect x="520" y="186" width="100" height="40" rx="8" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="570" y="211" font-size="14" fill="#4a3724" text-anchor="middle">化合物</text><text x="180" y="190" font-size="12" fill="#d98e3a" text-anchor="middle">空气、溶液</text><text x="430" y="248" font-size="12" fill="#d98e3a" text-anchor="middle">金属/非金属</text><text x="570" y="248" font-size="12" fill="#d98e3a" text-anchor="middle">酸/碱/盐/氧化物</text></svg>', caption: '图1　树状分类法：从"物质"出发，先分混合物和纯净物，纯净物再分单质和化合物。' },
+      { type: 'table', headers: ['类别', '定义', '举例'], rows: [['混合物', '由两种或两种以上物质混合而成', '空气、食盐水、海水'], ['纯净物', '由一种物质组成', '水、氧气、氯化钠'], ['单质', '由同种元素组成的纯净物', '铁 Fe、氧气 O₂'], ['化合物', '由不同种元素组成的纯净物', '水 H₂O、氯化钠 NaCl'], ['氧化物', '由两种元素组成且一种是氧的化合物', '二氧化碳 CO₂、氧化铜 CuO']] },
+      { type: 'heading', text: '三、交叉分类法——从多个角度同时贴标签' },
+      { type: 'paragraph', text: '同一种物质，可以从不同角度去分类，于是它会同时拥有好几个"身份"。比如碳酸钠 Na₂CO₃，从阳离子的角度看它是"钠盐"，从阴离子的角度看它又是"碳酸盐"。这种从多个分类标准出发、给同一事物同时归类的办法，就是交叉分类法。' },
+      { type: 'keypoint', label: '重点·交叉分类', text: '<strong>交叉分类法是对同一物质按不同标准分别归类。</strong>例如 Na₂CO₃ 既是钠盐又是碳酸盐；Na₂SO₄ 既是钠盐又是硫酸盐。几个角度一交叉，物质的"身份"就描述得又全又准。' },
+      { type: 'example', label: '例题·交叉分类', text: '对物质 Na₂CO₃ 进行分类，下列说法正确的是？<br>A. 它只属于碳酸盐<br>B. 它既属于钠盐，又属于碳酸盐<br>C. 它属于酸式盐<br>D. 它属于氧化物<br><br><strong>解析</strong>：Na₂CO₃ 由钠离子 Na⁺ 和碳酸根 CO₃²⁻ 构成。按阳离子分，含 Na⁺ 所以叫<strong>钠盐</strong>；按阴离子分，含 CO₃²⁻ 所以叫<strong>碳酸盐</strong>。它是正盐（不是酸式盐），也不是氧化物。因此 B 正确。' },
+      { type: 'warn', label: '易错·同素异形体', text: '要分清"同素异形体"和"同位素"。<strong>同素异形体是同种元素形成的不同单质</strong>，如金刚石和石墨（都是碳元素）、氧气 O₂ 和臭氧 O₃（都是氧元素）、红磷和白磷（都是磷元素）。它们单质不同、结构不同、性质也不同。注意：同素异形体之间必须是"单质对单质"，CO 和 CO₂ 不是同素异形体（它们是化合物）。' },
+      { type: 'list', items: ['金刚石与石墨：同种碳元素形成的两种不同单质', '氧气 O₂ 与臭氧 O₃：同种氧元素形成的两种不同单质', '红磷与白磷：同种磷元素形成的两种不同单质', '同素异形体的研究对象是"单质"，不能是化合物'] },
+      { type: 'heading', text: '四、分散系与胶体' },
+      { type: 'paragraph', text: '把一勺蔗糖放进水中，糖"消失"在水里变成糖水；把少量泥土放进水中，却是一团浑。为什么会不一样？关键在于"被分散的小颗粒"有多大。化学上把一种（或多种）物质分散到另一种物质里形成的混合物，叫作分散系。被分散的物质叫分散质，容纳它的物质叫分散剂。' },
+      { type: 'keypoint', label: '重点·胶体与丁达尔效应', text: '<strong>按分散质粒子直径大小，分散系分为溶液、胶体和浊液。</strong>胶体的粒子直径在 1 纳米到 100 纳米之间。让一束光穿过胶体，从侧面能看到一条光亮的"通路"，这叫<strong>丁达尔效应</strong>，它是区分胶体与溶液最常用的方法。' },
+      { type: 'table', headers: ['分散系', '粒子直径', '外观', '能否透过滤纸', '丁达尔效应'], rows: [['溶液', '小于 1 纳米', '透明澄清', '能', '无'], ['胶体', '1 到 100 纳米', '澄清或半透明', '能', '有（光亮通路）'], ['浊液', '大于 100 纳米', '浑浊', '不能', '无']] },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="300" fill="#f7ecdc"/><text x="340" y="34" font-size="17" font-weight="bold" fill="#b5651d" text-anchor="middle">丁达尔效应：光穿过胶体时侧面看到光亮通路</text><rect x="40" y="60" width="280" height="200" rx="10" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="180" y="86" font-size="14" fill="#4a3724" text-anchor="middle" font-weight="bold">溶液（无丁达尔）</text><rect x="80" y="120" width="200" height="40" rx="6" fill="#d98e3a"/><text x="180" y="146" font-size="13" fill="#ffffff" text-anchor="middle">光直接穿过，侧面看不见</text><rect x="360" y="60" width="280" height="200" rx="10" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="500" y="86" font-size="14" fill="#4a3724" text-anchor="middle" font-weight="bold">胶体（有丁达尔）</text><rect x="400" y="120" width="200" height="40" rx="6" fill="#d98e3a" opacity="0.85"/><circle cx="450" cy="140" r="3" fill="#4a3724"/><circle cx="470" cy="135" r="3" fill="#4a3724"/><circle cx="490" cy="142" r="3" fill="#4a3724"/><circle cx="510" cy="138" r="3" fill="#4a3724"/><circle cx="530" cy="143" r="3" fill="#4a3724"/><text x="500" y="180" font-size="13" fill="#4a3724" text-anchor="middle">粒子散射光，侧面现光亮通路</text><text x="500" y="222" font-size="13" fill="#d98e3a" text-anchor="middle">如 Fe(OH)₃ 胶体、豆浆</text></svg>', caption: '图2　溶液中的粒子太小，光直接穿过，侧面看不见光路；胶体粒子适中，会散射光形成丁达尔效应。' },
+      { type: 'example', label: '例题·区分分散系', text: '下列分散系中，能产生丁达尔效应的是？<br>A. 食盐水　B. 豆浆　C. 泥水　D. 纯净水<br><br><strong>解析</strong>：丁达尔效应是<strong>胶体</strong>特有的现象。豆浆是典型的胶体，能产生光亮通路，选 B。食盐水是溶液、泥水是浊液、纯净水几乎是纯液体，都不会产生明显的丁达尔效应。' },
+      { type: 'heading', text: '五、物质的转化' },
+      { type: 'paragraph', text: '记住了分类，下一步就是看"一类物质之间能不能互相变来变去"。化学里大量反应，本质上就是物质在各类别之间转化。掌握几条通用的转化路线，你就能预测很多反应能不能发生。' },
+      { type: 'keypoint', label: '重点·两类转化路线', text: '<strong>金属路线：金属单质 → 碱性氧化物 → 碱 → 盐。</strong><br><strong>非金属路线：非金属单质 → 酸性氧化物 → 酸 → 盐。</strong><br>例如钙：Ca → CaO → Ca(OH)₂ → CaCO₃；碳：C → CO₂ → H₂CO₃ → CaCO₃。' },
+      { type: 'tip', label: '提示', text: '酸性氧化物大多能溶于水生成对应的酸（如 CO₂ + H₂O → H₂CO₃），碱性氧化物大多能溶于水生成对应的碱（如 CaO + H₂O → Ca(OH)₂）。但像二氧化硅 SiO₂ 这种酸性氧化物不溶于水，不能直接变成硅酸，这类特殊情形以后会专门讲。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="320" fill="#f7ecdc"/><text x="340" y="34" font-size="17" font-weight="bold" fill="#b5651d" text-anchor="middle">物质的转化路线：金属与非金属两条主干</text><rect x="40" y="70" width="150" height="46" rx="8" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="115" y="98" font-size="13" fill="#4a3724" text-anchor="middle" font-weight="bold">金属单质</text><rect x="40" y="150" width="150" height="46" rx="8" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="115" y="178" font-size="13" fill="#4a3724" text-anchor="middle" font-weight="bold">碱性氧化物</text><rect x="40" y="230" width="150" height="46" rx="8" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="115" y="258" font-size="13" fill="#4a3724" text-anchor="middle" font-weight="bold">碱 → 盐</text><line x1="115" y1="116" x2="115" y2="150" stroke="#d98e3a" stroke-width="2"/><line x1="115" y1="196" x2="115" y2="230" stroke="#d98e3a" stroke-width="2"/><rect x="490" y="70" width="150" height="46" rx="8" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="565" y="98" font-size="13" fill="#4a3724" text-anchor="middle" font-weight="bold">非金属单质</text><rect x="490" y="150" width="150" height="46" rx="8" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="565" y="178" font-size="13" fill="#4a3724" text-anchor="middle" font-weight="bold">酸性氧化物</text><rect x="490" y="230" width="150" height="46" rx="8" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="565" y="258" font-size="13" fill="#4a3724" text-anchor="middle" font-weight="bold">酸 → 盐</text><line x1="565" y1="116" x2="565" y2="150" stroke="#d98e3a" stroke-width="2"/><line x1="565" y1="196" x2="565" y2="230" stroke="#d98e3a" stroke-width="2"/><text x="305" y="300" font-size="13" fill="#d98e3a" text-anchor="middle">例：Ca→CaO→Ca(OH)₂→CaCO₃；C→CO₂→H₂CO₃→CaCO₃</text></svg>', caption: '图3　物质转化的两条主干：金属单质沿"碱性氧化物→碱→盐"转化，非金属单质沿"酸性氧化物→酸→盐"转化。' }
+    ],
+    exercises: [
+      { type: 'choice', question: '下列物质中，属于化合物的是？', options: ['空气', '氧气 O₂', '水 H₂O', '金刚石'], answer: '水 H₂O', explanation: '化合物是由不同种元素组成的纯净物。水 H₂O 由氢和氧两种元素组成，是化合物。空气是混合物；氧气 O₂ 和金刚石都由同种元素（氧或碳）组成，属于单质，不是化合物。' },
+      { type: 'choice', question: '对 Na₂CO₃ 的分类，正确的是？', options: ['它只属于碳酸盐', '它既是钠盐又是碳酸盐', '它属于酸式盐', '它属于氧化物'], answer: '它既是钠盐又是碳酸盐', explanation: 'Na₂CO₃ 由 Na⁺ 和 CO₃²⁻ 构成。按阳离子分含 Na⁺，是钠盐；按阴离子分含 CO₃²⁻，是碳酸盐。它用交叉分类法同时拥有这两个身份，属于正盐而非酸式盐，也不是氧化物，所以选"既是钠盐又是碳酸盐"。' },
+      { type: 'choice', question: '下列能用来区分溶液和胶体的方法是？', options: ['看颜色', '过滤', '观察丁达尔效应', '尝味道'], answer: '观察丁达尔效应', explanation: '胶体粒子直径在 1 到 100 纳米之间，会使穿过它的光发生散射，从侧面能看到一条光亮通路，这就是丁达尔效应；溶液粒子太小没有这种现象。因此丁达尔效应是区分溶液和胶体最常用、最可靠的方法。颜色不能区分，过滤对两者都透过滤纸。' },
+      { type: 'fill', question: '同种元素形成的不同单质互称为___，例如金刚石和石墨（都是碳元素）。', answer: '同素异形体', explanation: '同素异形体是指同种元素组成的不同单质。金刚石和石墨都由碳元素组成，但原子排列方式不同，是两种不同的单质，互为同素异形体。氧气 O₂ 和臭氧 O₃、红磷和白磷也互为同素异形体。注意必须是单质之间，化合物不算。' },
+      { type: 'fill', question: '按照物质的转化路线，金属钙 Ca 可以转化为氧化钙 CaO，CaO 再与水反应生成氢氧化钙，写出该碱的化学式：___。', answer: 'Ca(OH)₂', explanation: '金属单质可沿"金属单质→碱性氧化物→碱→盐"转化。钙 Ca 燃烧生成氧化钙 CaO（碱性氧化物），CaO 溶于水生成对应的碱氢氧化钙，化学式为 Ca(OH)₂。同理非金属路线如碳 C 生成 CO₂ 进而生成 H₂CO₃，是酸性氧化物对应酸。' }
+    ]
+  });
+})();

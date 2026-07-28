@@ -13,7 +13,7 @@
     {
       id: 'bx2-u5-l1',
       name: '核心词汇与过去分词作表语',
-      chapter: 'Unit 5 Music · 核心词汇与过去分词作表语',
+      chapter: 'Unit 5 Music',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、Unit 5 核心词汇梳理（名词与动词）' },
@@ -84,7 +84,7 @@
     {
       id: 'bx2-u5-l2',
       name: '重点句型与过去分词作状语',
-      chapter: 'Unit 5 Music · 重点句型与过去分词作状语',
+      chapter: 'Unit 5 Music',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、Unit 5 重点句型' },

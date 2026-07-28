@@ -85,13 +85,17 @@
     else renderHome();
     document.body.classList.remove('sidebar-open');
     window.scrollTo(0, 0);
-    // 滚动监听：控制「返回顶部」按钮
+    // 滚动监听：控制「返回顶部」按钮 + 主区顶部条变 fixed
     if (!window.__scrollBound) {
       window.addEventListener('scroll', function () {
         var btn = document.getElementById('toTop');
-        if (!btn) return;
-        if (window.scrollY > 400) btn.classList.add('show');
-        else btn.classList.remove('show');
+        if (btn) {
+          if (window.scrollY > 400) btn.classList.add('show');
+          else btn.classList.remove('show');
+        }
+        // 滚动距离超过 50px 时，主区顶部条变成 fixed 悬浮
+        if (window.scrollY > 50) document.body.classList.add('scrolled');
+        else document.body.classList.remove('scrolled');
       }, { passive: true });
       window.__scrollBound = true;
     }
@@ -270,6 +274,19 @@
     var v = gzGetVolume(sid, vid);
     if (v && (v.points || []).length > 0) navigate('vol', sid, vid);
     else toast('「' + (v ? v.name : '') + '」内容建设中，敬请期待');
+  };
+  // 展开/折叠单元
+  window.__toggleVolUnit = function (sid, vid, chName) {
+    var volKey = sid + '/' + vid;
+    var openArr;
+    try { openArr = JSON.parse(localStorage.getItem('gz_vol_open') || '{}'); } catch (e) { openArr = {}; }
+    var cur = openArr[volKey] || [];
+    var idx = cur.indexOf(chName);
+    if (idx >= 0) cur.splice(idx, 1);
+    else cur.push(chName);
+    openArr[volKey] = cur;
+    try { localStorage.setItem('gz_vol_open', JSON.stringify(openArr)); } catch (e) {}
+    renderVolume(sid, vid);
   };
 
   function volCounts(s) {
@@ -850,11 +867,16 @@
         '<div class="empty-tip">📦 「' + esc(v.name) + '」内容建设中，敬请期待。</div>';
       return;
     }
-    // 按章节（单元）分组
+    // 按章节（单元）分组：把 "第一章 集合...· 1.1" 这种带段号的 chapter 归并到 "第一章 集合..."
     var groups = [];
     var map = {};
+    function normalizeChapter(ch) {
+      if (!ch) return '单元课时';
+      // 去掉末尾的 " · 1.1" / "· 1" / "· 1.2.3" 之类的段号
+      return ch.replace(/\s*[·•・][^·•・]*?\d+(\.\d+)*\s*$/, '').trim() || ch;
+    }
     pts.forEach(function (p, i) {
-      var ch = p.chapter || '单元课时';
+      var ch = normalizeChapter(p.chapter);
       if (!map[ch]) { map[ch] = []; groups.push(ch); }
       map[ch].push({ p: p, i: i });
     });
@@ -1048,6 +1070,8 @@
     var inpt = box.querySelector('.fill-input');
     if (inpt) inpt.disabled = true;
     var sb = box.querySelector('.quiz-submit'); if (sb) sb.disabled = true;
+    // 记录做题日志（用于 7 天节奏图）
+    logQuiz(sid, vid, idx, qi, correct);
     // 大图标 + 答案对比
     var bigIcon = correct
       ? '<div class="quiz-result-icon ok">✓</div>'
@@ -1086,8 +1110,38 @@
 
   function markProgress(sid, vid, idx) {
     var prog = lsGet('gz_progress', {});
-    prog[lessonKey(sid, vid, idx)] = true;
+    prog[lessonKey(sid, vid, idx)] = { ts: Date.now() };
     lsSet('gz_progress', prog);
+  }
+
+  /* 给旧的 gz_progress 记录补时间戳（按签到日期均匀回填到历史中） */
+  function backfillProgressTs() {
+    var prog = lsGet('gz_progress', {});
+    var noTs = [];
+    Object.keys(prog).forEach(function (k) { if (prog[k] === true) noTs.push(k); });
+    if (!noTs.length) return;
+    var checkin = lsGet('gz_checkin', { history: [] });
+    var history = (checkin.history || []).slice().sort();
+    var dayMs = 86400000;
+    // 没有签到记录就全部回填到今天
+    var tsList = history.length
+      ? history.map(function (ds) {
+          var p = ds.split('-');
+          return new Date(+p[0], +p[1] - 1, +p[2], 12, 0, 0).getTime();
+        })
+      : [Date.now()];
+    noTs.forEach(function (k, i) {
+      prog[k] = { ts: tsList[i % tsList.length], backfilled: true };
+    });
+    lsSet('gz_progress', prog);
+  }
+
+  /* 记录一次做题（含对错），用于最近 7 天做题数统计 */
+  function logQuiz(sid, vid, idx, qi, right) {
+    var log = lsGet('gz_quiz_log', []);
+    log.push({ ts: Date.now(), key: lessonKey(sid, vid, idx), qi: qi, right: !!right });
+    if (log.length > 2000) log = log.slice(-2000);
+    lsSet('gz_quiz_log', log);
   }
   window.__markLessonRead = function (sid, vid, idx) {
     markProgress(sid, vid, idx);
@@ -1137,19 +1191,36 @@
     for (var k in users) if (users[k].username === name) return users[k];
     return null;
   }
-  function registerUser(username, password) {
-    username = (username || '').trim();
-    if (!username) return { ok: false, msg: '用户名不能为空' };
-    if (username.length < 2 || username.length > 20) return { ok: false, msg: '用户名长度需 2-20' };
-    if (!/^[\u4e00-\u9fa5\w.\-]+$/.test(username)) return { ok: false, msg: '用户名仅支持中英文/数字/_.-' };
+  // 把手机号格式化为 138****1234 形式
+  function formatPhoneDisplay(phone) {
+    if (!phone) return '';
+    var s = String(phone).replace(/\D/g, '');
+    if (s.length < 7) return s;
+    if (s.length === 11) return s.slice(0, 3) + '****' + s.slice(7);
+    // 非 11 位时，按前 3 + 中间 * + 后 4 截取
+    return s.slice(0, 3) + '****' + s.slice(-4);
+  }
+  // 获取用户对外显示名：自定义昵称优先，否则用手机号掩码
+  function getDisplayName(u) {
+    if (!u) return '';
+    if (u.nickname && u.nickname !== u.username && u.nickname !== (u.phone || '')) {
+      return u.nickname;
+    }
+    return formatPhoneDisplay(u.phone || u.username);
+  }
+  function registerUser(phone, password) {
+    phone = (phone || '').trim();
+    if (!phone) return { ok: false, msg: '手机号不能为空' };
+    var phoneClean = phone.replace(/\D/g, '');
+    if (!/^1\d{10}$/.test(phoneClean)) return { ok: false, msg: '请输入正确的 11 位手机号' };
     if (!password || password.length < 6) return { ok: false, msg: '密码至少 6 位' };
-    if (findUserByName(username)) return { ok: false, msg: '用户名已被占用' };
+    if (findUserByName(phoneClean)) return { ok: false, msg: '该手机号已注册' };
     var users = getAllUsers();
     var id = 'u_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 6);
     var avatarPool = ['🐱', '🐶', '🦊', '🐼', '🐯', '🦁', '🐰', '🐨', '🐸', '🐵', '🦄', '🐙'];
     var user = {
-      id: id, username: username, password: hashPassword(password),
-      nickname: username, avatar: avatarPool[Math.floor(Math.random() * avatarPool.length)],
+      id: id, username: phoneClean, phone: phoneClean, password: hashPassword(password),
+      nickname: phoneClean, avatar: avatarPool[Math.floor(Math.random() * avatarPool.length)],
       createdAt: new Date().toISOString(), lastLoginAt: new Date().toISOString()
     };
     users[id] = user;
@@ -1198,7 +1269,7 @@
   window.__updateProfile = updateProfile;
   window.__changePassword = changePassword;
 
-  // 顶栏用户区渲染（未登录显示"登录/注册"按钮；已登录显示头像+昵称+下拉）
+  // 顶栏用户区渲染（未登录显示"登录/注册"按钮；已登录显示头像+手机号+下拉）
   function renderTopbarUser() {
     var box = document.getElementById('topbarUser');
     if (!box) return;
@@ -1207,18 +1278,19 @@
       box.innerHTML = '<button class="auth-btn" id="authOpenBtn" onclick="window.__openAuthModal()">登录 / 注册</button>';
       return;
     }
+    var displayName = getDisplayName(u);
     box.innerHTML =
       '<div class="auth-user-wrap">' +
-        '<button class="auth-user-btn" id="authUserBtn" onclick="window.__toggleUserMenu(event)">' +
+        '<button class="auth-user-btn" id="authUserBtn" onclick="window.__toggleUserMenu(event)" title="' + esc(displayName) + '">' +
           '<span class="auth-avatar">' + esc(u.avatar || '👤') + '</span>' +
-          '<span class="auth-nickname">' + esc(u.nickname || u.username) + '</span>' +
+          '<span class="auth-nickname">' + esc(displayName) + '</span>' +
           '<span class="auth-caret">▾</span>' +
         '</button>' +
         '<div class="auth-user-menu" id="authUserMenu">' +
           '<div class="auth-user-menu-head">' +
             '<div class="auth-avatar-lg">' + esc(u.avatar || '👤') + '</div>' +
             '<div class="auth-user-info">' +
-              '<div class="auth-user-name">' + esc(u.nickname || u.username) + '</div>' +
+              '<div class="auth-user-name">' + esc(displayName) + '</div>' +
               '<div class="auth-user-handle">@' + esc(u.username) + '</div>' +
             '</div>' +
           '</div>' +
@@ -1278,8 +1350,8 @@
           '<div class="auth-title">欢迎回来 👋</div>' +
           '<div class="auth-subtitle">登录后同步你的学习进度、错题本、签到记录</div>' +
           '<label class="auth-field">' +
-            '<span>用户名</span>' +
-            '<input type="text" id="authUser" placeholder="请输入用户名" maxlength="20" autocomplete="username" />' +
+            '<span>手机号</span>' +
+            '<input type="tel" id="authUser" placeholder="11 位手机号" maxlength="11" autocomplete="username" inputmode="numeric" />' +
           '</label>' +
           '<label class="auth-field">' +
             '<span>密码</span>' +
@@ -1328,7 +1400,7 @@
       pane.innerHTML =
         '<div class="auth-title">欢迎回来 👋</div>' +
         '<div class="auth-subtitle">登录后同步你的学习进度、错题本、签到记录</div>' +
-        '<label class="auth-field"><span>用户名</span><input type="text" id="authUser" placeholder="请输入用户名" maxlength="20" autocomplete="username" /></label>' +
+        '<label class="auth-field"><span>手机号</span><input type="tel" id="authUser" placeholder="11 位手机号" maxlength="11" autocomplete="username" inputmode="numeric" /></label>' +
         '<label class="auth-field"><span>密码</span><input type="password" id="authPwd" placeholder="请输入密码" maxlength="40" autocomplete="current-password" /></label>' +
         '<div class="auth-msg" id="authMsg"></div>' +
         '<button class="auth-submit" id="authSubmit" onclick="window.__doAuth()">登 录</button>' +
@@ -1336,8 +1408,8 @@
     } else {
       pane.innerHTML =
         '<div class="auth-title">创建账号 ✨</div>' +
-        '<div class="auth-subtitle">注册后数据保存在本地浏览器中</div>' +
-        '<label class="auth-field"><span>用户名</span><input type="text" id="authUser" placeholder="2-20 位，中英文/数字" maxlength="20" autocomplete="username" /></label>' +
+        '<div class="auth-subtitle">用手机号注册，默认昵称为 138****1234 形式</div>' +
+        '<label class="auth-field"><span>手机号</span><input type="tel" id="authUser" placeholder="11 位手机号" maxlength="11" autocomplete="username" inputmode="numeric" /></label>' +
         '<label class="auth-field"><span>密码</span><input type="password" id="authPwd" placeholder="至少 6 位" maxlength="40" autocomplete="new-password" /></label>' +
         '<label class="auth-field"><span>确认密码</span><input type="password" id="authPwd2" placeholder="再输入一次" maxlength="40" autocomplete="new-password" /></label>' +
         '<div class="auth-msg" id="authMsg"></div>' +
@@ -2110,19 +2182,46 @@
       }
     });
 
-    // 2) 7 天学习量
+    // 2) 7 天学习量（每天的课时数 + 做题数）
     var last7 = [];
     var now = new Date();
+    function pad2(n) { return String(n).padStart(2, '0'); }
+    function dateOnly(ts) {
+      var d = new Date(ts);
+      return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
+    }
     for (var i = 6; i >= 0; i--) {
       var d = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i);
-      var ds = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+      var ds = d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
       last7.push({
         date: ds,
         label: (d.getMonth() + 1) + '/' + d.getDate(),
         weekday: ['日', '一', '二', '三', '四', '五', '六'][d.getDay()],
-        studied: history.indexOf(ds) !== -1
+        studied: history.indexOf(ds) !== -1,
+        lessons: 0,
+        questions: 0,
+        isToday: i === 0
       });
     }
+    // 课时数：从 gz_progress 的 ts 累加
+    Object.keys(prog).forEach(function (k) {
+      var v = prog[k];
+      if (v && v.ts) {
+        var ds2 = dateOnly(v.ts);
+        for (var li = 0; li < last7.length; li++) {
+          if (last7[li].date === ds2) { last7[li].lessons++; break; }
+        }
+      }
+    });
+    // 做题数：从 gz_quiz_log 累加
+    var quizLog = lsGet('gz_quiz_log', []);
+    quizLog.forEach(function (e) {
+      if (!e || !e.ts) return;
+      var ds2 = dateOnly(e.ts);
+      for (var li = 0; li < last7.length; li++) {
+        if (last7[li].date === ds2) { last7[li].questions++; break; }
+      }
+    });
 
     // 3) 难度分布
     var diffTotal = { '基础': 0, '重点': 0, '难点': 0 };
@@ -2150,6 +2249,8 @@
     var streakText = 0;
     for (var si = last7.length - 1; si >= 0; si--) { if (last7[si].studied) streakText++; else break; }
     var last7Studied = last7.filter(function (d) { return d.studied; }).length;
+    var totalLessons7 = last7.reduce(function (s, d) { return s + d.lessons; }, 0);
+    var totalQuestions7 = last7.reduce(function (s, d) { return s + d.questions; }, 0);
 
     // 渲染：学科卡片
     var subjCardsHtml = GZ_SUBJECTS.map(function (s) {
@@ -2189,19 +2290,88 @@
         '</a>';
     }).join('');
 
-    // 渲染：7 天柱状图
-    var barsHtml = last7.map(function (d, idx) {
-      var h = d.studied ? 100 : 8;
-      var isToday = idx === last7.length - 1;
-      return '' +
-        '<div class="pbar-col' + (isToday ? ' is-today' : '') + (d.studied ? ' is-studied' : '') + '">' +
-          '<div class="pbar-bar-wrap">' +
-            '<div class="pbar-stick" style="height:' + h + '%"><span class="pbar-tip">' + (d.studied ? '✅ 已学习' : '⚪ 未学习') + '<br>' + d.date + '</span></div>' +
-          '</div>' +
-          '<div class="pbar-wd">' + d.weekday + '</div>' +
-          '<div class="pbar-dt">' + d.label + '</div>' +
-        '</div>';
+    // 渲染：最近 7 天节奏图（柱状=课时数 / 折线=做题数 / hover 显示数值）
+    var W = 700, H = 200, PAD_T = 22, PAD_B = 36, PAD_L = 12, PAD_R = 12;
+    var innerW = W - PAD_L - PAD_R, innerH = H - PAD_T - PAD_B;
+    var colW = innerW / 7;
+    var barW = Math.min(28, colW * 0.42);
+    var maxL = Math.max.apply(null, last7.map(function (d) { return d.lessons; }).concat([1]));
+    var maxQ = Math.max.apply(null, last7.map(function (d) { return d.questions; }).concat([1]));
+
+    // 4 条横向 grid
+    var gridHtml = '';
+    for (var gi = 0; gi < 4; gi++) {
+      var gy = PAD_T + innerH * gi / 4;
+      gridHtml += '<line class="week-grid' + (gi === 0 ? ' is-base' : '') + '" x1="' + PAD_L + '" y1="' + gy.toFixed(1) + '" x2="' + (W - PAD_R) + '" y2="' + gy.toFixed(1) + '"></line>';
+    }
+
+    // 柱
+    var barSvg = last7.map(function (d, i) {
+      var x = PAD_L + i * colW + (colW - barW) / 2;
+      var ratio = d.lessons / maxL;
+      var h = d.lessons > 0 ? Math.max(8, ratio * innerH) : 4;
+      var y = PAD_T + innerH - h;
+      var cls = 'week-bar' + (d.lessons > 0 ? ' is-active' : '') + (d.isToday ? ' is-today' : '');
+      return '<rect class="' + cls + '" x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + barW.toFixed(1) + '" height="' + h.toFixed(1) + '" rx="3"></rect>';
     }).join('');
+
+    // 折线点
+    var pts = last7.map(function (d, i) {
+      var x = PAD_L + i * colW + colW / 2;
+      var ratio = d.questions / maxQ;
+      var y = d.questions > 0 ? (PAD_T + innerH - ratio * innerH) : (PAD_T + innerH);
+      return { x: x, y: y, d: d };
+    });
+    var polyPts = pts.map(function (p) { return p.x.toFixed(1) + ',' + p.y.toFixed(1); }).join(' ');
+    var lineSvg = '<polyline class="week-line" points="' + polyPts + '"></polyline>';
+    var dotSvg = pts.map(function (p) {
+      var cls = 'week-dot' + (p.d.questions > 0 ? ' is-active' : '') + (p.d.isToday ? ' is-today' : '');
+      var r = p.d.questions > 0 ? 4.5 : 3;
+      return '<circle class="' + cls + '" cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="' + r + '"></circle>';
+    }).join('');
+
+    // x 轴标签
+    var xLabSvg = last7.map(function (d, i) {
+      var x = PAD_L + i * colW + colW / 2;
+      var wdCls = 'week-x-wd' + (d.isToday ? ' is-today' : '');
+      var dtCls = 'week-x-dt' + (d.isToday ? ' is-today' : '');
+      return '<text class="' + wdCls + '" x="' + x.toFixed(1) + '" y="' + (PAD_T + innerH + 16) + '" text-anchor="middle">' + d.weekday + '</text>' +
+             '<text class="' + dtCls + '" x="' + x.toFixed(1) + '" y="' + (PAD_T + innerH + 30) + '" text-anchor="middle">' + d.label + '</text>';
+    }).join('');
+
+    // 悬浮点击区（HTML 层覆盖在 SVG 上，方便用百分比定位）
+    var zoneHtml = last7.map(function (d, i) {
+      var leftPct = i * 100 / 7;
+      var widthPct = 100 / 7;
+      return '<div class="week-hover" data-i="' + i + '" style="left:' + leftPct + '%;width:' + widthPct + '%" onmouseover="window.__weekHover(' + i + ')" onmouseout="window.__weekLeave()"></div>';
+    }).join('');
+
+    // 把每天的数据塞进全局，hover 函数读取
+    window.__weekDays = last7;
+
+    var chartSvg = '<svg class="week-chart" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMidYMid meet">' +
+      '<defs>' +
+        '<linearGradient id="weekBarGrad" x1="0" y1="0" x2="0" y2="1">' +
+          '<stop offset="0%" stop-color="#5e8dee"/>' +
+          '<stop offset="100%" stop-color="#4a7de0"/>' +
+        '</linearGradient>' +
+        '<linearGradient id="weekBarGradToday" x1="0" y1="0" x2="0" y2="1">' +
+          '<stop offset="0%" stop-color="#a855f7"/>' +
+          '<stop offset="100%" stop-color="#7c3aed"/>' +
+        '</linearGradient>' +
+      '</defs>' +
+      gridHtml + barSvg + lineSvg + dotSvg + xLabSvg +
+    '</svg>';
+
+    var weekChartHtml = '<div class="week-chart-wrap">' +
+      chartSvg +
+      '<div class="week-hover-zones">' + zoneHtml + '</div>' +
+      '<div class="week-tip" id="weekTip" style="display:none"><div class="wt-date"></div><div class="wt-row wt-l"></div><div class="wt-row wt-q"></div></div>' +
+      '<div class="week-legend">' +
+        '<span class="wl-item"><i class="wl-bar"></i>每日学习课时数</span>' +
+        '<span class="wl-item"><i class="wl-line"></i>每日做题数</span>' +
+      '</div>' +
+    '</div>';
 
     // 渲染：难度分布
     var diffHtml = diffOrder.map(function (k) {
@@ -2284,8 +2454,8 @@
         '<p>总览你的学习情况：最近 7 天节奏、难度攻克分布、各学科完成度、勋章成就。</p>' +
         '<div class="prog-charts">' +
           '<div class="prog-chart-card">' +
-            '<div class="pcc-head"><h4>📅 最近 7 天学习节奏</h4><span class="pcc-sub">已学 ' + last7Studied + ' / 7 天' + (streakText > 0 ? ' · 连续 ' + streakText + ' 天 🔥' : '') + '</span></div>' +
-            '<div class="pbar-chart">' + barsHtml + '</div>' +
+            '<div class="pcc-head"><h4>📅 最近 7 天学习节奏</h4><span class="pcc-sub">' + totalLessons7 + ' 课时 · ' + totalQuestions7 + ' 题' + (streakText > 0 ? ' · 连续 ' + streakText + ' 天 🔥' : '') + '</span></div>' +
+            weekChartHtml +
           '</div>' +
           '<div class="prog-chart-card">' +
             '<div class="pcc-head"><h4>🎯 难度攻克分布</h4><span class="pcc-sub">基础/重点/难点 三档</span></div>' +
@@ -2304,6 +2474,11 @@
       var nCard = document.querySelector('.prog-overview .navigate-wrong');
       if (nCard) nCard.style.cursor = 'pointer';
     }
+    // dev hook: ?autohover=N 自动触发第 N 天 hover（仅 dev/截图用，正常用户不会带这个参数）
+    try {
+      var m = location.search.match(/[?&]autohover=(\d)/);
+      if (m) setTimeout(function () { window.__weekHover(+m[1]); }, 80);
+    } catch (e) {}
   }
   function overviewCard(icon, label, val, sub, flag) {
     var attrs = '';
@@ -2389,6 +2564,68 @@
         '<p>数据保存在本机浏览器中，无需登录，打开即用。</p>' +
       '</div>';
   }
+
+  /* ---------- 主题切换（深色 / 浅色） ---------- */
+  function applyTheme(theme) {
+    var isDark = theme === 'dark';
+    document.body.classList.toggle('theme-dark', isDark);
+    var tip = document.getElementById('themeTip');
+    if (tip) tip.textContent = isDark ? '深色' : '浅色';
+    var btn = document.getElementById('themeToggle');
+    if (btn) btn.setAttribute('title', isDark ? '切换到浅色模式' : '切换到深色模式');
+    try { localStorage.setItem('gz_theme', theme); } catch (e) {}
+  }
+  function initTheme() {
+    var saved = null;
+    try { saved = localStorage.getItem('gz_theme'); } catch (e) {}
+    if (saved === 'dark' || saved === 'light') {
+      applyTheme(saved);
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      applyTheme('dark');
+    }
+  }
+  window.__toggleTheme = function () {
+    var isDark = document.body.classList.contains('theme-dark');
+    applyTheme(isDark ? 'light' : 'dark');
+  };
+
+  /* ---------- 学习进度页：7 天节奏图 hover 交互 ---------- */
+  window.__weekHover = function (i) {
+    var days = window.__weekDays;
+    var tip = document.getElementById('weekTip');
+    if (!days || !tip) return;
+    var d = days[i];
+    if (!d) return;
+    var dateEl = tip.querySelector('.wt-date');
+    var lEl = tip.querySelector('.wt-l');
+    var qEl = tip.querySelector('.wt-q');
+    var todayTag = d.isToday ? '（今天）' : '';
+    dateEl.textContent = d.date + ' · 周' + d.weekday + todayTag;
+    lEl.innerHTML = d.lessons > 0
+      ? '<i class="wt-dot wt-dot-bar"></i>学习课时：<b>' + d.lessons + '</b> 节'
+      : '<i class="wt-dot wt-dot-empty"></i>学习课时：<b class="muted">0</b> 节';
+    qEl.innerHTML = d.questions > 0
+      ? '<i class="wt-dot wt-dot-line"></i>做题数量：<b>' + d.questions + '</b> 题'
+      : '<i class="wt-dot wt-dot-empty"></i>做题数量：<b class="muted">0</b> 题';
+    // 定位
+    var zones = document.querySelector('.week-hover-zones');
+    var zone = zones && zones.children[i];
+    if (zones && zone) {
+      var zRect = zone.getBoundingClientRect();
+      var wRect = zones.getBoundingClientRect();
+      var center = (zRect.left - wRect.left) + zRect.width / 2;
+      tip.style.left = center + 'px';
+      tip.style.top = '0px';
+      tip.style.transform = 'translate(-50%, -100%) translateY(-6px)';
+    }
+    tip.style.display = 'block';
+  };
+  window.__weekLeave = function () {
+    var tip = document.getElementById('weekTip');
+    if (tip) tip.style.display = 'none';
+  };
+  initTheme();
+  backfillProgressTs();
 
   /* ---------- 启动 ---------- */
   window.addEventListener('hashchange', render);

@@ -1,0 +1,48 @@
+/* ============================================================
+ * 高一化学 · 必修 第一册 · 第四章 物质结构 元素周期律
+ * 课时19：化学键（离子键与共价键）
+ * 数据注入：chemistry.bx1.points
+ * ============================================================ */
+(function () {
+  var v = gzGetVolume('chemistry', 'bx1');
+  if (!v) return;
+
+  v.points.push({
+    id: 'bx1-u19',
+    name: '化学键（离子键与共价键）',
+    chapter: '必修 第一册 · 第四章 物质结构 元素周期律',
+    difficulty: '基础',
+    content: [
+      { type: 'heading', text: '一、什么是化学键' },
+      { type: 'paragraph', text: '原子之间为什么会"粘"在一起形成物质？靠的是一种强烈的相互作用，化学上叫化学键。注意，化学键说的是"相邻"原子（或离子）之间强烈的相互作用，不是随便两个原子远隔千里也有键。常见的化学键分两大类：离子键和共价键。先理解这个总概念，后面两种键就好区分了。' },
+      { type: 'keypoint', label: '重点·化学键定义', text: '<strong>化学键是相邻原子（或离子）之间强烈的相互作用。</strong>它主要分为离子键和共价键两大类。键的本质是一种"作用力"，把原子或离子牢牢连成分子或晶体。' },
+      { type: 'list', items: ['化学键存在于"相邻"的粒子之间', '化学键是一种"强烈"的相互作用（区别于弱作用力）', '成键粒子可以是原子，也可以是离子', '化学键分为离子键、共价键（以及金属键等）'] },
+      { type: 'heading', text: '二、离子键——靠静电吸引' },
+      { type: 'paragraph', text: '活泼金属（如钠、镁）容易失去电子变成阳离子，活泼非金属（如氯、氧）容易得到电子变成阴离子。阴、阳离子带着相反的电荷，它们靠近时会产生强烈的静电吸引，这种靠静电作用形成的化学键就叫离子键。典型例子是氯化钠 NaCl（Na⁺ 与 Cl⁻ 之间）和氧化镁 MgO（Mg²⁺ 与 O²⁻ 之间）。' },
+      { type: 'keypoint', label: '重点·离子键', text: '<strong>离子键是阴、阳离子通过静电作用形成的化学键。</strong>成键微粒是离子，通常出现在活泼金属与活泼非金属之间，如 NaCl、MgO、KBr 等。离子间既相互吸引，也存在电子云排斥，总体是强烈的静电作用。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="320" fill="#f7ecdc"/><text x="340" y="34" font-size="17" font-weight="bold" fill="#b5651d" text-anchor="middle">离子键的形成：Na 失电子→Na⁺，Cl 得电子→Cl⁻</text><circle cx="140" cy="160" r="42" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="140" y="156" font-size="13" fill="#4a3724" text-anchor="middle" font-weight="bold">Na</text><text x="140" y="178" font-size="12" fill="#4a3724" text-anchor="middle">最外层1e</text><circle cx="320" cy="160" r="42" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="320" y="156" font-size="13" fill="#4a3724" text-anchor="middle" font-weight="bold">Cl</text><text x="320" y="178" font-size="12" fill="#4a3724" text-anchor="middle">最外层7e</text><circle cx="230" cy="160" r="10" fill="#d98e3a"/><line x1="240" y1="160" x2="290" y2="160" stroke="#d98e3a" stroke-width="2" stroke-dasharray="4,3"/><text x="230" y="140" font-size="11" fill="#4a3724" text-anchor="middle">e⁻转移</text><line x1="382" y1="160" x2="470" y2="160" stroke="#d98e3a" stroke-width="3"/><polygon points="470,154 483,160 470,166" fill="#d98e3a"/><circle cx="540" cy="160" r="42" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="540" y="156" font-size="13" fill="#4a3724" text-anchor="middle" font-weight="bold">Na⁺</text><text x="540" y="178" font-size="12" fill="#4a3724" text-anchor="middle">阳离子</text><circle cx="620" cy="160" r="42" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="620" y="156" font-size="13" fill="#4a3724" text-anchor="middle" font-weight="bold">Cl⁻</text><text x="620" y="178" font-size="12" fill="#4a3724" text-anchor="middle">阴离子</text><text x="580" y="240" font-size="12" fill="#d98e3a" text-anchor="middle">静电吸引 → 离子键</text></svg>', caption: '图1　钠原子失去最外层 1 个电子变成 Na⁺，氯原子得到电子变成 Cl⁻，正负离子靠静电吸引形成离子键（如 NaCl）。' },
+      { type: 'example', label: '例题·判断离子键', text: '下列物质中，含有离子键的是？<br>A. H₂　B. HCl　C. NaCl　D. CO₂<br><br><strong>解析</strong>：NaCl 由活泼金属钠和活泼非金属氯组成，Na 失去电子成 Na⁺、Cl 得到电子成 Cl⁻，二者靠静电吸引形成<strong>离子键</strong>，所以 C 正确。H₂ 是 H−H 共价键；HCl 是 H 与 Cl 共用电子对的共价键；CO₂ 是 C 与 O 之间的共价键，都不含离子键。' },
+      { type: 'list', items: ['离子键成键微粒：阴、阳离子', '离子键作用力本质：静电作用（吸引与排斥平衡）', '典型物质：NaCl、MgO、K₂O、CaCl₂ 等', '一般出现在活泼金属 + 活泼非金属之间'] },
+      { type: 'heading', text: '三、共价键——共用电子对' },
+      { type: 'paragraph', text: '如果两个都是非金属原子，谁也不愿意彻底把电子让出去，于是它们各拿出一个（或多个）电子，凑成一对"共用"，这样双方最外层都变得更稳定。这种通过共用电子对形成的化学键叫共价键。典型例子：氢气 H₂（H:H）、氯化氢 HCl、水 H₂O、二氧化碳 CO₂。共价键的成键微粒是原子。' },
+      { type: 'keypoint', label: '重点·共价键', text: '<strong>共价键是原子间通过共用电子对形成的化学键。</strong>成键微粒是原子，通常出现在非金属与非金属之间，如 H₂、HCl、H₂O、CO₂、CH₄ 等。双方都不完全失去电子，而是"合伙"使用电子对。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="300" fill="#f7ecdc"/><text x="340" y="34" font-size="17" font-weight="bold" fill="#b5651d" text-anchor="middle">共价键的形成：H 与 Cl 各出 1 电子，共用一对</text><circle cx="200" cy="160" r="40" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="200" y="156" font-size="13" fill="#4a3724" text-anchor="middle" font-weight="bold">H</text><text x="200" y="178" font-size="12" fill="#4a3724" text-anchor="middle">1e</text><circle cx="420" cy="160" r="40" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="420" y="156" font-size="13" fill="#4a3724" text-anchor="middle" font-weight="bold">Cl</text><text x="420" y="178" font-size="12" fill="#4a3724" text-anchor="middle">7e</text><circle cx="310" cy="160" r="8" fill="#d98e3a"/><text x="310" y="135" font-size="12" fill="#4a3724" text-anchor="middle">共用电子对</text><line x1="240" y1="160" x2="280" y2="160" stroke="#d98e3a" stroke-width="2" stroke-dasharray="4,3"/><line x1="340" y1="160" x2="380" y2="160" stroke="#d98e3a" stroke-width="2" stroke-dasharray="4,3"/><text x="310" y="235" font-size="13" fill="#4a3724" text-anchor="middle">H 与 Cl 各贡献 1 个电子 → 共用一对 → H:Cl</text><text x="310" y="265" font-size="12" fill="#d98e3a" text-anchor="middle">双方最外层都更接近稳定结构</text></svg>', caption: '图2　氢原子与氯原子各拿出 1 个电子组成共用电子对，形成共价键，得到 HCl 分子。' },
+      { type: 'list', items: ['共价键成键微粒：原子', '共价键本质：共用电子对', '典型物质：H₂、O₂、HCl、H₂O、CO₂、NH₃ 等', '一般出现在非金属与非金属之间'] },
+      { type: 'heading', text: '四、离子化合物与共价化合物' },
+      { type: 'paragraph', text: '含有离子键的化合物叫离子化合物，比如 NaCl、MgO，以及含有金属阳离子或 NH₄⁺ 与阴离子的物质。只含共价键的化合物叫共价化合物，比如 HCl、H₂O、CO₂。这里有个易错关键点：离子化合物一定含离子键，但可能同时含共价键（如 NaOH 里的 O−H 键、NH₄Cl 里的 N−H 键）；而共价化合物只含共价键，绝不能有离子键。' },
+      { type: 'keypoint', label: '重点·两类化合物', text: '<strong>离子化合物：含有离子键的化合物（可能还含共价键），如 NaCl、NaOH、NH₄Cl。</strong><strong>共价化合物：只含共价键的化合物，如 HCl、H₂O、CO₂。</strong>判断化合物类型，看它"是否含离子键"即可。' },
+      { type: 'table', headers: ['对比项', '离子键', '共价键'], rows: [['成键微粒', '阴、阳离子', '原子'], ['作用力', '静电作用', '共用电子对'], ['典型物质', 'NaCl、MgO、KBr', 'H₂、HCl、H₂O、CO₂'], ['所属化合物', '离子化合物（必含）', '共价化合物（只含）']] },
+      { type: 'warn', label: '易错·含不含共价键', text: '<strong>第一，离子化合物一定含离子键，但可能还含共价键（如 NaOH 中的 O−H、NH₄Cl 中的 N−H），只要含离子键就是离子化合物。</strong><strong>第二，共价化合物只含共价键，绝无离子键，若有离子键就变成离子化合物了。</strong><strong>第三，AlCl₃ 是共价化合物（特例），不过多深究，记住结论即可。</strong>' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="320" fill="#f7ecdc"/><text x="340" y="34" font-size="17" font-weight="bold" fill="#b5651d" text-anchor="middle">离子化合物 vs 共价化合物：是否含离子键？</text><rect x="50" y="70" width="240" height="200" rx="10" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="170" y="105" font-size="14" fill="#4a3724" text-anchor="middle" font-weight="bold">离子化合物</text><text x="170" y="140" font-size="13" fill="#4a3724" text-anchor="middle">一定含离子键</text><text x="170" y="170" font-size="13" fill="#4a3724" text-anchor="middle">可能含共价键</text><text x="170" y="205" font-size="12" fill="#d98e3a" text-anchor="middle">例：NaCl、NaOH、NH₄Cl</text><text x="170" y="245" font-size="12" fill="#4a3724" text-anchor="middle">NaOH、NH₄Cl 含共价键</text><rect x="390" y="70" width="240" height="200" rx="10" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="510" y="105" font-size="14" fill="#4a3724" text-anchor="middle" font-weight="bold">共价化合物</text><text x="510" y="140" font-size="13" fill="#4a3724" text-anchor="middle">只含共价键</text><text x="510" y="170" font-size="13" fill="#4a3724" text-anchor="middle">绝无离子键</text><text x="510" y="205" font-size="12" fill="#d98e3a" text-anchor="middle">例：HCl、H₂O、CO₂</text><text x="510" y="245" font-size="12" fill="#4a3724" text-anchor="middle">含离子键就不再是它</text></svg>', caption: '图3　判断化合物类型的关键：含离子键就是离子化合物（可能同时含共价键）；只含共价键才是共价化合物。' },
+      { type: 'tip', label: '提示·NH₄Cl 的特殊结构', text: 'NH₄Cl 看起来"全是非金属"，但它含有 NH₄⁺（铵根阳离子）和 Cl⁻，NH₄⁺ 与 Cl⁻ 之间是离子键，所以它是<strong>离子化合物</strong>；同时 NH₄⁺ 内部 N 与 H 之间是共价键。记住一句话："含 NH₄⁺ 的化合物通常都是离子化合物"，可帮你避开很多选择题陷阱。' },
+      { type: 'example', label: '例题·化合物类型', text: '下列物质中，属于共价化合物的是？<br>A. NaCl　B. NaOH　C. H₂O　D. NH₄Cl<br><br><strong>解析</strong>：共价化合物只含共价键、不含离子键。H₂O 中只存在 O−H 共价键，是共价化合物，选 C。NaCl 只含离子键；NaOH 含 Na⁺ 与 OH⁻ 的离子键（OH⁻ 内还有共价键）；NH₄Cl 含 NH₄⁺ 与 Cl⁻ 的离子键，后两者都是离子化合物。' }
+    ],
+    exercises: [
+      { type: 'choice', question: '下列关于离子键的说法，正确的是？', options: ['离子键是原子间共用电子对形成的', '离子键是阴、阳离子通过静电作用形成的', '离子键只存在于非金属之间', '离子键的成键微粒是原子'], answer: '离子键是阴、阳离子通过静电作用形成的', explanation: '离子键的定义是阴、阳离子之间通过静电作用（吸引与排斥的平衡）形成的化学键，成键微粒是离子而非原子，所以"阴、阳离子通过静电作用形成"正确。共用电子对形成的是共价键；离子键一般出现在活泼金属与活泼非金属之间，而非只存在于非金属之间。' },
+      { type: 'choice', question: '下列物质中，只含共价键、属于共价化合物的是？', options: ['NaCl', 'MgO', 'HCl', 'Na₂O'], answer: 'HCl', explanation: '共价化合物只含共价键。HCl 由 H 与 Cl 通过共用电子对结合，只含共价键，是共价化合物。NaCl、MgO、Na₂O 都含有金属阳离子与阴离子之间的离子键，属于离子化合物。因此选 HCl。' },
+      { type: 'choice', question: '关于 NaOH，下列说法正确的是？', options: ['只含离子键', '只含共价键', '含离子键和共价键，属离子化合物', '不含任何化学键'], answer: '含离子键和共价键，属离子化合物', explanation: 'NaOH 由 Na⁺ 和 OH⁻ 构成，Na⁺ 与 OH⁻ 之间是离子键；而 OH⁻ 内部 O 与 H 之间是共价键。所以它既含离子键又含共价键，由于含有离子键，属于离子化合物。因此"含离子键和共价键，属离子化合物"正确。' },
+      { type: 'fill', question: 'NH₄Cl 中含有 NH₄⁺ 与 Cl⁻，二者之间靠___键结合，因此 NH₄Cl 属于离子化合物（NH₄⁺ 内部 N−H 为共价键）。', answer: '离子', explanation: 'NH₄Cl 由铵根离子 NH₄⁺ 和氯离子 Cl⁻ 构成，NH₄⁺ 与 Cl⁻ 之间靠静电吸引形成离子键，所以它属于离子化合物；同时 NH₄⁺ 内部的 N 与 H 之间是共价键。结论：含 NH₄⁺ 的化合物通常是离子化合物，这里空格填"离子"键。' },
+      { type: 'fill', question: '离子化合物与共价化合物的根本区别在于：离子化合物___含离子键，而共价化合物只含共价键、绝无离子键。', answer: '一定', explanation: '判断化合物类型的根本标准是有没有离子键：离子化合物一定含有离子键（可能同时还含共价键，如 NaOH、NH₄Cl）；共价化合物只含共价键，绝对不含离子键。所以离子化合物的表述是"一定含离子键"，空格填"一定"。' }
+    ]
+  });
+})();

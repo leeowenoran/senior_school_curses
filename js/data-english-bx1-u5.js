@@ -13,7 +13,7 @@
     {
       id: 'bx1-u5-l1',
       name: 'Unit 4 核心词汇与常用短语',
-      chapter: 'Unit 4 Natural Disasters · 核心词汇与常用短语',
+      chapter: 'Unit 4 Natural Disasters',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、单元主题与词汇概览' },
@@ -60,7 +60,7 @@
     {
       id: 'bx1-u5-l2',
       name: 'Unit 4 重点句型与定语从句关系代词',
-      chapter: 'Unit 4 Natural Disasters · 重点句型与定语从句关系代词',
+      chapter: 'Unit 4 Natural Disasters',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、单元重点句型回顾' },

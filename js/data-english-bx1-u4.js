@@ -13,7 +13,7 @@
     {
       id: 'bx1-u4-l1',
       name: 'Unit 3 核心词汇与常用短语',
-      chapter: 'Unit 3 Sports and Fitness · 核心词汇与常用短语',
+      chapter: 'Unit 3 Sports and Fitness',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、本单元词汇概览' },
@@ -56,7 +56,7 @@
     {
       id: 'bx1-u4-l2',
       name: 'Unit 3 重点句型与附加疑问句',
-      chapter: 'Unit 3 Sports and Fitness · 重点句型与附加疑问句',
+      chapter: 'Unit 3 Sports and Fitness',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、建议表达的常用句型' },

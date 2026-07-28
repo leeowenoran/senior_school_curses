@@ -14,7 +14,7 @@
     {
       id: `xb2-u2-l1`,
       name: `核心词汇与名词性从句（上）`,
-      chapter: `Unit 2 Bridging Cultures · 核心词汇与名词性从句（上）`,
+      chapter: `Unit 2 Bridging Cultures`,
       difficulty: `基础`,
       content: [
         { type: `heading`, text: `一、Unit 2 核心词汇（认字为先）` },
@@ -103,7 +103,7 @@
     {
       id: `xb2-u2-l2`,
       name: `重点句型与名词性从句（下）`,
-      chapter: `Unit 2 Bridging Cultures · 重点句型与名词性从句（下）`,
+      chapter: `Unit 2 Bridging Cultures`,
       difficulty: `基础`,
       content: [
         { type: `heading`, text: `一、Unit 2 重点句型（写好长句）` },

@@ -1,0 +1,80 @@
+(function () {
+  var v = gzGetVolume('english', 'zt1');
+  if (!v) return;
+  v.points.push(
+    {
+      id: `zt1-u4-l1`,
+      name: `不定式与动名词`,
+      chapter: `词汇与语法 · 第4单元 非谓语动词`,
+      difficulty: `基础`,
+      content: [
+        { type: 'heading', text: `一、什么是非谓语动词` },
+        { type: 'paragraph', text: `在英语里，一个句子通常只能有一个动作作谓语。当一个动词不作谓语时，它就要变成一种特别的形式，这种形式叫非谓语动词。它不受主语的人称和单复数的限制，所以才叫"非谓语"。` },
+        { type: 'keypoint', label: `重点·非谓语核心`, text: `非谓语动词<strong>不作谓语</strong>，所以它没有"第三人称单数加s"这种麻烦。<br>常见的非谓语有三种：<strong>to do</strong>（不定式）、<strong>doing</strong>（动名词或现在分词）、<strong>done</strong>（过去分词）。` },
+        { type: 'list', items: [`to do：不定式，常表目的、将来、具体一次的动作`, `doing：动名词，常表习惯、爱好、已发生的动作`, `done：过去分词，常表被动、完成（本课先了解，下节课细讲）`] },
+        { type: 'heading', text: `二、不定式 to do` },
+        { type: 'paragraph', text: `不定式就是"to + 动词原形"。它像一个小跟班，常用来表示做一件事的目的，或者将来要做、具体某一次做的动作。` },
+        { type: 'list', items: [`表目的：I came to see you. 我来看你。`, `表想做：I want to eat. 我想吃。`, `表将来：He is to leave tomorrow. 他明天要离开。`] },
+        { type: 'example', label: `例句`, text: `I went to the shop <strong>to buy</strong> some milk. 我去商店买牛奶。（to buy 说明去的目的）` },
+        { type: 'heading', text: `三、动名词 doing` },
+        { type: 'paragraph', text: `动名词是"动词加 ing"，但它当名词用。它常表示一种习惯、爱好，或者已经发生的动作。它最爱的职位是作主语和宾语。` },
+        { type: 'list', items: [`作主语：Swimming is fun. 游泳很有趣。`, `作宾语：I like reading. 我喜欢读书。`, `表爱好：She enjoys singing. 她喜欢唱歌。`] },
+        { type: 'example', label: `例句`, text: `Reading in bed is my hobby. <strong>在床上看书</strong>是我的爱好。（reading 是动名词，作主语）` },
+        { type: 'warn', label: `易错`, text: `别把动名词和现在分词搞混：动名词当<strong>名词</strong>用（主语、宾语），现在分词当<strong>形容词</strong>用（修饰名词）。写法都是 ing，看它担任什么职务。下一节课会专门讲现在分词。` },
+        { type: 'tip', label: `记忆`, text: `记口诀：<strong>to do 奔目的，doing 是习惯</strong>。看到"为了……"想 to do，看到"喜欢/爱好"想 doing。` },
+        { type: 'heading', text: `四、to do 与 doing 作宾语的意思差别` },
+        { type: 'table', headers: [`动词`, `to do 意思`, `doing 意思`], rows: [['remember', '记得要去做（还没做）', '记得做过（已发生）'], ['stop', '停下来去做另一件', '停止正在做的事'], ['forget', '忘了要去做', '忘了做过']] },
+        { type: 'example', label: `例题`, text: `Remember <strong>to lock</strong> the door. 记得要去锁门（还没锁）。<br>Remember <strong>locking</strong> the door. 记得锁过门了（已经锁了）。` },
+        { type: 'keypoint', label: `重点·意思天差地别`, text: `同一个动词，后面跟 to do 和 doing，<strong>意思可能完全相反</strong>。<br>考试最爱考 remember / stop / forget 这三组，务必分清"还没做"还是"已做过"。` },
+        { type: 'svg', svg: `<svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="300" fill="#f3edfa"/><text x="340" y="34" font-size="17" font-weight="bold" fill="#7a3fb0" text-anchor="middle">不定式与动名词都能作哪些成分</text><rect x="40" y="60" width="280" height="200" rx="10" fill="#ffffff" stroke="#9c56d4"/><text x="180" y="90" font-size="15" font-weight="bold" fill="#9c56d4" text-anchor="middle">不定式 to do</text><text x="180" y="120" font-size="13" fill="#3a2a4a" text-anchor="middle">主语</text><text x="180" y="148" font-size="13" fill="#3a2a4a" text-anchor="middle">宾语</text><text x="180" y="176" font-size="13" fill="#3a2a4a" text-anchor="middle">定语</text><text x="180" y="204" font-size="13" fill="#3a2a4a" text-anchor="middle">状语</text><text x="180" y="232" font-size="13" fill="#3a2a4a" text-anchor="middle">补语</text><rect x="360" y="60" width="280" height="200" rx="10" fill="#ffffff" stroke="#b87fd8"/><text x="500" y="90" font-size="15" font-weight="bold" fill="#7a3fb0" text-anchor="middle">动名词 doing</text><text x="500" y="120" font-size="13" fill="#3a2a4a" text-anchor="middle">主语</text><text x="500" y="148" font-size="13" fill="#3a2a4a" text-anchor="middle">宾语</text><text x="500" y="176" font-size="13" fill="#3a2a4a" text-anchor="middle">定语</text><text x="500" y="204" font-size="13" fill="#3a2a4a" text-anchor="middle">（不作状语）</text><text x="500" y="232" font-size="13" fill="#3a2a4a" text-anchor="middle">（不作补语）</text></svg>`, caption: `图1 不定式与动名词能担任的句子成分对比` },
+        { type: 'svg', svg: `<svg viewBox="0 0 680 280" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="280" fill="#f3edfa"/><text x="340" y="32" font-size="17" font-weight="bold" fill="#7a3fb0" text-anchor="middle">同样动词，to do 与 doing 意思不同</text><rect x="40" y="55" width="290" height="80" rx="8" fill="#ffffff" stroke="#9c56d4"/><text x="185" y="82" font-size="14" font-weight="bold" fill="#9c56d4" text-anchor="middle">remember to do</text><text x="185" y="110" font-size="13" fill="#3a2a4a" text-anchor="middle">记得要去做（还没做）</text><rect x="350" y="55" width="290" height="80" rx="8" fill="#ffffff" stroke="#b87fd8"/><text x="495" y="82" font-size="14" font-weight="bold" fill="#7a3fb0" text-anchor="middle">remember doing</text><text x="495" y="110" font-size="13" fill="#3a2a4a" text-anchor="middle">记得做过（已发生）</text><rect x="40" y="155" width="290" height="80" rx="8" fill="#ffffff" stroke="#9c56d4"/><text x="185" y="182" font-size="14" font-weight="bold" fill="#9c56d4" text-anchor="middle">stop to do</text><text x="185" y="210" font-size="13" fill="#3a2a4a" text-anchor="middle">停下来去做另一件</text><rect x="350" y="155" width="290" height="80" rx="8" fill="#ffffff" stroke="#b87fd8"/><text x="495" y="182" font-size="14" font-weight="bold" fill="#7a3fb0" text-anchor="middle">stop doing</text><text x="495" y="210" font-size="13" fill="#3a2a4a" text-anchor="middle">停止正在做的事</text></svg>`, caption: `图2 to do 与 doing 在宾语位置的语义差别` },
+        { type: 'svg', svg: `<svg viewBox="0 0 680 260" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="260" fill="#f3edfa"/><text x="340" y="32" font-size="17" font-weight="bold" fill="#7a3fb0" text-anchor="middle">非谓语动词的三种形式</text><rect x="50" y="60" width="170" height="150" rx="10" fill="#9c56d4"/><text x="135" y="110" font-size="15" font-weight="bold" fill="#ffffff" text-anchor="middle">to do</text><text x="135" y="140" font-size="13" fill="#ffffff" text-anchor="middle">不定式</text><text x="135" y="168" font-size="12" fill="#ffffff" text-anchor="middle">表目的将来</text><rect x="255" y="60" width="170" height="150" rx="10" fill="#b87fd8"/><text x="340" y="110" font-size="15" font-weight="bold" fill="#ffffff" text-anchor="middle">doing</text><text x="340" y="140" font-size="13" fill="#ffffff" text-anchor="middle">动名词</text><text x="340" y="168" font-size="12" fill="#ffffff" text-anchor="middle">表习惯爱好</text><rect x="460" y="60" width="170" height="150" rx="10" fill="#7a3fb0"/><text x="545" y="110" font-size="15" font-weight="bold" fill="#ffffff" text-anchor="middle">done</text><text x="545" y="140" font-size="13" fill="#ffffff" text-anchor="middle">过去分词</text><text x="545" y="168" font-size="12" fill="#ffffff" text-anchor="middle">表被动完成</text></svg>`, caption: `图3 非谓语动词三种形式总览` },
+        { type: 'paragraph', text: `小结：不定式 to do 和动名词 doing 都不作谓语，都不受人称和单复数影响。to do 多用于目的和将来，doing 多用于习惯和爱好。当它们都作宾语时，意思可能完全不同，重点记牢 remember、stop、forget 三组对比。` }
+      ],
+      exercises: [
+        { type: 'choice', question: `When you leave the room, please remember ___ the light.`, options: ['turn off', 'turning off', 'to turn off', 'turned off'], answer: 'to turn off', explanation: `remember to do 表示记得要去做某事，动作还没有发生；remember doing 表示记得做过某事，动作已经发生。句中说当你离开房间时请记得关灯，关灯这个动作还没有做，所以要用不定式 to turn off。如果选 turning off 就变成记得已经关过灯，与句意不符。因此正确答案是 to turn off。` },
+        { type: 'choice', question: `___ in the river is great fun in summer.`, options: ['Swim', 'To swim', 'Swimming', 'Swam'], answer: 'Swimming', explanation: `动名词作主语表示一种习惯或一般情况。句意是夏天在河里游泳是件乐事，这是一般性、习惯性的描述，所以用 Swimming 作主语。不定式 To swim 也可作主语但更强调具体某一次或将来的动作。Swim 是动词原形不能作主语，Swam 是过去式也不能作主语。因此选 Swimming。` },
+        { type: 'choice', question: `He was tired, so he stopped ___ a rest.`, options: ['to have', 'having', 'have', 'had'], answer: 'to have', explanation: `stop to do 表示停下来去做另一件事，stop doing 表示停止正在做的事。句中说他累了，所以他停下来去休息，休息是另一件将要做的动作，因此用 stop to have a rest。如果选 having 就表示停止休息，与累了要休息的意思相反。所以正确答案是 to have。` },
+        { type: 'fill', question: `I went to the store ___ (buy) some milk. 请用不定式填空。`, answer: 'to buy', explanation: `不定式 to do 常用来表示目的，说明前面动作的目的。句意是我去商店买牛奶，去买牛奶是去商店的目的，所以填 to buy。如果用 buying 动名词则意思变成去商店并且买牛奶，侧重伴随而不是目的。因此这里应填 to buy 表示目的。` },
+        { type: 'fill', question: `She likes ___ (read) books in the library. 请用动名词填空。`, answer: 'reading', explanation: `动词 like 后面接动名词 doing 表示习惯性的爱好。句意是她喜欢在图书馆读书，这是一种长期的爱好，所以用 reading。如果填 to read 也可以表示具体的某次想读，但表达一般爱好时更常用动名词。本题强调爱好习惯，因此填 reading 最合适。` }
+      ]
+    },
+    {
+      id: `zt1-u4-l2`,
+      name: `分词作定语、状语与补语`,
+      chapter: `词汇与语法 · 第4单元 非谓语动词`,
+      difficulty: `基础`,
+      content: [
+        { type: 'heading', text: `一、什么是分词` },
+        { type: 'paragraph', text: `分词也是非谓语动词的一种，分两种：现在分词（doing）和过去分词（done）。它们常当形容词用，用来修饰名词或补充说明。判断用哪一个，关键看"主动还是被动、进行还是完成"。` },
+        { type: 'keypoint', label: `重点·分词两兄弟`, text: `<strong>现在分词 doing</strong>：表主动、进行（正在发生）。<br><strong>过去分词 done</strong>：表被动、完成（已经被做）。` },
+        { type: 'list', items: [`现在分词：the boy playing basketball 正在打篮球的男孩`, `过去分词：the book written by Lu Xun 鲁迅写的书`, `判断口诀：名词自己发出动作用 doing，被别人做用 done`] },
+        { type: 'heading', text: `二、现在分词 doing` },
+        { type: 'paragraph', text: `现在分词由"动词加 ing"构成，当它修饰名词时，表示这个名词自己主动发出动作，而且动作正在进行。` },
+        { type: 'example', label: `例句`, text: `The girl <strong>sitting</strong> by the window is my sister. 坐在窗边的女孩是我妹妹。（女孩主动坐，正在坐）` },
+        { type: 'list', items: [`作定语：a sleeping baby 一个正在睡觉的婴儿`, `作状语：Walking in the park, I saw a dog. 走在公园里，我看见一只狗。`, `作补语：I heard him singing. 我听见他在唱歌。`] },
+        { type: 'heading', text: `三、过去分词 done` },
+        { type: 'paragraph', text: `过去分词常由"动词加 ed"构成（不规则变化要单独记）。当它修饰名词时，表示这个名词是被动的、动作已经被完成。` },
+        { type: 'example', label: `例句`, text: `The house <strong>built</strong> last year is beautiful. 去年建好的房子很漂亮。（房子被建，已建完）` },
+        { type: 'list', items: [`作定语：a broken cup 一个破了的杯子`, `作状语：Seen from the hill, the city is small. 从小山看，城市很小。`, `作补语：I had my hair cut. 我理了发（头发被剪）。`] },
+        { type: 'warn', label: `易错`, text: `burning house 和 burnt house 意思完全不同：<strong>burning</strong> 是正在着火的房子（快打119），<strong>burnt</strong> 是已经烧焦的房子（火已灭）。别把"正在"和"已经"弄反。` },
+        { type: 'tip', label: `记忆`, text: `记对比：<strong>doing 主动在进行，done 被动已完成</strong>。看到名词是"被……的"就用 done，看到名词"自己正在……"就用 doing。` },
+        { type: 'heading', text: `四、分词作定语、状语与补语` },
+        { type: 'table', headers: [`成分`, `现在分词 doing`, `过去分词 done`], rows: [['作定语', 'the boy playing 正在玩的男孩', 'the book written 被写的书'], ['作状语', '主动、进行', '被动、完成'], ['作补语', 'I heard him singing', 'I had my hair cut']] },
+        { type: 'example', label: `例题`, text: `The <strong>burning</strong> house needs help. 着火的房子需要帮助。（房子自己正在燃烧，主动进行，用 burning）` },
+        { type: 'keypoint', label: `重点·成分三兄弟`, text: `分词可作<strong>定语</strong>（修饰名词）、<strong>状语</strong>（修饰整个句子）、<strong>补语</strong>（补充说明宾语）。<br>选 doing 还是 done，永远看名词与动作的"主动/被动、进行/完成"关系。` },
+        { type: 'svg', svg: `<svg viewBox="0 0 680 280" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="280" fill="#f3edfa"/><text x="340" y="32" font-size="17" font-weight="bold" fill="#7a3fb0" text-anchor="middle">现在分词 doing 与过去分词 done</text><rect x="40" y="55" width="290" height="180" rx="10" fill="#ffffff" stroke="#9c56d4"/><text x="185" y="88" font-size="15" font-weight="bold" fill="#9c56d4" text-anchor="middle">现在分词 doing</text><text x="185" y="120" font-size="13" fill="#3a2a4a" text-anchor="middle">表主动</text><text x="185" y="150" font-size="13" fill="#3a2a4a" text-anchor="middle">表进行（正在）</text><text x="185" y="180" font-size="12" fill="#5a7a2a" text-anchor="middle">例：the boy playing</text><text x="185" y="205" font-size="12" fill="#5a7a2a" text-anchor="middle">正在玩的男孩</text><rect x="350" y="55" width="290" height="180" rx="10" fill="#ffffff" stroke="#b87fd8"/><text x="495" y="88" font-size="15" font-weight="bold" fill="#7a3fb0" text-anchor="middle">过去分词 done</text><text x="495" y="120" font-size="13" fill="#3a2a4a" text-anchor="middle">表被动</text><text x="495" y="150" font-size="13" fill="#3a2a4a" text-anchor="middle">表完成（已做）</text><text x="495" y="180" font-size="12" fill="#c0392b" text-anchor="middle">例：the book written</text><text x="495" y="205" font-size="12" fill="#c0392b" text-anchor="middle">被写的书</text></svg>`, caption: `图1 现在分词与过去分词的核心区别` },
+        { type: 'svg', svg: `<svg viewBox="0 0 680 260" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="260" fill="#f3edfa"/><text x="340" y="32" font-size="17" font-weight="bold" fill="#7a3fb0" text-anchor="middle">分词可以作三种成分</text><rect x="50" y="60" width="170" height="150" rx="10" fill="#9c56d4"/><text x="135" y="115" font-size="15" font-weight="bold" fill="#ffffff" text-anchor="middle">定语</text><text x="135" y="145" font-size="12" fill="#ffffff" text-anchor="middle">修饰名词</text><rect x="255" y="60" width="170" height="150" rx="10" fill="#b87fd8"/><text x="340" y="115" font-size="15" font-weight="bold" fill="#ffffff" text-anchor="middle">状语</text><text x="340" y="145" font-size="12" fill="#ffffff" text-anchor="middle">修饰句子</text><rect x="460" y="60" width="170" height="150" rx="10" fill="#7a3fb0"/><text x="545" y="115" font-size="15" font-weight="bold" fill="#ffffff" text-anchor="middle">补语</text><text x="545" y="145" font-size="12" fill="#ffffff" text-anchor="middle">补充说明宾语</text></svg>`, caption: `图2 分词在句子中的三种成分` },
+        { type: 'svg', svg: `<svg viewBox="0 0 680 260" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="260" fill="#f3edfa"/><text x="340" y="32" font-size="17" font-weight="bold" fill="#7a3fb0" text-anchor="middle">burning house 与 burnt house</text><rect x="40" y="55" width="290" height="170" rx="10" fill="#ffffff" stroke="#9c56d4"/><text x="185" y="100" font-size="15" font-weight="bold" fill="#9c56d4" text-anchor="middle">burning house</text><text x="185" y="135" font-size="13" fill="#3a2a4a" text-anchor="middle">正在着火的房子</text><text x="185" y="170" font-size="13" fill="#3a2a4a" text-anchor="middle">现在分词，主动进行</text><text x="185" y="200" font-size="12" fill="#c0392b" text-anchor="middle">快打119！</text><rect x="350" y="55" width="290" height="170" rx="10" fill="#ffffff" stroke="#b87fd8"/><text x="495" y="100" font-size="15" font-weight="bold" fill="#7a3fb0" text-anchor="middle">burnt house</text><text x="495" y="135" font-size="13" fill="#3a2a4a" text-anchor="middle">已经烧焦的房子</text><text x="495" y="170" font-size="13" fill="#3a2a4a" text-anchor="middle">过去分词，被动完成</text><text x="495" y="200" font-size="12" fill="#5a7a2a" text-anchor="middle">火已灭</text></svg>`, caption: `图3 burning 与 burnt 的语义对比` },
+        { type: 'paragraph', text: `小结：现在分词 doing 表主动、进行；过去分词 done 表被动、完成。它们可以作定语、状语和宾语补足语。做题时先判断名词与动作的关系，再决定用 doing 还是 done，特别留意 burning 与 burnt 这类易混词。` }
+      ],
+      exercises: [
+        { type: 'choice', question: `The girl ___ by the window is my sister.`, options: ['sit', 'sitting', 'sat', 'to sit'], answer: 'sitting', explanation: `现在分词 doing 作定语表示主动和进行。the girl sitting by the window 表示正坐在窗边的女孩，女孩主动发出坐的动作且正在发生，所以用 sitting。sit 是原形不能作定语，sat 是过去式也不行，to sit 不定式作定语多表将来。因此选 sitting。` },
+        { type: 'choice', question: `The house ___ last year is very beautiful.`, options: ['build', 'building', 'built', 'to build'], answer: 'built', explanation: `过去分词 done 作定语表示被动和完成。房子是被建造的而且是去年建好的，所以用 built 表示被动完成。build 是原形不行，building 是现在分词表主动进行，这里房子不能自己建，to build 表将来也不符合去年已建好。因此选 built。` },
+        { type: 'choice', question: `Look at the ___ house. We must call 119.`, options: ['burning', 'burnt', 'burn', 'to burn'], answer: 'burning', explanation: `现在分词 burning 表示正在燃烧的，过去分词 burnt 表示已经烧焦的。句中说快打119报警，说明房子正在着火，所以用 burning house 着火的房子。如果是 burnt house 则表示已经烧焦的房子，火已灭不需要立刻报警。因此选 burning。` },
+        { type: 'fill', question: `I had my hair ___ (cut) yesterday. 请用过去分词填空。`, answer: 'cut', explanation: `have something done 表示让别人做某事。hair 是被剪的，所以用过去分词 cut 作宾语补足语，表示头发被剪了。这里不能用 cutting，因为头发不能自己剪，是被动关系。因此填 cut，注意 cut 的过去分词还是 cut。` },
+        { type: 'fill', question: `___ (walk) in the park, I saw a cute dog. 请用现在分词填空。`, answer: 'Walking|walking', explanation: `现在分词作状语表示主动和同时发生。主语 I 主动发出走路的动作，且与看见狗同时发生，所以用 Walking 作状语。如果用 walked 过去式会造成主语不一致，不定式 to walk 表目的也不合适。因此填 Walking，注意句首首字母可大写。` }
+      ]
+    }
+  );
+})();

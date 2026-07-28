@@ -13,7 +13,7 @@
     {
       id: 'xb2-u5-l1',
       name: '核心词汇与动词-ing形式作主语',
-      chapter: 'Unit 5 First Aid · 核心词汇与动词-ing形式作主语',
+      chapter: 'Unit 5 First Aid',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、Unit 5 核心词汇（急救相关）' },
@@ -141,7 +141,7 @@
     {
       id: 'xb2-u5-l2',
       name: '重点句型与动词-ing形式作宾语',
-      chapter: 'Unit 5 First Aid · 重点句型与动词-ing形式作宾语',
+      chapter: 'Unit 5 First Aid',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、Unit 5 重点句型' },

@@ -14,7 +14,7 @@
     {
       id: `bx2-u1-l1`,
       name: `核心词汇与限制性定语从句关系代词`,
-      chapter: `Unit 1 Cultural Heritage · 核心词汇与限制性定语从句关系代词`,
+      chapter: `Unit 1 Cultural Heritage`,
       difficulty: `基础`,
       content: [
         { type: `heading`, text: `一、Unit 1 核心词汇概览` },
@@ -90,7 +90,7 @@
     {
       id: `bx2-u1-l2`,
       name: `重点句型与关系副词`,
-      chapter: `Unit 1 Cultural Heritage · 重点句型与关系副词`,
+      chapter: `Unit 1 Cultural Heritage`,
       difficulty: `基础`,
       content: [
         { type: `heading`, text: `一、Unit 1 重点句型` },

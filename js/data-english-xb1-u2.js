@@ -12,7 +12,7 @@
     {
       id: 'xb1-u2-l1',
       name: '核心词汇与将来进行时',
-      chapter: 'Unit 2 Looking into the Future · 核心词汇与将来进行时',
+      chapter: 'Unit 2 Looking into the Future',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、Unit 2 核心词汇概览' },
@@ -54,7 +54,7 @@
     {
       id: 'xb1-u2-l2',
       name: '重点句型与将来进行时运用',
-      chapter: 'Unit 2 Looking into the Future · 重点句型与将来进行时运用',
+      chapter: 'Unit 2 Looking into the Future',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、Unit 2 重点句型概览' },

@@ -12,7 +12,7 @@
     {
       id: 'bx2-u3-l1',
       name: '核心词汇与现在完成时的被动语态',
-      chapter: 'Unit 3 The Internet · 核心词汇与现在完成时的被动语态',
+      chapter: 'Unit 3 The Internet',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、Unit 3 核心词汇概览' },
@@ -53,7 +53,7 @@
     {
       id: 'bx2-u3-l2',
       name: '重点句型与被动语态对比',
-      chapter: 'Unit 3 The Internet · 重点句型与被动语态对比',
+      chapter: 'Unit 3 The Internet',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、Unit 3 重点句型概览' },

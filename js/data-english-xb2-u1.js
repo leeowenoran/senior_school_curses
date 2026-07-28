@@ -15,7 +15,7 @@
     {
       id: 'xb2-u1-l1',
       name: 'Unit 1 核心词汇与表语从句（上）',
-      chapter: 'Unit 1 Science and Scientists · 核心词汇与表语从句（上）',
+      chapter: 'Unit 1 Science and Scientists',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、Unit 1 核心词汇（科学研究名词）' },
@@ -108,7 +108,7 @@
     {
       id: 'xb2-u1-l2',
       name: 'Unit 1 重点句型与表语从句（下）',
-      chapter: 'Unit 1 Science and Scientists · 重点句型与表语从句（下）',
+      chapter: 'Unit 1 Science and Scientists',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、强调句 It is / was ... that ...' },

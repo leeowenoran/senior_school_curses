@@ -14,7 +14,7 @@
     {
       id: 'bx1-u3-l1',
       name: '核心词汇与常用短语',
-      chapter: 'Unit 2 Travelling Around · 核心词汇与常用短语',
+      chapter: 'Unit 2 Travelling Around',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、单元导入：Travelling Around' },
@@ -59,7 +59,7 @@
     {
       id: 'bx1-u3-l2',
       name: '重点句型与现在进行时表将来',
-      chapter: 'Unit 2 Travelling Around · 重点句型与现在进行时表将来',
+      chapter: 'Unit 2 Travelling Around',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、单元重点句型导入' },

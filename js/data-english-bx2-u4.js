@@ -15,7 +15,7 @@
     {
       id: 'bx2-u4-l1',
       name: '核心词汇与过去分词作定语',
-      chapter: 'Unit 4 History and Traditions · 核心词汇与过去分词作定语',
+      chapter: 'Unit 4 History and Traditions',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、Unit 4 核心词汇概览' },
@@ -85,7 +85,7 @@
     {
       id: 'bx2-u4-l2',
       name: '重点句型与过去分词作宾补',
-      chapter: 'Unit 4 History and Traditions · 重点句型与过去分词作宾补',
+      chapter: 'Unit 4 History and Traditions',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、Unit 4 重点句型' },

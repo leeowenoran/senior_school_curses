@@ -15,7 +15,7 @@
     {
       id: 'xb1-u5-l1',
       name: '核心词汇与主语从句（上）',
-      chapter: 'Unit 5 Working the Land · 核心词汇与主语从句（上）',
+      chapter: 'Unit 5 Working the Land',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、Unit 5 核心词汇概览' },
@@ -93,7 +93,7 @@
     {
       id: 'xb1-u5-l2',
       name: '重点句型与主语从句（下）',
-      chapter: 'Unit 5 Working the Land · 重点句型与主语从句（下）',
+      chapter: 'Unit 5 Working the Land',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、Unit 5 重点句型' },

@@ -13,7 +13,7 @@
     {
       id: 'xb1-u1-l1',
       name: '核心词汇与非限制性定语从句（上）',
-      chapter: 'Unit 1 People of Achievement · 核心词汇与非限制性定语从句（上）',
+      chapter: 'Unit 1 People of Achievement',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、Unit 1 核心词汇概览' },
@@ -56,7 +56,7 @@
     {
       id: 'xb1-u1-l2',
       name: '重点句型与非限制性定语从句（下）',
-      chapter: 'Unit 1 People of Achievement · 重点句型与非限制性定语从句（下）',
+      chapter: 'Unit 1 People of Achievement',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、描写人物的重点句型' },

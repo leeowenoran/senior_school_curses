@@ -13,7 +13,7 @@
     {
       id: 'xb2-u4-l1',
       name: '核心词汇与过去分词作表语',
-      chapter: 'Unit 4 Journey Across a Vast Land · 核心词汇与过去分词作表语',
+      chapter: 'Unit 4 Journey Across a Vast Land',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、Unit 4 核心名词（风景与地理）' },
@@ -53,7 +53,7 @@
     {
       id: 'xb2-u4-l2',
       name: '重点句型与过去分词作状语',
-      chapter: 'Unit 4 Journey Across a Vast Land · 重点句型与过去分词作状语',
+      chapter: 'Unit 4 Journey Across a Vast Land',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、Unit 4 重点句型（描述旅行感受）' },

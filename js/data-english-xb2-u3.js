@@ -14,7 +14,7 @@
     {
       id: 'xb2-u3-l1',
       name: 'Unit 3 核心词汇与过去完成时（上）',
-      chapter: 'Unit 3 Food and Culture · 核心词汇与过去完成时（上）',
+      chapter: 'Unit 3 Food and Culture',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、Unit 3 核心词汇：先认识这些"吃"的单词' },
@@ -138,7 +138,7 @@
     {
       id: 'xb2-u3-l2',
       name: 'Unit 3 重点句型与过去完成时被动语态',
-      chapter: 'Unit 3 Food and Culture · 重点句型与过去完成时被动语态',
+      chapter: 'Unit 3 Food and Culture',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、重点句型：more than 的多种含义' },

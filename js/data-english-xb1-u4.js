@@ -14,7 +14,7 @@
     {
       id: 'xb1-u4-l1',
       name: '核心词汇与动词-ing形式作宾语',
-      chapter: 'Unit 4 Body Language · 核心词汇与动词-ing形式作宾语',
+      chapter: 'Unit 4 Body Language',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、Unit 4 核心词汇概览' },
@@ -60,7 +60,7 @@
     {
       id: 'xb1-u4-l2',
       name: '重点句型与动词-ing形式作表语',
-      chapter: 'Unit 4 Body Language · 重点句型与动词-ing形式作表语',
+      chapter: 'Unit 4 Body Language',
       difficulty: '基础',
       content: [
         { type: 'heading', text: '一、Unit 4 重点句型' },
