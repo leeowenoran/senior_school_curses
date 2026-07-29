@@ -1,0 +1,41 @@
+/* 生物学 · 选择性必修2 生物与环境 · 第2章 · 课时：第3节 群落的演替 */
+(function () {
+  var v = gzGetVolume('biology', 'xb2');
+  if (!v) return;
+  v.points.push({
+    id: 'xb2-u6',
+    name: '第3节 群落的演替',
+    chapter: '选择性必修2 生物与环境 · 第2章 群落及其演替',
+    difficulty: '基础',
+    content: [
+      { type: 'heading', text: '一、什么是群落演替' },
+      { type: 'paragraph', text: '<strong>群落演替</strong>是指随着时间的推移，一个群落被另一个群落代替的过程。例如一块光秃秃的岩石，最先只有地衣能附着，后来长出苔藓，再后来草本、灌木陆续出现，最后变成森林。这不是同一种生物数量变化，而是群落的优势物种发生了更替，是群落动态变化最重要的形式。' },
+      { type: 'list', items: ['演替是「群落水平」的变化，不是单一物种种群数量波动', '演替是优势物种的依次更替，本质上受环境和物种本身特性共同驱动', '演替是一个漫长的、定向的过程，最终趋向稳定'] },
+      { type: 'keypoint', label: '重点·演替概念', text: '<strong>群落演替</strong>是随着时间的推移，一个群落被另一个群落代替的过程。关键词是「时间」和「代替」：旧群落中的物种逐渐被新物种取代，群落的物种组成、空间结构和环境条件都随之改变。' },
+      { type: 'heading', text: '二、群落演替的类型' },
+      { type: 'paragraph', text: '根据起始条件不同，演替分为<strong>初生演替</strong>和<strong>次生演替</strong>两类。二者最大的区别在于「起点」有没有土壤和繁殖体。初生演替的起点几乎一无所有，次生演替的起点还保留着土壤甚至种子。' },
+      { type: 'list', items: ['初生演替：发生在从未有过生物，或原有生物被彻底消灭的地方，如裸岩、沙丘、火山岩', '次生演替：发生在原有植被已不存在，但原有土壤条件基本保留，甚至还保留种子或繁殖体的地方，如弃耕农田、火灾后的森林'] },
+      { type: 'paragraph', text: '<strong>初生演替</strong>的过程可以裸岩为例：裸岩上首先出现地衣，地衣分泌有机酸风化岩石形成薄薄土壤；接着苔藓生长，进一步积累土壤；土壤变厚后草本植物定居，之后灌木出现，最后乔木长成，形成森林。每一步都为下一步创造了更好的土壤和遮阴条件。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="320" fill="#eef6e4"/><text x="340" y="34" font-size="17" font-weight="bold" fill="#3f7d1e" text-anchor="middle">初生演替的过程（以裸岩为例）</text><rect x="30" y="80" width="110" height="80" rx="10" fill="#d6eac4" stroke="#3f7d1e" stroke-width="2"/><text x="85" y="118" font-size="13" fill="#2e3a22" text-anchor="middle" font-weight="bold">裸岩</text><rect x="165" y="80" width="110" height="80" rx="10" fill="#d6eac4" stroke="#3f7d1e" stroke-width="2"/><text x="220" y="118" font-size="13" fill="#2e3a22" text-anchor="middle" font-weight="bold">地衣</text><rect x="300" y="80" width="110" height="80" rx="10" fill="#d6eac4" stroke="#3f7d1e" stroke-width="2"/><text x="355" y="118" font-size="13" fill="#2e3a22" text-anchor="middle" font-weight="bold">苔藓</text><rect x="435" y="80" width="110" height="80" rx="10" fill="#d6eac4" stroke="#3f7d1e" stroke-width="2"/><text x="490" y="118" font-size="13" fill="#2e3a22" text-anchor="middle" font-weight="bold">草本</text><rect x="565" y="80" width="95" height="80" rx="10" fill="#d6eac4" stroke="#3f7d1e" stroke-width="2"/><text x="612" y="118" font-size="13" fill="#2e3a22" text-anchor="middle" font-weight="bold">森林</text><polygon points="141,122 178,110 178,134" fill="#3f7d1e"/><polygon points="276,122 313,110 313,134" fill="#3f7d1e"/><polygon points="411,122 448,110 448,134" fill="#3f7d1e"/><polygon points="546,122 583,110 583,134" fill="#3f7d1e"/><text x="340" y="240" font-size="13" fill="#2e3a22" text-anchor="middle">裸岩 → 地衣 → 苔藓 → 草本 → 灌木 → 森林</text><text x="340" y="285" font-size="13" fill="#5aa832" text-anchor="middle">初生演替起点几乎无土壤，速度缓慢</text></svg>', caption: '图1　初生演替从裸岩开始，经地衣、苔藓等阶段最终形成森林。' },
+      { type: 'tip', label: '提示·记忆演替顺序', text: '记忆初生演替顺序可用口诀「裸地衣，苔藓草，灌木林」。先记起点裸岩，再记地衣开路、苔藓跟进、草本铺地、灌木立起、乔木成林。这是教材经典顺序，考试常考填空。' },
+      { type: 'paragraph', text: '<strong>次生演替</strong>则以弃耕农田为例：农田荒废后，原有农作物不再耕种，但土壤里还留着杂草种子和地下根。很快一年生杂草萌发，之后多年生杂草和灌木侵入，若任其发展，若干年后可恢复为森林。因为起点有土壤和种子，次生演替比初生演替快得多。' },
+      { type: 'list', items: ['弃耕农田：先长一年生杂草，再被多年生杂草和灌木取代', '火灾后的森林：乔木虽毁，但土壤和地下芽保留，恢复较快', '砍伐后的森林：保留土壤与种子库，可较快重新郁闭'] },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="300" fill="#eef6e4"/><text x="340" y="34" font-size="17" font-weight="bold" fill="#3f7d1e" text-anchor="middle">次生演替的过程（以弃耕农田为例）</text><rect x="60" y="80" width="160" height="90" rx="10" fill="#d6eac4" stroke="#3f7d1e" stroke-width="2"/><text x="140" y="118" font-size="13" fill="#2e3a22" text-anchor="middle" font-weight="bold">弃耕农田</text><rect x="260" y="80" width="160" height="90" rx="10" fill="#d6eac4" stroke="#3f7d1e" stroke-width="2"/><text x="340" y="118" font-size="13" fill="#2e3a22" text-anchor="middle" font-weight="bold">杂草丛生</text><rect x="460" y="80" width="160" height="90" rx="10" fill="#d6eac4" stroke="#3f7d1e" stroke-width="2"/><text x="540" y="118" font-size="13" fill="#2e3a22" text-anchor="middle" font-weight="bold">灌木 → 森林</text><polygon points="221,132 258,120 258,144" fill="#3f7d1e"/><polygon points="421,132 458,120 458,144" fill="#3f7d1e"/><text x="340" y="240" font-size="13" fill="#2e3a22" text-anchor="middle">弃耕农田 → 杂草 → 灌木 → 森林</text><text x="340" y="280" font-size="13" fill="#5aa832" text-anchor="middle">次生演替起点有土壤，速度快于初生演替</text></svg>', caption: '图2　次生演替从弃耕农田开始，因保留土壤而恢复较快。' },
+      { type: 'warn', label: '易错·初生与次生区别', text: '易错点：判断演替类型看「起点」而非「快慢」。只要起点是<strong>从未有过生物或原有生物被彻底消灭、连土壤都没有</strong>，就是初生演替；只要起点<strong>保留原有土壤条件</strong>，哪怕草木全无，也是次生演替。弃耕农田、火灾森林虽然看上去「荒了」，但仍属次生演替。不要把「看起来荒凉」误判为初生演替。' },
+      { type: 'heading', text: '三、群落演替的规律' },
+      { type: 'paragraph', text: '群落演替不是杂乱无章的变化，而是<strong>群落长期变化的积累结果</strong>。在演替过程中，物种多样性通常先增加后趋于稳定，群落结构由简单变复杂，有机物总量和土壤肥力逐渐提高，群落利用环境资源的能力越来越强。' },
+      { type: 'paragraph', text: '演替最终趋向于形成与当地<strong>气候和土壤条件相适应</strong>的稳定群落，称为顶极群落。在湿润温暖地区，顶极群落往往是森林；在半干旱区可能是草原；在极地或高原则是苔原。也就是说，演替的方向受当地环境「封顶」，不会无限进行。' },
+      { type: 'table', headers: ['比较项目', '初生演替', '次生演替'], rows: [['起点', '无植被、无土壤或土壤被彻底消灭', '植被不在，但土壤条件基本保留'], ['经历时间', '漫长', '较短'], ['速度', '缓慢', '较快'], ['实例', '裸岩、沙丘、火山岩', '弃耕农田、火灾后森林']] },
+      { type: 'example', label: '例题·区分演替类型', text: '题目：在某一火山喷发后形成的裸岩上，逐渐出现了地衣、苔藓、草本，最终长出森林。这一过程属于？<br>A. 次生演替　B. 初生演替　C. 群落退化　D. 种群爆发<br>解析：火山喷发后的裸岩上原本没有任何生物，也没有土壤，属于「从未有过生物或原有生物被彻底消灭」的起点，符合初生演替的定义。演替经历地衣、苔藓、草本到森林，正是初生演替的经典顺序。次生演替要求保留土壤，火山裸岩不满足，因此选 B。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="320" fill="#eef6e4"/><text x="340" y="34" font-size="17" font-weight="bold" fill="#3f7d1e" text-anchor="middle">群落演替的方向与顶极群落</text><rect x="60" y="90" width="200" height="100" rx="10" fill="#d6eac4" stroke="#3f7d1e" stroke-width="2"/><text x="160" y="132" font-size="14" fill="#2e3a22" text-anchor="middle" font-weight="bold">简单群落</text><text x="160" y="158" font-size="12" fill="#2e3a22" text-anchor="middle">物种少、结构简</text><polygon points="261,142 298,130 298,154" fill="#3f7d1e"/><rect x="420" y="90" width="200" height="100" rx="10" fill="#d6eac4" stroke="#3f7d1e" stroke-width="2"/><text x="520" y="132" font-size="14" fill="#2e3a22" text-anchor="middle" font-weight="bold">稳定顶极群落</text><text x="520" y="158" font-size="12" fill="#2e3a22" text-anchor="middle">物种多、结构复杂</text><text x="340" y="250" font-size="13" fill="#2e3a22" text-anchor="middle">演替方向：由简单到复杂，最终趋于与气候土壤适应</text><text x="340" y="290" font-size="13" fill="#5aa832" text-anchor="middle">人类活动可改变演替的速度和方向</text></svg>', caption: '图3　演替由简单群落趋向与当地环境适应的稳定顶极群落。' },
+      { type: 'paragraph', text: '人类活动会对群落演替产生重大影响。退耕还林、封山育林可以加速正向演替；过度放牧、乱砍滥伐则会破坏演替进程，使群落退化。因此，认识演替规律对人类合理利用和保护自然资源具有重要意义。' }
+    ],
+    exercises: [
+      { type: 'choice', question: '群落演替是指？', options: ['一个种群被另一个种群代替', '随着时间的推移一个群落被另一个群落代替', '生物个体数量单纯增加', '物种全部灭绝的过程'], answer: '随着时间的推移一个群落被另一个群落代替', explanation: '群落演替的核心定义是随时间的推移，一个群落被另一个群落代替，强调的是群落整体优势物种的更替，而不是单个物种种群数量的增减，更不是物种灭绝。因此正确选项是「随着时间的推移一个群落被另一个群落代替」。' },
+      { type: 'choice', question: '下列演替中，属于初生演替的是？', options: ['弃耕农田上的演替', '火灾后森林的演替', '裸岩上开始的演替', '砍伐后森林的演替'], answer: '裸岩上开始的演替', explanation: '初生演替的起点是从未有过生物或原有生物被彻底消灭、几乎没有土壤的地方，裸岩符合这一条件。弃耕农田、火灾后森林、砍伐后森林都还保留着原有土壤和繁殖体，属于次生演替。因此属于初生演替的是裸岩上开始的演替。' },
+      { type: 'choice', question: '关于初生演替和次生演替的叙述，正确的是？', options: ['初生演替起点有土壤条件', '次生演替起点原有土壤条件基本保留', '二者都要经历裸岩阶段', '次生演替不能形成森林'], answer: '次生演替起点原有土壤条件基本保留', explanation: '次生演替发生在原有植被已不存在，但原有土壤条件基本保留，甚至还保留植物种子或繁殖体的地方，因此恢复较快。初生演替起点恰恰缺少土壤；次生演替一般不经历裸岩阶段，也可以恢复为森林。所以正确叙述是次生演替起点原有土壤条件基本保留。' },
+      { type: 'fill', question: '在裸岩上发生的初生演替，常经历 地衣 → 苔藓 → 草本 → 灌木 → ___ 的阶段。', answer: '森林', explanation: '初生演替以裸岩为例的经典顺序是：裸岩上先出现地衣，地衣风化岩石形成薄土；随后苔藓生长积累更多土壤；接着草本植物定居，再被灌木取代，最后乔木长成形成森林。因此最后一个阶段是森林，这是湿润地区初生演替的顶极群落。' },
+      { type: 'fill', question: '群落演替是长期变化的积累结果，最终趋向于形成与当地___和土壤条件相适应的稳定群落（顶极群落）。', answer: '气候', explanation: '演替的方向受环境制约，最终形成的顶极群落是与当地气候和土壤条件相适应的稳定群落。在温暖湿润地区顶极群落多为森林，半干旱区多为草原，极地或高原则为苔原。因此填空应为气候，它与土壤共同决定了顶极群落的类型。' }
+    ]
+  });
+})();
