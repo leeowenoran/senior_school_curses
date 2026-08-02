@@ -1,0 +1,40 @@
+/* 地理 · 高三总复习 · 专题一 自然地理 · 第1章 地球与地图 · 第1节 经纬网与地图三要素 */
+(function () {
+  var v = gzGetVolume('geography', 'zt1');
+  if (!v) return;
+  v.points.push({
+    id: 'zt1-u1',
+    name: '第1节 经纬网与地图三要素',
+    chapter: '高三地理复习 · 专题一 自然地理 · 第1章 地球与地图',
+    difficulty: '基础',
+    content: [
+      { type: 'heading', text: '一、什么是经纬网' },
+      { type: 'paragraph', text: '经纬网是地球表面人为划分出来的坐标网络，由经线和纬线交织而成。利用它，地球上任意一点的位置都可以用一组经度和纬度唯一确定，就像用横竖坐标给平面上的点定位一样。在高中地理里，经纬网是描述任何地理事物空间位置的基础工具，也是计算距离、判断方向、划分半球的前提。' },
+      { type: 'list', items: ['经线：连接南北两极的半圆弧，所有经线长度相等，指示南北方向', '纬线：与赤道平行的圆圈，纬线长度从赤道向两极递减，指示东西方向', '经度：某地经线平面与本初子午线平面的夹角，范围 0° 到 180° 东经或西经', '纬度：某点与地心连线和赤道平面的夹角，范围 0° 到 90° 北纬或南纬'] },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 360" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="360" fill="#e8f2fb"/><text x="340" y="30" font-size="17" font-weight="bold" fill="#2a6fa8" text-anchor="middle">经纬网示意（侧视简化）</text><ellipse cx="340" cy="200" rx="240" ry="120" fill="#e3f0fa" stroke="#2a6fa8" stroke-width="2"/><line x1="100" y1="200" x2="580" y2="200" stroke="#c1583b" stroke-width="2"/><text x="340" y="222" font-size="13" fill="#1f3a4d" text-anchor="middle" font-weight="bold">赤道（0°纬线）</text><line x1="340" y1="80" x2="340" y2="320" stroke="#1f3a4d" stroke-width="2" stroke-dasharray="6 5"/><text x="352" y="96" font-size="13" fill="#1f3a4d" font-weight="bold">本初子午线（0°经线）</text><circle cx="340" cy="200" r="6" fill="#2a6fa8"/><text x="300" y="195" font-size="12" fill="#1f3a4d">北极</text><text x="300" y="320" font-size="12" fill="#1f3a4d">南极</text><text x="560" y="180" font-size="12" fill="#1f3a4d">东经增大方向 →</text><text x="120" y="180" font-size="12" fill="#1f3a4d">← 西经增大方向</text><text x="340" y="345" font-size="12" fill="#1f3a4d" text-anchor="middle">经线指示南北，纬线指示东西；经度沿赤道展开，纬度沿经线展开。</text></svg>', caption: '图1　经纬网由经线和纬线交织而成，是确定地表任意点位置的坐标系统。' },
+      { type: 'keypoint', label: '重点·经纬度判定口诀', text: '<strong>向东增大为东经（E），向西增大为西经（W）；向北增大为北纬（N），向南增大为南纬（S）。</strong>读图时先看数值变化方向：经度顺着地球自转方向（自西向东）数值变大就是东经；纬度向北数值变大就是北纬。把「东增东经、北增北纬」记牢，就不会把东西经、南北纬搞反。' },
+      { type: 'heading', text: '二、经纬度的距离与半球划分' },
+      { type: 'paragraph', text: '经纬网不仅能定位，还能用来估算距离。由于所有经线都交于两极，赤道上 1 个经度对应的弧长约为 111 千米，向高纬递减；而纬线长度随纬度变化，所以同一条纬线上 1 个经度对应的距离约为 111 千米乘以该纬度的余弦。纬度方向上每相差 1° 距离都约为 111 千米。半球划分也有固定界线：南北半球以赤道为界，东西半球以 20°W 和 160°E 组成的经线圈为界。' },
+      { type: 'list', items: ['南北半球：赤道（0°纬线）以北为北半球，以南为南半球', '东西半球：20°W 向东到 160°E 为东半球，20°W 向西到 160°E 为西半球', '经线距离规律：赤道上 1°经度 ≈ 111 千米，纬度 φ 处 1°经度 ≈ 111×cosφ 千米', '纬线距离规律：任意纬度上 1°纬度 ≈ 111 千米'] },
+      { type: 'table', headers: ['界线', '划分对象', '具体范围'], rows: [['赤道 0°', '南北半球', '北纬 N 属北半球，南纬 S 属南半球'], ['20°W 与 160°E 经线圈', '东西半球', '20°W 向东至 160°E 为东半球，其余为西半球'], ['30°、60°纬线', '低中高纬', '0°–30° 低纬，30°–60° 中纬，60°–90° 高纬']] },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="320" fill="#e8f2fb"/><text x="340" y="30" font-size="17" font-weight="bold" fill="#2a6fa8" text-anchor="middle">东西半球划分（俯视）</text><circle cx="340" cy="175" r="130" fill="#e3f0fa" stroke="#2a6fa8" stroke-width="2"/><line x1="210" y1="175" x2="470" y2="175" stroke="#1f3a4d" stroke-width="2"/><text x="340" y="168" font-size="12" fill="#1f3a4d" text-anchor="middle">0° 本初子午线</text><line x1="285" y1="55" x2="285" y2="295" stroke="#c1583b" stroke-width="2" stroke-dasharray="5 4"/><text x="295" y="70" font-size="13" fill="#c1583b" font-weight="bold">20°W</text><line x1="395" y1="55" x2="395" y2="295" stroke="#c1583b" stroke-width="2" stroke-dasharray="5 4"/><text x="405" y="70" font-size="13" fill="#c1583b" font-weight="bold">160°E</text><rect x="222" y="120" width="70" height="110" rx="8" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="1.5"/><text x="257" y="180" font-size="13" fill="#1f3a4d" text-anchor="middle">西半球</text><rect x="388" y="120" width="70" height="110" rx="8" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="1.5"/><text x="423" y="180" font-size="13" fill="#1f3a4d" text-anchor="middle">东半球</text><text x="340" y="305" font-size="12" fill="#1f3a4d" text-anchor="middle">注意：东半球不等于全在东经，西半球不等于全在西经，以 20°W–160°E 为界。</text></svg>', caption: '图2　东西半球以 20°W 和 160°E 组成的经线圈为界，避免把欧洲非洲切开。' },
+      { type: 'example', label: '例题·两点距离估算', text: '题目：从赤道上经度 0° 的点沿赤道向东到经度 90°E 的点，大约相距多少千米？<br>解析：赤道上 1°经度对应约 111 千米，从 0° 到 90°E 共跨 90 个经度，所以距离约为 111 × 90 ≈ 9990 千米，接近一万千米。这类题关键是先判断两点是否在同一纬线或同一经线上，再套用「经度差 × 111×cosφ」或「纬度差 × 111」的公式。' },
+      { type: 'heading', text: '三、地图三要素之比例尺' },
+      { type: 'paragraph', text: '地图三要素指比例尺、方向和图例注记。比例尺表示图上距离比实地距离缩小的程度，有三种常见表示方式：数字式（如 1:100000）、线段式（图上 1 厘米代表实地若干千米）、文字式（直接写出比例关系）。比例尺大小看分母，分母越大比例尺越小，表示的实地范围越大、内容越简略；分母越小比例尺越大，范围越小、内容越详细。' },
+      { type: 'warn', label: '易错·比例尺大小的判断', text: '① 比例尺「大小」比的是比值，不是比分母：1:1000 比 1:10000 大，因为前者分母小、比值大；② 比例尺越大，地图表示的实际范围越小、内容越详细，常考「同一区域大比例尺图更详细」；③ 图幅相同的两幅图，比例尺大的那幅实地范围更小。把「分母小则比例尺大、范围小、内容详」连成一句就不会错。' },
+      { type: 'tip', label: '提示·快速换算比例尺', text: '遇到线段式比例尺时，记住「图上 1 厘米 = 实地多少千米」可直接换算：若线段标 1 厘米代表 50 千米，则数字式为 1:5000000（50 千米 = 5000000 厘米）。做比例尺计算先把单位统一成厘米，再比大小或算实地距离，能少出错。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="320" fill="#e8f2fb"/><text x="340" y="30" font-size="17" font-weight="bold" fill="#2a6fa8" text-anchor="middle">比例尺的三种表示方式</text><rect x="60" y="70" width="560" height="80" rx="12" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="2"/><text x="80" y="100" font-size="14" fill="#1f3a4d" font-weight="bold">数字式</text><text x="80" y="128" font-size="13" fill="#1f3a4d">1:100000（图上 1 厘米代表实地 1 千米）</text><rect x="60" y="170" width="560" height="80" rx="12" fill="#e3f0fa" stroke="#2a6fa8" stroke-width="2"/><text x="80" y="200" font-size="14" fill="#1f3a4d" font-weight="bold">线段式</text><text x="80" y="228" font-size="13" fill="#1f3a4d">0　　1　　2　　3 千米（图上线段长度代表实地距离）</text><rect x="60" y="265" width="560" height="40" rx="12" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="2"/><text x="80" y="290" font-size="13" fill="#1f3a4d" font-weight="bold">文字式</text><text x="300" y="290" font-size="13" fill="#1f3a4d">图上 1 厘米相当于实地 1 千米</text></svg>', caption: '图3　比例尺有数字式、线段式、文字式三种，三者可互相换算。' },
+      { type: 'heading', text: '四、方向与图例注记' },
+      { type: 'paragraph', text: '方向是地图三要素之二，常用三种定向法：一般定向法（上北下南、左西右东）、指向标定向法（按指向标箭头指向北）、经纬网定向法（经线指示南北、纬线指示东西，最精确）。图例是地图上表示地理事物的符号，注记是说明地理事物名称或数量的文字数字。读图时先看图例，弄清符号含义，再结合方向判断位置关系。' },
+      { type: 'list', items: ['一般定向法：无指向标和经纬网时，默认上北下南、左西右东', '指向标定向法：指向标箭头指向正北，据此旋转判断其余方向', '经纬网定向法：经线定南北、纬线定东西，适用于大范围精确定向', '图例与注记：符号系统加上文字数字说明，是读图的「字典」'] },
+      { type: 'example', label: '例题·地图方向判断', text: '题目：一幅有指向标的地图中，指向标箭头指向正北，图中某村庄位于学校的东北方向，则学校在村庄的什么方向？<br>解析：方向是相对的，A 在 B 的东北，则 B 在 A 的西南。所以学校位于村庄的西南方向。判断相对方向时，先确定参照点，再取相反方向（东对西、北对南、东北对西南），能快速得到答案。' }
+    ],
+    exercises: [
+      { type: 'choice', question: '划分东西半球的界线是？', options: ['0° 和 180° 经线', '20°W 和 160°E 经线', '赤道', '30° 和 60° 纬线'], answer: '20°W 和 160°E 经线', explanation: '东西半球以 20°W 和 160°E 组成的经线圈为界，20°W 向东到 160°E 为东半球，其余为西半球。这样划分是为了避免把欧洲和非洲的大陆沿 0° 经线切开。0° 和 180° 是东西经度的分界，赤道是南北半球分界，30° 和 60° 是低中高纬分界，均不用于东西半球划分。' },
+      { type: 'choice', question: '关于比例尺的叙述，正确的是？', options: ['比例尺 1:1000 比 1:10000 小', '比例尺越大表示范围越大', '比例尺越大内容越详细', '线段式不能换算成数字式'], answer: '比例尺越大内容越详细', explanation: '比例尺是图上距离与实地距离的比，分母越小比值越大，所以 1:1000 比 1:10000 大；比例尺越大，表示的实地范围越小、内容越详细。线段式、数字式、文字式三者可以互相换算。因此只有「比例尺越大内容越详细」正确。' },
+      { type: 'choice', question: '在经纬网上，经线指示的方向是？', options: ['东西方向', '南北方向', '东北西南方向', '无固定方向'], answer: '南北方向', explanation: '经线是连接南北两极的半圆弧，所有经线都收敛于两极，因此经线指示南北方向；纬线是与赤道平行的圆圈，指示东西方向。这是经纬网定向法的基础，也用于精确判断大范围地区的位置关系。' },
+      { type: 'fill', question: '赤道上经度每相差 1°，实地距离约为___千米；任意纬度上纬度每相差 1°，实地距离约为___千米。', answer: '111；111', explanation: '地球平均半径约 6371 千米，赤道周长约 4 万千米，除以 360° 得到赤道上 1° 经度约 111 千米。由于所有经线长度大致相等，任意纬度上纬度相差 1° 的实地距离也都约为 111 千米。同纬度上经度距离会随纬度升高而减小，需用 111×cosφ 修正。' },
+      { type: 'fill', question: '有指向标的地图中，某工厂位于学校的东南方向，则学校位于工厂的___方向。', answer: '西北', explanation: '方向具有相对性，A 在 B 的东南方向，则 B 在 A 的西北方向。判断时把东对西、南对北、东南对西北即可。指向标地图要先以箭头为正北定向，再确定相对方位，避免误用「上北下南」的默认规则。' }
+    ]
+  });
+})();

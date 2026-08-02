@@ -1,0 +1,41 @@
+/* 地理 · 必修 第二册 · 第3章 · 课时：服务业区位因素及其变化 */
+(function () {
+  var v = gzGetVolume('geography', 'bx2');
+  if (!v) return;
+  v.points.push({
+    id: 'bx2-u9',
+    name: '服务业区位因素及其变化',
+    chapter: '必修 第二册 · 第3章 产业区位因素',
+    difficulty: '基础',
+    content: [
+      { type: 'heading', text: '一、什么是服务业' },
+      { type: 'paragraph', text: '我们去买东西、下馆子、存钱、看病、上网课，都是在享受服务业。服务业是不生产具体实物的产业，它为人提供各种服务。大到银行、学校、医院，小到楼下的小吃店、快递站，都属服务业。它和农业、工业并称为三大产业，是现代城市最活跃的部分。' },
+      { type: 'list', items: ['商业服务：商店、餐饮、理发，直接面对消费者', '公共服务：教育、医疗、交通、公安，由政府或社会提供', '生产性服务：金融、物流、咨询，为企业运转服务', '新兴服务：电商、外卖、网约车，依托互联网而生'] },
+      { type: 'keypoint', label: '重点·服务业的两大区位需求', text: '<strong>服务业布局最看重两个条件：一是有足够多的人（市场），二是人和货能方便到达（交通）。</strong>此外劳动力、集聚、信息技术也越来越关键。和工业相比，服务业更贴近人，哪里人多、哪里好找，店就开到哪里，这是理解服务业区位的主线。' },
+      { type: 'heading', text: '二、影响服务业的区位因素' },
+      { type: 'paragraph', text: '服务业落点首先看市场：人流量大的市中心、车站、商圈，店铺生意最好。交通是否方便决定顾客能不能轻松到达，地铁口、公交站旁常是黄金位置。劳动力方面，餐饮、家政需要大量人手，多设在人口密集区；金融、软件则需要高学历人才，聚集在写字楼。政府的规划和政策也会引导商业中心的形成。' },
+      { type: 'list', items: ['市场：人口密度、消费能力、人流量是首要因素', '交通：地铁口、路口、停车场旁容易聚集店铺', '劳动力：普通服务靠人力，高端服务靠人才', '集聚：同类店铺扎堆形成商圈，互相带旺人气'] },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="340" fill="#e8f2fb"/><text x="340" y="32" font-size="17" font-weight="bold" fill="#2a6fa8" text-anchor="middle">服务业区位的四大因素（市场·交通·劳力·集聚）</text><circle cx="340" cy="170" r="44" fill="#2a6fa8" stroke="#2a6fa8" stroke-width="1.5"/><text x="340" y="166" font-size="13" fill="#e8f2fb" text-anchor="middle" font-weight="bold">市场</text><text x="340" y="186" font-size="11" fill="#e8f2fb" text-anchor="middle">人流量</text><rect x="90" y="80" width="120" height="60" rx="10" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="2"/><text x="150" y="115" font-size="12" fill="#1f3a4d" text-anchor="middle" font-weight="bold">交通</text><rect x="470" y="80" width="120" height="60" rx="10" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="2"/><text x="530" y="115" font-size="12" fill="#1f3a4d" text-anchor="middle" font-weight="bold">劳动力</text><rect x="90" y="220" width="120" height="60" rx="10" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="2"/><text x="150" y="255" font-size="12" fill="#1f3a4d" text-anchor="middle" font-weight="bold">集聚</text><rect x="470" y="220" width="120" height="60" rx="10" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="2"/><text x="530" y="255" font-size="12" fill="#1f3a4d" text-anchor="middle" font-weight="bold">政策</text><line x1="210" y1="110" x2="296" y2="150" stroke="#3389c4" stroke-width="2"/><line x1="470" y1="110" x2="384" y2="150" stroke="#3389c4" stroke-width="2"/><line x1="150" y1="220" x2="296" y2="190" stroke="#3389c4" stroke-width="2"/><line x1="530" y1="220" x2="384" y2="190" stroke="#3389c4" stroke-width="2"/><text x="340" y="312" font-size="12" fill="#1f3a4d" text-anchor="middle">市场是核心，交通、劳动力、集聚与政策共同决定服务业落点。</text></svg>', caption: '图1　服务业区位以市场为核心，叠加交通、劳动力与集聚等因素。' },
+      { type: 'heading', text: '三、用表格比较三类服务业' },
+      { type: 'paragraph', text: '不同服务业对区位的要求不一样。便利超市、理发店讲究就近方便，哪儿人多开哪儿；大型商场、专科医院需要大客流和好交通，多在城市中心或枢纽；金融、总部经济依赖信息与人才，集中在写字楼密集的商务区。下面用表对比，帮助预习时理清思路。' },
+      { type: 'table', headers: ['服务业类型', '最看重因素', '常见选址'], rows: [['生活性小服务', '就近、人流量', '社区周边、街角'], ['商业中心', '大客流、好交通', '城市中心、地铁口'], ['生产性高端服务', '人才、信息、集聚', '商务区、金融街']] },
+      { type: 'list', items: ['社区小店：步行可达最重要，离居民越近越好', '购物中心：依赖庞大客流和便捷停车、地铁', '总部与金融：靠近人才与信息枢纽，形成商务区'] },
+      { type: 'heading', text: '四、服务业区位的变化' },
+      { type: 'paragraph', text: '互联网正在重写服务业区位。过去开店必须选热闹街口，现在电商把店铺搬上手机，仓库可以远在郊区，靠快递送到家门口。外卖、网约车让服务突破门店限制，谁都能在家点到餐、叫到车。信息技术减弱了地理位置的束缚，却也让数据、网络成为新的关键区位因素。' },
+      { type: 'warn', label: '易错·线上不等于无区位', text: '① 很多同学以为电商不需要选址，其实它的仓库、配送中心仍要靠近交通干线和城市，区位依然重要；② 线上服务依赖网络和数据处理中心，这些设施偏好电价低、气候凉爽的地方；③ 实体店没有被完全取代，体验类消费反而更依赖好地段，不能以为服务业都搬到了网上。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="340" fill="#e8f2fb"/><text x="340" y="32" font-size="17" font-weight="bold" fill="#2a6fa8" text-anchor="middle">互联网时代服务业区位的变化（线上+物流）</text><rect x="70" y="110" width="150" height="80" rx="10" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="2"/><text x="145" y="150" font-size="13" fill="#1f3a4d" text-anchor="middle" font-weight="bold">手机下单</text><text x="145" y="172" font-size="11" fill="#1f3a4d" text-anchor="middle">消费者在家</text><line x1="220" y1="150" x2="300" y2="150" stroke="#2a6fa8" stroke-width="2"/><polygon points="305,150 295,143 295,157" fill="#2a6fa8"/><rect x="310" y="110" width="150" height="80" rx="10" fill="#3389c4" stroke="#2a6fa8" stroke-width="2"/><text x="385" y="150" font-size="13" fill="#e8f2fb" text-anchor="middle" font-weight="bold">电商仓库</text><text x="385" y="172" font-size="11" fill="#e8f2fb" text-anchor="middle">近交通干线</text><line x1="460" y1="150" x2="540" y2="150" stroke="#3389c4" stroke-width="3"/><text x="560" y="150" font-size="12" fill="#1f3a4d" text-anchor="middle">快递</text><text x="540" y="200" font-size="11" fill="#1f3a4d" text-anchor="middle">配送到家</text><text x="340" y="300" font-size="12" fill="#1f3a4d" text-anchor="middle">线上交易加线下物流，使服务突破门店，但仓库仍讲区位。</text></svg>', caption: '图2　电商与快递结合，让服务业突破实体门店的地理限制。' },
+      { type: 'heading', text: '五、案例：外卖与即时零售' },
+      { type: 'paragraph', text: '外卖平台是服务业区位变化的缩影。餐厅不再只等客人上门，通过平台把菜品送到几公里外的顾客手中；前置仓把日用品囤在小区附近，下单半小时送达。这类即时零售依赖密集的骑手网络和城市路网，区位从「店找人」变成「货找人」，地理距离被时间和算法重新定义。' },
+      { type: 'example', label: '例题·分析便利店区位', text: '题目：某品牌便利店在地铁口、小区门口和写字楼大堂密集开店，而它的线上订单由附近前置仓发货。请分析该品牌线下门店选址的依据，并说明前置仓的区位作用。<br>解析：线下门店选在地铁口、小区、写字楼，是因为这些地方人流量大、顾客顺路可达，契合服务业靠市场与交通的布局逻辑。前置仓设在居民区附近，能缩短配送距离、实现快速送达，体现了互联网时代仓储贴近城市的新区位特点。' },
+      { type: 'tip', label: '提示·抓住人这一核心', text: '服务业区位记住<strong>「跟着人走」</strong>四个字：人多的地方开实体店，人分散的地方用网络和物流覆盖。分析任何服务设施，先找人在哪、路通到哪，再看技术如何把距离变近。这样既能解释老商场，也能看懂新电商。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="340" fill="#e8f2fb"/><text x="340" y="32" font-size="17" font-weight="bold" fill="#2a6fa8" text-anchor="middle">便利店与前置仓区位示意（人流密集+快速配送）</text><circle cx="160" cy="160" r="30" fill="#2a6fa8" stroke="#2a6fa8" stroke-width="1.5"/><text x="160" y="165" font-size="12" fill="#e8f2fb" text-anchor="middle" font-weight="bold">地铁</text><circle cx="300" cy="160" r="30" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="2"/><text x="300" y="165" font-size="12" fill="#1f3a4d" text-anchor="middle">小区</text><rect x="430" y="130" width="120" height="60" rx="10" fill="#3389c4" stroke="#2a6fa8" stroke-width="2"/><text x="490" y="165" font-size="12" fill="#e8f2fb" text-anchor="middle" font-weight="bold">前置仓</text><line x1="330" y1="160" x2="425" y2="160" stroke="#3389c4" stroke-width="3"/><line x1="550" y1="160" x2="610" y2="160" stroke="#3389c4" stroke-width="3"/><text x="630" y="165" font-size="12" fill="#1f3a4d" text-anchor="middle">配送</text><text x="340" y="300" font-size="12" fill="#1f3a4d" text-anchor="middle">门店贴着人流，前置仓贴近社区，二者共同服务消费者。</text></svg>', caption: '图3　便利店沿人流密集处布局，前置仓贴近社区实现快速配送。' }
+    ],
+    exercises: [
+      { type: 'choice', question: '与农业、工业并列，提供服务而不生产实物产品的产业是？', options: ['种植业', '制造业', '服务业', '采矿业'], answer: '服务业', explanation: '第一产业农业、第二产业工业都生产实物产品，而服务业是提供各种服务的第三产业，如商业、金融、教育、医疗等，本身不制造具体实物。种植业和采矿业属农业与工业范畴，制造业是典型的工业，因此正确答案是服务业。' },
+      { type: 'choice', question: '便利店、小吃店等生活性小服务选址时最看重的因素是？', options: ['矿产丰富', '就近与人流量', '气候凉爽', '土地广阔'], answer: '就近与人流量', explanation: '生活性小服务直接面向居民日常消费，顾客图方便，所以店铺要开在居民身边、人流量大的地方，如小区门口、地铁口。它不依赖矿产、广阔土地或凉爽气候，离消费者越近、人越多生意越好，这是服务业区位的核心逻辑。' },
+      { type: 'choice', question: '互联网时代，电商仓库的选址更可能靠近？', options: ['南极科考站', '交通干线与城市附近', '深海海沟', '原始森林中心'], answer: '交通干线与城市附近', explanation: '电商虽把交易搬上网，但商品仍需实体仓库存储并由快递送出，仓库必须靠近公路、铁路等交通干线和消费城市，才能快速发货、降低配送成本。南北极、深海、原始森林都远离市场与交通，不适合设仓，因此选交通干线与城市附近。' },
+      { type: 'fill', question: '服务业布局最看重两个条件：一是有足够多的___（市场），二是人和货能方便到达的___。', answer: '人；交通', explanation: '服务业不生产实物，直接为人服务，所以首先要有人——人口密度大、人流量大、消费能力强的市场；其次要能方便到达，即交通便捷，顾客和货物来去顺畅。市场与交通是服务业区位的两大基石，其余因素围绕它们发挥作用。' },
+      { type: 'fill', question: '外卖、网约车等依托互联网的新兴服务，使服务业从「店找人」转向「___」，但背后的仓库和配送中心仍要靠近___与城市。', answer: '货找人；交通干线', explanation: '互联网让服务突破门店限制，平台把商品和服务主动送到消费者手中，即从实体店的「店找人」变成「货找人」。但快递和前置仓仍需实体物流支撑，必须布局在公路、铁路等交通干线附近和消费城市周边，区位因素并未消失，只是形式改变。' }
+    ]
+  });
+})();

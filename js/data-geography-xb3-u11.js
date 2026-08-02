@@ -1,0 +1,40 @@
+/* 地理 · 选择性必修3 · 第3章 · 课时：全球气候变化与国家安全 */
+(function () {
+  var v = gzGetVolume('geography', 'xb3');
+  if (!v) return;
+  v.points.push({
+    id: 'xb3-u11',
+    name: '全球气候变化与国家安全',
+    chapter: '选择性必修3 · 第3章 环境安全与国家安全',
+    difficulty: '基础',
+    content: [
+      { type: 'heading', text: '一、全球气候变化的表现与成因' },
+      { type: 'paragraph', text: '全球气候变化主要指以气候变暖为主要特征的长期变化。观测显示，近百年来全球平均气温上升、冰川融化、海平面上升、极端天气增多。科学界主流认为，人类活动排放的温室气体（二氧化碳、甲烷等）增强温室效应，是近几十年变暖加速的主因。' },
+      { type: 'list', items: ['气温升高：全球地表平均温度上升', '冰川消融：两极与高山积雪减少', '海平面上升：海水增温膨胀加冰川融水', '极端天气：高温、暴雨、干旱更频繁', '主因：人类温室气体排放增强温室效应'] },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="320" fill="#e8f2fb"/><text x="340" y="32" font-size="17" font-weight="bold" fill="#2a6fa8" text-anchor="middle">温室效应增强的机制</text><rect x="70" y="70" width="180" height="80" rx="10" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="2"/><text x="160" y="110" font-size="13" fill="#1f3a4d" text-anchor="middle" font-weight="bold">太阳辐射进</text><text x="160" y="138" font-size="12" fill="#1f3a4d" text-anchor="middle">地表吸热</text><rect x="270" y="70" width="180" height="80" rx="10" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="2"/><text x="360" y="110" font-size="13" fill="#1f3a4d" text-anchor="middle" font-weight="bold">温室气体增</text><text x="360" y="138" font-size="12" fill="#1f3a4d" text-anchor="middle">阻碍散热</text><rect x="470" y="70" width="140" height="80" rx="10" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="2"/><text x="540" y="110" font-size="13" fill="#1f3a4d" text-anchor="middle" font-weight="bold">气候变暖</text><line x1="250" y1="110" x2="268" y2="110" stroke="#2a6fa8" stroke-width="2"/><line x1="450" y1="110" x2="468" y2="110" stroke="#2a6fa8" stroke-width="2"/><text x="340" y="210" font-size="13" fill="#1f3a4d" text-anchor="middle" font-weight="bold">热量"进多出少" → 温度上升</text><text x="340" y="260" font-size="12" fill="#1f3a4d" text-anchor="middle">温室气体像"棉被"裹住地球，散热受阻。</text></svg>', caption: '图1　温室气体增多阻碍地表散热，温室效应增强导致变暖。' },
+      { type: 'keypoint', label: '重点·温室效应双刃剑', text: '<strong>温室效应本身是必要的：</strong>没有它，地球会冰冷不宜居。问题是人类排放过量温室气体，使"棉被"过厚，热量进多出少，全球变暖加速。理解这一点，就不会把"温室效应"与"温室效应增强"混为一谈。' },
+      { type: 'heading', text: '二、气候变化对国家安全的影响' },
+      { type: 'paragraph', text: '气候变化通过多条路径威胁国家安全：海平面上升淹没沿海低地、威胁港口城市；干旱与极端天气冲击粮食与水安全；冰川消融改变水资源格局；气候难民和 resource 争夺可能诱发冲突；小岛屿国家和生态脆弱国甚至面临生存危机。它是典型的非传统安全挑战。' },
+      { type: 'list', items: ['沿海威胁：海平面上升淹没低地', '粮食威胁：旱涝影响产量', '水安全：冰川融水格局改变', '冲突风险：资源争夺、气候难民', '生存危机：小岛屿国家受沉没威胁'] },
+      { type: 'table', headers: ['影响路径', '具体表现', '安全后果'], rows: [['海平面上升', '淹没沿海低地', '国土与城市安全'], ['极端天气', '旱涝灾害', '粮食水安全'], ['资源变化', '冰川消融', '水资源冲突'], ['生态脆弱', '物种北移', '系统失衡']] },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="300" fill="#e8f2fb"/><text x="340" y="30" font-size="17" font-weight="bold" fill="#2a6fa8" text-anchor="middle">气候变化威胁国家安全的路径</text><rect x="60" y="65" width="160" height="70" rx="10" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="2"/><text x="140" y="105" font-size="13" fill="#1f3a4d" text-anchor="middle" font-weight="bold">海平面升</text><text x="140" y="132" font-size="12" fill="#1f3a4d" text-anchor="middle">淹没低地</text><rect x="255" y="65" width="160" height="70" rx="10" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="2"/><text x="335" y="105" font-size="13" fill="#1f3a4d" text-anchor="middle" font-weight="bold">旱涝加剧</text><text x="335" y="132" font-size="12" fill="#1f3a4d" text-anchor="middle">粮食受损</text><rect x="450" y="65" width="170" height="70" rx="10" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="2"/><text x="535" y="105" font-size="13" fill="#1f3a4d" text-anchor="middle" font-weight="bold">资源争夺</text><text x="535" y="132" font-size="12" fill="#1f3a4d" text-anchor="middle">冲突风险</text><rect x="220" y="185" width="240" height="70" rx="12" fill="#e3f0fa" stroke="#2a6fa8" stroke-width="2"/><text x="340" y="220" font-size="13" fill="#1f3a4d" text-anchor="middle" font-weight="bold">非传统安全挑战</text><text x="340" y="250" font-size="12" fill="#1f3a4d" text-anchor="middle">多路径叠加，影响深远且跨国界。</text></svg>', caption: '图2　气候变化经海平面、旱涝、资源争夺等路径威胁国安。' },
+      { type: 'example', label: '例题·海平面上升', text: '题目：全球变暖导致海平面上升，对国家安全最直接的威胁是？<br>A. 气温略微升高　B. 沿海低地和港口城市被淹没<br>C. 物种变多　D. 降水均匀化<br>解析：海平面上升会淹没海拔较低的沿海地带和港口城市，直接侵蚀国土、破坏基础设施、迫使人口迁移，是对国土与城市安全的直接威胁。气温升高是变暖本身，物种变多和降水均匀化并非海平面上升的直接后果，且变暖总体使生态风险上升。所以选沿海低地被淹没，即 B。' },
+      { type: 'heading', text: '三、应对气候变化的国际行动' },
+      { type: 'paragraph', text: '气候变化是全球性问题，需要各国合作应对。国际社会通过联合国气候公约、京都议定书、巴黎协定等，确立"共同但有区别的责任"原则，推动减排与适应。各国提交自主贡献，目标是将升温控制在远低于2摄氏度、努力限制在1.5摄氏度以内。' },
+      { type: 'warn', label: '易错·"共同但有区别的责任"', text: '这一原则指所有国家都有减排责任（共同），但发达国家历史排放多、能力更强，应承担更多义务并提供资金技术支持（有区别）。不能理解为"各国完全一样"，也不能理解为"发展中国家无需行动"。考试中常考该原则的内涵，须区分"共同"与"有区别"。' },
+      { type: 'tip', label: '提示·应对两方向', text: '应对气候变化有"减缓"和"适应"两条腿：减缓即减排增汇，降低变暖速度；适应即加固海堤、调整农业、完善防灾，降低已发生变化的危害。答题时两条都提，才完整。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="320" fill="#e8f2fb"/><text x="340" y="32" font-size="17" font-weight="bold" fill="#2a6fa8" text-anchor="middle">应对气候变化的两大方向</text><rect x="70" y="70" width="260" height="120" rx="12" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="2"/><text x="200" y="105" font-size="14" fill="#1f3a4d" text-anchor="middle" font-weight="bold">减缓</text><text x="200" y="138" font-size="12" fill="#1f3a4d" text-anchor="middle">减排：少烧化石能源</text><text x="200" y="165" font-size="12" fill="#1f3a4d" text-anchor="middle">增汇：植树固碳</text><text x="200" y="188" font-size="12" fill="#1f3a4d" text-anchor="middle">降速度</text><rect x="350" y="70" width="260" height="120" rx="12" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="2"/><text x="480" y="105" font-size="14" fill="#1f3a4d" text-anchor="middle" font-weight="bold">适应</text><text x="480" y="138" font-size="12" fill="#1f3a4d" text-anchor="middle">加固海堤防灾</text><text x="480" y="165" font-size="12" fill="#1f3a4d" text-anchor="middle">调整农业布局</text><text x="480" y="188" font-size="12" fill="#1f3a4d" text-anchor="middle">降危害</text><text x="340" y="240" font-size="13" fill="#1f3a4d" text-anchor="middle" font-weight="bold">国际协作：共同但有区别的责任</text><text x="340" y="280" font-size="12" fill="#1f3a4d" text-anchor="middle">减缓+适应+合作，方能守住安全。</text></svg>', caption: '图3　应对气候变化靠减缓、适应与国际协作三管齐下。' },
+      { type: 'heading', text: '四、中国在全球气候治理中的行动' },
+      { type: 'paragraph', text: '作为负责任大国，中国提出碳达峰、碳中和目标（二氧化碳排放力争2030年前达峰、2060年前中和），大力发展可再生能源，推进绿色低碳转型，并开展南南合作帮助发展中国家。中国的积极行动既保障自身气候安全，也为全球气候治理作出贡献。' },
+      { type: 'list', items: ['碳达峰：排放达到峰值后下降', '碳中和：排放与被吸收相抵消', '能源转型：风光水核替代煤电', '南南合作：帮扶发展中国家', '气候安全纳入国家安全视野'] },
+      { type: 'example', label: '例题·双碳目标', text: '题目：我国提出"碳中和"是指？<br>A. 完全不排放二氧化碳　B. 排放量与吸收量相互抵消<br>C. 只靠进口能源　D. 放弃工业发展<br>解析：碳中和指在一定时期内，人类活动产生的二氧化碳排放量，通过植树造林、碳捕集等途径被吸收和抵消，实现净排放为零，而非完全不排放或放弃发展。我国目标是2060年前实现碳中和，配套能源转型与国际合作。因此选排放与吸收相互抵消，即 B。' }
+    ],
+    exercises: [
+      { type: 'choice', question: '关于温室效应，正确的认识是？', options: ['温室效应本身有害应消除', '温室效应增强才导致变暖加速', '温室气体越少越好', '温室效应与温度无关'], answer: '温室效应增强才导致变暖加速', explanation: '天然的温室效应使地球保持适宜温度，是必要的；问题在于人类排放过量温室气体，使效应增强、热量散不出去，导致全球变暖加速。因此应区分"温室效应"与"温室效应增强"，正确项是后者导致变暖加速。其余三项都误解了温室效应的作用。' },
+      { type: 'choice', question: '国际气候合作确立的基本原则是？', options: ['各国完全一样', '共同但有区别的责任', '仅发达国家负责', '发展中国家不行动'], answer: '共同但有区别的责任', explanation: '该原则指各国都有减排责任（共同），但发达国家历史排放多、能力更强，应承担更多义务并提供资金技术支持（有区别）。它不是要求各国完全一样，也不意味着发展中国家可以不行动，而是权责与能力相匹配。因此正确项是共同但有区别的责任。' },
+      { type: 'choice', question: '应对气候变化的两大方向是？', options: ['只靠减排', '减缓与适应', '只靠移民', '放弃发展'], answer: '减缓与适应', explanation: '应对气候变化有两条路径：减缓指减排增汇、降低变暖速度；适应指通过加固海堤、调整农业、完善防灾等，降低已发生气候变化的危害。两者缺一不可，仅靠其一或不发展都不现实。因此正确项是减缓与适应。' },
+      { type: 'fill', question: '我国提出二氧化碳排放力争2030年前达到峰值，即实现___。', answer: '碳达峰', explanation: '碳达峰是指二氧化碳排放量达到历史最高值后进入平台期并逐步回落。我国承诺力争2030年前实现碳达峰，之后排放稳中有降，为2060年前实现碳中和奠定基础。题干描述的是排放达峰值后下降的过程，所缺术语为碳达峰。' },
+      { type: 'fill', question: '巴黎协定目标是将全球升温控制在远低于2摄氏度，努力限制在___摄氏度以内。', answer: '1.5', explanation: '《巴黎协定》确立的全球气候目标，是将本世纪全球平均气温升幅控制在工业化前水平以上远低于2摄氏度，并努力将升温限制在1.5摄氏度以内，以降低气候风险。题干所缺的关键数值为1.5摄氏度。' }
+    ]
+  });
+})();

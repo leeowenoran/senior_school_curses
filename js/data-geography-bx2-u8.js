@@ -1,0 +1,41 @@
+/* 地理 · 必修 第二册 · 第3章 · 课时：工业区位因素及其变化 */
+(function () {
+  var v = gzGetVolume('geography', 'bx2');
+  if (!v) return;
+  v.points.push({
+    id: 'bx2-u8',
+    name: '工业区位因素及其变化',
+    chapter: '必修 第二册 · 第3章 产业区位因素',
+    difficulty: '基础',
+    content: [
+      { type: 'heading', text: '一、什么是工业区位' },
+      { type: 'paragraph', text: '工厂建在哪里，不是随便选的。工业区位就是指工厂为什么坐落在这个地方。建钢铁厂要靠近铁矿和煤炭，建服装厂要找劳动力多的城市，建饮料厂最好靠近大城市市场。地理学把决定工厂选址的各种条件，叫做工业区位因素。一个好的区位，能让企业省钱、赚钱又环保。' },
+      { type: 'list', items: ['工业区位关注的核心问题：工厂建在哪、靠近什么、避开什么', '选址要考虑成本、市场、运输和环境影响', '不同工业对区位因素的要求差别很大，不能一概而论'] },
+      { type: 'keypoint', label: '重点·工业区位五大因素', text: '<strong>工业区位的主要因素可归纳为五大类：原料、能源、劳动力、市场、交通。</strong>此外还有政策、技术、环境等。分析一个工厂的选址，就是看它最依赖哪一两项因素：依赖原料的叫原料指向型，依赖劳动力的叫劳动力指向型，靠近市场的叫市场指向型。' },
+      { type: 'heading', text: '二、不同工业的指向类型' },
+      { type: 'paragraph', text: '有的工厂原料笨重、运费高，必须建在原料产地，如制糖厂、钢铁厂；有的产品笨重或不便运输，要靠近市场，如啤酒厂、家具厂；有的耗电惊人，要挨着电站，如有色金属冶炼；有的需要大量缝纫工，要多设在劳动力丰富且工资较低的地方，如服装、电子装配。认清指向类型，就抓住了选址要害。' },
+      { type: 'list', items: ['原料指向型：原料笨重、运费高，靠近产地，如制糖、钢铁', '市场指向型：产品不便远运或易变质，靠近城市，如啤酒、家具', '动力指向型：耗电巨大，靠近电站，如有色金属冶炼', '劳动力指向型：需大量普通工人，劳动力丰富且廉价处，如服装'] },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="340" fill="#e8f2fb"/><text x="340" y="32" font-size="17" font-weight="bold" fill="#2a6fa8" text-anchor="middle">工业指向类型与落点（原料·市场·动力·劳动力）</text><rect x="40" y="90" width="140" height="70" rx="10" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="2"/><text x="110" y="130" font-size="13" fill="#1f3a4d" text-anchor="middle" font-weight="bold">原料地</text><rect x="190" y="90" width="140" height="70" rx="10" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="2"/><text x="260" y="130" font-size="13" fill="#1f3a4d" text-anchor="middle" font-weight="bold">城市市场</text><rect x="340" y="90" width="140" height="70" rx="10" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="2"/><text x="410" y="130" font-size="13" fill="#1f3a4d" text-anchor="middle" font-weight="bold">电站</text><rect x="490" y="90" width="140" height="70" rx="10" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="2"/><text x="560" y="130" font-size="13" fill="#1f3a4d" text-anchor="middle" font-weight="bold">劳动力区</text><line x1="110" y1="200" x2="110" y2="250" stroke="#3389c4" stroke-width="3"/><text x="110" y="272" font-size="12" fill="#1f3a4d" text-anchor="middle">制糖厂</text><line x1="260" y1="200" x2="260" y2="250" stroke="#3389c4" stroke-width="3"/><text x="260" y="272" font-size="12" fill="#1f3a4d" text-anchor="middle">啤酒厂</text><line x1="410" y1="200" x2="410" y2="250" stroke="#3389c4" stroke-width="3"/><text x="410" y="272" font-size="12" fill="#1f3a4d" text-anchor="middle">炼铝厂</text><line x1="560" y1="200" x2="560" y2="250" stroke="#3389c4" stroke-width="3"/><text x="560" y="272" font-size="12" fill="#1f3a4d" text-anchor="middle">服装厂</text><text x="340" y="312" font-size="12" fill="#1f3a4d" text-anchor="middle">工厂落点由它最依赖的区位因素决定，不同类型指向不同。</text></svg>', caption: '图1　按主导因素，工业可分为原料、市场、动力、劳动力等指向类型。' },
+      { type: 'heading', text: '三、用表格看清工业区位因素' },
+      { type: 'paragraph', text: '把主要工业部门和它们最看重的因素列成表，能一目了然。下表是几种典型工业的指向类型与代表部门，预习时建议自己再补充两三个例子，加深理解。不同工业对运输、劳动力、市场的敏感度不同，选址逻辑也就不同。' },
+      { type: 'table', headers: ['工业类型', '主导区位因素', '代表部门'], rows: [['原料指向型', '靠近原料产地，节省运费', '制糖厂、钢铁厂'], ['市场指向型', '靠近消费城市', '啤酒厂、家具厂'], ['动力指向型', '靠近廉价电力', '有色冶金、炼铝'], ['劳动力指向型', '劳动力丰富且工资低', '服装、电子装配']] },
+      { type: 'list', items: ['运输成本：原料或产品笨重时，运费往往决定厂址', '集聚效应：同类工厂扎堆，共享基础设施和零部件供应', '环境要求：污染大的工厂应布局在居民区下风向、河流下游'] },
+      { type: 'heading', text: '四、工业区位因素的变化' },
+      { type: 'paragraph', text: '过去工厂死守原料和燃料地，因为运煤运矿太贵。如今情况变了：超级货轮和铁路让运输成本大降，工厂可以远离原料；电力普及使动力不再卡脖子；自动化减少了对廉价劳动力的依赖。相反，科技、信息和环境变得更重要，高科技园区偏爱人才密集、环境优美的城市郊区。' },
+      { type: 'warn', label: '易错·不能死记指向类型', text: '① 同一类工业随技术进步会改变指向，如钢铁厂因海运便宜从靠近煤矿转向沿海港口；② 劳动力指向型正被机器人取代，工厂未必再去廉价劳动力地区；③ 环境法规收紧后，污染厂必须避开上风向和上游，区位要多算一笔环保账，不能只看成本。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="340" fill="#e8f2fb"/><text x="340" y="32" font-size="17" font-weight="bold" fill="#2a6fa8" text-anchor="middle">工业区位因素的变化（交通·技术作用上升）</text><rect x="60" y="90" width="150" height="70" rx="10" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="2"/><text x="135" y="130" font-size="13" fill="#1f3a4d" text-anchor="middle" font-weight="bold">过去：靠原料</text><text x="135" y="152" font-size="11" fill="#1f3a4d" text-anchor="middle">运费高束缚</text><line x1="210" y1="125" x2="300" y2="125" stroke="#2a6fa8" stroke-width="2"/><polygon points="305,125 295,118 295,132" fill="#2a6fa8"/><rect x="310" y="90" width="150" height="70" rx="10" fill="#3389c4" stroke="#2a6fa8" stroke-width="2"/><text x="385" y="130" font-size="13" fill="#e8f2fb" text-anchor="middle" font-weight="bold">现在：重技术</text><text x="385" y="152" font-size="11" fill="#e8f2fb" text-anchor="middle">交通环保</text><circle cx="540" cy="125" r="34" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="2"/><text x="540" y="122" font-size="12" fill="#1f3a4d" text-anchor="middle" font-weight="bold">高科技</text><text x="540" y="140" font-size="11" fill="#1f3a4d" text-anchor="middle">园区</text><text x="340" y="300" font-size="12" fill="#1f3a4d" text-anchor="middle">运输成本下降、技术进步，使交通、人才与环境成为新主导因素。</text></svg>', caption: '图2　工业区位从依赖原料燃料，转向重视交通、技术与环境。' },
+      { type: 'heading', text: '五、案例：钢铁工业布局的搬迁' },
+      { type: 'paragraph', text: '钢铁工业是观察区位变化的活教材。早期钢铁厂必须紧挨煤矿和铁矿，因为一吨钢要耗掉好几吨煤和矿，运费吓人。后来大型矿石船出现，从澳大利亚、巴西运矿到沿海比陆运便宜，于是宝山钢铁厂直接建在上海沿江海边，靠进口矿和广阔市场取胜。同一个行业，选址逻辑彻底改写。' },
+      { type: 'example', label: '例题·分析钢铁厂区位', text: '题目：上海宝山钢铁厂并不靠近大型铁矿和煤矿，却成为我国重要钢铁基地。请结合所学知识，分析它选址上海的原因。<br>解析：宝山靠长江入海口和海岸，便于用巨轮从海外进口铁矿石，运费低；上海及长三角经济发达、市场巨大，钢材就近销售；当地科技和资金实力强，能支撑现代化生产；加上便利的交通网，弥补了本地缺矿少煤的不足。这体现了交通与市场主导的现代区位。' },
+      { type: 'tip', label: '提示·判断指向型的方法', text: '拿到一个工厂，先问<strong>「它最怕什么成本」</strong>：怕原料运费高就找原料，怕产品运费高就找市场，怕电费高就找电站，怕工资高就找机器人或廉价劳力。再结合污染要避居民区上风向，基本就能锁定它的合理厂址。这个方法比死背结论更管用。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="340" fill="#e8f2fb"/><text x="340" y="32" font-size="17" font-weight="bold" fill="#2a6fa8" text-anchor="middle">宝山钢铁厂区位示意（临海·靠市场·便运输）</text><rect x="250" y="120" width="180" height="80" rx="10" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="2"/><text x="340" y="150" font-size="13" fill="#1f3a4d" text-anchor="middle" font-weight="bold">宝山钢铁厂</text><text x="340" y="172" font-size="11" fill="#1f3a4d" text-anchor="middle">临江靠海</text><line x1="120" y1="160" x2="245" y2="160" stroke="#3389c4" stroke-width="3"/><text x="110" y="150" font-size="12" fill="#1f3a4d" text-anchor="middle">海外矿石</text><line x1="430" y1="160" x2="560" y2="160" stroke="#3389c4" stroke-width="3"/><text x="580" y="150" font-size="12" fill="#1f3a4d" text-anchor="middle">长三角</text><text x="580" y="172" font-size="11" fill="#1f3a4d" text-anchor="middle">大市场</text><text x="340" y="300" font-size="12" fill="#1f3a4d" text-anchor="middle">便利海运降低原料成本，邻近市场决定现代钢铁厂落点。</text></svg>', caption: '图3　宝山钢铁厂依托海运与市场，是现代工业区位变化的代表。' }
+    ],
+    exercises: [
+      { type: 'choice', question: '制糖厂原料笨重、运费高，最适宜的工业指向类型是？', options: ['市场指向型', '原料指向型', '动力指向型', '劳动力指向型'], answer: '原料指向型', explanation: '甘蔗、甜菜等制糖原料体积大、糖分低，运输成本远高于产出的糖，工厂必须建在原料产地附近才能节省运费。这种以靠近原料为主导因素的工业，称为原料指向型。啤酒厂才是市场指向型，炼铝是动力指向型，服装是劳动力指向型。' },
+      { type: 'choice', question: '上海宝山钢铁厂布局在沿海港口，主要依靠的条件是？', options: ['本地煤炭丰富', '便利海运降低原料运费', '劳动力最廉价', '气候最温暖'], answer: '便利海运降低原料运费', explanation: '宝山本地缺矿少煤，但它位于长江入海口、紧邻海岸，可用巨型矿石船从海外低价进口铁矿，运费远低于内陆运输；同时长三角市场广阔。正是便利的海运和邻近市场，弥补了资源不足，使其成为现代钢铁基地。' },
+      { type: 'choice', question: '关于工业区位因素的变化，下列说法正确的是？', options: ['运输成本下降使工厂可远离原料', '动力始终是首要限制', '劳动力指向型不会被技术改变', '环境要求越来越不重要'], answer: '运输成本下降使工厂可远离原料', explanation: '现代物流和大型船舶大幅降低了运输费用，工厂不必再死守原料产地，可以布局在市场或港口；与此同时自动化削弱了对廉价劳动力的依赖，环境法规也令环保更重要。所以只有「运输成本下降使工厂可远离原料」这一说法正确。' },
+      { type: 'fill', question: '啤酒、家具等产品不便远运或易变质，工厂应靠近消费城市，这类工业属于___指向型；而有色金属冶炼耗电巨大，应靠近电站，属于___指向型。', answer: '市场；动力', explanation: '啤酒瓶重、家具体积大、鲜奶易坏，运输不便或成本高，工厂贴近城市市场最划算，叫市场指向型；炼铝等有色冶金耗电极大，电费占成本大头，必须靠近廉价电力，叫动力指向型。区分各类指向型，关键看它最依赖哪一项区位因素。' },
+      { type: 'fill', question: '污染较大的工厂在布局时应避开居民区的___风向和河流的___游，以减少对城市和饮用水的影响。', answer: '上；上', explanation: '大气污染物会随盛行风向下风向扩散，水污染物会顺流到下游，因此高污染工厂应设在居民区的下风向、河流下游，绝不可位于上风向或上游，否则会危害城市空气和饮用水安全。环境因素是现代工业区位不可忽视的一项重要约束。' }
+    ]
+  });
+})();

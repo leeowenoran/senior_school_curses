@@ -1,0 +1,41 @@
+/* 地理 · 高三总复习 · 专题二 人文地理 · 第3章 产业区位因素 · 第3节 服务业区位因素 */
+(function () {
+  var v = gzGetVolume('geography', 'zt2');
+  if (!v) return;
+  v.points.push({
+    id: 'zt2-u10',
+    name: '第3节 服务业区位因素',
+    chapter: '高三地理复习 · 专题二 人文地理 · 第3章 产业区位因素',
+    difficulty: '基础',
+    content: [
+      { type: 'heading', text: '一、服务业的分类' },
+      { type: 'paragraph', text: '服务业指为生产、生活提供服务的产业，分三类：生产性服务业（金融、物流、信息、商务）、生活性服务业（零售、餐饮、教育、医疗）、公共服务业（教育、医疗、交通等由政府提供）。与农业、工业不同，服务业更依赖人口与市场，多布局在城市，尤其市中心和交通节点。' },
+      { type: 'list', items: ['生产性服务业：金融、物流、信息', '生活性服务业：零售、餐饮、家政', '公共服务业：教育、医疗、交通', '服务业多集聚在城市与交通节点'] },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="320" fill="#e8f2fb"/><text x="340" y="30" font-size="17" font-weight="bold" fill="#2a6fa8" text-anchor="middle">服务业的三大类别</text><rect x="70" y="80" width="180" height="70" rx="10" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="1.5"/><text x="160" y="115" font-size="14" fill="#1f3a4d" text-anchor="middle" font-weight="bold">生产性</text><text x="160" y="138" font-size="12" fill="#1f3a4d" text-anchor="middle">金融物流信息</text><rect x="250" y="80" width="180" height="70" rx="10" fill="#e3f0fa" stroke="#2a6fa8" stroke-width="1.5"/><text x="340" y="115" font-size="14" fill="#1f3a4d" text-anchor="middle" font-weight="bold">生活性</text><text x="340" y="138" font-size="12" fill="#1f3a4d" text-anchor="middle">零售餐饮家政</text><rect x="430" y="80" width="180" height="70" rx="10" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="1.5"/><text x="520" y="115" font-size="14" fill="#1f3a4d" text-anchor="middle" font-weight="bold">公共性</text><text x="520" y="138" font-size="12" fill="#1f3a4d" text-anchor="middle">教育医疗交通</text><text x="340" y="210" font-size="13" fill="#1f3a4d" text-anchor="middle">共同特点：靠近人口与市场，集聚在城市</text><rect x="150" y="240" width="380" height="50" rx="10" fill="#e3f0fa" stroke="#2a6fa8" stroke-width="1.5"/><text x="340" y="265" font-size="13" fill="#1f3a4d" text-anchor="middle">市场与交通是服务业最关键的区位指向</text><text x="340" y="285" font-size="13" fill="#1f3a4d" text-anchor="middle">与工农不同，服务业更依赖「人」</text></svg>', caption: '图1　服务业分生产、生活、公共三类，都高度依赖人口与市场。' },
+      { type: 'keypoint', label: '重点·服务业的最大区位指向', text: '<strong>服务业（尤其生活性、生产性服务业）最重要的区位是市场与交通，即靠近大量消费者和便捷的交通节点。</strong>商业中心选在人流车流大的路口，物流园区选在港口铁路枢纽，总部经济选在信息通达的CBD。人口规模与消费能力直接决定服务业的兴衰，这是与工业、农业区位最大的不同。' },
+      { type: 'heading', text: '二、影响服务业的因素' },
+      { type: 'paragraph', text: '市场（人口规模、消费水平、消费偏好）是首要因素；交通通达度影响可达性；劳动力素质影响高端服务；技术（互联网、大数据）催生电商、外卖等新业态；政策与集聚效应也重要——同类服务扎堆形成商圈，互相带动客流。地价则限制部分服务业布局。' },
+      { type: 'list', items: ['市场：人口与消费能力是核心', '交通：影响可达性与物流效率', '技术：互联网催生新业态', '集聚：同类扎堆形成商圈'] },
+      { type: 'table', headers: ['服务业', '主要区位', '例子'], rows: [['零售餐饮', '人流大的路口', '商圈步行街'], ['金融商务', '市中心CBD', '银行总部'], ['物流', '港口铁路枢纽', '物流园区'], ['电商', '信息网络发达', '数据中心']] },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="320" fill="#e8f2fb"/><text x="340" y="30" font-size="17" font-weight="bold" fill="#2a6fa8" text-anchor="middle">影响服务业布局的因素</text><rect x="80" y="80" width="150" height="55" rx="8" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="1.5"/><text x="155" y="113" font-size="13" fill="#1f3a4d" text-anchor="middle">市场</text><rect x="255" y="80" width="150" height="55" rx="8" fill="#e3f0fa" stroke="#2a6fa8" stroke-width="1.5"/><text x="330" y="113" font-size="13" fill="#1f3a4d" text-anchor="middle">交通</text><rect x="430" y="80" width="150" height="55" rx="8" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="1.5"/><text x="505" y="113" font-size="13" fill="#1f3a4d" text-anchor="middle">技术</text><rect x="160" y="160" width="150" height="55" rx="8" fill="#e3f0fa" stroke="#2a6fa8" stroke-width="1.5"/><text x="235" y="193" font-size="13" fill="#1f3a4d" text-anchor="middle">集聚</text><rect x="370" y="160" width="150" height="55" rx="8" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="1.5"/><text x="445" y="193" font-size="13" fill="#1f3a4d" text-anchor="middle">政策地价</text><text x="340" y="255" font-size="13" fill="#1f3a4d" text-anchor="middle">核心是人口规模、消费能力与可达性</text><rect x="150" y="280" width="380" height="35" rx="10" fill="#e3f0fa" stroke="#2a6fa8" stroke-width="1.5"/><text x="340" y="303" font-size="13" fill="#1f3a4d" text-anchor="middle">高端服务强调人才与信息通达</text></svg>', caption: '图2　市场、交通、技术、集聚、政策地价共同影响服务业选址。' },
+      { type: 'warn', label: '易错·服务业区位', text: '① 服务业不只在城市，农村也有零售医疗，只是层级低；② 电商弱化了对实体地段的依赖，但仓储与配送仍要靠交通节点；③ 高端服务业靠人才而非廉价劳动力；④ 把「服务业=餐饮」是误解，金融、物流、信息都属服务业且很重要。' },
+      { type: 'heading', text: '三、现代服务业与新业态' },
+      { type: 'paragraph', text: '信息技术推动服务业升级：电子商务打破时空限制，消费者网上购物、全国配送；共享经济（网约车、短租）提高资源利用率；总部经济、后台服务外包兴起。现代服务业知识技术密集、附加值高，是城市经济转型的方向，也改变了传统区位规律。' },
+      { type: 'example', label: '例题·服务业区位分析', text: '题目：为什么大型购物中心多布局在城市主干道交汇处？<br>解析：主干道交汇处交通便利、人流车流大，可达性强，能吸引最广消费群体；周边常住人口多、消费力强，符合服务业「靠近市场与交通」的指向。同时多家商铺集聚形成商圈，互相带客流。答题围绕「交通便、人流大、市场近、集聚效应」展开。' },
+      { type: 'tip', label: '提示·答题抓核心', text: '服务业区位题先定「市场加交通」两大核心，再补技术、集聚、政策、地价。高端服务强调人才与信息，物流强调枢纽，零售强调人流。与工农题一样列两栏，但服务业更突出「人」与「可达性」。' },
+      { type: 'heading', text: '四、服务业与城市发展' },
+      { type: 'paragraph', text: '服务业是城市经济的重要支柱，发达国家服务业占 GDP 七成以上。它吸纳大量就业，提升城市能级。中央商务区（CBD）就是高端服务业集聚地。城市等级越高，提供的服务种类越多、级别越高（如小城市缺三甲医院、国际航班）。理解中心地理论有助于解释服务等级。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="300" fill="#e8f2fb"/><text x="340" y="30" font-size="17" font-weight="bold" fill="#2a6fa8" text-anchor="middle">城市等级与服务等级</text><rect x="60" y="80" width="170" height="60" rx="8" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="1.5"/><text x="145" y="115" font-size="14" fill="#1f3a4d" text-anchor="middle" font-weight="bold">小城市</text><text x="145" y="138" font-size="11" fill="#1f3a4d" text-anchor="middle">种类少 级别低</text><rect x="255" y="80" width="170" height="60" rx="8" fill="#e3f0fa" stroke="#2a6fa8" stroke-width="1.5"/><text x="340" y="115" font-size="14" fill="#1f3a4d" text-anchor="middle" font-weight="bold">中等城市</text><text x="340" y="138" font-size="11" fill="#1f3a4d" text-anchor="middle">种类较多</text><rect x="450" y="80" width="170" height="60" rx="8" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="1.5"/><text x="535" y="115" font-size="14" fill="#1f3a4d" text-anchor="middle" font-weight="bold">大城市</text><text x="535" y="138" font-size="11" fill="#1f3a4d" text-anchor="middle">种类多 级别高</text><text x="340" y="195" font-size="13" fill="#1f3a4d" text-anchor="middle">城市等级越高，服务种类越多、级别越高</text><rect x="150" y="220" width="380" height="50" rx="10" fill="#e3f0fa" stroke="#2a6fa8" stroke-width="1.5"/><text x="340" y="245" font-size="13" fill="#1f3a4d" text-anchor="middle">中心地理论解释服务业等级与空间分布</text><text x="340" y="267" font-size="13" fill="#1f3a4d" text-anchor="middle">高端服务向大城市集聚</text></svg>', caption: '图3　城市等级越高，提供服务种类越多、级别越高（中心地理论）。' },
+      { type: 'heading', text: '五、服务业发展趋势' },
+      { type: 'paragraph', text: '未来服务业向数字化、智能化、品质化发展：线上线下融合（新零售）、智慧物流、健康养老、文旅休闲需求增长。区域上，核心城市集聚高端服务，中小城市承接生活与基础服务。把握趋势，有助于理解产业布局变化与就业方向。' },
+      { type: 'list', items: ['数字化、智能化、品质化', '线上线下融合的新零售', '健康养老与文旅需求上升', '高端服务向核心城市集聚'] }
+    ],
+    exercises: [
+      { type: 'choice', question: '下列产业中属于生产性服务业的是？', options: ['餐饮业', '零售业', '金融与物流', '家政服务'], answer: '金融与物流', explanation: '生产性服务业为其他产业提供中间服务，如金融、物流、信息、商务咨询。餐饮、零售、家政是直接面向居民的生活性服务业。区分三类服务业要看服务对象是「企业」还是「居民」，金融物流服务生产端，属生产性。' },
+      { type: 'choice', question: '大型购物中心布局的首要区位是？', options: ['靠近原料地', '市场与交通节点', '远离城市的荒郊', '靠近煤矿'], answer: '市场与交通节点', explanation: '购物中心靠大量消费者和便捷交通生存，应布局在人流车流大的交通节点与人口密集区，以最大化可达性与客流。它不依赖原料或矿产，也不会选荒郊。这体现服务业「市场加交通」的核心指向。' },
+      { type: 'choice', question: '关于电商对区位的影响，正确的是？', options: ['完全不需要交通', '仓储配送仍依赖交通节点', '只在农村发展', '取代所有实体店'], answer: '仓储配送仍依赖交通节点', explanation: '电商弱化了对实体门店地段的依赖，但商品仍需仓储与配送，因此物流园区、分拨中心仍要布局在港口、铁路等交通节点。电商并非完全脱离交通，也不是只在农村或能取代所有实体店，线上线下正在融合。' },
+      { type: 'fill', question: '服务业按服务对象可分为生产性服务业、生活性服务业和___服务业；其中金融、物流属于___服务业。', answer: '公共；生产性', explanation: '服务业分为生产性（服务企业生产，如金融物流）、生活性（服务居民，如餐饮零售）、公共性（政府提供，如教育医疗交通）。金融与物流为其他产业提供支撑，属生产性服务业。分类是分析服务业区位的前提。' },
+      { type: 'fill', question: '城市等级越高，能提供的服务种类越___、服务级别越___；小城镇一般只有较低等级的基础服务。', answer: '多；高', explanation: '依据中心地理论，城市等级越高，服务范围越大、种类越多、级别越高（如大城市有三甲医院、国际航线）；小城镇服务种类少、级别低。这解释了为什么高端服务向大城市集聚，也帮助判断城市体系与服务布局。' }
+    ]
+  });
+})();

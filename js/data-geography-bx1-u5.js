@@ -1,0 +1,40 @@
+/* 地理 · 必修 第一册 · 第2章 · 课时：第1节 大气的组成和垂直分层 */
+(function () {
+  var v = gzGetVolume('geography', 'bx1');
+  if (!v) return;
+  v.points.push({
+    id: 'bx1-u5',
+    name: '第1节 大气的组成和垂直分层',
+    chapter: '必修 第一册 · 第2章 地球上的大气',
+    difficulty: '基础',
+    content: [
+      { type: 'heading', text: '一、大气是由什么组成的' },
+      { type: 'paragraph', text: '我们每时每刻都在呼吸，包围在地球外面的这层气体就是大气。大气并不是单一的一种气体，而是由多种成分混合而成的。平时我们关注最多的是贴近地面、和我们生活关系最紧的低层大气，它主要由干洁空气、水汽和杂质三部分组成。' },
+      { type: 'list', items: ['干洁空气：氮气、氧气为主，还有少量二氧化碳和氩气等', '水汽：含量很少且变化大，是成云致雨的重要条件', '杂质：微小的尘埃和微粒，能充当水汽凝结的凝结核', '三者之中，干洁空气的比例相对比较稳定'] },
+      { type: 'table', headers: ['成分', '所占比例', '主要作用'], rows: [['氮气', '约 78%', '是地球生物体的基本组成元素'], ['氧气', '约 21%', '维持生命活动，支持燃烧'], ['二氧化碳', '很少', '植物光合作用的原料，能保温'], ['水汽和杂质', '少量', '是成云、降雨的必要条件']] },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="320" fill="#e8f2fb"/><text x="340" y="32" font-size="17" font-weight="bold" fill="#2a6fa8" text-anchor="middle">低层大气的组成</text><rect x="60" y="60" width="220" height="200" rx="12" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="2"/><text x="170" y="90" font-size="14" fill="#1f3a4d" text-anchor="middle" font-weight="bold">干洁空气</text><text x="170" y="125" font-size="13" fill="#1f3a4d" text-anchor="middle">氮气 约 78%</text><text x="170" y="155" font-size="13" fill="#1f3a4d" text-anchor="middle">氧气 约 21%</text><text x="170" y="185" font-size="13" fill="#1f3a4d" text-anchor="middle">二氧化碳 少量</text><text x="170" y="215" font-size="13" fill="#1f3a4d" text-anchor="middle">氩气等微量</text><rect x="320" y="60" width="150" height="200" rx="12" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="2"/><text x="395" y="95" font-size="14" fill="#1f3a4d" text-anchor="middle" font-weight="bold">水汽</text><text x="395" y="130" font-size="13" fill="#1f3a4d" text-anchor="middle">含量很少</text><text x="395" y="160" font-size="13" fill="#1f3a4d" text-anchor="middle">随地点时间变</text><rect x="500" y="60" width="140" height="200" rx="12" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="2"/><text x="570" y="95" font-size="14" fill="#1f3a4d" text-anchor="middle" font-weight="bold">杂质</text><text x="570" y="130" font-size="13" fill="#1f3a4d" text-anchor="middle">尘埃 微粒</text><text x="570" y="160" font-size="13" fill="#1f3a4d" text-anchor="middle">凝结核</text><text x="340" y="300" font-size="12" fill="#1f3a4d" text-anchor="middle">低层大气由干洁空气、水汽和杂质组成，后两者是成云致雨的条件。</text></svg>', caption: '图1　低层大气由干洁空气、水汽和杂质三部分组成。' },
+      { type: 'keypoint', label: '重点·干洁空气的主要成分', text: '<strong>干洁空气中，氮气约占 78%，氧气约占 21%，二者合起来就占了绝大部分。</strong>氮气是生物体的基本成分，氧气是人和动物呼吸、物质燃烧都离不开的气体；二氧化碳虽然含量很少，却是植物光合作用的原料，还能像被子一样把热量留住。记住「氮最多、氧其次」就不会把比例记反。' },
+      { type: 'heading', text: '二、大气在垂直方向分成几层' },
+      { type: 'paragraph', text: '大气在垂直方向上的温度变化并不均匀，科学家根据温度随高度变化的特点，把大气从下往上分成对流层、平流层和高层大气三层。每一层的冷热状况、运动方式和与人类的关系都不太一样，了解分层是学好大气知识的第一步。' },
+      { type: 'list', items: ['对流层：最下面一层，和我们关系最密切', '平流层：在对流层之上，飞机常在里面飞行', '高层大气：最上面，有能反射无线电波的电离层', '分层的主要依据是气温随高度怎样变化'] },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 360" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="360" fill="#e8f2fb"/><text x="340" y="32" font-size="17" font-weight="bold" fill="#2a6fa8" text-anchor="middle">大气的垂直分层</text><rect x="120" y="55" width="440" height="80" rx="12" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="2"/><text x="340" y="85" font-size="14" fill="#1f3a4d" text-anchor="middle" font-weight="bold">对流层（0 至约 12 千米）</text><text x="340" y="112" font-size="12" fill="#1f3a4d" text-anchor="middle">气温随高度升高而降低，对流显著</text><rect x="120" y="145" width="440" height="80" rx="12" fill="#bcd9f0" stroke="#2a6fa8" stroke-width="2"/><text x="340" y="175" font-size="14" fill="#1f3a4d" text-anchor="middle" font-weight="bold">平流层（约 12 至 55 千米）</text><text x="340" y="202" font-size="12" fill="#1f3a4d" text-anchor="middle">臭氧吸收紫外线，气温升高，平流为主</text><rect x="120" y="235" width="440" height="80" rx="12" fill="#cfe4f5" stroke="#2a6fa8" stroke-width="2"/><text x="340" y="265" font-size="14" fill="#1f3a4d" text-anchor="middle" font-weight="bold">高层大气（55 千米以上）</text><text x="340" y="292" font-size="12" fill="#1f3a4d" text-anchor="middle">有电离层，能反射无线电波</text><text x="340" y="345" font-size="12" fill="#1f3a4d" text-anchor="middle">大气在垂直方向上分为对流层、平流层和高层大气。</text></svg>', caption: '图2　大气自下而上分为对流层、平流层和高层大气。' },
+      { type: 'keypoint', label: '重点·各层的核心特点', text: '<strong>三层各有招牌特征：</strong>① 对流层，气温随高度升高而降低，空气上下对流明显，风霜雨雪都发生在这里；② 平流层，因为臭氧吸收紫外线，气温反而随高度升高，气流平稳，适合飞机飞行；③ 高层大气，空气稀薄，其中有电离层能反射无线电波，对通信很重要。把「对流层—天气、平流层—飞行、高层—电离层」对应记牢。' },
+      { type: 'heading', text: '三、与人类关系最密切的对流层' },
+      { type: 'paragraph', text: '对流层是贴近地面的一层，平均厚度约 12 千米，集中了几乎全部的水汽和杂质，所以风云雷电、阴晴冷热都出现在这一层。我们平常感受到的天气变化，以及对飞行、农业、交通的影响，几乎都和对流层有关。' },
+      { type: 'warn', label: '易错·对流层和平流层别混', text: '① 对流层的气温是「随高度升高而降低」，平流层则是「随高度升高而升高」，二者正好相反，最容易被考；② 适合飞机平稳飞行的是平流层，不是对流层，因为对流层气流上下翻滚、天气多变；③ 对流层厚度并不处处一样，赤道附近厚、两极附近薄。把这两层一对比，选择题就不容易错。' },
+      { type: 'heading', text: '四、平流层和高层大气' },
+      { type: 'paragraph', text: '平流层位于对流层顶之上，大约到 55 千米高度。这一层里有臭氧层，能大量吸收太阳光中的紫外线，既保护了地面生物，又使气温随高度升高。再往上就是高层大气，那里空气极稀薄，却含有电离层，是短波无线电通信的「中转站」。' },
+      { type: 'table', headers: ['层次', '高度范围', '气温变化', '运动特点'], rows: [['对流层', '0 至约 12 千米', '随高度升高而降低', '对流运动显著'], ['平流层', '约 12 至 55 千米', '随高度升高而升高', '平流运动为主'], ['高层大气', '55 千米以上', '先降后升', '有电离层']] },
+      { type: 'example', label: '例题·判断大气分层', text: '题目：某层大气气温随高度升高而升高，气流平稳，适合飞机飞行，这一层是？<br>A. 对流层　B. 平流层　C. 高层大气　D. 电离层<br>解析：对流层气温随高度降低，且天气多变，不适合平稳飞行，排除 A；平流层因臭氧吸收紫外线，气温随高度升高，气流以水平运动为主，天气晴朗平稳，正是飞机理想的飞行层，故选 B；高层大气空气稀薄，也不是常规飞行所在。答案是平流层。' },
+      { type: 'tip', label: '提示·用温度判层数', text: '拿到一道题，先看「气温随高度怎么变」：<strong>下降的是对流层，上升的是平流层</strong>。再记住对流层有天气、平流层适合飞行、高层有电离层这三条对应，考试时基本能直接定位。若题目还提到臭氧，那一定在平流层；提到无线电反射，那一定在高层大气的电离层。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="340" fill="#e8f2fb"/><text x="340" y="32" font-size="17" font-weight="bold" fill="#2a6fa8" text-anchor="middle">气温随高度的变化</text><line x1="80" y1="60" x2="80" y2="290" stroke="#1f3a4d" stroke-width="2"/><line x1="80" y1="290" x2="620" y2="290" stroke="#1f3a4d" stroke-width="2"/><text x="60" y="180" font-size="12" fill="#1f3a4d" text-anchor="middle" transform="rotate(-90 60 180)">高度 ↑</text><text x="350" y="312" font-size="12" fill="#1f3a4d" text-anchor="middle">气温</text><polyline points="80,70 260,200" fill="none" stroke="#2a6fa8" stroke-width="3"/><text x="165" y="120" font-size="12" fill="#1f3a4d">对流层：降</text><polyline points="260,200 440,90" fill="none" stroke="#3389c4" stroke-width="3"/><text x="350" y="150" font-size="12" fill="#1f3a4d">平流层：升</text><polyline points="440,90 620,150" fill="none" stroke="#2a6fa8" stroke-width="3"/><text x="530" y="120" font-size="12" fill="#1f3a4d">高层：先降后升</text><text x="340" y="330" font-size="12" fill="#1f3a4d" text-anchor="middle">对流层气温随高度降低，平流层随高度升高。</text></svg>', caption: '图3　对流层气温随高度降低，平流层随高度升高。' }
+    ],
+    exercises: [
+      { type: 'choice', question: '干洁空气中含量最多的气体是？', options: ['氮气', '氧气', '二氧化碳', '氩气'], answer: '氮气', explanation: '干洁空气里氮气约占 78%，氧气约占 21%，二氧化碳和氩气等只占很少一部分。所以含量最多的是氮气，它是地球生物体的基本组成成分。氧气虽然重要，但比例排在氮气之后。因此本题应选氮气。' },
+      { type: 'choice', question: '关于对流层气温变化的说法，正确的是？', options: ['随高度升高而升高', '随高度升高而降低', '不随高度变化', '先升后降'], answer: '随高度升高而降低', explanation: '对流层是最贴近地面的一层，地面是近地面大气的主要热源，离地面越远（高度越高）得到的热量越少，所以气温随高度升高而降低，平均每上升 1000 米约下降 6℃。平流层才是随高度升高而升高。因此正确选项是随高度升高而降低。' },
+      { type: 'choice', question: '飞机通常选择在平流层飞行，主要原因是？', options: ['对流旺盛', '天气晴朗、气流平稳', '气温随高度降低', '水汽含量多'], answer: '天气晴朗、气流平稳', explanation: '平流层气温随高度升高，气流以水平运动为主，很少出现云雨等天气现象，空气平稳，能见度高，非常适合飞机平稳飞行。对流层虽然离地面近，但气流上下翻滚、天气多变，并不适合。因此正确原因是天气晴朗、气流平稳。' },
+      { type: 'fill', question: '在大气的垂直分层中，与人类关系最密切、风霜雨雪等天气现象都出现在___层。', answer: '对流', explanation: '对流层是贴近地面的一层，集中了几乎全部的水汽和杂质，空气受热不均产生强烈的上下对流，阴晴冷热、风云雷电等天气现象都发生在这一层。它也是我们人类活动和生产生活主要所处的层次，因此与人类关系最密切的是对流层。' },
+      { type: 'fill', question: '平流层中的___能吸收太阳紫外线，使该层气温随高度升高；高层大气中的___能反射无线电波。', answer: '臭氧；电离层', explanation: '平流层里有一层臭氧，它能大量吸收太阳光中的紫外线，既保护地面生物少受伤害，又使平流层气温随高度升高。再往上的高层大气非常稀薄，其中的电离层含有大量带电粒子，能够反射短波无线电波，是远距离无线电通信的重要依靠。' }
+    ]
+  });
+})();
