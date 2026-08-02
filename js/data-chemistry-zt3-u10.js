@@ -1,0 +1,43 @@
+/* 化学 · 高三复习 · 有机化学 · 专题三 · 课时：酚 */
+(function () {
+  var v = gzGetVolume('chemistry', 'zt3');
+  if (!v) return;
+  v.points.push({
+    id: 'zt3-u10',
+    name: '酚',
+    chapter: '有机化学 · 专题三 烃的衍生物',
+    difficulty: '基础',
+    content: [
+      { type: 'heading', text: '一、酚与官能团（羟基直接连苯环）' },
+      { type: 'paragraph', text: '酚和醇只差一个"邻居"：<strong>羟基（—OH）直接连在苯环上</strong>的化合物叫酚，最简单的就是苯酚 C₆H₅OH。如果羟基连在饱和碳上，那叫醇（如乙醇）。就因为羟基的邻居从饱和碳变成了苯环，性质大不相同——酚能显弱酸性、能和浓溴水生成白色沉淀，而醇不能。高考常把醇和酚放在一起对比考查。' },
+      { type: 'list', items: ['醇：羟基 —OH 连在饱和碳原子上，如乙醇 C₂H₅OH', '酚：羟基 —OH 直接连在苯环上，如苯酚 C₆H₅OH', '判断关键看羟基的邻居：连饱和碳=醇，连苯环=酚', '二者官能团写法都是 —OH，但性质差别很大'] },
+      { type: 'heading', text: '二、苯酚的物理性质' },
+      { type: 'paragraph', text: '纯净的苯酚是<strong>无色晶体</strong>，有特殊的气味，<strong>有毒</strong>，对皮肤有腐蚀性（不小心沾到要马上用酒精擦洗，因为苯酚易溶于酒精）。常温下苯酚在水里溶得不多，但温度升到 65℃ 以上时，它能和水以任意比例互溶；也易溶于乙醇、乙醚等有机溶剂。' },
+      { type: 'keypoint', label: '重点·苯酚的溶解性', text: '<strong>常温下苯酚在水中溶解度小，但温度升到 65℃ 以上可与水任意比例互溶。</strong>原因是温度升高破坏了苯酚分子间的缔合，使其能更好地进入水。这个特性常用来提纯苯酚：用热水溶解、冷却又析出。另外苯酚易溶于酒精，皮肤沾染时用酒精清洗比用水更有效。' },
+      { type: 'heading', text: '三、苯酚的弱酸性（石炭酸）' },
+      { type: 'paragraph', text: '苯酚有弱酸性，俗称<strong>石炭酸</strong>，能和碱反应：<br>C₆H₅OH + NaOH → C₆H₅ONa + H₂O<br>生成苯酚钠（溶于水）。这说明酚羟基上的氢有一定活泼性，能给出去。但苯酚酸性很弱，弱到不能使石蕊试纸变红，属于比碳酸还弱的酸。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="300" fill="#f7ecdc"/><text x="340" y="34" font-size="17" font-weight="bold" fill="#b5651d" text-anchor="middle">苯酚的弱酸性（与 NaOH 反应）</text><rect x="50" y="64" width="580" height="74" rx="10" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="340" y="96" font-size="15" fill="#4a3724" text-anchor="middle">C₆H₅OH + NaOH → C₆H₅ONa + H₂O</text><text x="340" y="122" font-size="13" fill="#d98e3a" text-anchor="middle">苯酚给出羟基上的氢，生成溶于水的苯酚钠</text><rect x="50" y="162" width="580" height="104" rx="10" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="340" y="194" font-size="13" fill="#4a3724" text-anchor="middle">酸性比碳酸还弱，不能使石蕊变红</text><text x="340" y="222" font-size="13" fill="#4a3724" text-anchor="middle">苯酚钠易溶于水，溶液澄清透明</text><text x="340" y="250" font-size="13" fill="#4a3724" text-anchor="middle">通入 CO₂ 又能把苯酚"夺"回来（见下节）</text></svg>', caption: '图1　苯酚有弱酸性，能与 NaOH 反应生成可溶的苯酚钠。' },
+      { type: 'heading', text: '四、苯酚酸性比碳酸还弱' },
+      { type: 'paragraph', text: '往苯酚钠溶液里通入二氧化碳，苯酚会被重新"夺"回来：<br>C₆H₅ONa + CO₂ + H₂O → C₆H₅OH + NaHCO₃<br>这个反应说明<strong>苯酚的酸性比碳酸还弱</strong>——连弱酸碳酸都能把苯酚从盐里置换出来。产物是 NaHCO₃（碳酸氢钠）而不是 Na₂CO₃，也印证了苯酚酸性太弱，只能把碳酸拉到碳酸氢根这一步。' },
+      { type: 'warn', label: '易错·苯酚酸性弱的两层含义', text: '<strong>第一，苯酚虽显酸性却比碳酸弱，不能使石蕊变红；第二，它与 Na₂CO₃ 反应只生成 NaHCO₃，不会放出 CO₂。</strong>很多同学误以为苯酚能像强酸那样和碳酸钠放出二氧化碳，其实不能——因为苯酚酸性比碳酸弱，反过来碳酸能把苯酚从苯酚钠中置换出来。记住：弱酸制更弱酸，苯酚比碳酸更弱。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="320" fill="#f7ecdc"/><text x="340" y="34" font-size="17" font-weight="bold" fill="#b5651d" text-anchor="middle">苯酚与浓溴水生成白色沉淀</text><rect x="50" y="62" width="580" height="74" rx="10" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="340" y="94" font-size="14" fill="#4a3724" text-anchor="middle">C₆H₅OH + 3Br₂ → 2,4,6-三溴苯酚↓ + 3HBr</text><text x="340" y="120" font-size="13" fill="#d98e3a" text-anchor="middle">生成白色沉淀，是苯酚的特征检验</text><rect x="50" y="162" width="580" height="128" rx="10" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="340" y="194" font-size="13" fill="#4a3724" text-anchor="middle">酚羟基使苯环活化，邻位和对位氢容易被溴取代</text><text x="340" y="222" font-size="13" fill="#4a3724" text-anchor="middle">三个溴分别上 2、4、6 位，得白色三溴苯酚</text><text x="340" y="250" font-size="13" fill="#4a3724" text-anchor="middle">用浓溴水即可，不需催化剂，现象明显</text><text x="340" y="278" font-size="13" fill="#4a3724" text-anchor="middle">该白色沉淀常用于检验苯酚的存在</text></svg>', caption: '图2　苯酚遇浓溴水在邻对位生成白色的三溴苯酚沉淀。' },
+      { type: 'heading', text: '五、苯环上的取代（酚的特征检验）' },
+      { type: 'paragraph', text: '苯酚虽然也有苯环，但因为羟基连在苯环上，<strong>酚羟基使苯环变得活泼，特别是在邻位和对位更容易发生取代</strong>。往苯酚溶液里滴加浓溴水，不用催化剂就能迅速生成<strong>2,4,6-三溴苯酚白色沉淀</strong>。这一白色沉淀是苯酚的特征反应，常用于检验苯酚。' },
+      { type: 'keypoint', label: '重点·酚羟基"活化"苯环', text: '<strong>酚羟基把电子推向苯环，使邻位和对位的碳电子云密度升高，更容易被亲电试剂（如溴）进攻，所以取代发生在邻对位。</strong>这与苯要在 FeBr₃ 催化下才和液溴反应不同，苯酚用浓溴水就能常温快速生成白色三溴苯酚沉淀。活化效应是酚化学性质的核心，也是醇（羟基不连苯环）不具备的。' },
+      { type: 'heading', text: '六、显色反应（遇 FeCl₃ 变紫）' },
+      { type: 'paragraph', text: '苯酚还有一个特别好认的反应：<strong>遇到三氯化铁 FeCl₃ 溶液会显紫色</strong>。这是酚类共有的显色反应，操作简单、现象鲜明，也是检验酚羟基的常用方法。醇没有这个性质，所以能用它把酚和醇区分开。' },
+      { type: 'list', items: ['与浓溴水反应：生成白色三溴苯酚沉淀，检验苯酚', '与 FeCl₃ 显色：溶液变紫色，检验酚羟基', '弱酸性：能与 NaOH 反应，比碳酸弱', '与 Na 反应：放出氢气（羟基上氢活泼）'] },
+      { type: 'example', label: '例题·比较醇与酚', text: '为什么乙醇不能与浓溴水生成白色沉淀，而苯酚可以？为什么苯酚能使 NaOH 反应而乙醇不行？<br><br><strong>解析</strong>：乙醇的羟基连在饱和碳上，苯环不存在，所以没有苯环上的取代反应，遇浓溴水不生成沉淀。苯酚的羟基直接连苯环，酚羟基把电子推向苯环使其活化，邻对位易取代，故与浓溴水生成白色三溴苯酚沉淀。酸性方面，苯酚的羟基受苯环影响，氢较易电离显弱酸性，能与 NaOH 反应；乙醇羟基氢不显酸性，不与 NaOH 反应。两者差异根源在羟基的"邻居"不同。' },
+      { type: 'tip', label: '提示·酚的两招检验', text: '记住苯酚的两大特征检验：<strong>第一招加浓溴水，出现白色沉淀；第二招加 FeCl₃，溶液变紫色。</strong>两招任一出现都能说明有酚羟基。再补一句：苯酚酸性比碳酸弱，能和 NaOH 成盐溶于水，通入 CO₂ 又析出，这一来一回也是判断酚的好办法。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="340" fill="#f7ecdc"/><text x="340" y="34" font-size="17" font-weight="bold" fill="#b5651d" text-anchor="middle">醇与酚性质对比可视化</text><rect x="50" y="60" width="270" height="240" rx="10" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="185" y="92" font-size="15" fill="#b5651d" text-anchor="middle" font-weight="bold">乙醇（醇）</text><text x="185" y="124" font-size="13" fill="#4a3724" text-anchor="middle">—OH 连饱和碳</text><text x="185" y="152" font-size="13" fill="#4a3724" text-anchor="middle">不显酸性，不与 NaOH 反应</text><text x="185" y="180" font-size="13" fill="#4a3724" text-anchor="middle">不与浓溴水生成沉淀</text><text x="185" y="208" font-size="13" fill="#4a3724" text-anchor="middle">遇 FeCl₃ 不变色</text><text x="185" y="236" font-size="13" fill="#4a3724" text-anchor="middle">能与 Na 放出 H₂</text><text x="185" y="264" font-size="13" fill="#4a3724" text-anchor="middle">可催化氧化成醛或酮</text><text x="185" y="292" font-size="13" fill="#d98e3a" text-anchor="middle">无苯环取代活性</text><rect x="360" y="60" width="270" height="240" rx="10" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="495" y="92" font-size="15" fill="#b5651d" text-anchor="middle" font-weight="bold">苯酚（酚）</text><text x="495" y="124" font-size="13" fill="#4a3724" text-anchor="middle">—OH 直接连苯环</text><text x="495" y="152" font-size="13" fill="#4a3724" text-anchor="middle">显弱酸性，与 NaOH 反应</text><text x="495" y="180" font-size="13" fill="#4a3724" text-anchor="middle">浓溴水生成白色沉淀</text><text x="495" y="208" font-size="13" fill="#4a3724" text-anchor="middle">遇 FeCl₃ 显紫色</text><text x="495" y="236" font-size="13" fill="#4a3724" text-anchor="middle">能与 Na 放出 H₂</text><text x="495" y="264" font-size="13" fill="#4a3724" text-anchor="middle">苯环邻对位易取代</text><text x="495" y="292" font-size="13" fill="#d98e3a" text-anchor="middle">酸性比碳酸弱</text></svg>', caption: '图3　醇与酚性质对比：羟基连的邻居不同，性质大不同。' },
+      { type: 'table', headers: ['性质', '乙醇（醇）', '苯酚（酚）'], rows: [['羟基连接对象', '饱和碳原子', '直接连苯环'], ['与 NaOH 反应', '不反应（不显酸性）', '反应，显弱酸性（石炭酸）'], ['与浓溴水', '不反应、无沉淀', '生成白色三溴苯酚沉淀'], ['与 FeCl₃', '不变色', '显紫色'], ['酸性强弱', '不显酸性', '比碳酸弱']] }
+    ],
+    exercises: [
+      { type: 'choice', question: '判断一种物质是醇还是酚，关键看什么？', options: ['羟基连在饱和碳上还是直接连苯环', '分子中是否含苯环', '是否溶于水', '分子量的大小'], answer: '羟基连在饱和碳上还是直接连苯环', explanation: '醇和酚的官能团都写作 —OH，本质区别在于羟基所连的位置：羟基连在饱和碳原子上的是醇（如乙醇 C₂H₅OH），羟基直接连在苯环上的是酚（如苯酚 C₆H₅OH）。是否含苯环不是唯一标准，因为醇也可能含苯环（如苯甲醇），关键是羟基的邻居。所以判断标准是羟基连在饱和碳还是直接连苯环。' },
+      { type: 'choice', question: '苯酚溶液中滴加浓溴水，观察到的现象是？', options: ['生成白色沉淀', '溶液显紫色', '溶液变蓝色', '生成黄色沉淀'], answer: '生成白色沉淀', explanation: '酚羟基使苯环活化，邻对位易取代。苯酚与浓溴水反应生成 2,4,6-三溴苯酚白色沉淀，这是苯酚的特征检验，不需催化剂、常温即可发生。溶液显紫色是苯酚遇 FeCl₃ 的显色反应，不是与溴水的现象；黄色沉淀不是苯酚与溴水的特征。所以选生成白色沉淀。' },
+      { type: 'choice', question: '下列关于苯酚酸性的说法，正确的是？', options: ['酸性比碳酸强', '酸性比碳酸弱', '不显酸性', '是强酸'], answer: '酸性比碳酸弱', explanation: '苯酚有弱酸性（俗称石炭酸），但酸性比碳酸还弱，证据是向苯酚钠溶液通 CO₂ 能析出苯酚：C₆H₅ONa + CO₂ + H₂O → C₆H₅OH + NaHCO₃，说明碳酸能把苯酚从盐中置换出来，即苯酚酸性更弱。它虽显酸性却不足以使石蕊变红，更不是强酸。所以选酸性比碳酸弱。' },
+      { type: 'fill', question: '苯酚遇三氯化铁 FeCl₃ 溶液会显___色，这是酚类的特征显色反应。', answer: '紫', explanation: '酚类化合物与 FeCl₃ 溶液反应会显紫色，这是酚羟基的特征显色反应，操作简单、现象鲜明，常用于检验酚羟基的存在。醇没有这个性质，因此可用 FeCl₃ 把酚和醇区分开。注意该反应是显色而非生成沉淀，溶液整体呈现紫色。' },
+      { type: 'fill', question: '苯酚与氢氧化钠反应的化学方程式为 C₆H₅OH + NaOH → ___ + H₂O（写生成物的化学式）。', answer: 'C₆H₅ONa', explanation: '苯酚显弱酸性，羟基上的氢能被 NaOH 中和，生成苯酚钠 C₆H₅ONa 和水。苯酚钠易溶于水，所以浑浊的苯酚悬浊液加 NaOH 后会变澄清。由于苯酚酸性比碳酸弱，再向苯酚钠溶液中通入 CO₂ 又会析出苯酚，这是"弱酸制更弱酸"的体现。' }
+    ]
+  });
+})();

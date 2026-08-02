@@ -1,0 +1,48 @@
+/* ============================================================
+ * 高二化学 · 选择性必修1 · 化学反应原理 · 第四章
+ * 课时15：化学电源
+ * 数据注入：chemistry.xb1.points
+ * ============================================================ */
+(function () {
+  var v = gzGetVolume('chemistry', 'xb1');
+  if (!v) return;
+
+  v.points.push({
+    id: 'xb1-u15',
+    name: '化学电源',
+    chapter: '选择性必修1 化学反应原理 · 第四章 化学反应与电能',
+    difficulty: '基础',
+    content: [
+      { type: 'heading', text: '一、把原电池装进"盒子"里' },
+      { type: 'paragraph', text: '上节我们搭了一个"敞口"的锌铜原电池，真实生活中可不能让人抱着一杯稀硫酸走路。工程师把原电池原理封装成各种化学电源：干电池、充电电池、燃料电池。它们本质都是原电池，区别在"反应物质能不能补给、电用完能不能再充"。按能不能重复充电，分成一次电池、二次电池和燃料电池三大类。' },
+      { type: 'keypoint', label: '重点·化学电源的分类', text: '<strong>化学电源按可否充电分为：一次电池（用完即弃，如干电池）、二次电池（可充电，如铅蓄电池、锂电池）、燃料电池（连续供给燃料和氧化剂，如氢氧燃料电池）。</strong>它们都基于原电池的氧化还原分极思想。' },
+      { type: 'paragraph', text: '可以把一次电池想成"一次性打火机"——气烧完就扔；二次电池像"充电宝"——电放完插上电又能满血；燃料电池则像"燃气灶"——只要不断供气就能一直工作。' },
+      { type: 'list', items: ['一次电池：反应不可逆，放电后废弃（碱性锌锰电池）', '二次电池：可反复充放电，反应可逆（铅蓄电池、锂离子电池）', '燃料电池：燃料和氧化剂从外部连续输入（氢氧燃料电池）', '衡量指标：电动势、容量、能量密度、使用寿命'] },
+      { type: 'heading', text: '二、一次电池——干电池' },
+      { type: 'paragraph', text: '最常见的干电池是碱性锌锰电池。负极是锌筒（Zn − 2e⁻ → Zn²⁺ 或写成 Zn + 2OH⁻ − 2e⁻ → ZnO + H₂O），正极是 MnO₂ 得电子把 Mn 还原，电解质是 KOH 碱液。它放电时化学反应不可逆，电用光了只能丢掉。优点是便宜、方便，缺点是污染大、不可充。' },
+      { type: 'keypoint', label: '重点·碱性锌锰干电池', text: '<strong>负极（锌筒）：Zn 被氧化；正极（MnO₂）：Mn 被还原；电解质为 KOH。</strong>典型负极：Zn + 2OH⁻ − 2e⁻ → ZnO + H₂O；正极：2MnO₂ + H₂O + 2e⁻ → Mn₂O₃ + 2OH⁻。总反应把化学能转成电能，且不可逆，属一次电池。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="300" fill="#f7ecdc"/><text x="340" y="34" font-size="17" font-weight="bold" fill="#b5651d" text-anchor="middle">干电池（一次电池）的剖面示意</text><rect x="250" y="70" width="180" height="200" rx="14" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="340" y="100" font-size="13" fill="#d98e3a" text-anchor="middle" font-weight="bold">碳棒（正极）</text><rect x="280" y="120" width="120" height="120" rx="8" fill="#d98e3a" opacity="0.5"/><text x="340" y="170" font-size="12" fill="#4a3724" text-anchor="middle">MnO₂ 正极区</text><text x="340" y="200" font-size="12" fill="#4a3724" text-anchor="middle">KOH 电解质</text><text x="340" y="245" font-size="13" fill="#b5651d" text-anchor="middle" font-weight="bold">锌筒（负极）</text><line x1="430" y1="100" x2="470" y2="100" stroke="#4a3724" stroke-width="3"/><text x="510" y="104" font-size="12" fill="#4a3724" text-anchor="middle">电流流出</text></svg>', caption: '图1　碱性锌锰干电池：锌筒作负极被氧化，碳棒周围 MnO₂ 作正极被还原，KOH 为电解质，放电后不可充电。' },
+      { type: 'table', headers: ['类型', '代表', '可否充电', '特点'], rows: [['一次电池', '碱性锌锰干电池', '不可', '便宜方便、污染大'], ['二次电池', '铅蓄电池、锂电池', '可', '可反复使用、成本较高'], ['燃料电池', '氢氧燃料电池', '持续供料', '效率高、清洁、需外部供料']] },
+      { type: 'paragraph', text: '二次电池里最经典的是铅蓄电池，汽车里那个"大块头"就是它。放电时它是原电池：负极 Pb − 2e⁻ + SO₄²⁻ → PbSO₄，正极 PbO₂ + 4H⁺ + SO₄²⁻ + 2e⁻ → PbSO₄ + 2H₂O。充电时外接电源，反应倒过来，把 PbSO₄ 重新变回 Pb 和 PbO₂。所以充放电是同一个装置的正逆过程。' },
+      { type: 'keypoint', label: '重点·二次电池可充放电', text: '<strong>二次电池放电时是原电池（自发放电），充电时是电解池（外接电源强制反向反应）。</strong>铅蓄电池放电生成 PbSO₄，充电时 PbSO₄ 分别在两极变回 Pb 和 PbO₂。锂离子电池靠 Li⁺ 在正负极间来回"嵌脱"实现充放电，能量密度高、应用广。' },
+      { type: 'heading', text: '三、燃料电池——连续供料的"发电站"' },
+      { type: 'paragraph', text: '燃料电池不像普通电池把反应物全封在里面，而是从外面不断通入燃料（如 H₂、CH₃OH）和氧化剂（如 O₂）。以氢氧燃料电池为例：负极 H₂ 失电子，酸性条件 2H₂ − 4e⁻ → 4H⁺，碱性条件 2H₂ − 4e⁻ + 4OH⁻ → 4H₂O；正极 O₂ 得电子，酸性 O₂ + 4H⁺ + 4e⁻ → 2H₂O，碱性 O₂ + 2H₂O + 4e⁻ → 4OH⁻。产物主要是水，非常清洁。' },
+      { type: 'list', items: ['氢氧燃料电池酸性：负极 2H₂ − 4e⁻ → 4H⁺；正极 O₂ + 4H⁺ + 4e⁻ → 2H₂O', '氢氧燃料电池碱性：负极 2H₂ − 4e⁻ + 4OH⁻ → 4H₂O；正极 O₂ + 2H₂O + 4e⁻ → 4OH⁻', '总反应都是 2H₂ + O₂ → 2H₂O', '优点：能量转化率高、产物清洁（主要是水）'] },
+      { type: 'example', label: '例题·燃料电池电极反应', text: '某氢氧燃料电池在碱性条件下工作，下列说法正确的是？<br>A. 负极反应为 2H₂ − 4e⁻ → 4H⁺<br>B. 正极反应为 O₂ + 2H₂O + 4e⁻ → 4OH⁻<br>C. 总反应是 2H₂ + O₂ → 2H₂O<br>D. B 和 C 都对<br><br><strong>解析</strong>：碱性条件下，负极氢气失电子同时消耗 OH⁻：2H₂ − 4e⁻ + 4OH⁻ → 4H₂O，所以 A 错（A 是酸性写法）。正极氧气得电子与水生成 OH⁻：O₂ + 2H₂O + 4e⁻ → 4OH⁻，B 正确。总反应为 2H₂ + O₂ → 2H₂O，C 也正确。因此选 D（B 和 C 都对）。注意酸碱性不同，电极反应写法不同但总反应一致。' },
+      { type: 'warn', label: '易错·酸碱性决定电极写法', text: '写燃料电池电极反应时，<strong>必须先看清电解质是酸性还是碱性，两者写法不同</strong>。酸性环境里可以用 H⁺，负极产物是 H⁺、正极有 H⁺ 参与；碱性环境里没有自由 H⁺，要靠 OH⁻ 和 H₂O 来配平（负极消耗 OH⁻，正极生成 OH⁻）。若把酸性写法套到碱性电池上（出现 H⁺ 又出现大量 OH⁻）就会自相矛盾。总反应则与介质无关，始终是燃料燃烧反应。' },
+      { type: 'heading', text: '四、化学电源的选择与环保' },
+      { type: 'paragraph', text: '不同场景选不同电源：遥控器、钟表用一次电池图便宜；电动车、手机用二次锂电池图可循环；航天、潜艇用燃料电池图高效清洁。同时，废旧电池含重金属（汞、镉、铅），乱丢会污染土壤和水源，必须分类回收。理解电源原理，也让我们更会"用"和"收"。' },
+      { type: 'tip', label: '提示·电极反应配平三步', text: '写任何化学电源的电极反应，按三步不易错：① 确定介质（酸性/碱性/熔融），这决定能不能写 H⁺；② 负极写燃料失电子，用 H⁺ 或 OH⁻ + H₂O 配平电荷和原子；③ 正极写氧化剂（多为 O₂）得电子，同样配平。配不平就用"水配氧、H⁺/OH⁻ 配氢"，最后用总反应检验两边原子和电荷是否守恒。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="300" fill="#f7ecdc"/><text x="340" y="34" font-size="17" font-weight="bold" fill="#b5651d" text-anchor="middle">氢氧燃料电池：连续供料发电</text><rect x="60" y="90" width="160" height="170" rx="10" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="140" y="120" font-size="14" fill="#4a3724" text-anchor="middle" font-weight="bold">负极（通 H₂）</text><text x="140" y="158" font-size="12" fill="#4a3724" text-anchor="middle">2H₂ − 4e⁻</text><text x="140" y="182" font-size="12" fill="#4a3724" text-anchor="middle">→ 4H⁺(酸)</text><text x="140" y="225" font-size="11" fill="#b5651d" text-anchor="middle">燃料失电子</text><rect x="460" y="90" width="160" height="170" rx="10" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="540" y="120" font-size="14" fill="#4a3724" text-anchor="middle" font-weight="bold">正极（通 O₂）</text><text x="540" y="158" font-size="12" fill="#4a3724" text-anchor="middle">O₂ + 4H⁺ + 4e⁻</text><text x="540" y="182" font-size="12" fill="#4a3724" text-anchor="middle">→ 2H₂O(酸)</text><text x="540" y="225" font-size="11" fill="#d98e3a" text-anchor="middle">氧化剂得电子</text><rect x="240" y="140" width="200" height="80" rx="10" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="340" y="170" font-size="13" fill="#4a3724" text-anchor="middle">电解质（酸/碱）</text><text x="340" y="198" font-size="12" fill="#d98e3a" text-anchor="middle">H⁺ 或 OH⁻ 传导</text><line x1="220" y1="130" x2="462" y2="130" stroke="#4a3724" stroke-width="2"/><text x="340" y="118" font-size="11" font-size="11" fill="#4a3724" text-anchor="middle">外电路电子流</text></svg>', caption: '图2　氢氧燃料电池：外部不断通入 H₂ 和 O₂，负极燃料失电子、正极氧化剂得电子，产物主要为水。' },
+      { type: 'paragraph', text: '化学电源是第四章"化学反应与电能"最贴近生活的一节。它把原电池原理做成可靠、便携、可充、可清洁的供能装置。下一节我们"反过来"看问题——给装置接上外接电源，强制发生非自发的反应，那就是电解池。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 280" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="280" fill="#f7ecdc"/><text x="340" y="34" font-size="17" font-weight="bold" fill="#b5651d" text-anchor="middle">化学电源三大类型对比</text><rect x="40" y="90" width="190" height="150" rx="8" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="135" y="120" font-size="14" fill="#b5651d" text-anchor="middle" font-weight="bold">一次电池</text><text x="135" y="155" font-size="12" fill="#4a3724" text-anchor="middle">干电池</text><text x="135" y="185" font-size="12" fill="#4a3724" text-anchor="middle">不可充电</text><text x="135" y="215" font-size="11" fill="#d98e3a" text-anchor="middle">便宜、方便</text><rect x="245" y="90" width="190" height="150" rx="8" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="340" y="120" font-size="14" fill="#4a3724" text-anchor="middle" font-weight="bold">二次电池</text><text x="340" y="155" font-size="12" fill="#4a3724" text-anchor="middle">铅蓄/锂电</text><text x="340" y="185" font-size="12" fill="#4a3724" text-anchor="middle">可充电</text><text x="340" y="215" font-size="11" fill="#d98e3a" text-anchor="middle">反复使用</text><rect x="450" y="90" width="190" height="150" rx="8" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="545" y="120" font-size="14" fill="#d98e3a" text-anchor="middle" font-weight="bold">燃料电池</text><text x="545" y="155" font-size="12" fill="#4a3724" text-anchor="middle">氢氧电池</text><text x="545" y="185" font-size="12" fill="#4a3724" text-anchor="middle">连续供料</text><text x="545" y="215" font-size="11" fill="#d98e3a" text-anchor="middle">清洁高效</text></svg>', caption: '图3　化学电源三大类型：一次电池（不可充）、二次电池（可充）、燃料电池（外部连续供料），各有适用场景。' }
+    ],
+    exercises: [
+      { type: 'choice', question: '下列化学电源中，属于二次电池（可充电）的是？', options: ['碱性锌锰干电池', '铅蓄电池', '普通锌锰干电池', '纽扣式一次电池'], answer: '铅蓄电池', explanation: '二次电池指反应可逆、放电后可用外接电源充电复原的电池。铅蓄电池和锂离子电池都属于二次电池，可反复充放电。碱性锌锰干电池、普通锌锰干电池以及大多数纽扣一次电池都是一次电池，放电后化学反应不可逆，只能废弃。所以本题只有"铅蓄电池"是二次电池。' },
+      { type: 'choice', question: '关于氢氧燃料电池，下列说法正确的是？', options: ['放电时氢气在正极反应', '碱性条件下负极生成 H⁺', '总反应为 2H₂ + O₂ → 2H₂O', '燃料电池不能连续工作'], answer: '总反应为 2H₂ + O₂ → 2H₂O', explanation: '氢氧燃料电池中氢气是燃料，在负极失电子，不是在正极，A 错。碱性条件下没有自由 H⁺，负极反应为 2H₂ − 4e⁻ + 4OH⁻ → 4H₂O，并不生成 H⁺，B 错。燃料电池正是靠外部连续供给燃料和氧化剂来持续发电，D 错。无论酸性还是碱性，总反应都是氢气燃烧：2H₂ + O₂ → 2H₂O，产物主要是水，C 正确。' },
+      { type: 'choice', question: '铅蓄电池在充电时，发生的装置类型是？', options: ['原电池', '电解池', '燃料电池', '盐桥电池'], answer: '电解池', explanation: '铅蓄电池放电时是原电池（自发放电，负极 Pb 被氧化、正极 PbO₂ 被还原）。充电时接上外接电源，强制让放电产物 PbSO₄ 反向反应重新变成 Pb 和 PbO₂，这是一个非自发的、靠电能驱动的过程，属于电解池。简记：放电是原电池，充电是电解池，二者互为逆过程。故选"电解池"。' },
+      { type: 'fill', question: '在碱性介质氢氧燃料电池中，负极反应为 2H₂ − 4e⁻ + 4OH⁻ → ___（写产物化学式）。', answer: '4H₂O', explanation: '碱性条件下氢气在负极失电子，由于没有自由 H⁺，需借助 OH⁻ 和 H₂O 配平。2 个 H₂ 共失去 4 个电子，与 4 个 OH⁻ 结合生成 4 个 H₂O：2H₂ − 4e⁻ + 4OH⁻ → 4H₂O。注意这是碱性写法，若写成生成 H⁺ 就错了（碱性环境不存在大量 H⁺）。产物是水 H₂O，系数 4。' },
+      { type: 'fill', question: '废旧电池含有汞、镉、铅等重金属，随意丢弃会污染土壤和___，因此必须分类回收处理。', answer: '水源（或水体）', explanation: '电池中的重金属（汞、镉、铅等）及其化合物进入环境后，会随雨水渗入土壤、流入河流湖泊，污染水体和地下水，并通过食物链在生物体内富集，危害人和动物健康。因此废旧电池属于有害垃圾，必须分类回收、专门处理，不能混入普通生活垃圾随意丢弃。填空填"水源"或"水体"均可。' }
+    ]
+  });
+})();

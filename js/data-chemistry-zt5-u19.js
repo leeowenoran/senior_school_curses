@@ -1,0 +1,40 @@
+/* 化学 · 高三复习 · 化学计算 · 专题八 · 课时：关系式法 */
+(function () {
+  var v = gzGetVolume('chemistry', 'zt5');
+  if (!v) return;
+  v.points.push({
+    id: 'zt5-u19',
+    name: '关系式法',
+    chapter: '化学计算 · 专题八 常用计算技巧',
+    difficulty: '基础',
+    content: [
+      { type: 'heading', text: '一、关系式法：多步反应一步到位' },
+      { type: 'paragraph', text: '化工生产常是多步反应，比如制硝酸、制硫酸。如果一步步算中间产物，又长又容易错。<strong>关系式法</strong>是多步反应中找中心元素或电子守恒，直接建立首尾物质 A — B 的关系，一步算出结果。' },
+      { type: 'list', items: ['找中心元素：某元素在始态和终态间的守恒关系', '电子守恒：氧化还原多步中求电子得失总关系', '一步列式：A — B 直接换算，跳过中间产物'] },
+      { type: 'heading', text: '二、氨氧化制硝酸的关系式' },
+      { type: 'paragraph', text: '工业制硝酸：NH₃ → NO → NO₂ → HNO₃。氮原子从原料到产品全程没有增减，所以氮元素守恒，得到关系式 NH₃ — HNO₃。只要没有中间损失，1 mol NH₃ 最终得到 1 mol HNO₃。' },
+      { type: 'keypoint', label: '重点·氮守恒得 NH₃ — HNO₃', text: '<strong>工业制硝酸中氮原子无损耗时，1 mol NH₃ 最终得到 1 mol HNO₃，关系式 NH₃ — HNO₃。</strong>前提是没有中间损失，若题目给了转化率或产率，则还要乘以实际转化率或产率。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="300" fill="#f7ecdc"/><text x="340" y="34" font-size="17" font-weight="bold" fill="#b5651d" text-anchor="middle">多步反应中心元素追踪（以氮为例）</text><rect x="40" y="110" width="130" height="70" rx="10" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="105" y="145" font-size="14" fill="#4a3724" text-anchor="middle" font-weight="bold">NH₃</text><text x="105" y="168" font-size="13" fill="#4a3724" text-anchor="middle">N 元素</text><polygon points="170,145 200,135 200,155" fill="#b5651d"/><rect x="215" y="110" width="130" height="70" rx="10" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="280" y="145" font-size="14" fill="#4a3724" text-anchor="middle" font-weight="bold">NO</text><text x="280" y="168" font-size="13" fill="#4a3724" text-anchor="middle">N 元素</text><polygon points="345,145 375,135 375,155" fill="#b5651d"/><rect x="390" y="110" width="130" height="70" rx="10" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="455" y="145" font-size="14" fill="#4a3724" text-anchor="middle" font-weight="bold">NO₂</text><text x="455" y="168" font-size="13" fill="#4a3724" text-anchor="middle">N 元素</text><polygon points="520,145 550,135 550,155" fill="#b5651d"/><rect x="565" y="110" width="100" height="70" rx="10" fill="#d98e3a" stroke="#b5651d" stroke-width="2"/><text x="615" y="145" font-size="14" fill="#ffffff" text-anchor="middle" font-weight="bold">HNO₃</text><text x="340" y="230" font-size="14" fill="#d98e3a" text-anchor="middle" font-weight="bold">氮原子全程守恒：NH₃ — HNO₃</text><text x="340" y="262" font-size="13" fill="#4a3724" text-anchor="middle">跳过中间产物，直接建立首尾关系</text></svg>', caption: '图1　追踪中心元素 N，从 NH₃ 直接到 HNO₃，建立关系式。' },
+      { type: 'example', label: '例题·NH₃ 制 HNO₃ 的质量换算', text: '以 NH₃ 为原料制 HNO₃，若 NH₃ 利用率 100%，17 t NH₃ 可制多少 t HNO₃？<br>解：M(NH₃)=17，M(HNO₃)=63。关系式 NH₃ — HNO₃，n 相等。<br>质量比 17 : 63，HNO₃ 质量 = 17 t × (63 / 17) = 63 t。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="300" fill="#f7ecdc"/><text x="340" y="34" font-size="17" font-weight="bold" fill="#b5651d" text-anchor="middle">关系式：NH₃ — HNO₃</text><rect x="90" y="90" width="180" height="90" rx="10" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="180" y="125" font-size="15" fill="#4a3724" text-anchor="middle" font-weight="bold">NH₃</text><text x="180" y="152" font-size="13" fill="#4a3724" text-anchor="middle">M = 17 g/mol</text><text x="340" y="140" font-size="28" fill="#b5651d" text-anchor="middle" font-weight="bold">→</text><rect x="410" y="90" width="180" height="90" rx="10" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="500" y="125" font-size="15" fill="#4a3724" text-anchor="middle" font-weight="bold">HNO₃</text><text x="500" y="152" font-size="13" fill="#4a3724" text-anchor="middle">M = 63 g/mol</text><text x="340" y="225" font-size="15" fill="#d98e3a" text-anchor="middle" font-weight="bold">1 mol NH₃ 对应 1 mol HNO₃</text><text x="340" y="262" font-size="13" fill="#4a3724" text-anchor="middle">质量比 17 : 63，按物质的量相等换算</text></svg>', caption: '图2　无损失时氮守恒，1 mol NH₃ 得 1 mol HNO₃。' },
+      { type: 'heading', text: '三、接触法制硫酸的关系式' },
+      { type: 'paragraph', text: '接触法制硫酸：FeS₂ → SO₂ → SO₃ → H₂SO₄。这里要盯住硫元素：一个 FeS₂ 含有 2 个硫原子，每个硫最终进入一个 H₂SO₄，所以硫守恒给出 FeS₂ — 2 H₂SO₄。' },
+      { type: 'example', label: '例题·FeS₂ 制硫酸的关系量', text: '用黄铁矿 FeS₂ 制硫酸，理论上 1 mol FeS₂ 可得多少 mol H₂SO₄？<br>解：FeS₂ 含 2 个 S 原子，每个 S 最终进入 1 个 H₂SO₄，故 FeS₂ — 2 H₂SO₄，得 2 mol H₂SO₄。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="300" fill="#f7ecdc"/><text x="340" y="34" font-size="17" font-weight="bold" fill="#b5651d" text-anchor="middle">关系式：FeS₂ — 2 H₂SO₄</text><rect x="90" y="90" width="200" height="90" rx="10" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="190" y="125" font-size="15" fill="#4a3724" text-anchor="middle" font-weight="bold">FeS₂</text><text x="190" y="152" font-size="13" fill="#4a3724" text-anchor="middle">含 2 个 S 原子</text><text x="340" y="140" font-size="28" fill="#b5651d" text-anchor="middle" font-weight="bold">→</text><rect x="390" y="90" width="200" height="90" rx="10" fill="#ecd9bf" stroke="#b5651d" stroke-width="2"/><text x="490" y="125" font-size="15" fill="#4a3724" text-anchor="middle" font-weight="bold">2 H₂SO₄</text><text x="490" y="152" font-size="13" fill="#4a3724" text-anchor="middle">S 守恒得 2 个</text><text x="340" y="225" font-size="15" fill="#d98e3a" text-anchor="middle" font-weight="bold">1 mol FeS₂ 对应 2 mol H₂SO₄</text><text x="340" y="262" font-size="13" fill="#4a3724" text-anchor="middle">质量比 120 : 196，注意乘 2</text></svg>', caption: '图3　FeS₂ 含两个 S，故 1 mol FeS₂ 对应 2 mol H₂SO₄。' },
+      { type: 'warn', label: '易错·别漏乘中心元素个数', text: '关系式法必须建立在元素守恒或电子守恒之上。若中间有副反应、有损失、有循环，就不能简单 1:1，要乘以实际转化率或产率。另外像 FeS₂ 含 2 个 S，必须乘 2，漏乘是最常见错误。' },
+      { type: 'list', items: ['第一步：写出连续反应的各步方程式', '第二步：确定中心元素在首尾的物质', '第三步：按守恒或电子配平，写出 A — B 系数比'] },
+      { type: 'heading', text: '四、综合例题' },
+      { type: 'example', label: '例题·黄铁矿制浓硫酸', text: '含 S 32% 的黄铁矿 100 t，理论上可制 98% 浓硫酸多少 t？<br>解：硫元素守恒，S — H₂SO₄。100 t 矿含 S = 100 × 32% = 32 t。<br>S 摩尔质量 32，H₂SO₄ 摩尔质量 98，故纯 H₂SO₄ 质量 = 32 × (98 / 32) = 98 t。<br>折 98% 浓硫酸 = 98 / 0.98 = 100 t。' },
+      { type: 'table', headers: ['工业流程', '中心元素', '关系式'], rows: [['氨氧化制硝酸', 'N', 'NH₃ — HNO₃'], ['接触法制硫酸', 'S', 'FeS₂ — 2 H₂SO₄'], ['氨催化氧化制硝酸（计产率）', 'N', 'NH₃ — HNO₃ 再乘产率']] },
+      { type: 'tip', label: '提示·看清中心元素个数', text: '关系式法最怕漏乘系数。FeS₂ 含两个 S，所以对应 2 个 H₂SO₄；NH₃ 含一个 N，对应一个 HNO₃。看清中心元素个数再写比例，就不会漏乘。' },
+      { type: 'paragraph', text: '小结：关系式法就是<strong>抓中心元素</strong>。把多步反应压缩成一道简单的比例题，既快又准。考试看到“多步反应”“工业流程求产量”，立刻想到找中心元素写关系式。' }
+    ],
+    exercises: [
+      { type: 'choice', question: '氨氧化制硝酸（无损失）的关系式是？', options: ['2 NH₃ — HNO₃', 'NH₃ — HNO₃', 'NH₃ — 2 HNO₃', '3 NH₃ — HNO₃'], answer: 'NH₃ — HNO₃', explanation: '工业制硝酸时，NH₃ 经催化氧化、吸收等步骤最终得到 HNO₃，氮原子在整个流程中没有损失时全程守恒，1 个 NH₃ 分子含 1 个 N 原子，最终进入 1 个 HNO₃ 分子，故关系式为 NH₃ — HNO₃。' },
+      { type: 'choice', question: '接触法制硫酸，FeS₂ 与 H₂SO₄ 的关系为？', options: ['FeS₂ — H₂SO₄', 'FeS₂ — 2 H₂SO₄', '2 FeS₂ — H₂SO₄', 'FeS₂ — 3 H₂SO₄'], answer: 'FeS₂ — 2 H₂SO₄', explanation: '黄铁矿 FeS₂ 中含有 2 个硫原子，在接触法制硫酸中每个 S 原子最终进入 1 个 H₂SO₄，所以 1 mol FeS₂ 中的 2 个 S 对应生成 2 mol H₂SO₄，关系式为 FeS₂ — 2 H₂SO₄。' },
+      { type: 'choice', question: '关系式法的核心是？', options: ['逐步计算每一步产物', '找中心元素守恒或电子守恒建 A—B', '只用于气体反应', '忽略所有中间步骤'], answer: '找中心元素守恒或电子守恒建 A—B', explanation: '关系式法的核心是不必逐步算出中间产物，而是找出首尾物质间通过元素守恒或电子守恒建立的直接比例 A — B，从而一步到位求解。它并不等于忽略中间步骤，而是用守恒关系把它们压缩掉。' },
+      { type: 'fill', question: 'NH₃（M=17）制 HNO₃（M=63），17 t NH₃ 理论上可得 HNO₃ ___ t。', answer: '63', explanation: '由关系式 NH₃ — HNO₃ 可知两者物质的量相等。NH₃ 摩尔质量 17 g/mol，HNO₃ 摩尔质量 63 g/mol。17 t NH₃ 对应 HNO₃ 也是相同物质的量，质量为 17 t × (63 / 17) = 63 t。答案为 63。' },
+      { type: 'fill', question: 'FeS₂ 制硫酸，关系式 FeS₂ — 2 H₂SO₄，120 t FeS₂ 理论上得纯 H₂SO₄ ___ t（M(H₂SO₄)=98）。', answer: '196', explanation: '由关系式 FeS₂ — 2 H₂SO₄，质量比为 M(FeS₂):2M(H₂SO₄) = 120:196。120 t FeS₂ 理论上可得纯 H₂SO₄ 质量 = 120 t × (196 / 120) = 196 t。答案为 196。' }
+    ]
+  });
+})();
