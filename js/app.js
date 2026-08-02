@@ -190,8 +190,6 @@
         '<button class="sb-collapse-btn" onclick="window.__toggleSidebarCollapse()" title="折叠/展开侧边栏">«</button>' +
       '</div>' +
       '<ul class="sb-list">' + items + '</ul>' +
-      '<div class="sb-title sb-title-func">功能</div>' +
-      '<ul class="sb-list sb-func-list">' + funcs + '</ul>' +
       '<button class="sb-expand-btn" onclick="window.__toggleSidebarCollapse()" title="展开侧边栏">»</button>';
     bindSidebarTooltip();
   }
@@ -1654,9 +1652,6 @@
     var streak = (lsGet('gz_checkin', {}) || {}).streak || 0;
     var favCount = favs.length;
     var wrongCount = wrong.length;
-    var today = new Date();
-    var hours = today.getHours();
-    var greet = hours < 6 ? '凌晨好' : hours < 11 ? '早上好' : hours < 14 ? '中午好' : hours < 18 ? '下午好' : '晚上好';
 
     // 学科题量统计（基于常考题型库）
     var subjectKeys = Object.keys(GZ_COMMON_TYPES);
@@ -1665,40 +1660,76 @@
     // 最近收藏 3 条
     var recent = favs.slice(-3).reverse();
 
-    var stats = [
-      { num: favCount, label: '我的收藏', icon: '⭐', tone: 'amber',
-        grad: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
-        sub: favCount > 0 ? '持续巩固中' : '去收藏第一题' },
-      { num: done, label: '累计答题', icon: '✍️', tone: 'blue',
-        grad: 'linear-gradient(135deg, #60a5fa 0%, #4a7de0 100%)',
-        sub: done > 0 ? '坚持就是胜利' : '开始第一次练习' },
-      { num: wrongCount, label: '错题', icon: '📕', tone: 'red',
-        grad: 'linear-gradient(135deg, #f87171 0%, #ef4444 100%)',
-        sub: wrongCount > 0 ? '及时查漏补缺' : '暂无错题' },
-      { num: streak, label: '连续学习', icon: '🔥', tone: 'purple',
-        grad: 'linear-gradient(135deg, #c084fc 0%, #9c56d4 100%)',
-        sub: streak > 0 ? '保持节奏 ✨' : '今日还未签到' }
-    ];
+    // 1) 简洁页头
+    var headerHtml = '<div class="bank-head">' +
+      '<div class="bh-title"><span class="bh-icon">📝</span><h2>题库</h2></div>' +
+      '<p class="bh-sub">收录你做过的题目，按学科分类练习高中常考题型</p>' +
+    '</div>';
 
-    var statsHtml = '<div class="bank-stats">' + stats.map(function (s) {
-      return '<div class="bank-stat ' + s.tone + '" style="--grad:' + s.grad + ';">' +
-        '<div class="bank-stat-icon">' + s.icon + '</div>' +
-        '<div class="bank-stat-body">' +
-          '<div class="bank-stat-num">' + s.num + '</div>' +
-          '<div class="bank-stat-label">' + s.label + '</div>' +
-          '<div class="bank-stat-sub">' + esc(s.sub) + '</div>' +
-        '</div>' +
+    // 2) 横向数据条（4 个数字 + 标签，中间分隔线）
+    var stats = [
+      { num: favCount,   label: '收藏',   icon: '⭐', tone: 'amber' },
+      { num: done,       label: '答题',   icon: '✍️', tone: 'blue' },
+      { num: wrongCount, label: '错题',   icon: '📕', tone: 'red' },
+      { num: streak,     label: '连续',   icon: '🔥', tone: 'purple' }
+    ];
+    var statsHtml = '<div class="bank-stats-strip">' + stats.map(function (s, i) {
+      return '<div class="bss-item ' + s.tone + (i < stats.length - 1 ? ' has-divider' : '') + '">' +
+        '<div class="bss-icon">' + s.icon + '</div>' +
+        '<div class="bss-body"><div class="bss-num">' + s.num + '</div><div class="bss-lbl">' + s.label + '</div></div>' +
       '</div>';
     }).join('') + '</div>';
 
+    // 3) 快速进入（两个并排卡）
+    var entriesHtml = '<div class="bank-entries">' +
+      '<a class="bank-entry" onclick="navigate(\'bank\', \'fav\')">' +
+        '<div class="be-icon" style="background:linear-gradient(135deg,#fbbf24 0%,#f59e0b 100%);">⭐</div>' +
+        '<div class="be-body">' +
+          '<div class="be-title">我的收藏 <span class="be-num">' + favCount + '</span></div>' +
+          '<div class="be-sub">集中复习你做过的题目</div>' +
+        '</div>' +
+        '<div class="be-arrow">→</div>' +
+      '</a>' +
+      '<a class="bank-entry" onclick="navigate(\'bank\', \'common\')">' +
+        '<div class="be-icon" style="background:linear-gradient(135deg,#4a7de0 0%,#9c56d4 100%);">📚</div>' +
+        '<div class="be-body">' +
+          '<div class="be-title">高中常考题型 <span class="be-num">' + totalCats + '</span></div>' +
+          '<div class="be-sub">按学科 + 题型分类整理</div>' +
+        '</div>' +
+        '<div class="be-arrow">→</div>' +
+      '</a>' +
+    '</div>';
+
+    // 4) 学科网格（干净版，去掉大装饰圆点）
+    var subjGridHtml = '<div class="bank-section">' +
+      '<div class="bank-section-head">' +
+        '<h3>📚 按学科浏览</h3>' +
+        '<span class="bank-section-tip">共 ' + subjectKeys.length + ' 个学科 · ' + totalCats + ' 个题型</span>' +
+      '</div>' +
+      '<div class="bank-subj-grid">' + subjectKeys.map(function (k) {
+        var s = GZ_COMMON_TYPES[k];
+        return '<a class="bank-subj-card" style="--sc:' + esc(s.color) + ';" onclick="navigate(\'bank\', \'common\')">' +
+          '<div class="bsc-top">' +
+            '<span class="bsc-icon">' + s.icon + '</span>' +
+            '<span class="bsc-name">' + esc(s.name) + '</span>' +
+            '<span class="bsc-count">' + s.cats.length + ' 题型</span>' +
+          '</div>' +
+          '<div class="bsc-cats">' + s.cats.slice(0, 4).map(function (c) {
+            return '<span>' + esc(c.name) + '</span>';
+          }).join('') + (s.cats.length > 4 ? '<span class="bsc-more">+' + (s.cats.length - 4) + '</span>' : '') + '</div>' +
+        '</a>';
+      }).join('') + '</div>' +
+    '</div>';
+
+    // 5) 最近收藏（垂直列表）
     var recentHtml = '';
     if (recent.length) {
       recentHtml = '<div class="bank-section">' +
         '<div class="bank-section-head">' +
-          '<h3>🕒 最近收藏</h3>' +
+          '<h3>⭐ 最近收藏</h3>' +
           '<a class="bank-section-more" onclick="navigate(\'bank\', \'fav\')">查看全部 →</a>' +
         '</div>' +
-        '<div class="bank-recent-grid">' + recent.map(function (f) {
+        '<div class="bank-recent-list">' + recent.map(function (f) {
           // 老数据兼容：缺字段时从 lesson 补
           if (!f.question || !f.sName) {
             var fS = f.sid, fV = f.vid, fI = f.idx;
@@ -1723,74 +1754,27 @@
           var sName = f.sName || f.sid || '未知学科';
           var vName = f.vName || f.vid || '';
           var qText = f.question || '（题目内容已丢失）';
-          return '<div class="bank-recent-card" onclick="navigate(\'bank\', \'fav\')">' +
-            '<div class="bank-recent-meta" style="--sc:' + color + ';">' +
-              '<span class="bank-recent-ico">' + icon + '</span>' +
-              '<span>' + esc(sName) + ' · ' + esc(vName) + '</span>' +
+          return '<a class="bank-recent-item" style="--sc:' + color + ';" onclick="navigate(\'bank\', \'fav\')">' +
+            '<span class="bri-icon">' + icon + '</span>' +
+            '<div class="bri-body">' +
+              '<div class="bri-meta">' + esc(sName) + (vName ? ' · ' + esc(vName) : '') +
+                '<span class="bri-type">' + (f.type === 'choice' ? '选择' : '填空') + '</span>' +
+              '</div>' +
+              '<div class="bri-q">' + esc(qText.length > 80 ? qText.slice(0, 80) + '…' : qText) + '</div>' +
             '</div>' +
-            '<div class="bank-recent-text">' + esc(qText.length > 50 ? qText.slice(0, 50) + '…' : qText) + '</div>' +
-            '<div class="bank-recent-foot">' +
-              '<span class="bank-recent-tag">' + (f.type === 'choice' ? '选择' : '填空') + '</span>' +
-              '<span class="bank-recent-time">' + timeAgo(f.addedAt) + '</span>' +
-            '</div>' +
-          '</div>';
+            '<span class="bri-time">' + timeAgo(f.addedAt) + '</span>' +
+          '</a>';
         }).join('') + '</div>' +
       '</div>';
     }
 
-    var subjGrid = '<div class="bank-section">' +
-      '<div class="bank-section-head">' +
-        '<h3>📚 高中常考题型 · 学科分类</h3>' +
-        '<span class="bank-section-tip">共 ' + subjectKeys.length + ' 个学科 · ' + totalCats + ' 个题型</span>' +
-      '</div>' +
-      '<div class="bank-subj-grid">' + subjectKeys.map(function (k) {
-        var s = GZ_COMMON_TYPES[k];
-        return '<div class="bank-subj-card" style="--sc:' + esc(s.color) + ';" onclick="navigate(\'bank\', \'common\')">' +
-          '<div class="bank-subj-card-bg"></div>' +
-          '<div class="bank-subj-icon">' + s.icon + '</div>' +
-          '<div class="bank-subj-name">' + esc(s.name) + '</div>' +
-          '<div class="bank-subj-cats">' + s.cats.map(function (c) { return '<span>' + esc(c.icon) + ' ' + esc(c.name) + '</span>'; }).join('') + '</div>' +
-          '<div class="bank-subj-foot">' + s.cats.length + ' 个常考题型 →</div>' +
-        '</div>';
-      }).join('') + '</div>' +
-    '</div>';
-
     view.innerHTML = '' +
       '<div class="crumb"><a onclick="navigate(\'home\')">首页</a> / 题库</div>' +
       '<div class="panel">' +
-        '<div class="bank-hero">' +
-          '<div class="bank-hero-text">' +
-            '<div class="bank-hero-greet">' + esc(greet) + ' 👋</div>' +
-            '<h2 class="bank-hero-title">题库 · 你的私人练习场</h2>' +
-            '<p class="bank-hero-desc">收藏你做过的题目，按学科分类练习高中常考题型，做错的题自动归集到错题本。</p>' +
-          '</div>' +
-          '<div class="bank-hero-deco">📝</div>' +
-        '</div>' +
-
-        '<h3 class="bank-block-title">📊 我的学习数据</h3>' +
+        headerHtml +
         statsHtml +
-
-        '<h3 class="bank-block-title">🚀 快速进入</h3>' +
-        '<div class="bank-modes">' +
-          '<div class="bank-mode" onclick="navigate(\'bank\', \'fav\')">' +
-            '<div class="bank-mode-icon" style="background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);">⭐</div>' +
-            '<div class="bank-mode-body">' +
-              '<div class="bank-mode-title">我的收藏 <span class="bank-mode-count">' + favCount + '</span></div>' +
-              '<div class="bank-mode-desc">收录你从课时练习中收藏的题目，便于集中复习、考前冲刺。</div>' +
-            '</div>' +
-            '<div class="bank-mode-arrow">›</div>' +
-          '</div>' +
-          '<div class="bank-mode" onclick="navigate(\'bank\', \'common\')">' +
-            '<div class="bank-mode-icon" style="background: linear-gradient(135deg, #4a7de0 0%, #9c56d4 100%);">📚</div>' +
-            '<div class="bank-mode-body">' +
-              '<div class="bank-mode-title">高中常考题型 <span class="bank-mode-count bank-mode-count-blue">' + totalCats + '</span></div>' +
-              '<div class="bank-mode-desc">按学科与题型分类整理的高中常考题，可在线作答、即时反馈。</div>' +
-            '</div>' +
-            '<div class="bank-mode-arrow">›</div>' +
-          '</div>' +
-        '</div>' +
-
-        subjGrid +
+        entriesHtml +
+        subjGridHtml +
         recentHtml +
       '</div>';
   }
@@ -2291,19 +2275,50 @@
     }).join('');
 
     // 渲染：最近 7 天节奏图（柱状=课时数 / 折线=做题数 / hover 显示数值）
-    var W = 700, H = 200, PAD_T = 22, PAD_B = 36, PAD_L = 12, PAD_R = 12;
+    var W = 700, H = 200, PAD_T = 30, PAD_B = 36, PAD_L = 36, PAD_R = 36;
     var innerW = W - PAD_L - PAD_R, innerH = H - PAD_T - PAD_B;
     var colW = innerW / 7;
     var barW = Math.min(28, colW * 0.42);
-    var maxL = Math.max.apply(null, last7.map(function (d) { return d.lessons; }).concat([1]));
-    var maxQ = Math.max.apply(null, last7.map(function (d) { return d.questions; }).concat([1]));
+    // niceMax：把上限取到 2 / 5 的整数倍
+    function niceMax(v, step) {
+      if (v <= 0) return step * 2;
+      return Math.max(step, Math.ceil(v / step) * step);
+    }
+    var rawMaxL = Math.max.apply(null, last7.map(function (d) { return d.lessons; }).concat([0]));
+    var rawMaxQ = Math.max.apply(null, last7.map(function (d) { return d.questions; }).concat([0]));
+    var maxL = niceMax(rawMaxL, 2);
+    var maxQ = niceMax(rawMaxQ, 5);
 
-    // 4 条横向 grid
+    // 左侧 Y 轴刻度：0, 2, 4, ... maxL
+    var leftTickVals = [];
+    for (var lv = 0; lv <= maxL; lv += 2) leftTickVals.push(lv);
+    // 右侧 Y 轴刻度：0, 5, 10, ... maxQ
+    var rightTickVals = [];
+    for (var qv = 0; qv <= maxQ; qv += 5) rightTickVals.push(qv);
+
+    // 4 条虚线 grid（视觉参考）
     var gridHtml = '';
     for (var gi = 0; gi < 4; gi++) {
       var gy = PAD_T + innerH * gi / 4;
-      gridHtml += '<line class="week-grid' + (gi === 0 ? ' is-base' : '') + '" x1="' + PAD_L + '" y1="' + gy.toFixed(1) + '" x2="' + (W - PAD_R) + '" y2="' + gy.toFixed(1) + '"></line>';
+      gridHtml += '<line class="week-grid" x1="' + PAD_L + '" y1="' + gy.toFixed(1) + '" x2="' + (W - PAD_R) + '" y2="' + gy.toFixed(1) + '"></line>';
     }
+    // 底线（粗一点）
+    gridHtml += '<line class="week-grid is-base" x1="' + PAD_L + '" y1="' + (PAD_T + innerH) + '" x2="' + (W - PAD_R) + '" y2="' + (PAD_T + innerH) + '"></line>';
+
+    // 左 Y 轴标签
+    var leftAxisHtml = leftTickVals.map(function (v) {
+      var y = PAD_T + innerH - (v / maxL) * innerH;
+      return '<text class="week-y-l" x="' + (PAD_L - 8) + '" y="' + y.toFixed(1) + '" text-anchor="end" dominant-baseline="middle">' + v + '</text>';
+    }).join('');
+    // 右 Y 轴标签
+    var rightAxisHtml = rightTickVals.map(function (v) {
+      var y = PAD_T + innerH - (v / maxQ) * innerH;
+      return '<text class="week-y-r" x="' + (W - PAD_R + 8) + '" y="' + y.toFixed(1) + '" text-anchor="start" dominant-baseline="middle">' + v + '</text>';
+    }).join('');
+    // 轴单位（顶部小字）
+    var axisTitleHtml =
+      '<text class="week-y-title-l" x="' + (PAD_L - 8) + '" y="' + (PAD_T - 12) + '" text-anchor="end">课时</text>' +
+      '<text class="week-y-title-r" x="' + (W - PAD_R + 8) + '" y="' + (PAD_T - 12) + '" text-anchor="start">题数</text>';
 
     // 柱
     var barSvg = last7.map(function (d, i) {
@@ -2339,15 +2354,22 @@
              '<text class="' + dtCls + '" x="' + x.toFixed(1) + '" y="' + (PAD_T + innerH + 30) + '" text-anchor="middle">' + d.label + '</text>';
     }).join('');
 
-    // 悬浮点击区（HTML 层覆盖在 SVG 上，方便用百分比定位）
+    // 悬浮点击区（SVG 内 rect，与画布坐标一致，不会盖到轴标签）
     var zoneHtml = last7.map(function (d, i) {
-      var leftPct = i * 100 / 7;
-      var widthPct = 100 / 7;
-      return '<div class="week-hover" data-i="' + i + '" style="left:' + leftPct + '%;width:' + widthPct + '%" onmouseover="window.__weekHover(' + i + ')" onmouseout="window.__weekLeave()"></div>';
+      var x = PAD_L + i * colW;
+      return '<rect class="week-hover" x="' + x.toFixed(1) + '" y="' + PAD_T + '" width="' + colW.toFixed(1) + '" height="' + innerH + '" fill="transparent" pointer-events="all" data-i="' + i + '" onmouseover="window.__weekHover(' + i + ')" onmouseout="window.__weekLeave()"></rect>';
+    }).join('');
+
+    // 悬浮高亮：在悬浮区下方画一个淡色 backdrop
+    var hoverBackdropHtml = last7.map(function (d, i) {
+      var x = PAD_L + i * colW;
+      return '<rect class="week-hover-bg" data-bg-i="' + i + '" x="' + x.toFixed(1) + '" y="' + PAD_T + '" width="' + colW.toFixed(1) + '" height="' + innerH + '" fill="transparent" pointer-events="none"></rect>';
     }).join('');
 
     // 把每天的数据塞进全局，hover 函数读取
     window.__weekDays = last7;
+    window.__weekMaxL = maxL;
+    window.__weekMaxQ = maxQ;
 
     var chartSvg = '<svg class="week-chart" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="xMidYMid meet">' +
       '<defs>' +
@@ -2360,12 +2382,11 @@
           '<stop offset="100%" stop-color="#7c3aed"/>' +
         '</linearGradient>' +
       '</defs>' +
-      gridHtml + barSvg + lineSvg + dotSvg + xLabSvg +
+      gridHtml + leftAxisHtml + rightAxisHtml + axisTitleHtml + barSvg + lineSvg + dotSvg + xLabSvg + hoverBackdropHtml + zoneHtml +
     '</svg>';
 
     var weekChartHtml = '<div class="week-chart-wrap">' +
       chartSvg +
-      '<div class="week-hover-zones">' + zoneHtml + '</div>' +
       '<div class="week-tip" id="weekTip" style="display:none"><div class="wt-date"></div><div class="wt-row wt-l"></div><div class="wt-row wt-q"></div></div>' +
       '<div class="week-legend">' +
         '<span class="wl-item"><i class="wl-bar"></i>每日学习课时数</span>' +
@@ -2607,12 +2628,17 @@
     qEl.innerHTML = d.questions > 0
       ? '<i class="wt-dot wt-dot-line"></i>做题数量：<b>' + d.questions + '</b> 题'
       : '<i class="wt-dot wt-dot-empty"></i>做题数量：<b class="muted">0</b> 题';
+    // 高亮当前列的 backdrop
+    var bgs = document.querySelectorAll('.week-hover-bg');
+    bgs.forEach(function (b) { b.setAttribute('fill', 'transparent'); });
+    var bg = document.querySelector('.week-hover-bg[data-bg-i="' + i + '"]');
+    if (bg) bg.setAttribute('fill', 'rgba(74, 125, 224, 0.10)');
     // 定位
-    var zones = document.querySelector('.week-hover-zones');
-    var zone = zones && zones.children[i];
-    if (zones && zone) {
+    var wrap = document.querySelector('.week-chart-wrap');
+    var zone = document.querySelector('.week-hover[data-i="' + i + '"]');
+    if (wrap && zone) {
       var zRect = zone.getBoundingClientRect();
-      var wRect = zones.getBoundingClientRect();
+      var wRect = wrap.getBoundingClientRect();
       var center = (zRect.left - wRect.left) + zRect.width / 2;
       tip.style.left = center + 'px';
       tip.style.top = '0px';
@@ -2623,6 +2649,8 @@
   window.__weekLeave = function () {
     var tip = document.getElementById('weekTip');
     if (tip) tip.style.display = 'none';
+    var bgs = document.querySelectorAll('.week-hover-bg');
+    bgs.forEach(function (b) { b.setAttribute('fill', 'transparent'); });
   };
   initTheme();
   backfillProgressTs();
