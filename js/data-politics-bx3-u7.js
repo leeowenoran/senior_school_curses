@@ -1,0 +1,47 @@
+/* 思想政治 · 必修3 · 政治与法治 · 第七课 治国理政的基本方式 */
+(function () {
+  var v = gzGetVolume('politics', 'bx3');
+  if (!v) return;
+  v.points.push({
+    id: 'bx3-u7',
+    name: '第七课 治国理政的基本方式',
+    chapter: '高一思想政治（必修3 政治与法治）· 第七课 治国理政的基本方式',
+    difficulty: '基础',
+    content: [
+      { type: 'para', text: '前面几课我们弄清了"谁来领导、谁来当家、靠什么制度"。这一课换一个角度：国家这么大，人这么多，靠什么把大家的行为管得住、管得公平？答案就是——法。第七课要回答三个问题：法是怎么来的、法到底是谁的意志、我们国家要建成什么样的法治。' },
+      { type: 'heading', text: '一、法的产生与本质' },
+      { type: 'para', text: '很多同学以为法律是"自古就有"的。其实不是。原始社会没有法律，人们靠风俗习惯和氏族长老的威望过日子。后来生产发展了，出现了私有财产，社会分成了不同的阶级，冲突多了，光靠习惯压不住了，国家才出现，法也跟着出现。' },
+      { type: 'keypoint', label: '重点·法的产生', text: '<strong>法不是从来就有的，它是人类社会发展到一定历史阶段的产物。国家和法是同时产生的：有了国家，才有法；国家消亡了，法也会消亡。</strong>' },
+      { type: 'para', text: '既然法是国家制定的，那国家听谁的，法就写谁的意思。这就是法的本质。' },
+      { type: 'keypoint', label: '重点·法的本质', text: '<strong>法是统治阶级意志的体现，而这种意志的内容不是凭空想出来的，是由社会物质生活条件（说白了就是当时的生产力和经济状况）决定的。</strong>' },
+      { type: 'example', label: '例子·三句话看懂法的本质', text: '奴隶制法规定奴隶是"会说话的工具"，因为立法的是奴隶主；封建制法规定农民要交租服役，因为立法的是地主；资本主义法把私有财产写成"神圣不可侵犯"，因为立法的是资产阶级。到了我国，法律规定劳动者有休息权、有社会保险，因为我们的法体现的是工人阶级领导的广大人民的意志。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 210" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="210" fill="#fbeef0"/><text x="340" y="30" font-size="17" font-weight="bold" fill="#d4485a" text-anchor="middle">法的历史类型：谁统治，法就体现谁的意志</text><line x1="40" y1="120" x2="640" y2="120" stroke="#d4485a" stroke-width="2"/><polygon points="640,114 654,120 640,126" fill="#d4485a"/><rect x="45" y="75" width="120" height="40" rx="8" fill="#fae7ea" stroke="#d4485a" stroke-width="1.2"/><text x="105" y="100" font-size="13" fill="#3d1f24" text-anchor="middle">奴隶制法</text><rect x="195" y="75" width="120" height="40" rx="8" fill="#fae7ea" stroke="#d4485a" stroke-width="1.2"/><text x="255" y="100" font-size="13" fill="#3d1f24" text-anchor="middle">封建制法</text><rect x="345" y="75" width="130" height="40" rx="8" fill="#f7dde1" stroke="#d4485a" stroke-width="1.2"/><text x="410" y="100" font-size="13" fill="#3d1f24" text-anchor="middle">资本主义法</text><rect x="505" y="75" width="130" height="40" rx="8" fill="#b8334a"/><text x="570" y="100" font-size="13" fill="#fff" text-anchor="middle" font-weight="bold">社会主义法</text><text x="105" y="152" font-size="11" fill="#3d1f24" text-anchor="middle">奴隶主意志</text><text x="255" y="152" font-size="11" fill="#3d1f24" text-anchor="middle">地主阶级意志</text><text x="410" y="152" font-size="11" fill="#3d1f24" text-anchor="middle">资产阶级意志</text><text x="570" y="152" font-size="11" fill="#b8334a" text-anchor="middle" font-weight="bold">人民的意志</text><text x="340" y="188" font-size="12" fill="#3d1f24" text-anchor="middle">前三种都是剥削阶级意志的体现，只有社会主义法是人民意志的体现</text></svg>', caption: '图1　法有四种历史类型，前三种是剥削阶级的法，我国的法是人民的法。' },
+      { type: 'heading', text: '二、法的职能与特征' },
+      { type: 'para', text: '法在社会里干两件大事，我们叫它"两个职能"。' },
+      { type: 'list', items: ['政治职能：维护一定阶级的统治秩序，比如打击犯罪、保卫国家安全。', '社会职能：管理社会公共事务，比如规定交通规则、保护环境、管理市场。'] },
+      { type: 'para', text: '法和道德、校规都不一样，它有三个别的规范比不了的特征。' },
+      { type: 'table', headers: ['特征', '通俗解释'], rows: [['由国家制定或认可', '要么国家专门写一部法，要么把已有的好习惯确认为法'], ['由国家强制力保证实施', '不遵守就会被追究，警察、法院、监狱都是后盾'], ['对全体社会成员具有普遍约束力', '不管你是谁、多大的官，都得守，没有法外之人']] },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="200" fill="#fbeef0"/><text x="340" y="30" font-size="17" font-weight="bold" fill="#d4485a" text-anchor="middle">法的三大特征</text><rect x="35" y="65" width="190" height="80" rx="10" fill="#f7dde1" stroke="#d4485a" stroke-width="1.5"/><text x="130" y="95" font-size="13" fill="#b8334a" text-anchor="middle" font-weight="bold">国家制定或认可</text><text x="130" y="120" font-size="11" fill="#3d1f24" text-anchor="middle">来源特殊</text><rect x="245" y="65" width="190" height="80" rx="10" fill="#f7dde1" stroke="#d4485a" stroke-width="1.5"/><text x="340" y="95" font-size="13" fill="#b8334a" text-anchor="middle" font-weight="bold">国家强制力保证</text><text x="340" y="120" font-size="11" fill="#3d1f24" text-anchor="middle">后盾特殊</text><rect x="455" y="65" width="190" height="80" rx="10" fill="#f7dde1" stroke="#d4485a" stroke-width="1.5"/><text x="550" y="95" font-size="13" fill="#b8334a" text-anchor="middle" font-weight="bold">普遍约束力</text><text x="550" y="120" font-size="11" fill="#3d1f24" text-anchor="middle">范围特殊</text><text x="340" y="176" font-size="12" fill="#3d1f24" text-anchor="middle">校规只在学校管用，道德靠自觉，只有法三样都占</text></svg>', caption: '图2　抓住三大特征，就能把法律和道德、校规区分开。' },
+      { type: 'heading', text: '三、我国法治建设的成就' },
+      { type: 'para', text: '新中国成立以来，特别是改革开放以后，我国的法治建设走了一条从"无法可依"到"有法可依"再到"良法善治"的路。教材把成就归为三条。' },
+      { type: 'list', items: ['形成了中国特色社会主义法律体系：以宪法为核心，包括法律、行政法规、地方性法规等多个层次，覆盖社会生活各个方面。', '依法行政和公正司法水平不断提高：政府办事讲规矩，法院判案更公开、更公正。', '人权的法治化保障水平达到新高度：从宪法把"国家尊重和保障人权"写进去，到具体法律保护每个人的人身权、财产权。'] },
+      { type: 'keypoint', label: '重点·法律体系的核心', text: '<strong>中国特色社会主义法律体系以宪法为核心。宪法是国家的根本法，具有最高法律效力，任何法律法规都不能同宪法相抵触。</strong>' },
+      { type: 'heading', text: '四、全面依法治国的总目标与原则' },
+      { type: 'para', text: '有了法律体系，不等于就有了法治。法治还要看法律能不能真正管用。所以党的十八届四中全会提出了全面依法治国的总目标。' },
+      { type: 'keypoint', label: '重点·总目标（两句话，必背）', text: '<strong>建设中国特色社会主义法治体系，建设社会主义法治国家。</strong>前一句讲的是"要搭一套什么样的架子"，后一句讲的是"最终要建成一个什么样的国家"。' },
+      { type: 'para', text: '要走到这个目标，必须守住五条原则。这五条原则也是常考点，可以按"党、人民、平等、德法、国情"五个词来记。' },
+      { type: 'table', headers: ['原则', '为什么这么定'], rows: [['坚持中国共产党的领导', '这是社会主义法治最根本的保证，党领导立法、保证执法、支持司法、带头守法'], ['坚持人民主体地位', '法律是人民意志的体现，人民既是法治的建设者也是受益者'], ['坚持法律面前人人平等', '任何组织和个人都没有超越宪法法律的特权'], ['坚持依法治国和以德治国相结合', '法律是成文的道德，道德是内心的法律，两手都要抓'], ['坚持从中国实际出发', '不照搬外国模式，走自己的法治道路']] },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 240" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="240" fill="#fbeef0"/><text x="340" y="30" font-size="17" font-weight="bold" fill="#d4485a" text-anchor="middle">全面依法治国：一个总目标，五条原则</text><rect x="180" y="50" width="320" height="52" rx="10" fill="#b8334a"/><text x="340" y="72" font-size="13" fill="#fff" text-anchor="middle" font-weight="bold">建设中国特色社会主义法治体系</text><text x="340" y="92" font-size="13" fill="#fff" text-anchor="middle" font-weight="bold">建设社会主义法治国家</text><line x1="340" y1="102" x2="340" y2="128" stroke="#d4485a" stroke-width="2"/><polygon points="334,128 340,140 346,128" fill="#d4485a"/><rect x="20" y="145" width="122" height="58" rx="8" fill="#f7dde1" stroke="#d4485a" stroke-width="1.2"/><text x="81" y="170" font-size="12" fill="#3d1f24" text-anchor="middle">坚持党的</text><text x="81" y="189" font-size="12" fill="#3d1f24" text-anchor="middle">领导</text><rect x="152" y="145" width="122" height="58" rx="8" fill="#f7dde1" stroke="#d4485a" stroke-width="1.2"/><text x="213" y="170" font-size="12" fill="#3d1f24" text-anchor="middle">人民主体</text><text x="213" y="189" font-size="12" fill="#3d1f24" text-anchor="middle">地位</text><rect x="284" y="145" width="122" height="58" rx="8" fill="#f7dde1" stroke="#d4485a" stroke-width="1.2"/><text x="345" y="170" font-size="12" fill="#3d1f24" text-anchor="middle">法律面前</text><text x="345" y="189" font-size="12" fill="#3d1f24" text-anchor="middle">人人平等</text><rect x="416" y="145" width="122" height="58" rx="8" fill="#f7dde1" stroke="#d4485a" stroke-width="1.2"/><text x="477" y="170" font-size="12" fill="#3d1f24" text-anchor="middle">依法治国与</text><text x="477" y="189" font-size="12" fill="#3d1f24" text-anchor="middle">以德治国结合</text><rect x="548" y="145" width="112" height="58" rx="8" fill="#f7dde1" stroke="#d4485a" stroke-width="1.2"/><text x="604" y="170" font-size="12" fill="#3d1f24" text-anchor="middle">从中国</text><text x="604" y="189" font-size="12" fill="#3d1f24" text-anchor="middle">实际出发</text><text x="340" y="226" font-size="12" fill="#b8334a" text-anchor="middle" font-weight="bold">口诀：党、人民、平等、德法、国情</text></svg>', caption: '图3　总目标在上，五条原则在下，一起构成全面依法治国的框架。' },
+      { type: 'warn', label: '易错提醒', text: '不要把"依法治国"和"以德治国"对立起来，更不能说"有了法律就不需要道德"。教材明确说二者要相结合。另外，"法律面前人人平等"指的是法律实施上的平等（守法平等、适用平等），不是说立法时对所有阶级一视同仁。' },
+      { type: 'tip', label: '学习小贴士', text: '这一课的记忆量集中在"总目标两句话+五条原则"。可以做一张对照卡片：正面写关键词，背面写完整表述。另外注意区分三组容易混的表述——法的本质（统治阶级意志）、法的特征（三条）、法的职能（两条），考试常把它们互相当作干扰项。' },
+      { type: 'para', text: '小结：法随国家产生，体现统治阶级意志；它有政治和社会两大职能、三大特征。我国已经建成了以宪法为核心的法律体系，接下来要朝着建设中国特色社会主义法治体系、建设社会主义法治国家的总目标前进，路上必须守住五条原则。' }
+    ],
+    exercises: [
+      { type: 'choice', question: '关于法的本质，下列说法正确的是？', options: ['法是全体社会成员共同意志的体现', '法是统治阶级意志的体现', '法是立法者个人意志的体现', '法是道德规范的书面形式'], answer: '法是统治阶级意志的体现', explanation: '法的本质是统治阶级意志的体现，这种意志的内容由社会物质生活条件决定。它不是全体成员的共同意志，也不是立法者的个人随意决定，更不等同于道德规范。因此正确答案是法是统治阶级意志的体现。' },
+      { type: 'choice', question: '中国特色社会主义法律体系的核心是？', options: ['刑法', '民法典', '宪法', '行政法'], answer: '宪法', explanation: '中国特色社会主义法律体系以宪法为核心。宪法是国家的根本法，规定国家最根本最重要的问题，具有最高的法律效力，任何法律法规都不得同宪法相抵触。刑法、民法典都是重要法律，但不是核心。所以本题选宪法。' },
+      { type: 'choice', question: '下列哪一项不属于全面依法治国必须坚持的原则？', options: ['坚持中国共产党的领导', '坚持人民主体地位', '坚持法律面前人人平等', '坚持司法机关脱离监督独立运行'], answer: '坚持司法机关脱离监督独立运行', explanation: '全面依法治国的五条原则是坚持党的领导、坚持人民主体地位、坚持法律面前人人平等、坚持依法治国和以德治国相结合、坚持从中国实际出发。司法机关依法独立行使职权，但必须接受党的领导和人民监督，不存在脱离监督的独立。故选该项。' },
+      { type: 'fill', question: '全面依法治国的总目标是建设中国特色社会主义法治体系、建设___。', answer: '社会主义法治国家', explanation: '全面依法治国的总目标包含两句话，前一句是建设中国特色社会主义法治体系，后一句是建设社会主义法治国家。两句话缺一不可，前者是架子，后者是最终建成的国家形态。答案为社会主义法治国家。' },
+      { type: 'fill', question: '法有两大职能，一是___，二是社会职能。', answer: '政治职能', explanation: '法的政治职能是指维护一定阶级的统治秩序，比如打击犯罪、保卫国家安全；社会职能是指管理社会公共事务，比如制定交通规则、保护环境。两大职能共同发挥作用。答案填政治职能。' }
+    ]
+  });
+})();
