@@ -1,0 +1,42 @@
+/* 生物学 · 高三复习 · 稳态与调节 · 第5章 · 课时：第1节 植物生长素（一）发现与运输 */
+(function () {
+  var v = gzGetVolume('biology', 'zt3');
+  if (!v) return;
+  v.points.push({
+    id: 'zt3-u18',
+    name: '第1节 植物生长素（一）发现与运输',
+    chapter: '稳态与调节 · 第5章 植物生命活动的调节',
+    difficulty: '基础',
+    content: [
+      { type: 'heading', text: '一、生长素的发现历程' },
+      { type: 'paragraph', text: '植物为什么总朝有光的方向弯？科学家用一系列巧妙实验找到了答案：植物体内有一种物质能「从尖端产生、向下传递、在下部造成弯曲」，这种物质后来被命名为<strong>生长素</strong>。整个发现史像接力赛，四位科学家各解决一步：谁产生、能否传递、为何弯、是什么。' },
+      { type: 'list', items: ['达尔文：胚芽鞘尖端产生某种影响，向下传递使伸长区弯曲', '鲍森·詹森：这种影响可以透过琼脂片向下传递', '拜尔：影响在尖端下方分布不均匀造成弯曲', '温特：证明这种影响是化学物质，并命名为生长素'] },
+      { type: 'table', headers: ['科学家', '实验处理', '核心结论'], rows: [['达尔文', '胚芽鞘尖端遮光', '尖端产生某种影响向下传递'], ['鲍森·詹森', '尖端与下部间放琼脂片', '影响可透过琼脂片传递'], ['拜尔', '尖端放一侧', '影响在下部分布不均致弯'], ['温特', '尖端放琼脂块再移去尖', '影响是化学物质，命名生长素']] },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="320" fill="#eef6e4"/><text x="340" y="34" font-size="17" font-weight="bold" fill="#3f7d1e" text-anchor="middle">图1 生长素发现的四步接力</text><rect x="30" y="80" width="280" height="70" rx="10" fill="#d6eac4" stroke="#3f7d1e" stroke-width="2"/><text x="170" y="108" font-size="13" fill="#2e3a22" text-anchor="middle" font-weight="bold">达尔文：尖端生影响</text><text x="170" y="132" font-size="11" fill="#5aa832" text-anchor="middle">向下传使弯曲</text><polygon points="312,115 338,108 338,122" fill="#3f7d1e"/><rect x="350" y="80" width="300" height="70" rx="10" fill="#d6eac4" stroke="#3f7d1e" stroke-width="2"/><text x="500" y="108" font-size="13" fill="#2e3a22" text-anchor="middle" font-weight="bold">鲍森·詹森：可透琼脂</text><text x="500" y="132" font-size="11" fill="#5aa832" text-anchor="middle">影响能向下传</text><rect x="30" y="180" width="280" height="70" rx="10" fill="#d6eac4" stroke="#3f7d1e" stroke-width="2"/><text x="170" y="208" font-size="13" fill="#2e3a22" text-anchor="middle" font-weight="bold">拜尔：分布不均致弯</text><text x="170" y="232" font-size="11" fill="#5aa832" text-anchor="middle">尖端下部分布不匀</text><polygon points="312,215 338,208 338,222" fill="#3f7d1e"/><rect x="350" y="180" width="300" height="70" rx="10" fill="#d6eac4" stroke="#3f7d1e" stroke-width="2"/><text x="500" y="208" font-size="13" fill="#2e3a22" text-anchor="middle" font-weight="bold">温特：是化学物质</text><text x="500" y="232" font-size="11" fill="#5aa832" text-anchor="middle">命名生长素</text><text x="340" y="294" font-size="13" fill="#2e3a22" text-anchor="middle">从「有影响」到确认「是化学物质」，四代实验逐步揭开生长素之谜。</text></svg>', caption: '图1　达尔文、鲍森·詹森、拜尔、温特接力发现生长素。' },
+      { type: 'keypoint', label: '重点·生长素发现的核心结论', text: '<strong>生长素发现的核心：</strong>胚芽鞘尖端是产生「影响」的部位，这种影响是一种能向下运输的化学物质；它在尖端下方分布不均匀，导致胚芽鞘向光弯曲。温特通过把放过尖端的琼脂块移到去尖胚芽鞘上仍能引起弯曲，证明该影响是化学物质，并将其命名为生长素。' },
+      { type: 'heading', text: '二、生长素的产生部位' },
+      { type: 'paragraph', text: '生长素主要在植物的<strong>生长活跃部位</strong>合成。主要有三处：<strong>芽</strong>（特别是顶芽、叶芽）、<strong>幼叶</strong>，以及<strong>发育中的种子</strong>。可以把它想象成植物体内的「生长激素工厂」，都设在正在生长、需要被调控的地方。成熟叶片和根尖虽然也有，但合成量很少。' },
+      { type: 'list', items: ['主要合成部位：芽、幼叶、发育中的种子', '由色氨酸经过一系列反应转变而来', '成熟组织合成量很少', '生长旺盛部位既是产生地也是作用地'] },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="300" fill="#eef6e4"/><text x="340" y="34" font-size="17" font-weight="bold" fill="#3f7d1e" text-anchor="middle">图2 生长素的主要产生部位</text><rect x="70" y="100" width="160" height="80" rx="10" fill="#d6eac4" stroke="#3f7d1e" stroke-width="2"/><text x="150" y="135" font-size="14" fill="#2e3a22" text-anchor="middle" font-weight="bold">芽</text><text x="150" y="160" font-size="11" fill="#5aa832" text-anchor="middle">顶芽叶芽</text><rect x="260" y="100" width="160" height="80" rx="10" fill="#d6eac4" stroke="#3f7d1e" stroke-width="2"/><text x="340" y="135" font-size="14" fill="#2e3a22" text-anchor="middle" font-weight="bold">幼叶</text><text x="340" y="160" font-size="11" fill="#5aa832" text-anchor="middle">新生叶片</text><rect x="450" y="100" width="160" height="80" rx="10" fill="#d6eac4" stroke="#3f7d1e" stroke-width="2"/><text x="530" y="135" font-size="14" fill="#2e3a22" text-anchor="middle" font-weight="bold">发育中种子</text><text x="530" y="160" font-size="11" fill="#5aa832" text-anchor="middle">幼嫩种子</text><polygon points="230,140 254,133 254,147" fill="#3f7d1e"/><polygon points="420,140 444,133 444,147" fill="#3f7d1e"/><text x="340" y="240" font-size="13" fill="#2e3a22" text-anchor="middle">生长素在芽、幼叶、发育中的种子等生长旺盛部位合成。</text></svg>', caption: '图2　生长素主要合成于芽、幼叶和发育中的种子。' },
+      { type: 'heading', text: '三、生长素的运输' },
+      { type: 'paragraph', text: '生长素的运输有方向性，最重要的是<strong>极性运输</strong>：只能从植物的<strong>形态学上端</strong>运到<strong>形态学下端</strong>，不能倒流。注意「形态学上下端」不是「地理上下」，而看器官的形态结构——比如一段枝条，无论正放倒放，生长素都从枝条的形态学上端往下端走。极性运输消耗能量，是<strong>主动运输</strong>。此外还有通过韧皮部的非极性运输和受光照、重力影响的横向运输。' },
+      { type: 'list', items: ['极性运输：形态学上端 → 形态学下端', '方式：主动运输，需要消耗能量', '横向运输：受光、重力影响，在尖端发生', '非极性运输：通过韧皮部随有机物运输'] },
+      { type: 'warn', label: '易错·形态学上端不等于地理上端', text: '「形态学上端」是按器官形态判定的：茎的顶端、根尖的基部方向相对固定，与物体怎么摆放无关。把一段茎倒插进土里，生长素仍从它本身的形态学上端运往形态学下端，不会因倒放而反向。考题常给「倒放的枝条」图，要看形态学方向而非地理上下。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="300" fill="#eef6e4"/><text x="340" y="34" font-size="17" font-weight="bold" fill="#3f7d1e" text-anchor="middle">图3 生长素的极性运输方向</text><rect x="240" y="80" width="200" height="60" rx="10" fill="#d6eac4" stroke="#3f7d1e" stroke-width="2"/><text x="340" y="108" font-size="14" fill="#2e3a22" text-anchor="middle" font-weight="bold">茎段（形态学）</text><text x="190" y="115" font-size="13" fill="#5aa832" text-anchor="middle">上端</text><text x="490" y="115" font-size="13" fill="#5aa832" text-anchor="middle">下端</text><polygon points="340,150 332,176 348,176" fill="#3f7d1e"/><text x="340" y="200" font-size="14" fill="#2e3a22" text-anchor="middle" font-weight="bold">生长素：上端 → 下端</text><text x="340" y="245" font-size="13" fill="#2e3a22" text-anchor="middle">极性运输是主动运输，方向固定，不随摆放方式改变。</text></svg>', caption: '图3　生长素极性运输从形态学上端单向运往形态学下端。' },
+      { type: 'heading', text: '四、生长素的分布' },
+      { type: 'paragraph', text: '生长素在植物体内分布很广，但相对集中出现在<strong>生长旺盛的部位</strong>，如胚芽鞘、芽和根尖的分生组织、形成层、发育中的种子和果实。老叶、老根中分布很少。简单说：哪里在猛长，哪里生长素就多。这也解释了为什么顶芽、根尖对生长调控特别敏感。' },
+      { type: 'list', items: ['集中分布于生长旺盛部位', '胚芽鞘、芽、根尖分生组织含量较高', '发育中的种子、果实中也有较多', '衰老组织含量很低'] },
+      { type: 'keypoint', label: '重点·产生与分布一句话', text: '<strong>产生与分布：</strong>生长素主要在芽、幼叶、发育中的种子合成，集中分布在胚芽鞘、芽、根尖分生组织、发育中种子和果实等生长旺盛的部位，衰老组织里很少。记住「生长旺、分布多」这个规律，做题判断某部位生长素多少时直接用。' },
+      { type: 'example', label: '例题·温特实验', text: '题目：温特实验把接触过胚芽鞘尖端的琼脂块放在去尖胚芽鞘一侧，结果胚芽鞘弯曲生长。该实验说明？<br>A. 尖端产生生长素　B. 影响是化学物质且可转移<br>C. 光引起弯曲　D. 生长素向下运输<br>解析：琼脂块本身无生命，接触尖端后却能引起去尖胚芽鞘弯曲，说明尖端产生了某种可溶于琼脂并向下传递的化学物质，即生长素。这直接证明该「影响」是化学物质且可转移。实验并未单独证明光引起弯曲或向下的极性运输方向，因此选影响是化学物质且可转移。' },
+      { type: 'tip', label: '提示·发现实验的对照设计', text: '高考爱考生长素发现实验的「对照」。关键对照有：①有尖端 vs 去尖端（证明确实是尖端在起作用）；②尖端与下部间放云母片阻断 vs 放琼脂片（证明影响可透过琼脂这种非生命材料，即化学物质）；③尖端放单侧光侧 vs 另一侧。答题时先找「单一变量」再下结论，别把不同实验的结论张冠李戴。' },
+      { type: 'warn', label: '易错·生长素与生长激素不是一回事', text: '植物生长素（吲哚乙酸）是植物激素，动物体内叫「生长激素」的是垂体分泌的蛋白质类激素，二者名称相近但完全不同：一个是植物小分子有机物，一个是动物蛋白质。此外，生长素是「发现最早」的植物激素，但不是植物体内「唯一」的激素，后面还会学赤霉素、细胞分裂素等。' }
+    ],
+    exercises: [
+      { type: 'choice', question: '通过实验证明胚芽鞘尖端产生的影响是一种化学物质，并命名生长素的科学家是？', options: ['达尔文', '鲍森·詹森', '拜尔', '温特'], answer: '温特', explanation: '温特把接触过胚芽鞘尖端的琼脂块放在去尖胚芽鞘上，仍引起弯曲，证明尖端产生的是可转移的化学物质，并将其命名为生长素。达尔文提出尖端产生某种影响，鲍森·詹森证明影响可透过琼脂片，拜尔证明影响在下部分布不均，但确认其为化学物质并命名的正是温特。因此答案是温特。' },
+      { type: 'choice', question: '关于生长素的极性运输，下列说法正确的是？', options: ['从形态学下端运到上端', '属于被动运输不耗能', '从形态学上端运到下端', '只在根尖发生'], answer: '从形态学上端运到下端', explanation: '极性运输指生长素只能从植物的形态学上端运往形态学下端，方向固定、不能倒流，这是一种主动运输，需要消耗能量，在胚芽鞘、茎、根等多种器官中都存在，并非只在根尖。因此正确说法是从形态学上端运到下端。' },
+      { type: 'choice', question: '下列部位中，不属于生长素主要合成部位的是？', options: ['芽', '幼叶', '发育中的种子', '老熟叶片'], answer: '老熟叶片', explanation: '生长素主要在生长旺盛的部位合成，包括芽、幼叶和发育中的种子；老熟叶片属于衰老组织，合成生长素的量很少，不属于主要合成部位。因此答案是老熟叶片。' },
+      { type: 'fill', question: '生长素的极性运输是从植物的___运往___，该过程消耗能量，属于___运输。', answer: '形态学上端；形态学下端；主动', explanation: '极性运输是生长素特有的运输方式，方向固定，只能从形态学上端运往形态学下端，且不随器官摆放方向改变。它需要载体蛋白并消耗能量，属于主动运输。逆转该方向需要人为干预，自然状态下极性运输是单向的，这正是植物形态建成的重要基础。' },
+      { type: 'fill', question: '胚芽鞘尖端产生的「影响」能透过___片向下传递，说明它是可以扩散的化学物质；生长素相对集中分布在___部位。', answer: '琼脂；生长旺盛', explanation: '鲍森·詹森用琼脂片隔开胚芽鞘尖端与下部，发现影响仍能透过琼脂片向下传递，因琼脂是非生命凝胶，这证明该影响是化学物质。生长素在植物体内分布广泛，但相对集中出现在胚芽鞘、芽、根尖分生组织、发育中种子和果实等生长旺盛的部位，衰老组织含量很低。' }
+    ]
+  });
+})();

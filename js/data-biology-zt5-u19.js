@@ -1,0 +1,41 @@
+/* 生物学 · 高三复习 · 实验与探究 · 第7章 · 课时：常用技术与试剂 */
+(function () {
+  var v = gzGetVolume('biology', 'zt5');
+  if (!v) return;
+  v.points.push({
+    id: 'zt5-u19',
+    name: '第2节 常用技术与试剂',
+    chapter: '实验与探究 · 第7章 常用实验方法与技术',
+    difficulty: '基础',
+    content: [
+      { type: 'heading', text: '一、重要实验技术概览' },
+      { type: 'paragraph', text: '除基本方法外，高中生物还涉及多种操作技术：荧光标记、纸层析、梯度离心、抽样检测，以及观察细胞分裂时的解离-漂洗-染色-制片流程。这些技术是实验结果可靠的前提。' },
+      { type: 'list', items: ['荧光标记：用荧光物质标记分子，观察其位置与动态。', '纸层析：按溶解度差异分离色素等混合物。', '梯度离心：按密度分离细胞组分或大分子。', '抽样检测：对培养液等抽样计数，如血细胞计数板。', '解离-漂洗-染色-制片：观察根尖分裂的固定流程。'] },
+      { type: 'svg', caption: '纸层析中四种光合色素因在层析液中溶解度不同而扩散速度有别，形成自上而下排列的四条色素带。', svg: '<svg viewBox="0 0 680 360" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="360" fill="#eef6e4"/><text x="340" y="34" text-anchor="middle" font-size="22" font-weight="bold" fill="#3f7d1e">纸层析分离光合色素</text><rect x="300" y="60" width="80" height="260" fill="#ffffff" stroke="#3f7d1e" stroke-width="2"/><rect x="300" y="70" width="80" height="40" fill="#caff70"/><text x="240" y="95" text-anchor="end" font-size="13" fill="#2e3a22">胡萝卜素（最快）</text><rect x="300" y="110" width="80" height="40" fill="#ffe23a"/><text x="240" y="135" text-anchor="end" font-size="13" fill="#2e3a22">叶黄素</text><rect x="300" y="150" width="80" height="50" fill="#3fae3f"/><text x="240" y="180" text-anchor="end" font-size="13" fill="#2e3a22">叶绿素 a</text><rect x="300" y="200" width="80" height="50" fill="#2f7ad1"/><text x="240" y="225" text-anchor="end" font-size="13" fill="#2e3a22">叶绿素 b</text><text x="420" y="120" font-size="14" fill="#2e3a22">溶解度越高</text><text x="420" y="142" font-size="14" fill="#2e3a22">扩散越快</text><text x="340" y="345" text-anchor="middle" font-size="14" fill="#5aa832">四条色素带自上而下为胡萝卜素、叶黄素、叶绿素 a、叶绿素 b</text></svg>' },
+      { type: 'keypoint', text: '纸层析原理：不同色素在层析液中的溶解度不同，溶解度高的随层析液在滤纸上扩散得快，反之则慢，于是色素按快慢在滤纸上分开，如同按体重排队。' },
+      { type: 'heading', text: '二、解离-漂洗-染色-制片流程' },
+      { type: 'paragraph', text: '观察植物根尖细胞有丝分裂时，需先把根尖放入解离液（质量分数15%的盐酸与体积分数95%的酒精按1:1混合）中解离，使组织酥软并杀死细胞；再用清水漂洗去酸；接着用龙胆紫或醋酸洋红染色使染色体着色；最后制片压片便于显微镜观察。' },
+      { type: 'list', items: ['解离：盐酸与酒精混合液，使细胞分散并固定。', '漂洗：清水洗去多余盐酸，防止影响染色。', '染色：碱性染料使染色体着色便于观察。', '制片：压片使细胞分散成单层，利于高倍观察。'] },
+      { type: 'table', caption: '观察根尖有丝分裂的四步流程', headers: ['步骤', '试剂或操作', '目的'], rows: [['解离', '质量分数15%盐酸+体积分数95%酒精（1:1）', '使组织酥软、细胞分散并固定'], ['漂洗', '清水冲洗', '洗去盐酸，防止影响染色'], ['染色', '龙胆紫或醋酸洋红', '使染色体着色'], ['制片', '压片使细胞分散', '便于高倍镜观察单层细胞']] },
+      { type: 'keypoint', text: '解离液是质量分数15%盐酸与体积分数95%酒精等体积混合；漂洗必须用清水且要充分，否则残留酸会干扰碱性染料染色。' },
+      { type: 'svg', caption: '观察根尖有丝分裂的固定四步流程，顺序不可颠倒，其中漂洗不充分会直接影响后续的染色效果。', svg: '<svg viewBox="0 0 680 360" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="360" fill="#eef6e4"/><text x="340" y="34" text-anchor="middle" font-size="22" font-weight="bold" fill="#3f7d1e">解离-漂洗-染色-制片</text><rect x="30" y="150" width="120" height="60" rx="8" fill="#d6eac4" stroke="#3f7d1e" stroke-width="2"/><text x="90" y="180" text-anchor="middle" font-size="15" fill="#2e3a22">解离</text><rect x="180" y="150" width="120" height="60" rx="8" fill="#d6eac4" stroke="#3f7d1e" stroke-width="2"/><text x="240" y="180" text-anchor="middle" font-size="15" fill="#2e3a22">漂洗</text><rect x="330" y="150" width="120" height="60" rx="8" fill="#d6eac4" stroke="#3f7d1e" stroke-width="2"/><text x="390" y="180" text-anchor="middle" font-size="15" fill="#2e3a22">染色</text><rect x="480" y="150" width="120" height="60" rx="8" fill="#d6eac4" stroke="#3f7d1e" stroke-width="2"/><text x="540" y="180" text-anchor="middle" font-size="15" fill="#2e3a22">制片</text><polygon points="155,180 178,168 178,192" fill="#3f7d1e"/><polygon points="305,180 328,168 328,192" fill="#3f7d1e"/><polygon points="455,180 478,168 478,192" fill="#3f7d1e"/><text x="305" y="260" text-anchor="middle" font-size="13" fill="#2e3a22">解离液：15%盐酸+95%酒精(1:1)</text><text x="305" y="290" text-anchor="middle" font-size="13" fill="#2e3a22">漂洗用清水，染色用龙胆紫</text><text x="340" y="330" text-anchor="middle" font-size="14" fill="#5aa832">顺序不可颠倒，漂洗不充分则染色失败</text></svg>' },
+      { type: 'heading', text: '三、常用试剂与作用' },
+      { type: 'paragraph', text: '实验试剂种类繁多，其中酒精在不同实验中浓度与作用各异，盐酸、NaOH、硫酸铜等也各有用途，需逐一对应记忆，避免混淆。' },
+      { type: 'table', caption: '常用试剂及其作用', headers: ['试剂', '浓度/配制', '主要作用'], rows: [['酒精', '体积分数50%', '脂肪鉴定中洗去浮色'], ['酒精', '体积分数70%', '消毒或固定土壤小动物标本'], ['酒精', '体积分数95%', '参与解离液、提取杂质'], ['无水乙醇', '纯乙醇', '提取光合色素、提取 DNA'], ['盐酸', '质量分数15%', '与酒精配成解离液'], ['盐酸', '质量分数8%', '水解、改变膜通透性（DNA 分布实验）'], ['NaOH', '斐林/双缩脲 A 液', '提供碱性环境'], ['CuSO₄', '斐林/双缩脲 B 液', '与物质反应生成特征色']] },
+      { type: 'warn', text: '易错：酒精浓度与作用最易张冠李戴——体积分数50%洗浮色、体积分数70%消毒/固定、体积分数95%参与解离或提取、无水乙醇提取色素或 DNA、质量分数15%盐酸参与解离。' },
+      { type: 'example', text: '例题：脂肪鉴定中用体积分数50%的酒精，其作用是？答：洗去浮色（洗去苏丹Ⅲ染液本身的颜色），便于观察橘黄色脂肪颗粒。' },
+      { type: 'tip', text: '高频考点：斐林试剂与双缩脲试剂都含 NaOH 与 CuSO₄，但斐林试剂甲乙液等量混合、需水浴加热、产生砖红色沉淀；双缩脲试剂先加 A 液（NaOH）再加 B 液（CuSO₄）、不加热、呈紫色。' },
+      { type: 'svg', caption: '本课时技术与试剂可归类为分离技术、检测技术与关键试剂三大块，彼此配合完成各类实验。', svg: '<svg viewBox="0 0 680 360" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="360" fill="#eef6e4"/><text x="340" y="34" text-anchor="middle" font-size="22" font-weight="bold" fill="#3f7d1e">常用技术与试剂归类</text><rect x="40" y="70" width="180" height="220" rx="10" fill="#d6eac4" stroke="#3f7d1e" stroke-width="2"/><text x="130" y="105" text-anchor="middle" font-size="16" font-weight="bold" fill="#2e3a22">分离技术</text><text x="130" y="140" text-anchor="middle" font-size="14" fill="#2e3a22">纸层析</text><text x="130" y="168" text-anchor="middle" font-size="14" fill="#2e3a22">梯度离心</text><text x="130" y="196" text-anchor="middle" font-size="14" fill="#2e3a22">差速离心</text><rect x="250" y="70" width="180" height="220" rx="10" fill="#d6eac4" stroke="#3f7d1e" stroke-width="2"/><text x="340" y="105" text-anchor="middle" font-size="16" font-weight="bold" fill="#2e3a22">检测技术</text><text x="340" y="140" text-anchor="middle" font-size="14" fill="#2e3a22">荧光标记</text><text x="340" y="168" text-anchor="middle" font-size="14" fill="#2e3a22">抽样检测</text><text x="340" y="196" text-anchor="middle" font-size="14" fill="#2e3a22">显色反应</text><rect x="460" y="70" width="180" height="220" rx="10" fill="#d6eac4" stroke="#3f7d1e" stroke-width="2"/><text x="550" y="105" text-anchor="middle" font-size="16" font-weight="bold" fill="#2e3a22">关键试剂</text><text x="550" y="140" text-anchor="middle" font-size="14" fill="#2e3a22">酒精多浓度</text><text x="550" y="168" text-anchor="middle" font-size="14" fill="#2e3a22">盐酸/NaOH</text><text x="550" y="196" text-anchor="middle" font-size="14" fill="#2e3a22">硫酸铜</text><text x="340" y="330" text-anchor="middle" font-size="14" fill="#5aa832">技术服务于方法，试剂成就显色与分离</text></svg>' },
+      { type: 'heading', text: '四、技术要点辨析' },
+      { type: 'list', items: ['纸层析滤液细线不能触及层析液，否则色素直接溶入其中。', '梯度离心与差速离心目的不同：前者分密度，后者分细胞器。', '抽样检测取代表样，需摇匀后取样以保证随机性。', '解离后必须漂洗，染色才能成功显色。'] },
+      { type: 'paragraph', text: '综上，常用技术与试剂是实验操作的硬功夫：纸层析看扩散快慢，解离漂洗染色制片是固定的四步曲，而各种试剂浓度与作用是高考每年必考的高频点。' }
+    ],
+    exercises: [
+      { type: 'choice', question: '观察植物根尖细胞有丝分裂时，解离液的正确组成是', options: ['A. 质量分数15%盐酸与体积分数95%酒精等体积混合', 'B. 体积分数50%酒精与盐酸混合', 'C. 质量分数8%盐酸与酒精混合', 'D. 无水乙醇与盐酸混合'], answer: 'A. 质量分数15%盐酸与体积分数95%酒精等体积混合', explanation: '解离液由质量分数15%的盐酸和体积分数95%的酒精按1:1混合而成，作用是使组织酥软、细胞分散并杀死固定细胞，为后续漂洗、染色和制片做准备。' },
+      { type: 'choice', question: '纸层析法分离叶绿体色素时，在滤纸条上扩散速度最快的色素是', options: ['A. 叶绿素 a', 'B. 叶绿素 b', 'C. 叶黄素', 'D. 胡萝卜素'], answer: 'D. 胡萝卜素', explanation: '纸层析中色素随层析液在滤纸上扩散的速度与其在层析液中的溶解度成正比，胡萝卜素溶解度最高，扩散最快，位于滤纸条最上端；叶绿素 b 溶解度最低，位于最下端。' },
+      { type: 'choice', question: '脂肪鉴定实验中，体积分数50%的酒精所起的作用是', options: ['A. 固定标本', 'B. 洗去浮色', 'C. 解离组织', 'D. 提取脂肪'], answer: 'B. 洗去浮色', explanation: '脂肪鉴定用苏丹Ⅲ染色后，组织周围会残留染液本身的橘黄色，用体积分数50%的酒精可洗去这些浮色，使脂肪颗粒的颜色观察更清晰，与消毒、解离等作用不同。' },
+      { type: 'fill', question: '斐林试剂与双缩脲试剂都含 NaOH 和 CuSO₄，但双缩脲试剂使用时先加 A 液（NaOH），再加少量 B 液（CuSO₄），______（填需要或不需要）水浴加热。', answer: '不需要', explanation: '双缩脲试剂鉴定蛋白质时在常温下即可与肽键反应呈紫色，不需要水浴加热；而斐林试剂鉴定还原糖必须等量混合且水浴加热才出现砖红色沉淀，二者条件不同。' },
+      { type: 'fill', question: 'DNA 和蛋白质在细胞中分布的实验中，用质量分数8%的盐酸处理，其作用是改变细胞膜通透性并促使______水解，便于染色剂进入。', answer: '蛋白质', explanation: '该实验用质量分数8%盐酸处理细胞，能改变细胞膜的通透性，同时使染色质中的 DNA 与蛋白质分离（促使蛋白质水解），有利于甲基绿、吡罗红进入细胞并分别染色。' }
+    ]
+  });
+})();
