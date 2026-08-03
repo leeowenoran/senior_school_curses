@@ -1,0 +1,18 @@
+{
+  "studyProgress": {
+    "read": "doc.userId == auth.uid",
+    "write": "doc.userId == auth.uid"
+  },
+  "exerciseRecords": {
+    "read": "doc.userId == auth.uid",
+    "write": "doc.userId == auth.uid"
+  },
+  "wrongQuestions": {
+    "read": "doc.userId == auth.uid",
+    "write": "doc.userId == auth.uid"
+  },
+  "users": {
+    "read": "doc._id == auth.uid",
+    "write": "doc._id == auth.uid"
+  }
+}

@@ -14,3 +14,9 @@ Thumbs.db
 
 # Node (if added later)
 node_modules/
+
+# Local backup copies (large safety copies, not source)
+_local_backup_*/
+
+# Seed/preview templates (dev artifacts)
+_seed*.html

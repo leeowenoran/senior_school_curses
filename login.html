@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登录 · 高中预习</title>
+  <style>
+    body { font-family: system-ui, "PingFang SC", sans-serif; max-width: 360px; margin: 80px auto; color: #3d2c18; }
+    h2 { color: #8a5a2b; }
+    input { display: block; width: 100%; box-sizing: border-box; margin: 8px 0; padding: 10px; border: 1px solid #e6d3b3; border-radius: 8px; }
+    button { width: 100%; padding: 11px; background: #b5651d; color: #fff; border: 0; border-radius: 8px; font-size: 15px; cursor: pointer; }
+    button.alt { background: #8a5a2b; margin-top: 8px; }
+    .tip { color: #a8472d; font-size: 13px; min-height: 18px; }
+    a { color: #a8472d; }
+  </style>
+</head>
+<body>
+  <h2>登录 / 注册</h2>
+  <input id="email" placeholder="邮箱">
+  <input id="password" type="password" placeholder="密码（≥6位）">
+  <input id="grade" placeholder="年级，如 高一（选填）">
+  <button onclick="doLogin()">登录</button>
+  <button class="alt" onclick="doRegister()">注册</button>
+  <p class="tip" id="msg"></p>
+  <p><a href="index.html">进入预习网站 →</a></p>
+
+  <script src="https://imgcache.qq.com/qcloud/cloudbase-js-sdk/1.6.3/cloudbase.full.js"></script>
+  <script src="js/cloudbase.js"></script>
+  <script>
+    function setMsg(t) { document.getElementById('msg').textContent = t; }
+    async function doLogin() {
+      try {
+        var uid = await cbLogin(email.value.trim(), password.value);
+        setMsg('登录成功：' + uid);
+      } catch (e) { setMsg('登录失败：' + e.message); }
+    }
+    async function doRegister() {
+      try {
+        var uid = await cbRegister(email.value.trim(), password.value, { grade: grade.value.trim() });
+        setMsg('注册成功：' + uid);
+      } catch (e) { setMsg('注册失败：' + e.message); }
+    }
+  </script>
+</body>
+</html>

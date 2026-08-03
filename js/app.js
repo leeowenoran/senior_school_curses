@@ -1175,6 +1175,97 @@
   }
   function lsSet(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {} }
 
+  /* ---------- 云端同步（腾讯云 CloudBase）：学习数据自动同步到云 ---------- */
+  var _origLsSet = lsSet;
+  // 需要同步到云端的学习类 localStorage 键
+  var CB_LEARNING_KEYS = ['gz_progress', 'gz_wrongbook', 'gz_checkin', 'gz_recent', 'gz_quiz_log', 'gz_favs', 'gz_medals', 'gz_comments', 'gz_done_count'];
+  var _cbSyncTimer = null;
+  function cbCloudEnabled() { return !!(window.cbAvailable); }
+  function cbSyncNow() {
+    if (!cbCloudEnabled()) return;
+    var data = {};
+    for (var i = 0; i < CB_LEARNING_KEYS.length; i++) data[CB_LEARNING_KEYS[i]] = lsGet(CB_LEARNING_KEYS[i], null);
+    var u = getCurrentUser();
+    if (u) { data.phone = u.phone || u.username; data.nickname = u.nickname; data.avatar = u.avatar; data.createdAt = u.createdAt; }
+    window.cbSaveUserData(data);
+  }
+  function cbScheduleSync() {
+    if (!cbCloudEnabled()) return;
+    if (_cbSyncTimer) clearTimeout(_cbSyncTimer);
+    _cbSyncTimer = setTimeout(cbSyncNow, 800);
+  }
+  // 覆写 lsSet：学习类数据写入后，自动（防抖）同步到云端
+  lsSet = function (key, val) {
+    _origLsSet(key, val);
+    if (CB_LEARNING_KEYS.indexOf(key) >= 0) cbScheduleSync();
+  };
+  // 把云端用户文档的学习数据恢复到本机
+  function cbRestoreFromCloud(data) {
+    if (!data) return;
+    for (var i = 0; i < CB_LEARNING_KEYS.length; i++) {
+      var k = CB_LEARNING_KEYS[i];
+      if (data[k] !== undefined) _origLsSet(k, data[k]);
+    }
+  }
+  // 在本地建立/更新一个账号记录（云端手机号优先；无则 local_<phone>）
+  function cbApplyCloudUser(account, uid) {
+    var users = getAllUsers();
+    var id = uid || ('local_' + account);
+    if (!users[id]) {
+      var avatarPool = ['🐱', '🐶', '🦊', '🐼', '🐯', '🦁', '🐰', '🐨', '🐸', '🐵', '🦄', '🐙'];
+      users[id] = {
+        id: id, username: account, phone: account, email: account, nickname: account,
+        avatar: avatarPool[Math.floor(Math.random() * avatarPool.length)],
+        createdAt: new Date().toISOString(), lastLoginAt: new Date().toISOString()
+      };
+    } else {
+      users[id].lastLoginAt = new Date().toISOString();
+    }
+    _origLsSet('gz_users', users);
+    _origLsSet('gz_currentUser', id);
+  }
+  // 本机账号兜底（云端不可达时使用），保证网站始终可登录
+  function cbLocalLogin(phone, password) {
+    var users = getAllUsers();
+    var found = null;
+    for (var k in users) if (users[k].username === phone) { found = users[k]; break; }
+    if (!found) return { ok: false, msg: '该手机号尚未在本机注册（云端可能不可达，请联网后重试）' };
+    if (found.password !== hashPassword(password)) return { ok: false, msg: '密码错误' };
+    found.lastLoginAt = new Date().toISOString();
+    users[found.id] = found;
+    _origLsSet('gz_users', users);
+    _origLsSet('gz_currentUser', found.id);
+    return { ok: true };
+  }
+  function cbLocalAuth(phone, password, isRegister, p2) {
+    if (!isRegister) return cbLocalLogin(phone, password);
+    if (p2 != null && password !== p2) return { ok: false, msg: '两次密码不一致' };
+    var users = getAllUsers();
+    var id = 'local_' + phone;
+    if (users[id]) return cbLocalLogin(phone, password);
+    var avatarPool = ['🐱', '🐶', '🦊', '🐼', '🐯', '🦁', '🐰', '🐨', '🐸', '🐵', '🦄', '🐙'];
+    users[id] = {
+      id: id, username: phone, phone: phone, email: phone, nickname: phone, password: hashPassword(password),
+      avatar: avatarPool[Math.floor(Math.random() * avatarPool.length)],
+      createdAt: new Date().toISOString(), lastLoginAt: new Date().toISOString()
+    };
+    _origLsSet('gz_users', users);
+    _origLsSet('gz_currentUser', id);
+    return { ok: true };
+  }
+  // 页面加载时：若本地存有云端 token，静默恢复登录态与云端数据
+  function cbAutoRestore() {
+    if (!cbCloudEnabled()) return;
+    var tok = window.cbGetToken ? window.cbGetToken() : '';
+    if (!tok) return; // 无云端会话，保留本机缓存
+    var phone = window.cbGetPhone ? window.cbGetPhone() : '';
+    window.cbLoadUserData().then(function (data) {
+      cbApplyCloudUser(phone, phone);
+      if (data) cbRestoreFromCloud(data);
+      renderTopbarUser();
+    }).catch(function () {});
+  }
+
   /* ---------- 用户系统（多账号 + 登录/注册） ---------- */
   function getAllUsers() { return lsGet('gz_users', {}); }
   function getCurrentUserId() { return lsGet('gz_currentUser', null); }
@@ -1205,13 +1296,14 @@
     // 非 11 位时，按前 3 + 中间 * + 后 4 截取
     return s.slice(0, 3) + '****' + s.slice(-4);
   }
-  // 获取用户对外显示名：自定义昵称优先，否则用手机号掩码
+  // 获取用户对外显示名：自定义昵称优先，否则手机号掩码，再否则邮箱
   function getDisplayName(u) {
     if (!u) return '';
     if (u.nickname && u.nickname !== u.username && u.nickname !== (u.phone || '')) {
       return u.nickname;
     }
-    return formatPhoneDisplay(u.phone || u.username);
+    if (u.phone) return formatPhoneDisplay(u.phone);
+    return u.username || '';
   }
   function registerUser(phone, password) {
     phone = (phone || '').trim();
@@ -1323,6 +1415,7 @@
 
   function logoutAndToast() {
     var u = getCurrentUser();
+    if (window.cbLogout) { try { window.cbLogout(); } catch (e) {} }
     logoutUser();
     var m = document.getElementById('authUserMenu');
     if (m) m.classList.remove('open');
@@ -1413,7 +1506,7 @@
     } else {
       pane.innerHTML =
         '<div class="auth-title">创建账号 ✨</div>' +
-        '<div class="auth-subtitle">用手机号注册，默认昵称为 138****1234 形式</div>' +
+        '<div class="auth-subtitle">用手机号注册，账号与学习数据将保存在云端</div>' +
         '<label class="auth-field"><span>手机号</span><input type="tel" id="authUser" placeholder="11 位手机号" maxlength="11" autocomplete="username" inputmode="numeric" /></label>' +
         '<label class="auth-field"><span>密码</span><input type="password" id="authPwd" placeholder="至少 6 位" maxlength="40" autocomplete="new-password" /></label>' +
         '<label class="auth-field"><span>确认密码</span><input type="password" id="authPwd2" placeholder="再输入一次" maxlength="40" autocomplete="new-password" /></label>' +
@@ -1425,41 +1518,83 @@
   window.__switchAuthTab = switchAuthTab;
 
   function doAuth() {
-    var u = document.getElementById('authUser').value;
-    var p = document.getElementById('authPwd').value;
+    var u = (document.getElementById('authUser').value || '').trim();
+    var p = (document.getElementById('authPwd').value || '').trim();
     var p2 = document.getElementById('authPwd2') ? document.getElementById('authPwd2').value : null;
     var msg = document.getElementById('authMsg');
     var btn = document.getElementById('authSubmit');
     msg.className = 'auth-msg';
     msg.textContent = '';
+    if (!/^1\d{10}$/.test(u)) { msg.className = 'auth-msg err'; msg.textContent = '请输入正确的 11 位手机号'; return; }
+    if (!p || p.length < 6) { msg.className = 'auth-msg err'; msg.textContent = '密码至少 6 位'; return; }
     if (btn) { btn.disabled = true; btn.textContent = '处理中…'; }
-    var res;
-    if (_authMode === 'register') {
-      if (p2 != null && p !== p2) {
-        res = { ok: false, msg: '两次密码不一致' };
-      } else {
-        res = registerUser(u, p);
+
+    (async function () {
+      var usedCloud = false, cloudErr = null;
+      try {
+        if (cbCloudEnabled()) {
+          if (_authMode === 'register') {
+            if (p2 != null && p !== p2) throw new Error('两次密码不一致');
+            var reg = await window.cbRegister(u, p);
+            if (!reg.ok) {
+              // 已注册则直接尝试登录（便于在另一台设备继续用同一手机号）
+              if (/已注册|已存在|exists/i.test(reg.msg || '')) {
+                var lg0 = await window.cbLogin(u, p);
+                if (!lg0.ok) throw new Error(lg0.msg || '登录失败');
+              } else {
+                throw new Error(reg.msg || '注册失败');
+              }
+            }
+          } else {
+            var lg = await window.cbLogin(u, p);
+            if (!lg.ok) throw new Error(lg.msg || '登录失败');
+          }
+          usedCloud = true;
+        }
+      } catch (e) { cloudErr = e; }
+
+      if (usedCloud) {
+        cbApplyCloudUser(u, u);
+        try {
+          var doc = await window.cbLoadUserData();
+          if (doc) cbRestoreFromCloud(doc);
+        } catch (e) {}
+        afterCloudLoginUI(u, '云端账号已就绪，学习数据已同步');
+        return;
       }
-    } else {
-      res = loginUser(u, p);
-    }
+
+      // 云端不可用 / 登录失败 → 回退本机账号（数据保存在本机，联网后可同步）
+      var local = cbLocalAuth(u, p, _authMode === 'register', p2);
+      if (!local.ok) {
+        if (btn) { btn.disabled = false; btn.textContent = _authMode === 'register' ? '注 册' : '登 录'; }
+        msg.className = 'auth-msg err';
+        msg.textContent = local.msg || (cloudErr && cloudErr.message) || '操作失败，请重试';
+        return;
+      }
+      var note = cbCloudEnabled()
+        ? '云端登录未成功（' + (cloudErr && cloudErr.message ? cloudErr.message : '请检查手机号或密码') + '），已先在本机登录，数据保存在本机'
+        : '当前为离线模式，已在本机登录，联网后将同步到云端';
+      afterCloudLoginUI(u, note);
+    })();
+  }
+  window.__doAuth = doAuth;
+
+  // 登录成功后的统一收尾（消息 + 关闭弹窗 + 重渲染）
+  function afterCloudLoginUI(account, note) {
+    var btn = document.getElementById('authSubmit');
     if (btn) { btn.disabled = false; btn.textContent = _authMode === 'register' ? '注 册' : '登 录'; }
-    if (!res.ok) {
-      msg.className = 'auth-msg err';
-      msg.textContent = res.msg;
-      return;
-    }
-    msg.className = 'auth-msg ok';
-    msg.textContent = (_authMode === 'register' ? '注册成功！' : '登录成功！') + ' 欢迎 ' + res.user.nickname;
+    var u = getCurrentUser();
+    var disp = u ? getDisplayName(u) : account;
+    var msg = document.getElementById('authMsg');
+    if (msg) { msg.className = 'auth-msg ok'; msg.textContent = '登录成功！' + (note ? '（' + note + '）' : '欢迎 ' + disp); }
     setTimeout(function () {
       closeAuthModal();
       renderTopbarUser();
       if (typeof renderHome === 'function') renderHome();
       if (typeof renderSettings === 'function' && (location.hash || '').indexOf('/settings') >= 0) renderSettings();
-      toast('已登录：' + res.user.username);
+      toast('已登录：' + disp);
     }, 600);
   }
-  window.__doAuth = doAuth;
 
   // 账号设置 modal（修改昵称 / 修改密码 / 切换账号）
   function openProfileModal() {
@@ -1552,7 +1687,11 @@
       }
       var r2 = changePassword(oldPwd, newPwd);
       if (!r2.ok) { msg.className = 'auth-msg err'; msg.textContent = r2.msg; return; }
+      // 同步改云端密码（最佳努力，失败不影响本机）
+      if (window.cbChangePassword) { try { window.cbChangePassword(oldPwd, newPwd); } catch (e) {} }
     }
+    // 把昵称/头像/学习数据同步到云端（最佳努力）
+    cbSyncNow();
     msg.className = 'auth-msg ok';
     msg.textContent = '保存成功！';
     renderTopbarUser();
@@ -1564,6 +1703,7 @@
   // 切换账号
   function switchAccount() {
     document.getElementById('authUserMenu') && document.getElementById('authUserMenu').classList.remove('open');
+    if (window.cbLogout) { try { window.cbLogout(); } catch (e) {} }
     logoutUser();
     renderTopbarUser();
     if (typeof renderHome === 'function') renderHome();
@@ -2927,4 +3067,6 @@
   window.addEventListener('hashchange', render);
   document.addEventListener('DOMContentLoaded', render);
   if (document.readyState !== 'loading') render();
+  // 若已有云端会话，静默恢复登录态与学习数据（刷新后保持登录）
+  cbAutoRestore();
 })();

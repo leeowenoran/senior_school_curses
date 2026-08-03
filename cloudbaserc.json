@@ -1,0 +1,7 @@
+{
+  "envId": "shanghai-env1-d3gq2odzh654c9264",
+  "functionRoot": "cloud_functions",
+  "functions": [
+    { "name": "gzApi", "runtime": "Nodejs18.15", "handler": "index.main", "installDependency": true, "timeout": 30, "memorySize": 256 }
+  ]
+}
