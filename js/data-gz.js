@@ -193,7 +193,9 @@ function gzStats() {
   GZ_SUBJECTS.forEach(function (s) {
     s.volumes.forEach(function (v) {
       if (v.grade === '高三') topics++; else volumes++;
-      points += (v.points || []).length;
+      // 懒加载下 v.points 可能尚未注入；优先用 v.units（首屏恒有），回退 v.points
+      var cnt = (v.units && v.units.length) ? v.units.length : ((v.points && v.points.length) || 0);
+      points += cnt;
     });
   });
   return { subjects: subjects, volumes: volumes, topics: topics, points: points };

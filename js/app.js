@@ -44,6 +44,56 @@
     return { subject: gzGetSubject(sid), vol: v, point: p, idx: idx };
   }
 
+  /* ---------- 懒加载：课时内容按需注入 ----------
+   * 首屏只加载 data-meta.js（轻量元数据 v.units / v.files），重内容（v.points）
+   * 在用户进入册次/课时时再按顺序注入对应数据文件，降低首屏解析压力。
+   * v.units 与 v.points 下标对齐（同一文件顺序），故进度 idx 映射不变。 */
+  var _scriptCache = {};
+  var _volLoaded = {};
+  var _renderToken = 0;
+  // 课时总数：优先 v.units（首屏恒有），回退 v.points
+  function gzUnitCount(v) {
+    if (!v) return 0;
+    return (v.units && v.units.length) ? v.units.length : ((v.points && v.points.length) || 0);
+  }
+  // 轻量版 findLesson（无需 v.points 已注入，首屏即可用）
+  function findLessonMeta(sid, vid, idx) {
+    var v = gzGetVolume(sid, vid);
+    if (!v) return null;
+    var u = (v.units && v.units[idx]) || (v.points && v.points[idx]);
+    if (!u) return null;
+    return { subject: gzGetSubject(sid), vol: v, point: u, idx: idx };
+  }
+  // 顺序加载单个脚本（Promise 化 + 去重）；async=false 保执行顺序
+  function loadScriptOnce(src) {
+    if (_scriptCache[src]) return _scriptCache[src];
+    var p = new Promise(function (resolve) {
+      var sc = document.createElement('script');
+      sc.src = src;
+      sc.async = false;
+      sc.onload = function () { resolve(true); };
+      sc.onerror = function () { resolve(false); }; // 单文件失败不阻断其它
+      document.head.appendChild(sc);
+    });
+    _scriptCache[src] = p;
+    return p;
+  }
+  // 确保某册内容已注入：按 v.files 顺序填充 v.points；已加载则直接返回
+  function ensureVolumeContent(sid, vid) {
+    var v = gzGetVolume(sid, vid);
+    if (!v) return Promise.resolve(false);
+    var key = sid + '/' + vid;
+    if (_volLoaded[key]) return Promise.resolve(true);
+    var files = (v.files && v.files.slice()) || [];
+    if (!files.length) { _volLoaded[key] = true; return Promise.resolve(false); }
+    return files.reduce(function (chain, src) {
+      return chain.then(function () { return loadScriptOnce(src); });
+    }, Promise.resolve()).then(function () {
+      _volLoaded[key] = true;
+      return true;
+    });
+  }
+
   /* ---------- 路由 ---------- */
   function parseHash() {
     var h = (location.hash || '#/home').replace(/^#\/?/, '');
@@ -68,6 +118,7 @@
   }
 
   function render() {
+    _renderToken++;
     var r = parseHash();
     setNavActive(r.route);
     if (r.route === 'subject' && r.param && gzGetSubject(r.param)) expandedSid = r.param;
@@ -133,7 +184,7 @@
       var isOpen = openSet.indexOf(s.id) >= 0;
       var isCurrent = (cur === s.id);
       var vols = s.volumes.map(function (v) {
-        var pts = v.points || [];
+        var pts = (v.units && v.units.length) ? v.units : (v.points || []);
         if (pts.length === 0) {
           return '' +
             '<div class="sb-vol is-empty" onclick="window.__volClick(\'' + esc(s.id) + '\',\'' + esc(v.id) + '\')">' +
@@ -277,7 +328,7 @@
   /* 册次点击：有内容进册次页，否则提示建设中 */
   window.__volClick = function (sid, vid) {
     var v = gzGetVolume(sid, vid);
-    if (v && (v.points || []).length > 0) navigate('vol', sid, vid);
+    if (v && gzUnitCount(v) > 0) navigate('vol', sid, vid);
     else toast('「' + (v ? v.name : '') + '」内容建设中，敬请期待');
   };
   // 展开/折叠单元
@@ -305,7 +356,7 @@
     var c = volCounts(s);
     var totalPts = 0;
     s.volumes.forEach(function (v) {
-      if (v.grade !== '高三') totalPts += (v.points || []).length;
+      if (v.grade !== '高三') totalPts += gzUnitCount(v);
     });
     var meta = c.books + ' 册教材' + (c.topics ? ' · ' + c.topics + ' 个高三专题' : '');
     var badge;
@@ -366,7 +417,7 @@
     GZ_SUBJECTS.forEach(function (s) {
       s.volumes.forEach(function (v) {
         if (v.grade === '高三') return;
-        (v.points || []).forEach(function (p, i) {
+        ((v.units && v.units.length) ? v.units : (v.points || [])).forEach(function (p, i) {
           out.push({ subjectId: s.id, subjectName: s.name, color: s.color, volName: v.name, name: p.name, chapter: p.chapter, hash: lessonUrl(s.id, v.id, i) });
         });
       });
@@ -485,7 +536,7 @@
     var list = lsGet('gz_recent', []);
     var out = [];
     list.forEach(function (r) {
-      var f = findLesson(r.sid, r.vid, r.idx);
+      var f = findLessonMeta(r.sid, r.vid, r.idx);
       if (f) out.push({ subjectId: r.sid, subjectName: f.subject.name, color: f.subject.color, volName: f.vol.name, name: f.point.name, chapter: f.point.chapter, hash: lessonUrl(r.sid, r.vid, r.idx) });
     });
     return out;
@@ -504,11 +555,11 @@
         for (var i = 0; i < subj.volumes.length; i++) {
           if (subj.volumes[i].id === top.vid) { vol = subj.volumes[i]; break; }
         }
-        if (vol && (vol.points || []).length > 0) {
+        if (vol && gzUnitCount(vol) > 0) {
           // 找 top.idx 之后第一个未完成的
-          for (var j = top.idx; j < vol.points.length; j++) {
+          for (var j = top.idx; j < gzUnitCount(vol); j++) {
             if (!prog[lessonKey(top.sid, top.vid, j)]) {
-              return { sid: top.sid, vid: top.vid, idx: j, f: findLesson(top.sid, top.vid, j) };
+              return { sid: top.sid, vid: top.vid, idx: j, f: findLessonMeta(top.sid, top.vid, j) };
             }
           }
         }
@@ -521,10 +572,10 @@
         for (var vi = 0; vi < subj2.volumes.length; vi++) {
           var vv = subj2.volumes[vi];
           if (vv.grade === '高三') continue;
-          if (!(vv.points || []).length) continue;
-          for (var pi = 0; pi < vv.points.length; pi++) {
+          if (!gzUnitCount(vv)) continue;
+          for (var pi = 0; pi < gzUnitCount(vv); pi++) {
             if (!prog[lessonKey(subj2.id, vv.id, pi)]) {
-              return { sid: subj2.id, vid: vv.id, idx: pi, f: findLesson(subj2.id, vv.id, pi) };
+              return { sid: subj2.id, vid: vv.id, idx: pi, f: findLessonMeta(subj2.id, vv.id, pi) };
             }
           }
         }
@@ -536,8 +587,8 @@
       for (var vi2 = 0; vi2 < s3.volumes.length; vi2++) {
         var v3 = s3.volumes[vi2];
         if (v3.grade === '高三') continue;
-        if ((v3.points || []).length > 0) {
-          return { sid: s3.id, vid: v3.id, idx: 0, f: findLesson(s3.id, v3.id, 0) };
+        if (gzUnitCount(v3) > 0) {
+          return { sid: s3.id, vid: v3.id, idx: 0, f: findLessonMeta(s3.id, v3.id, 0) };
         }
       }
     }
@@ -796,7 +847,7 @@
     var s = gzGetSubject(id);
     if (!s) { view.innerHTML = '<div class="empty-tip"><div class="big">🤔</div><p>没有找到这个学科</p></div>'; return; }
     function volCardHTML(v) {
-      var n = (v.points || []).length;
+      var n = gzUnitCount(v);
       if (n > 0) {
         var doneN = 0;
         var prog = lsGet('gz_progress', {});
@@ -863,7 +914,7 @@
     var v = gzGetVolume(sid, vid);
     if (!v) { view.innerHTML = '<div class="empty-tip"><div class="big">🤔</div><p>没有找到这个册次</p></div>'; return; }
     var s = gzGetSubject(sid);
-    var pts = v.points || [];
+    var pts = (v.units && v.units.length) ? v.units : (v.points || []);
     var crumb = '<a onclick="navigate(\'home\')">首页</a> / <a onclick="navigate(\'subject\',\'' + esc(sid) + '\')">' + esc(s.name) + '</a> / ' + esc(v.name);
 
     if (!pts.length) {
@@ -921,7 +972,7 @@
         var k = lessonKey(sid, vid, o.i);
         var done = !!prog[k];
         var diff = p.difficulty || '基础';
-        var exN = (p.exercises || []).length;
+        var exN = (p.exN != null ? p.exN : (p.exercises || []).length);
         var diffColor = diff === '难点' ? '#ef4444' : (diff === '重点' ? '#f59e0b' : '#10b981');
         return '<a class="lesson-row' + (done ? ' is-done' : '') + '" href="' + lessonUrl(sid, vid, o.i) + '">' +
           '<span class="lr-circle' + (done ? ' is-done' : '') + '">' + (done ? '✓' : '') + '</span>' +
@@ -949,43 +1000,55 @@
       volProgressBar +
       '<div class="vol-units-head"><h2 class="section-title">📑 单元目录</h2><span class="vol-units-count">共 <b>' + groups.length + '</b> 个单元 · <b>' + pts.length + '</b> 个课时</span></div>' +
       '<div class="vol-units">' + body + '</div>';
+    // 后台预加载本册重内容（不阻塞渲染），点课时即开
+    setTimeout(function () { ensureVolumeContent(sid, vid); }, 300);
   }
 
   /* ---------- 课时详情 ---------- */
   function renderLesson(sid, vid, idx) {
-    var f = findLesson(sid, vid, idx);
-    if (!f) { view.innerHTML = '<div class="empty-tip"><div class="big">🤔</div><p>没有找到这个课时</p></div>'; return; }
-    var s = f.subject, v = f.vol, p = f.point;
-    pushRecent(sid, vid, idx, p.name);
-    var crumb = '<a onclick="navigate(\'home\')">首页</a> / <a onclick="navigate(\'subject\',\'' + esc(sid) + '\')">' + esc(s.name) + '</a> / <a href="' + volUrl(sid, vid) + '">' + esc(v.name) + '</a> / ' + esc(p.name);
+    var v = gzGetVolume(sid, vid);
+    if (!v) { view.innerHTML = '<div class="empty-tip"><div class="big">🤔</div><p>没有找到这个课时</p></div>'; return; }
+    var s = gzGetSubject(sid);
+    // 先渲染骨架，内容按需懒加载，避免空白
+    view.innerHTML = '<div class="crumb"><a onclick="navigate(\'home\')">首页</a> / <a onclick="navigate(\'subject\',\'' + esc(sid) + '\')">' + esc(s ? s.name : '') + '</a> / ' + esc(v.name) + '</div>' +
+      '<div class="lesson-loading"><div class="spinner"></div><p>📚 正在加载课时内容…</p></div>';
+    var token = _renderToken;
+    ensureVolumeContent(sid, vid).then(function () {
+      if (token !== _renderToken) return; // 已被新导航取代
+      var p = v.points && v.points[idx];
+      if (!p) { view.innerHTML = '<div class="empty-tip"><div class="big">🤔</div><p>没有找到这个课时</p></div>'; return; }
+      var col = (s && s.color) || '#4a7de0';
+      pushRecent(sid, vid, idx, p.name);
+      var crumb = '<a onclick="navigate(\'home\')">首页</a> / <a onclick="navigate(\'subject\',\'' + esc(sid) + '\')">' + esc(s.name) + '</a> / <a href="' + volUrl(sid, vid) + '">' + esc(v.name) + '</a> / ' + esc(p.name);
 
-    var blocks = (p.content || []).map(renderContentBlock).join('');
-    var exHTML = renderExercises(p, sid, vid, idx);
+      var blocks = (p.content || []).map(renderContentBlock).join('');
+      var exHTML = renderExercises(p, sid, vid, idx);
 
-    // 标记已读按钮（看完内容但不做题也能算完成）
-    var isDone = !!lsGet('gz_progress', {})[lessonKey(sid, vid, idx)];
-    var readBtn = isDone
-      ? '<span class="read-toggle is-done">✓ 已学完</span>'
-      : '<button class="read-toggle" onclick="window.__markLessonRead(\'' + esc(sid) + '\',\'' + esc(vid) + '\',' + idx + ')">我已读完，标记为完成</button>';
+      // 标记已读按钮（看完内容但不做题也能算完成）
+      var isDone = !!lsGet('gz_progress', {})[lessonKey(sid, vid, idx)];
+      var readBtn = isDone
+        ? '<span class="read-toggle is-done">✓ 已学完</span>'
+        : '<button class="read-toggle" onclick="window.__markLessonRead(\'' + esc(sid) + '\',\'' + esc(vid) + '\',' + idx + ')">我已读完，标记为完成</button>';
 
-    // 上一课 / 下一课
-    var pts = v.points || [];
-    var prev = idx > 0 ? '<a class="nav-prev" href="' + lessonUrl(sid, vid, idx - 1) + '">← ' + esc(pts[idx - 1].name) + '</a>' : '<span class="nav-prev disabled">← 已是第一课</span>';
-    var next = idx < pts.length - 1 ? '<a class="nav-next" href="' + lessonUrl(sid, vid, idx + 1) + '">' + esc(pts[idx + 1].name) + ' →</a>' : '<span class="nav-next disabled">已是最后一课 →</span>';
+      // 上一课 / 下一课
+      var pts = v.points || [];
+      var prev = idx > 0 ? '<a class="nav-prev" href="' + lessonUrl(sid, vid, idx - 1) + '">← ' + esc(pts[idx - 1].name) + '</a>' : '<span class="nav-prev disabled">← 已是第一课</span>';
+      var next = idx < pts.length - 1 ? '<a class="nav-next" href="' + lessonUrl(sid, vid, idx + 1) + '">' + esc(pts[idx + 1].name) + ' →</a>' : '<span class="nav-next disabled">已是最后一课 →</span>';
 
-    view.innerHTML = '<div class="crumb">' + crumb + '</div>' +
-      '<article class="lesson" style="--sc:' + esc(s.color) + '">' +
-        '<header class="lesson-head">' +
-          '<div class="lesson-kicker">' + esc(v.name) + ' · ' + esc(p.chapter || '') + '</div>' +
-          '<h1 class="lesson-title">' + esc(p.name) + '</h1>' +
-          (p.author ? '<div class="lesson-author">' + esc(p.author) + '</div>' : '') +
-          (p.difficulty ? '<span class="lp-diff lp-diff-' + esc(p.difficulty) + '">难度：' + esc(p.difficulty) + '</span>' : '') +
-          '<div class="lesson-read">' + readBtn + '</div>' +
-        '</header>' +
-        '<div class="lesson-body">' + blocks + '</div>' +
-        '<section class="exercises" id="exercises"><h2 class="ex-title">📝 课后练习（' + (p.exercises || []).length + ' 题）</h2>' + exHTML + '</section>' +
-        '<div class="lesson-nav">' + prev + next + '</div>' +
-      '</article>';
+      view.innerHTML = '<div class="crumb">' + crumb + '</div>' +
+        '<article class="lesson" style="--sc:' + esc(col) + '">' +
+          '<header class="lesson-head">' +
+            '<div class="lesson-kicker">' + esc(v.name) + ' · ' + esc(p.chapter || '') + '</div>' +
+            '<h1 class="lesson-title">' + esc(p.name) + '</h1>' +
+            (p.author ? '<div class="lesson-author">' + esc(p.author) + '</div>' : '') +
+            (p.difficulty ? '<span class="lp-diff lp-diff-' + esc(p.difficulty) + '">难度：' + esc(p.difficulty) + '</span>' : '') +
+            '<div class="lesson-read">' + readBtn + '</div>' +
+          '</header>' +
+          '<div class="lesson-body">' + blocks + '</div>' +
+          '<section class="exercises" id="exercises"><h2 class="ex-title">📝 课后练习（' + (p.exercises || []).length + ' 题）</h2>' + exHTML + '</section>' +
+          '<div class="lesson-nav">' + prev + next + '</div>' +
+        '</article>';
+    });
   }
 
   /* ---------- 内容块渲染 ---------- */
@@ -2289,7 +2352,7 @@
       };
       s.volumes.forEach(function (v) {
         if (v.grade === '高三') return;
-        (v.points || []).forEach(function (p, idx) {
+        ((v.units && v.units.length) ? v.units : (v.points || [])).forEach(function (p, idx) {
           st.total++;
           var k = s.id + '/' + v.id + '/' + idx;
           if (prog[k]) {
@@ -2360,7 +2423,7 @@
     GZ_SUBJECTS.forEach(function (s) {
       s.volumes.forEach(function (v) {
         if (v.grade === '高三') return;
-        (v.points || []).forEach(function (p, idx) {
+        ((v.units && v.units.length) ? v.units : (v.points || [])).forEach(function (p, idx) {
           if (p.difficulty && diffTotal[p.difficulty] !== undefined) {
             diffTotal[p.difficulty]++;
             if (prog[s.id + '/' + v.id + '/' + idx]) diffDone[p.difficulty]++;
@@ -2374,7 +2437,7 @@
 
     // 4) 总览统计
     var totalLessons = 0, doneLessons = 0;
-    GZ_SUBJECTS.forEach(function (s) { s.volumes.forEach(function (v) { if (v.grade !== '高三') totalLessons += (v.points || []).length; }); });
+    GZ_SUBJECTS.forEach(function (s) { s.volumes.forEach(function (v) { if (v.grade !== '高三') totalLessons += gzUnitCount(v); }); });
     Object.keys(prog).forEach(function (k) { if (prog[k]) doneLessons++; });
     var totalStudyDays = history.length;
     var streakText = 0;
@@ -2984,7 +3047,7 @@
   function renderAbout() {
     var st = gzStats();
     var doneTotal = 0;
-    GZ_SUBJECTS.forEach(function (s) { s.volumes.forEach(function (v) { if (v.grade !== '高三') doneTotal += (v.points || []).length; }); });
+    GZ_SUBJECTS.forEach(function (s) { s.volumes.forEach(function (v) { if (v.grade !== '高三') doneTotal += gzUnitCount(v); }); });
     view.innerHTML = '' +
       '<div class="panel">' +
         '<h2>🎓 关于高中预习网站</h2>' +

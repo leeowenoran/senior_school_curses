@@ -1,10 +1,12 @@
 /* ============================================================
  * gen-meta.js — 生成 js/data-meta.js（课时轻量元数据）
  *
- * 目的：让首屏（首页/学科/册次/侧边栏）无需加载 997 个数据文件即可渲染。
+ * 目的：让首屏（首页/学科/册次/侧边栏）无需加载 970 个数据文件即可渲染。
  * 做法：
- *   1. 解析 index.html 中数据脚本的“文档顺序”——该顺序即当前 v.points 的顺序，
- *      这样原有学习进度（按 sid/vid/idx 存储）的 idx 映射完全保持不变。
+ *   1. 扫描 js/ 目录下所有 data-<subj>-<vol>-u<n>.js 文件，
+ *      按 (subj, vol) 分组，组内按单元号 n 数值升序（与 index.html 的加载顺序一致，
+ *      保证原有学习进度按 sid/vid/idx 存储的 idx 映射完全不变）。
+ *      —— 直接扫描目录，与 index.html 解耦，便于后续重新生成。
  *   2. 在 VM 沙箱中执行每个 data 文件，用桩 gzGetVolume 捕获 v.points.push 的
  *      轻量字段 {id,name,chapter,difficulty,exN}，不加载重内容（content/exercises）。
  *   3. 输出 js/data-meta.js：window.GZ_UNITS = { 'subj/vol': {units, files} }，
@@ -14,26 +16,27 @@
  * ============================================================ */
 'use strict';
 const fs = require('fs');
+const path = require('path');
 const vm = require('vm');
 
 const ROOT = process.cwd();
-const HTML = fs.readFileSync('index.html', 'utf8');
+const JS_DIR = path.join(ROOT, 'js');
 
-/* ---------- 1) 按 index.html 文档顺序提取数据脚本 ---------- */
-const re = /<script\s+src=["'](js\/data-([a-z0-9]+)-([a-z0-9]+)-u(\d+)\.js)["']/g;
-let m;
-const raw = [];
-while ((m = re.exec(HTML))) {
-  raw.push({ src: m[1], subj: m[2], vol: m[3], n: parseInt(m[4], 10) });
+/* ---------- 1) 扫描 js/ 下的数据脚本 ---------- */
+const fileRe = /^data-([a-z]+)-([a-z0-9]+)-u(\d+)\.js$/;
+const byKey = {};
+const allFiles = [];
+for (const fn of fs.readdirSync(JS_DIR)) {
+  const m = fileRe.exec(fn);
+  if (!m) continue;
+  const e = { src: 'js/' + fn, subj: m[1], vol: m[2], n: parseInt(m[3], 10) };
+  const key = e.subj + '/' + e.vol;
+  (byKey[key] = byKey[key] || []).push(e);
 }
-// 去重（保留首次出现），保持顺序
-const seen = {};
-const files = raw.filter((o) => {
-  if (seen[o.src]) return false;
-  seen[o.src] = 1;
-  return true;
-});
-console.log('[gen-meta] 从 index.html 解析到 ' + files.length + ' 个数据脚本');
+// 组内按单元号 n 数值升序，保证各册 idx 顺序稳定
+Object.keys(byKey).forEach((k) => byKey[k].sort((a, b) => a.n - b.n));
+Object.keys(byKey).forEach((k) => byKey[k].forEach((e) => allFiles.push(e)));
+console.log('[gen-meta] 从 js/ 扫描到 ' + allFiles.length + ' 个数据脚本');
 
 /* ---------- 2) 加载 data-gz.js，建立 volume 查找 ---------- */
 const gzCode = fs.readFileSync('js/data-gz.js', 'utf8');
@@ -53,12 +56,11 @@ let multiPush = 0;
 let noVol = 0;
 let noCapture = 0;
 
-files.forEach((f) => {
+allFiles.forEach((f) => {
   const key = f.subj + '/' + f.vol;
   if (!UNITS[key]) UNITS[key] = { units: [], files: [] };
   const vol = volOf(f.subj, f.vol);
   if (!vol) {
-    // 该册未在 data-gz.js 注册：仍记录文件路径以便懒加载，但无元数据
     noVol++;
     UNITS[key].files.push(f.src);
     return;
@@ -70,7 +72,17 @@ files.forEach((f) => {
     document: {},
     setTimeout: setTimeout,
     gzGetVolume: function () {
-      return { points: { push: function (obj) { captured.push(obj); } } };
+      // 注意：数据文件常用单个 push 调用一次性压入多个课时对象，
+      // 例如 v.points.push(objA, objB, objC)。必须收集全部参数，
+      // 否则 v.units（元数据）会与真实 v.points 在「长度」和「idx 顺序」上错位，
+      // 进而破坏按 sid/vid/idx 存储的既有学习进度映射。
+      return {
+        points: {
+          push: function () {
+            for (var i = 0; i < arguments.length; i++) captured.push(arguments[i]);
+          }
+        }
+      };
     }
   };
   vm.createContext(sandbox);
@@ -81,7 +93,6 @@ files.forEach((f) => {
     console.warn('[gen-meta] 执行失败: ' + f.src + ' -> ' + e.message);
   }
   if (captured.length === 0) {
-    // 文件未 push 任何内容（极少），仍记录文件路径
     noCapture++;
     UNITS[key].files.push(f.src);
     return;
