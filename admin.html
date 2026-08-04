@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>学习数据后台 · 高中预习</title>
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+
+  <!-- 登录门：未持有管理员 token 时显示 -->
+  <div class="gate" id="gate" style="display:none">
+    <div class="gate-card">
+      <h1>👑 学习数据后台</h1>
+      <p class="sub">需要管理员身份，普通学员账号无法进入</p>
+      <div class="field">
+        <span>管理员账号</span>
+        <input type="text" id="gUser" placeholder="管理员账号名" autocomplete="username" autocapitalize="off" spellcheck="false" />
+      </div>
+      <div class="field">
+        <span>密码</span>
+        <input type="password" id="gPwd" placeholder="请输入密码" autocomplete="current-password" />
+      </div>
+      <button class="btn primary" id="gBtn">登 录</button>
+      <div class="gate-msg" id="gMsg"></div>
+      <div class="gate-alt">
+        暂不登录，<a id="gDemo">直接查看演示数据 →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主体 -->
+  <div id="main" style="display:none">
+    <div class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <span class="dot">👑</span>
+          学习数据后台
+          <small id="whoami">—</small>
+        </div>
+        <div class="spacer"></div>
+        <div class="seg" id="rangeSeg">
+          <button data-days="7">7 天</button>
+          <button data-days="30" class="on">30 天</button>
+          <button data-days="90">90 天</button>
+        </div>
+        <button class="btn" id="btnReload">刷新</button>
+        <button class="btn" id="btnLogout">退出</button>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <div id="banners"></div>
+      <div id="body">
+        <div class="panel"><div class="empty"><div class="spin"></div>正在加载全站数据…</div></div>
+      </div>
+      <p style="text-align:center;font-size:12px;color:var(--text-3);margin:8px 0 24px">
+        数据生成于 <span id="genAt">—</span> · 手机号一律脱敏展示
+      </p>
+    </div>
+  </div>
+
+  <!-- 用户明细抽屉 -->
+  <div class="drawer-mask" id="drawerMask" style="display:none"></div>
+  <aside class="drawer" id="drawer" style="display:none">
+    <div class="drawer-head">
+      <h3>用户明细</h3>
+      <button class="btn sm" id="drawerClose">✕ 关闭</button>
+    </div>
+    <div class="drawer-body" id="drawerBody"></div>
+  </aside>
+
+  <!-- 学科名称 / 配色的权威来源；data-meta 提供全站课时总量用于计算完成率 -->
+  <script src="js/data-gz.js"></script>
+  <script src="js/data-meta.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
