@@ -1350,9 +1350,19 @@
     for (var k in users) if (users[k].username === name) return users[k];
     return null;
   }
+  // 管理员账号白名单：必须与云函数 gzApi 里的 ADMIN_IDS 保持一致。
+  // 这类账号不是手机号，只能登录、不能注册（云端 register 仍强制 11 位手机号）。
+  var ADMIN_IDS = ['king'];
+  function isAdminId(s) {
+    return ADMIN_IDS.indexOf(String(s || '').trim().toLowerCase()) >= 0;
+  }
+
   // 把手机号格式化为 138****1234 形式
   function formatPhoneDisplay(phone) {
     if (!phone) return '';
+    // 非纯数字账号（如管理员 king）原样返回：
+    // 否则 replace(/\D/g,'') 会把 'king' 抹成空串，导致顶栏用户名显示为空白
+    if (!/^\d+$/.test(String(phone))) return String(phone);
     var s = String(phone).replace(/\D/g, '');
     if (s.length < 7) return s;
     if (s.length === 11) return s.slice(0, 3) + '****' + s.slice(7);
@@ -1362,6 +1372,11 @@
   // 获取用户对外显示名：自定义昵称优先，否则手机号掩码，再否则邮箱
   function getDisplayName(u) {
     if (!u) return '';
+    var acct = u.phone || u.username || '';
+    if (isAdminId(acct)) {
+      // 管理员：昵称优先，否则用带皇冠的标识，一眼能看出当前处于管理员身份
+      return (u.nickname && u.nickname !== acct) ? u.nickname : 'King 👑';
+    }
     if (u.nickname && u.nickname !== u.username && u.nickname !== (u.phone || '')) {
       return u.nickname;
     }
@@ -1561,7 +1576,8 @@
       pane.innerHTML =
         '<div class="auth-title">欢迎回来 👋</div>' +
         '<div class="auth-subtitle">登录后同步你的学习进度、错题本、签到记录</div>' +
-        '<label class="auth-field"><span>手机号</span><input type="tel" id="authUser" placeholder="11 位手机号" maxlength="11" autocomplete="username" inputmode="numeric" /></label>' +
+        // 登录框用 text 而非 tel+numeric：管理员账号名含字母，numeric 输入法在手机上打不出来
+        '<label class="auth-field"><span>账号</span><input type="text" id="authUser" placeholder="11 位手机号" maxlength="20" autocomplete="username" /></label>' +
         '<label class="auth-field"><span>密码</span><input type="password" id="authPwd" placeholder="请输入密码" maxlength="40" autocomplete="current-password" /></label>' +
         '<div class="auth-msg" id="authMsg"></div>' +
         '<button class="auth-submit" id="authSubmit" onclick="window.__doAuth()">登 录</button>' +
@@ -1588,8 +1604,18 @@
     var btn = document.getElementById('authSubmit');
     msg.className = 'auth-msg';
     msg.textContent = '';
-    if (!/^1\d{10}$/.test(u)) { msg.className = 'auth-msg err'; msg.textContent = '请输入正确的 11 位手机号'; return; }
-    if (!p || p.length < 6) { msg.className = 'auth-msg err'; msg.textContent = '密码至少 6 位'; return; }
+    // 管理员账号名大小写不敏感：输入 King / KING 一律归一为白名单里的 king
+    if (isAdminId(u)) u = u.trim().toLowerCase();
+    var fail = function (t) { msg.className = 'auth-msg err'; msg.textContent = t; };
+    if (_authMode === 'register') {
+      // 注册路径完全不放开：仍强制 11 位手机号 + 密码至少 6 位（与云端 register 校验一致）
+      if (!/^1\d{10}$/.test(u)) { fail('请输入正确的 11 位手机号'); return; }
+      if (!p || p.length < 6) { fail('密码至少 6 位'); return; }
+    } else {
+      // 登录路径额外放行管理员账号名；登录本就不校验密码长度（与云端 login 一致）
+      if (!isAdminId(u) && !/^1\d{10}$/.test(u)) { fail('请输入正确的 11 位手机号'); return; }
+      if (!p) { fail('请输入密码'); return; }
+    }
     if (btn) { btn.disabled = true; btn.textContent = '处理中…'; }
 
     (async function () {
