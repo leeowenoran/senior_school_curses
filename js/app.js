@@ -1504,13 +1504,13 @@
     box.innerHTML =
       '<div class="auth-user-wrap">' +
         '<button class="auth-user-btn" id="authUserBtn" onclick="window.__toggleUserMenu(event)" title="' + esc(displayName) + '">' +
-          '<span class="auth-avatar">' + esc(u.avatar || '👤') + '</span>' +
+          '<span class="auth-avatar">' + userAvatarHtml(u) + '</span>' +
           '<span class="auth-nickname">' + esc(displayName) + '</span>' +
           '<span class="auth-caret">▾</span>' +
         '</button>' +
         '<div class="auth-user-menu" id="authUserMenu">' +
           '<div class="auth-user-menu-head">' +
-            '<div class="auth-avatar-lg">' + esc(u.avatar || '👤') + '</div>' +
+            '<div class="auth-avatar-lg">' + userAvatarHtml(u) + '</div>' +
             '<div class="auth-user-info">' +
               '<div class="auth-user-name">' + esc(displayName) + '</div>' +
               '<div class="auth-user-handle">@' + esc(u.username) + '</div>' +
@@ -1520,6 +1520,7 @@
           '<button class="auth-menu-item danger" onclick="window.__logoutAndToast()">↩ 退出登录</button>' +
         '</div>' +
       '</div>';
+    updateBellBadge();
   }
   window.__renderTopbarUser = renderTopbarUser;
 
@@ -1529,6 +1530,196 @@
     if (m) m.classList.toggle('open');
   }
   window.__toggleUserMenu = toggleUserMenu;
+
+  /* ---------- 头像 / 社交（关注 · 私信 · 系统通知） ---------- */
+  // 账号设置里暂存的头像（emoji 字符串 或 data:image 的 dataURL）；null 表示未改动
+  var pendingAvatar = null;
+
+  // 头像渲染：emoji 直接输出字符，data:image 输出 <img>（由 CSS 裁剪成圆形）
+  function userAvatarHtml(u) {
+    var av = (u && u.avatar) || '👤';
+    if (typeof av === 'string' && av.indexOf('data:image') === 0) {
+      return '<img class="ua-img" src="' + av + '" alt="头像">';
+    }
+    return esc(av);
+  }
+  function getUserById(id) { if (!id) return null; return getAllUsers()[id] || null; }
+
+  // 作者昵称：若是已注册用户则渲染成可点击进入其资料卡
+  function authorChip(authorId, authorName, cls) {
+    var name = authorName || '匿名';
+    if (authorId && getUserById(authorId)) {
+      return '<span class="' + (cls || '') + ' clickable" onclick="event.stopPropagation();window.__openUserProfile(\'' + esc(authorId) + '\')">' + esc(name) + '</span>';
+    }
+    return '<span class="' + (cls || '') + '">' + esc(name) + '</span>';
+  }
+
+  /* ----- 社交数据（localStorage，随浏览器账号共享） ----- */
+  function getSocial() {
+    var s = lsGet('gz_social', null);
+    if (!s) s = { follows: {}, followers: {}, messages: {}, notifications: [] };
+    s.follows = s.follows || {}; s.followers = s.followers || {};
+    s.messages = s.messages || {}; s.notifications = s.notifications || [];
+    return s;
+  }
+  function setSocial(s) { lsSet('gz_social', s); }
+
+  function isFollowing(targetId) {
+    var me = getCurrentUserId(); if (!me) return false;
+    return (getSocial().follows[me] || []).indexOf(targetId) >= 0;
+  }
+  function followUser(targetId) {
+    var me = getCurrentUser(); if (!me || me.id === targetId) return;
+    var s = getSocial();
+    s.follows[me.id] = s.follows[me.id] || [];
+    if (s.follows[me.id].indexOf(targetId) < 0) s.follows[me.id].push(targetId);
+    s.followers[targetId] = s.followers[targetId] || [];
+    if (s.followers[targetId].indexOf(me.id) < 0) s.followers[targetId].push(me.id);
+    setSocial(s);
+    pushNotification(targetId, 'follow', getDisplayName(me) + ' 关注了你', { userId: me.id });
+  }
+  function unfollowUser(targetId) {
+    var me = getCurrentUserId(); if (!me) return;
+    var s = getSocial();
+    if (s.follows[me]) s.follows[me] = s.follows[me].filter(function (x) { return x !== targetId; });
+    if (s.followers[targetId]) s.followers[targetId] = s.followers[targetId].filter(function (x) { return x !== me; });
+    setSocial(s);
+  }
+  function convKey(a, b) { return [a, b].sort().join('|'); }
+  function sendMessage(toId, text) {
+    text = (text || '').trim(); if (!text) return;
+    var me = getCurrentUser(); if (!me || me.id === toId) return;
+    var s = getSocial();
+    var k = convKey(me.id, toId);
+    s.messages[k] = s.messages[k] || [];
+    s.messages[k].push({ from: me.id, to: toId, text: text, ts: Date.now(), read: false });
+    setSocial(s);
+    pushNotification(toId, 'dm', getDisplayName(me) + ' 给你发来了一条私信', { userId: me.id });
+  }
+  function pushNotification(toId, type, text, extra) {
+    if (!toId) return;
+    var s = getSocial();
+    s.notifications.unshift({
+      id: 'n_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      toId: toId, type: type, text: text, ts: Date.now(), read: false, extra: extra || {}
+    });
+    if (s.notifications.length > 100) s.notifications = s.notifications.slice(0, 100);
+    setSocial(s);
+  }
+  function myNotifications() {
+    var me = getCurrentUserId(); if (!me) return [];
+    return getSocial().notifications.filter(function (n) { return n.toId === me; });
+  }
+  function unreadNotif() {
+    return myNotifications().filter(function (n) { return !n.read; }).length;
+  }
+  function myConversations() {
+    var me = getCurrentUserId(); if (!me) return [];
+    var s = getSocial();
+    var seen = {}, list = [];
+    Object.keys(s.messages).forEach(function (k) {
+      if (k.indexOf(me) < 0) return;
+      var ids = k.split('|');
+      var other = ids[0] === me ? ids[1] : ids[0];
+      if (seen[other]) return; seen[other] = true;
+      var msgs = s.messages[k] || [];
+      list.push({ other: other, last: msgs[msgs.length - 1], count: msgs.length });
+    });
+    list.sort(function (a, b) { return (b.last ? b.last.ts : 0) - (a.last ? a.last.ts : 0); });
+    return list;
+  }
+  function unreadDm() {
+    var me = getCurrentUserId(); if (!me) return 0;
+    var s = getSocial(), n = 0;
+    Object.keys(s.messages).forEach(function (k) {
+      if (k.indexOf(me) < 0) return;
+      (s.messages[k] || []).forEach(function (m) { if (m.to === me && !m.read) n++; });
+    });
+    return n;
+  }
+  function markConvRead(otherId) {
+    var me = getCurrentUserId(); if (!me) return;
+    var s = getSocial();
+    var k = convKey(me, otherId);
+    if (s.messages[k]) s.messages[k].forEach(function (m) { if (m.to === me) m.read = true; });
+    setSocial(s);
+  }
+  // 已知可互动的用户：本机注册账号（排除自己）+ 讨论区里出现过的作者
+  function knownUsers() {
+    var me = getCurrentUserId();
+    var map = {};
+    var all = getAllUsers();
+    Object.keys(all).forEach(function (id) { if (id !== me) map[id] = all[id]; });
+    var d = getDiscuss();
+    (d.topics || []).forEach(function (t) {
+      [t].concat(t.replies || []).forEach(function (it) {
+        if (it.authorId && it.authorId !== me && !map[it.authorId]) {
+          var u = getUserById(it.authorId);
+          map[it.authorId] = u ? u : { id: it.authorId, nickname: it.authorName, username: it.authorName, anonymous: true };
+        }
+      });
+    });
+    return Object.keys(map).map(function (k) { return map[k]; });
+  }
+
+  /* ----- 铃铛未读数 ----- */
+  function updateBellBadge() {
+    var b = document.getElementById('bellBadge');
+    if (!b) return;
+    var u = getCurrentUser();
+    if (!u) { b.style.display = 'none'; return; }
+    var n = unreadNotif() + unreadDm();
+    if (n > 0) { b.style.display = ''; b.textContent = n > 99 ? '99+' : String(n); }
+    else { b.style.display = 'none'; }
+  }
+  window.__updateBellBadge = updateBellBadge;
+
+  /* ----- 用户资料卡（点击头像进入，可关注 / 私信） ----- */
+  function openUserProfile(userId) {
+    var u = getUserById(userId);
+    if (!u) { toast('该用户暂无可查看的资料'); return; }
+    window.__upUserId = u.id;
+    var m = document.getElementById('userPopup');
+    if (!m) { m = document.createElement('div'); m.id = 'userPopup'; m.className = 'auth-modal up-modal'; document.body.appendChild(m); }
+    var following = isFollowing(u.id);
+    m.innerHTML =
+      '<div class="auth-mask" onclick="window.__closeUserProfile()"></div>' +
+      '<div class="up-card">' +
+        '<button class="auth-close" onclick="window.__closeUserProfile()" title="关闭">×</button>' +
+        '<div class="up-avatar">' + userAvatarHtml(u) + '</div>' +
+        '<div class="up-name">' + esc(getDisplayName(u)) + '</div>' +
+        '<div class="up-handle">@' + esc(u.username) + '</div>' +
+        '<div class="up-actions">' +
+          '<button class="up-btn ' + (following ? 'following' : 'primary') + '" id="upFollowBtn" onclick="window.__upToggleFollow()">' + (following ? '✓ 已关注' : '＋ 关注') + '</button>' +
+          '<button class="up-btn" onclick="window.__upDm()">💬 私信</button>' +
+        '</div>' +
+      '</div>';
+    m.classList.add('show');
+  }
+  window.__openUserProfile = openUserProfile;
+  function closeUserProfile() {
+    var m = document.getElementById('userPopup');
+    if (!m) return;
+    m.classList.remove('show');
+    setTimeout(function () { if (m.parentNode) m.remove(); }, 200);
+  }
+  window.__closeUserProfile = closeUserProfile;
+  function upToggleFollow() {
+    var fid = window.__upUserId; if (!fid) return;
+    if (isFollowing(fid)) unfollowUser(fid); else followUser(fid);
+    var btn = document.getElementById('upFollowBtn');
+    var now = isFollowing(fid);
+    btn.className = 'up-btn ' + (now ? 'following' : 'primary');
+    btn.textContent = now ? '✓ 已关注' : '＋ 关注';
+    updateBellBadge();
+  }
+  window.__upToggleFollow = upToggleFollow;
+  function upDm() {
+    var fid = window.__upUserId; if (!fid) return;
+    closeUserProfile();
+    openMessageCenter('dm', fid);
+  }
+  window.__upDm = upDm;
   // 点击外部关闭菜单
   document.addEventListener('click', function (e) {
     var m = document.getElementById('authUserMenu');
@@ -1739,6 +1930,7 @@
     if (m) { m.classList.add('show'); return; }
     var u = getCurrentUser();
     if (!u) return;
+    pendingAvatar = u.avatar;
     var mask = document.createElement('div');
     mask.id = 'profileModal';
     mask.className = 'auth-modal';
@@ -1748,7 +1940,7 @@
         '<button class="auth-close" onclick="window.__closeProfileModal()" title="关闭">×</button>' +
         '<div class="auth-title">账号设置 ⚙️</div>' +
         '<div class="profile-head">' +
-          '<div class="profile-avatar-big" id="profileAvatarBig">' + esc(u.avatar) + '</div>' +
+          '<div class="profile-avatar-big" id="profileAvatarBig">' + userAvatarHtml(u) + '</div>' +
           '<div class="profile-meta">' +
             '<div class="profile-name">' + esc(u.nickname) + '</div>' +
             '<div class="profile-handle">@' + esc(u.username) + '</div>' +
@@ -1757,6 +1949,10 @@
         '</div>' +
         '<div class="profile-section">' +
           '<div class="profile-section-title">头像</div>' +
+          '<div class="profile-avatar-upload">' +
+            '<label class="profile-upload-btn">📷 上传图片<input type="file" id="profileAvatarFile" accept="image/*" hidden></label>' +
+            '<button type="button" class="profile-reset-btn" onclick="window.__resetAvatar()">恢复表情头像</button>' +
+          '</div>' +
           '<div class="profile-avatar-picker" id="profileAvatarPicker">' +
             ['🐱','🐶','🦊','🐼','🐯','🦁','🐰','🐨','🐸','🐵','🦄','🐙','🐧','🦉','🐢','🐳','🦋','🌸','⭐','🔥'].map(function (a) {
               return '<button class="profile-avatar-btn ' + (a === u.avatar ? 'active' : '') + '" data-avatar="' + a + '" onclick="window.__pickAvatar(this)">' + a + '</button>';
@@ -1776,6 +1972,8 @@
         '<button class="auth-submit" onclick="window.__doProfileSave()">保 存</button>' +
       '</div>';
     document.body.appendChild(mask);
+    var fileInput = mask.querySelector('#profileAvatarFile');
+    if (fileInput) fileInput.addEventListener('change', handleAvatarUpload);
     requestAnimationFrame(function () { mask.classList.add('show'); });
     var onKey = function (e) { if (e.key === 'Escape') window.__closeProfileModal(); };
     mask._onKey = onKey;
@@ -1795,24 +1993,58 @@
   function pickAvatar(btn) {
     document.querySelectorAll('.profile-avatar-btn').forEach(function (b) { b.classList.remove('active'); });
     btn.classList.add('active');
-    var a = btn.getAttribute('data-avatar');
-    var big = document.getElementById('profileAvatarBig');
-    if (big) big.textContent = a;
+    pendingAvatar = btn.getAttribute('data-avatar');
+    renderProfileBigAvatar();
   }
   window.__pickAvatar = pickAvatar;
+
+  function renderProfileBigAvatar() {
+    var el = document.getElementById('profileAvatarBig'); if (!el) return;
+    var av = (pendingAvatar !== null) ? pendingAvatar : (getCurrentUser() ? getCurrentUser().avatar : '👤');
+    if (typeof av === 'string' && av.indexOf('data:image') === 0) el.innerHTML = '<img class="ua-img" src="' + av + '" alt="头像">';
+    else el.textContent = av;
+  }
+  function resetAvatar() {
+    pendingAvatar = getCurrentUser() ? getCurrentUser().avatar : null;
+    renderProfileBigAvatar();
+  }
+  window.__resetAvatar = resetAvatar;
+  function handleAvatarUpload(e) {
+    var file = e.target.files && e.target.files[0]; if (!file) return;
+    if (!/^image\//.test(file.type)) { toast('请选择图片文件'); return; }
+    var reader = new FileReader();
+    reader.onload = function () {
+      var img = new Image();
+      img.onload = function () {
+        var size = 160, scale = Math.min(size / img.width, size / img.height, 1);
+        var canvas = document.createElement('canvas');
+        canvas.width = Math.max(1, Math.round(img.width * scale));
+        canvas.height = Math.max(1, Math.round(img.height * scale));
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        var dataUrl;
+        try { dataUrl = canvas.toDataURL('image/jpeg', 0.85); } catch (err) { dataUrl = reader.result; }
+        pendingAvatar = dataUrl;
+        renderProfileBigAvatar();
+      };
+      img.onerror = function () { toast('图片读取失败'); };
+      img.src = reader.result;
+    };
+    reader.onerror = function () { toast('文件读取失败'); };
+    reader.readAsDataURL(file);
+  }
 
   function doProfileSave() {
     var msg = document.getElementById('profileMsg');
     msg.className = 'auth-msg'; msg.textContent = '';
     var nick = document.getElementById('profileNick').value.trim();
     if (!nick) { msg.className = 'auth-msg err'; msg.textContent = '昵称不能为空'; return; }
-    var activeAv = document.querySelector('.profile-avatar-btn.active');
-    var avatar = activeAv ? activeAv.getAttribute('data-avatar') : null;
+    var avatar = (pendingAvatar !== null) ? pendingAvatar : (getCurrentUser() ? getCurrentUser().avatar : null);
     var oldPwd = document.getElementById('profileOldPwd').value;
     var newPwd = document.getElementById('profileNewPwd').value;
     // 改昵称 + 头像
     var patch = { nickname: nick };
-    if (avatar) patch.avatar = avatar;
+    if (avatar !== undefined && avatar !== null) patch.avatar = avatar;
     var r1 = updateProfile(patch);
     if (!r1.ok) { msg.className = 'auth-msg err'; msg.textContent = r1.msg; return; }
     // 改密码（可选）
@@ -1835,6 +2067,170 @@
     setTimeout(closeProfileModal, 700);
   }
   window.__doProfileSave = doProfileSave;
+
+  /* ---------- 消息中心（铃铛） ---------- */
+  function openMessageCenter(tab, preselect) {
+    if (!getCurrentUser()) { if (window.__openAuthModal) window.__openAuthModal(); toast('请先登录后再查看消息'); return; }
+    var m = document.getElementById('msgCenter');
+    if (!m) {
+      m = document.createElement('div'); m.id = 'msgCenter'; m.className = 'auth-modal mc-modal';
+      document.body.appendChild(m);
+    }
+    m.innerHTML =
+      '<div class="auth-mask" onclick="window.__closeMessageCenter()"></div>' +
+      '<div class="mc-card">' +
+        '<button class="auth-close" onclick="window.__closeMessageCenter()" title="关闭">×</button>' +
+        '<div class="mc-layout">' +
+          '<aside class="mc-side">' +
+            '<div class="mc-side-title">消息中心</div>' +
+            '<button class="mc-nav" data-tab="notif" onclick="window.__mcTab(\'notif\')">🔔 系统通知 <span class="mc-badge" id="mcNotifBadge"></span></button>' +
+            '<button class="mc-nav" data-tab="dm" onclick="window.__mcTab(\'dm\')">💬 好友私信 <span class="mc-badge" id="mcDmBadge"></span></button>' +
+            '<button class="mc-nav ghost" onclick="window.__mcDiscover()">➕ 发现用户</button>' +
+          '</aside>' +
+          '<div class="mc-main" id="mcMain"></div>' +
+        '</div>' +
+      '</div>';
+    m.classList.add('show');
+    window.__mcState = { tab: tab || 'notif', preselect: preselect || null };
+    renderMc();
+  }
+  window.__openMessageCenter = openMessageCenter;
+
+  function closeMessageCenter() {
+    var m = document.getElementById('msgCenter'); if (!m) return;
+    m.classList.remove('show');
+    setTimeout(function () { if (m.parentNode) m.remove(); }, 200);
+    updateBellBadge();
+  }
+  window.__closeMessageCenter = closeMessageCenter;
+
+  function mcTab(tab) { window.__mcState = { tab: tab, preselect: null }; renderMc(); }
+  window.__mcTab = mcTab;
+
+  function renderMc() {
+    var st = window.__mcState || { tab: 'notif' };
+    document.querySelectorAll('.mc-nav[data-tab]').forEach(function (b) {
+      b.classList.toggle('active', b.getAttribute('data-tab') === st.tab);
+    });
+    updateBellBadge();
+    if (st.tab === 'notif') renderMcNotif(); else renderMcDm();
+  }
+
+  function renderMcNotif() {
+    var main = document.getElementById('mcMain'); if (!main) return;
+    var ns = myNotifications();
+    var s = getSocial();
+    ns.forEach(function (n) { n.read = true; });
+    setSocial(s);
+    var nb = document.getElementById('mcNotifBadge');
+    if (nb) nb.textContent = '';
+    if (!ns.length) { main.innerHTML = '<div class="mc-empty">📭 暂时没有系统通知</div>'; return; }
+    main.innerHTML = '<div class="mc-list">' + ns.map(function (n) {
+      var icon = n.type === 'dm' ? '💬' : n.type === 'follow' ? '➕' : (n.type === 'reply' ? '💬' : '🔔');
+      return '<div class="mc-item">' +
+        '<div class="mc-item-icon">' + icon + '</div>' +
+        '<div class="mc-item-body"><div class="mc-item-text">' + esc(n.text) + '</div>' +
+        '<div class="mc-item-time">' + esc(relativeTime(n.ts)) + '</div></div>' +
+        '</div>';
+    }).join('') + '</div>';
+  }
+
+  function renderMcDm() {
+    var main = document.getElementById('mcMain'); if (!main) return;
+    var convs = myConversations();
+    var st = window.__mcState || {};
+    var sel = st.preselect || (convs.length ? convs[0].other : null);
+    var html = '<div class="mc-dm">';
+    html += '<div class="mc-conv-list">';
+    if (!convs.length) html += '<div class="mc-empty small">还没有会话，去「发现用户」找人私信吧</div>';
+    convs.forEach(function (c) {
+      var u = getUserById(c.other);
+      var name = u ? getDisplayName(u) : (c.other || '用户');
+      html += '<button class="mc-conv ' + (c.other === sel ? 'active' : '') + '" onclick="window.__mcOpenConv(\'' + esc(c.other) + '\')">' +
+        '<span class="mc-conv-av">' + userAvatarHtml(u) + '</span>' +
+        '<div class="mc-conv-info"><div class="mc-conv-name">' + esc(name) + '</div>' +
+        '<div class="mc-conv-last">' + esc(c.last ? c.last.text : '') + '</div></div></button>';
+    });
+    html += '</div>';
+    html += '<div class="mc-chat">' + renderMcChat(sel) + '</div>';
+    html += '</div>';
+    main.innerHTML = html;
+  }
+
+  function renderMcChat(otherId) {
+    if (!otherId) return '<div class="mc-chat-empty">选择一个会话开始私信</div>';
+    var me = getCurrentUserId();
+    var u = getUserById(otherId);
+    var name = u ? getDisplayName(u) : (otherId || '用户');
+    markConvRead(otherId);
+    var s = getSocial();
+    var msgs = s.messages[convKey(me, otherId)] || [];
+    var html = '<div class="mc-chat-head"><span class="mc-chat-av">' + userAvatarHtml(u) + '</span><div>' + esc(name) + '</div></div>';
+    html += '<div class="mc-chat-body" id="mcChatBody">';
+    if (!msgs.length) html += '<div class="mc-chat-empty">还没有消息，发一条打个招呼吧 👋</div>';
+    msgs.forEach(function (m) {
+      var mine = m.from === me;
+      html += '<div class="mc-msg ' + (mine ? 'me' : 'them') + '">' +
+        '<div class="mc-msg-bubble">' + esc(m.text) + '</div>' +
+        '<div class="mc-msg-time">' + esc(relativeTime(m.ts)) + '</div></div>';
+    });
+    html += '</div>';
+    html += '<div class="mc-chat-input">' +
+      '<input type="text" id="mcMsgInput" placeholder="发消息给 ' + esc(name) + '…" maxlength="500" />' +
+      '<button class="mc-send" onclick="window.__mcSend(\'' + esc(otherId) + '\')">发送</button></div>';
+    return html;
+  }
+
+  function mcOpenConv(otherId) {
+    window.__mcState = window.__mcState || {}; window.__mcState.preselect = otherId;
+    renderMc();
+    var body = document.getElementById('mcChatBody'); if (body) body.scrollTop = body.scrollHeight;
+  }
+  window.__mcOpenConv = mcOpenConv;
+
+  function mcSend(otherId) {
+    var inp = document.getElementById('mcMsgInput'); if (!inp) return;
+    var text = inp.value.trim(); if (!text) return;
+    sendMessage(otherId, text);
+    window.__mcState = window.__mcState || {}; window.__mcState.preselect = otherId;
+    renderMc();
+    var body = document.getElementById('mcChatBody'); if (body) body.scrollTop = body.scrollHeight;
+    updateBellBadge();
+  }
+  window.__mcSend = mcSend;
+
+  function mcDiscover() {
+    var main = document.getElementById('mcMain'); if (!main) return;
+    var users = knownUsers();
+    if (!users.length) { main.innerHTML = '<div class="mc-empty">暂无可添加的用户，先去讨论区发帖或注册其他账号吧</div>'; return; }
+    var html = '<div class="mc-disc"><div class="mc-disc-title">发现用户</div><div class="mc-disc-list">';
+    users.forEach(function (u) {
+      var fid = u.id;
+      var following = isFollowing(fid);
+      var canDm = !u.anonymous;
+      html += '<div class="mc-disc-item">' +
+        '<span class="mc-disc-av">' + userAvatarHtml(u) + '</span>' +
+        '<div class="mc-disc-info"><div class="mc-disc-name">' + esc(getDisplayName(u)) + '</div>' +
+        '<div class="mc-disc-handle">@' + esc(u.username || u.id) + '</div></div>' +
+        '<div class="mc-disc-actions">' +
+          '<button class="mc-mini ' + (following ? 'following' : '') + '" onclick="window.__mcToggleFollow(\'' + esc(fid) + '\')">' + (following ? '已关注' : '关注') + '</button>' +
+          (canDm ? '<button class="mc-mini primary" onclick="window.__mcDmFromDiscover(\'' + esc(fid) + '\')">私信</button>' : '') +
+        '</div></div>';
+    });
+    html += '</div></div>';
+    main.innerHTML = html;
+  }
+  window.__mcDiscover = mcDiscover;
+  function mcToggleFollow(fid) {
+    if (isFollowing(fid)) unfollowUser(fid); else followUser(fid);
+    mcDiscover(); updateBellBadge();
+  }
+  window.__mcToggleFollow = mcToggleFollow;
+  function mcDmFromDiscover(fid) {
+    window.__mcState = { tab: 'dm', preselect: fid };
+    renderMc();
+  }
+  window.__mcDmFromDiscover = mcDmFromDiscover;
 
   // 切换账号
   function switchAccount() {
@@ -3236,7 +3632,7 @@
           '<div class="ds-topic-title">' + esc(t.title) + '</div>' +
           '<div class="ds-topic-meta">' + tag +
             '<span class="ds-dot">·</span>' +
-            '<span class="ds-topic-author">' + esc(t.authorName || '匿名') + '</span>' +
+            authorChip(t.authorId, t.authorName, 'ds-topic-author') +
             '<span class="ds-dot">·</span>' +
             '<span class="ds-topic-time">' + esc(relativeTime(t.ts)) + '</span>' +
           '</div>' +
@@ -3253,7 +3649,7 @@
     var guestName = lsGet('gz_guest_name', '') || '';
     var idHtml = u
       ? '<div class="cm-form-id cm-form-id-top">' +
-          '<span class="cm-form-avatar">' + esc(u.avatar || '🎓') + '</span>' +
+          '<span class="cm-form-avatar">' + userAvatarHtml(u) + '</span>' +
           '<span class="cm-form-name">以 <b>' + esc(getDisplayName(u) || u.username) + '</b> 身份发布</span>' +
           '<label class="cm-anon"><input type="checkbox" id="cmAnon"> <span>匿名发布</span></label>' +
         '</div>'
@@ -3334,9 +3730,13 @@
       ? '<ul class="ds-reply-list">' + t.replies.map(function (rp) {
           var canDel = discussCanDelete(rp.authorId, rp.guestId);
           return '<li class="ds-reply' + (canDel ? ' has-del' : '') + '">' +
-            '<div class="ds-reply-avatar' + (rp.authorId ? '' : ' anon') + '">' + (rp.authorId ? esc((rp.authorName || '🎓').slice(0, 1)) : '·') + '</div>' +
+            (rp.authorId
+              ? '<div class="ds-reply-avatar clickable" onclick="event.stopPropagation();window.__openUserProfile(\'' + esc(rp.authorId) + '\')">' + (getUserById(rp.authorId) ? userAvatarHtml(getUserById(rp.authorId)) : esc((rp.authorName || '🎓').slice(0, 1))) + '</div>'
+              : '<div class="ds-reply-avatar anon">·</div>') +
             '<div class="ds-reply-body">' +
-              '<div class="ds-reply-head"><span class="ds-reply-name">' + esc(rp.authorName || '匿名') + '</span>' +
+              '<div class="ds-reply-head">' + (rp.authorId
+                ? '<span class="ds-reply-name clickable" onclick="event.stopPropagation();window.__openUserProfile(\'' + esc(rp.authorId) + '\')">' + esc(rp.authorName || '匿名') + '</span>'
+                : '<span class="ds-reply-name">' + esc(rp.authorName || '匿名') + '</span>') +
                 '<span class="ds-reply-tag' + (rp.authorId ? '' : ' anon') + '">' + (rp.authorId ? '用户' : '匿名') + '</span>' +
                 '<span class="ds-reply-time">' + esc(relativeTime(rp.ts)) + '</span>' +
                 (canDel ? '<button class="ds-del ds-del-sm" onclick="deleteReply(\'' + esc(board) + '\',\'' + esc(t.id) + '\',\'' + esc(rp.id) + '\')">删除</button>' : '') +
@@ -3350,7 +3750,7 @@
     var guestName = lsGet('gz_guest_name', '') || '';
     var idHtml = u
       ? '<div class="cm-form-id cm-form-id-top">' +
-          '<span class="cm-form-avatar">' + esc(u.avatar || '🎓') + '</span>' +
+          '<span class="cm-form-avatar">' + userAvatarHtml(u) + '</span>' +
           '<span class="cm-form-name">以 <b>' + esc(getDisplayName(u) || u.username) + '</b> 身份回复</span>' +
           '<label class="cm-anon"><input type="checkbox" id="cmAnon"> <span>匿名</span></label>' +
         '</div>'
@@ -3364,7 +3764,7 @@
       '<div class="ds-topic-head' + (canDelT ? ' has-del' : '') + '" style="--bc:' + cfg.color + '">' +
         '<div class="ds-topic-title-lg">' + esc(t.title) + '</div>' +
         '<div class="ds-topic-by"><span class="ds-tag" style="--bc:' + cfg.color + '">' + cfg.icon + ' ' + esc(t.board) + '</span>' +
-          '<span class="ds-topic-author">' + esc(t.authorName || '匿名') + '</span>' +
+          authorChip(t.authorId, t.authorName, 'ds-topic-author') +
           '<span class="ds-dot">·</span><span>' + esc(relativeTime(t.ts)) + '</span>' +
           (canDelT ? '<button class="ds-del" onclick="deleteTopic(\'' + esc(board) + '\',\'' + esc(t.id) + '\')">删除</button>' : '') +
         '</div>' +
@@ -3426,6 +3826,9 @@
             guestId: id.isAnon ? currentGuestId() : null
           });
           saveDiscuss(d);
+          if (t.authorId && t.authorId !== id.authorId && getUserById(t.authorId)) {
+            pushNotification(t.authorId, 'reply', (id.authorName || '有人') + ' 回复了你的帖子《' + t.title + '》', { topicId: t.id, board: board });
+          }
           renderComments();
         }
       }
@@ -3440,7 +3843,7 @@
       accountHtml =
         '<div class="setting-row account-row">' +
           '<div class="account-info">' +
-            '<div class="account-avatar-lg">' + esc(u.avatar || '👤') + '</div>' +
+            '<div class="account-avatar-lg">' + userAvatarHtml(u) + '</div>' +
             '<div>' +
               '<div class="account-name">' + esc(u.nickname) + ' <span class="account-handle">@' + esc(u.username) + '</span></div>' +
               '<div class="account-meta">注册于 ' + (u.createdAt || '').slice(0, 10) + ' · 上次登录 ' + (u.lastLoginAt || '').slice(0, 16).replace('T', ' ') + '</div>' +
