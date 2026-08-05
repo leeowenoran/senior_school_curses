@@ -13,6 +13,18 @@
 (function () {
   'use strict';
 
+  // 全局错误兜底：把运行时错误显示到页面底部，避免白屏难以排查
+  window.addEventListener('error', function (e) {
+    var box = document.getElementById('__errBox');
+    if (!box) {
+      box = document.createElement('div');
+      box.id = '__errBox';
+      box.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:99999;max-height:50vh;overflow:auto;background:#fff3f3;color:#b00020;font:13px/1.6 monospace;padding:12px 16px;border-top:2px solid #c41e3a;white-space:pre-wrap';
+      (document.body || document.documentElement).appendChild(box);
+    }
+    box.textContent += '\n[页面错误] ' + (e && e.message ? e.message : e) + (e && e.filename ? (' @ ' + e.filename + ':' + e.lineno) : '');
+  });
+
   var view = document.getElementById('view');
   var expandedSid = null; // 侧边栏当前展开的学科 id
 
@@ -95,17 +107,26 @@
   }
 
   /* ---------- 路由 ---------- */
+  function decodePart(s) {
+    if (s == null) return s;
+    try { return decodeURIComponent(s); } catch (e) { return s; }
+  }
   function parseHash() {
     var h = (location.hash || '#/home').replace(/^#\/?/, '');
     var parts = h.split('/');
-    return { route: parts[0] || 'home', param: parts[1] || null, param2: parts[2] || null, param3: parts[3] || null };
+    return {
+      route: decodePart(parts[0]) || 'home',
+      param: decodePart(parts[1]) || null,
+      param2: decodePart(parts[2]) || null,
+      param3: decodePart(parts[3]) || null
+    };
   }
 
   window.navigate = function (route, param, param2, param3) {
     var h = '#/' + route;
-    if (param != null) h += '/' + param;
-    if (param2 != null) h += '/' + param2;
-    if (param3 != null) h += '/' + param3;
+    if (param != null) h += '/' + encodeURIComponent(param);
+    if (param2 != null) h += '/' + encodeURIComponent(param2);
+    if (param3 != null) h += '/' + encodeURIComponent(param3);
     location.hash = h;
   };
 
@@ -145,7 +166,7 @@
     else if (r.route === 'bank') { renderBank(r.param); restoreScrollKeep(prevScroll); }
     else if (r.route === 'wrongbook') { renderWrongbook(); restoreScrollKeep(prevScroll); }
     else if (r.route === 'progress') { renderProgress(); restoreScrollKeep(prevScroll); }
-    else if (r.route === 'comments') { renderComments(); restoreScrollKeep(prevScroll); }
+    else if (r.route === 'comments') { renderComments(r); restoreScrollKeep(prevScroll); }
     else if (r.route === 'settings') { renderSettings(); restoreScrollKeep(prevScroll); }
     else { renderHome(); restoreScrollKeep(prevScroll); }
     // 滚动监听：控制「返回顶部」按钮 + 主区顶部条变 fixed
@@ -238,7 +259,7 @@
     var FUNCS = [
       { route: 'bank',      icon: '📝', name: '题库' },
       { route: 'progress',  icon: '📊', name: '学习进度' },
-      { route: 'comments',  icon: '💬', name: '留言板' },
+      { route: 'comments',  icon: '💬', name: '讨论区' },
       { route: 'settings',  icon: '⚙️', name: '设置' }
     ];
     var funcs = FUNCS.map(function (f) {
@@ -833,7 +854,6 @@
             '<span class="hero-chip">📚 全学科覆盖</span>' +
             '<span class="hero-chip">🗂️ 按教材册次组织</span>' +
             '<span class="hero-chip">✏️ 知识点 + 练习</span>' +
-            '<span class="hero-chip">🆓 无需登录</span>' +
           '</div>' +
           '<div class="hero-stats">' +
             '<div class="hero-stat"><b>' + st.subjects + '</b><span>门学科</span></div>' +
@@ -3072,7 +3092,7 @@
     '</div>';
   }
 
-  /* ---------- 留言板 ---------- */
+  /* ---------- 讨论区（数据 / 身份辅助） ---------- */
   function getComments() { return lsGet('gz_comments', []); }
   function saveComments(list) { lsSet('gz_comments', list); }
   function escAttr(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
@@ -3103,234 +3123,313 @@
     return out;
   }
 
-  function renderComments() {
-    var list = getComments().slice().sort(function (a, b) { return b.ts - a.ts; });
-    var total = list.length;
-    var avg = total ? (list.reduce(function (s, c) { return s + c.stars; }, 0) / total) : 0;
-    var fiveStar = total ? list.filter(function (c) { return c.stars === 5; }).length : 0;
-    var avgStr = total ? avg.toFixed(1) : '—';
-    var fivePct = total ? Math.round(fiveStar * 100 / total) : 0;
+  /* ---------- 讨论区（洛谷风格：左侧板块 + 右侧帖子） ---------- */
+  var DISCUSS_BOARDS = [
+    { key: '站务板', icon: '🛠️', desc: '网站使用问题、功能建议、公告与反馈', color: '#2f6fb3' },
+    { key: '题目总版', icon: '📝', desc: '题目讨论、错题求助、解题交流', color: '#2e8b57' },
+    { key: '学术版', icon: '📚', desc: '学科知识、学习方法、拓展探讨', color: '#8e5cd9' }
+  ];
+  function getDiscuss() { return lsGet('gz_discuss', { topics: [] }); }
+  function saveDiscuss(d) { lsSet('gz_discuss', d); }
+  function discussTopicsOf(board) {
+    return getDiscuss().topics.filter(function (t) { return t.board === board; })
+      .sort(function (a, b) { return b.ts - a.ts; });
+  }
+  function discussAllTopics() {
+    return getDiscuss().topics.slice().sort(function (a, b) { return b.ts - a.ts; });
+  }
+  function discussBoardCfg(key) {
+    return DISCUSS_BOARDS.filter(function (b) { return b.key === key; })[0]
+      || { key: key, icon: '💬', color: '#8b8b8b', desc: '' };
+  }
 
+  /* 匿名用户的稳定浏览器身份（用于同一设备删除自己的匿名帖/回复） */
+  function currentGuestId() {
+    var g = lsGet('gz_guest_id', null);
+    if (!g) { g = 'g_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); lsSet('gz_guest_id', g); }
+    return g;
+  }
+  /* 判断当前用户能否删除某条内容（作者本人；管理员 king 可删任意帖含匿名帖） */
+  function discussCanDelete(authorId, guestId) {
     var u = getCurrentUser();
-
-    var main = document.getElementById('main');
-    if (!main) return;
-    main.innerHTML =
-      '<div class="panel cm-page">' +
-        '<div class="cm-head">' +
-          '<div class="cm-head-icon">💬</div>' +
-          '<div>' +
-            '<div class="cm-title">留言板</div>' +
-            '<div class="cm-sub">对网站有什么建议？你的每条反馈我们都会看到 ✨</div>' +
-          '</div>' +
-        '</div>' +
-
-        '<div class="cm-stats">' +
-          '<div class="cm-stat">' +
-            '<div class="cm-stat-num cm-stat-avg">' + avgStr + '</div>' +
-            '<div class="cm-stat-stars" id="cmAvgStars">' + (total ? renderStars(Math.round(avg), 16) : '') + '</div>' +
-            '<div class="cm-stat-lbl">平均评分</div>' +
-          '</div>' +
-          '<div class="cm-stat-sep"></div>' +
-          '<div class="cm-stat">' +
-            '<div class="cm-stat-num">' + total + '</div>' +
-            '<div class="cm-stat-lbl">条留言</div>' +
-          '</div>' +
-          '<div class="cm-stat-sep"></div>' +
-          '<div class="cm-stat">' +
-            '<div class="cm-stat-num cm-stat-good">' + fivePct + '%</div>' +
-            '<div class="cm-stat-lbl">五星好评</div>' +
-          '</div>' +
-        '</div>' +
-
-        '<div class="cm-form-card">' +
-          '<div class="cm-form-title">写一条留言</div>' +
-          '<div class="cm-form-row">' +
-            '<div class="cm-form-lbl">我的评分</div>' +
-            '<div class="cm-star-picker" id="cmStarPicker" role="radiogroup" aria-label="评分">' +
-              starPickerHtml(0) +
-            '</div>' +
-            '<div class="cm-star-word" id="cmStarWord">轻点星星给个分</div>' +
-          '</div>' +
-          '<div class="cm-form-row">' +
-            '<textarea class="cm-textarea" id="cmText" maxlength="500" placeholder="说点什么… 说说哪里好用、想加什么功能、遇到什么问题都可以 :)" rows="3"></textarea>' +
-            '<div class="cm-counter"><span id="cmCount">0</span> / 500</div>' +
-          '</div>' +
-          '<div class="cm-form-foot">' +
-            '<div class="cm-form-id">' +
-              (u
-                ? '<span class="cm-form-avatar">' + esc(u.avatar || '🎓') + '</span>' +
-                  '<span class="cm-form-name">以 <b>' + esc(u.nickname || u.username) + '</b> 身份发布</span>' +
-                  '<label class="cm-anon"><input type="checkbox" id="cmAnon"> <span>匿名</span></label>'
-                : '<span class="cm-form-avatar cm-form-avatar-anon">·</span>' +
-                  '<span class="cm-form-name">将以 <b>匿名同学</b> 身份发布</span>') +
-            '</div>' +
-            '<button class="cm-submit" id="cmSubmit" disabled>发布留言</button>' +
-          '</div>' +
-        '</div>' +
-
-        '<div class="cm-list-head">' +
-          '<span class="cm-list-title">全部留言</span>' +
-          '<span class="cm-list-count">' + total + ' 条</span>' +
-        '</div>' +
-
-        (total === 0
-          ? '<div class="cm-empty">' +
-              '<svg width="120" height="120" viewBox="0 0 120 120" fill="none">' +
-                '<circle cx="60" cy="60" r="46" fill="url(#cmGradBg)" stroke="var(--line)" stroke-width="1.5"/>' +
-                '<path d="M40 50 Q40 38 52 38 H80 Q92 38 92 50 V66 Q92 78 80 78 H58 L46 86 V78 H52 Q40 78 40 66 Z" fill="white" stroke="var(--primary)" stroke-width="2"/>' +
-                '<circle cx="56" cy="58" r="3" fill="var(--primary)"/>' +
-                '<circle cx="68" cy="58" r="3" fill="var(--primary)"/>' +
-                '<path d="M52 66 Q60 71 68 66" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" fill="none"/>' +
-                '<circle cx="86" cy="36" r="4" fill="var(--accent)" opacity="0.6"/>' +
-                '<circle cx="34" cy="38" r="3" fill="var(--primary)" opacity="0.5"/>' +
-                '<circle cx="92" cy="86" r="2.5" fill="var(--accent)" opacity="0.4"/>' +
-                '<defs><linearGradient id="cmGradBg" x1="0" y1="0" x2="1" y2="1">' +
-                  '<stop offset="0" stop-color="rgba(196,215,255,0.3)"/>' +
-                  '<stop offset="1" stop-color="rgba(225,200,255,0.25)"/>' +
-                '</linearGradient></defs>' +
-              '</svg>' +
-              '<div class="cm-empty-title">还没有留言</div>' +
-              '<div class="cm-empty-sub">来当第一个吧 ✨</div>' +
-            '</div>'
-          : '<ul class="cm-list">' + list.map(commentCardHtml).join('') + '</ul>') +
-      '</div>';
-
-    bindCommentForm();
-  }
-
-  function starPickerHtml(n) {
-    var out = '';
-    for (var i = 1; i <= 5; i++) {
-      var on = i <= n;
-      out += '<button type="button" class="cm-pick-star ' + (on ? 'on' : '') + '" data-v="' + i + '" aria-label="' + i + ' 星">' +
-        '<svg width="28" height="28" viewBox="0 0 24 24" fill="' + (on ? '#facc15' : 'transparent') + '" stroke="#facc15" stroke-width="1.8" stroke-linejoin="round">' +
-        '<path d="M12 2.6l2.94 5.96 6.58.96-4.76 4.64 1.12 6.55L12 17.6l-5.88 3.1 1.12-6.55L2.48 9.52l6.58-.96L12 2.6z"/>' +
-        '</svg></button>';
+    if (u) {
+      if (isAdminId(u.id) || isAdminId(u.username)) return true; // 管理员可删任何帖
+      return u.id === authorId;
     }
-    return out;
+    return authorId === null && !!guestId && guestId === currentGuestId();
   }
 
-  function commentCardHtml(c) {
-    var initial = (c.authorName || '匿').slice(0, 1);
-    var avatarInner = c.authorId
-      ? esc(c.avatar || '🎓')
-      : '<span class="cm-card-anon-glyph">·</span>';
-    var tagHtml = c.authorId
-      ? '<span class="cm-card-tag">用户</span>'
-      : '<span class="cm-card-tag cm-card-tag-anon">匿名</span>';
-    return '<li class="cm-card">' +
-      '<div class="cm-card-avatar">' + avatarInner + '</div>' +
-      '<div class="cm-card-body">' +
-        '<div class="cm-card-head">' +
-          '<span class="cm-card-name">' + esc(c.authorName || '匿名同学') + '</span>' +
-          tagHtml +
-          '<span class="cm-card-stars">' + renderStars(c.stars, 14) + '</span>' +
-          '<span class="cm-card-time">' + esc(relativeTime(c.ts)) + '</span>' +
+  function deleteTopic(board, topicId) {
+    if (!confirm('确定删除这篇帖子吗？此操作不可撤销。')) return;
+    var d = getDiscuss();
+    d.topics = d.topics.filter(function (t) { return t.id !== topicId; });
+    saveDiscuss(d);
+    renderComments(); // 直接重渲染：在列表里删就刷新列表；在详情页删会因找不到主题而回退到板块
+  }
+  window.deleteTopic = deleteTopic;
+
+  function deleteReply(board, topicId, replyId) {
+    if (!confirm('确定删除这条回复吗？此操作不可撤销。')) return;
+    var d = getDiscuss();
+    var t = d.topics.filter(function (x) { return x.id === topicId; })[0];
+    if (t && t.replies) {
+      t.replies = t.replies.filter(function (r) { return r.id !== replyId; });
+      saveDiscuss(d);
+    }
+    renderComments();
+  }
+  window.deleteReply = deleteReply;
+
+  function renderComments(r) {
+    if (!r) r = parseHash();
+    if (!r.param) return renderDiscussHome();
+    if (!r.param2) return renderDiscussBoard(r.param);
+    return renderDiscussTopic(r.param, r.param2);
+  }
+
+  function discussIdentity() {
+    var u = getCurrentUser();
+    var anon = document.getElementById('cmAnon');
+    var nameInput = document.getElementById('cmName');
+    var isAnon = u ? (anon && anon.checked) : true;
+    var guestName = nameInput ? (nameInput.value || '').trim() : '';
+    if (guestName) lsSet('gz_guest_name', guestName);
+    var authorName = isAnon ? (guestName || '匿名') : (u ? (getDisplayName(u) || u.username) : (guestName || '匿名'));
+    return {
+      isAnon: isAnon,
+      authorId: isAnon ? null : (u ? u.id : null),
+      authorName: authorName,
+      avatar: isAnon ? null : (u ? (u.avatar || '🎓') : null)
+    };
+  }
+
+  /* 左侧板块导航（含「全部板块」） */
+  function discussSidebar(activeBoard) {
+    var all = discussAllTopics().length;
+    var items = '<a class="ds-nav' + (activeBoard ? '' : ' active') + '" onclick="navigate(\'comments\')">' +
+      '<span class="ds-nav-icon">📋</span>' +
+      '<span class="ds-nav-body"><span class="ds-nav-name">全部板块</span><span class="ds-nav-desc">浏览所有主题</span></span>' +
+      '<span class="ds-nav-count">' + all + '</span></a>';
+    items += DISCUSS_BOARDS.map(function (b) {
+      var n = discussTopicsOf(b.key).length;
+      var act = activeBoard === b.key ? ' active' : '';
+      return '<a class="ds-nav' + act + '" onclick="navigate(\'comments\',\'' + esc(b.key) + '\')" style="--bc:' + b.color + '">' +
+        '<span class="ds-nav-icon">' + b.icon + '</span>' +
+        '<span class="ds-nav-body"><span class="ds-nav-name">' + esc(b.key) + '</span><span class="ds-nav-desc">' + esc(b.desc) + '</span></span>' +
+        '<span class="ds-nav-count">' + n + '</span></a>';
+    }).join('');
+    return '<aside class="ds-sidebar"><div class="ds-sidebar-title">板块</div>' + items +
+      '<div class="ds-sidebar-tip">匿名也能发言，登录后可一键匿名</div></aside>';
+  }
+
+  /* 主题列表（showBoard=true 时每条显示板块标签） */
+  function discussTopicListHtml(topics, showBoard) {
+    if (!topics.length) {
+      return '<div class="ds-empty"><div class="ds-empty-icon">💭</div><div class="ds-empty-title">还没有帖子</div><div class="ds-empty-sub">来发第一个吧 ✨</div></div>';
+    }
+    return '<ul class="ds-topic-list">' + topics.map(function (t) {
+      var cfg = discussBoardCfg(t.board);
+      var tag = showBoard ? '<span class="ds-tag" style="--bc:' + cfg.color + '">' + cfg.icon + ' ' + esc(t.board) + '</span>' : '';
+      var canDel = discussCanDelete(t.authorId, t.guestId);
+      return '<li class="ds-topic' + (canDel ? ' has-del' : '') + '" onclick="navigate(\'comments\',\'' + esc(t.board) + '\',\'' + esc(t.id) + '\')">' +
+        '<div class="ds-topic-main">' +
+          '<div class="ds-topic-title">' + esc(t.title) + '</div>' +
+          '<div class="ds-topic-meta">' + tag +
+            '<span class="ds-dot">·</span>' +
+            '<span class="ds-topic-author">' + esc(t.authorName || '匿名') + '</span>' +
+            '<span class="ds-dot">·</span>' +
+            '<span class="ds-topic-time">' + esc(relativeTime(t.ts)) + '</span>' +
+          '</div>' +
         '</div>' +
-        '<div class="cm-card-text">' + esc(c.content) + '</div>' +
-      '</div>' +
-    '</li>';
+        '<div class="ds-topic-stat"><div class="ds-topic-stat-n">' + (t.replies ? t.replies.length : 0) + '</div><div class="ds-topic-stat-l">回复</div></div>' +
+        (canDel ? '<button class="ds-del" onclick="event.stopPropagation();deleteTopic(\'' + esc(t.board) + '\',\'' + esc(t.id) + '\')">删除</button>' : '') +
+      '</li>';
+    }).join('') + '</ul>';
   }
 
-  var __commentPicked = 0;
-  function bindCommentForm() {
-    var picker = document.getElementById('cmStarPicker');
-    var word = document.getElementById('cmStarWord');
+  /* 发布表单（默认折叠，点「发新帖」展开） */
+  function discussComposeHtml(board) {
+    var u = getCurrentUser();
+    var guestName = lsGet('gz_guest_name', '') || '';
+    var idHtml = u
+      ? '<div class="cm-form-id cm-form-id-top">' +
+          '<span class="cm-form-avatar">' + esc(u.avatar || '🎓') + '</span>' +
+          '<span class="cm-form-name">以 <b>' + esc(getDisplayName(u) || u.username) + '</b> 身份发布</span>' +
+          '<label class="cm-anon"><input type="checkbox" id="cmAnon"> <span>匿名发布</span></label>' +
+        '</div>'
+      : '<div class="cm-form-id cm-form-id-top">' +
+          '<span class="cm-form-avatar cm-form-avatar-anon">·</span>' +
+          '<input class="cm-name-input" id="cmName" maxlength="20" placeholder="给自己起个昵称（可选）" value="' + esc(guestName) + '">' +
+          '<span class="cm-form-name">将以 <b>匿名</b> 身份发布</span>' +
+        '</div>';
+    return '<div class="ds-compose" id="dsCompose" style="display:none">' +
+      '<div class="cm-form-card">' + idHtml +
+          '<input class="cm-title-input" id="cmTitle" maxlength="50" placeholder="帖子标题（选填，留空则自动取正文前 20 字）">' +
+          '<textarea class="cm-textarea" id="cmText" maxlength="1000" placeholder="说点什么… 分享见解、提问、或反馈都可以 :)" rows="4"></textarea>' +
+          '<div class="cm-form-foot">' +
+            '<div class="cm-counter"><span id="cmCount">0</span> / 1000</div>' +
+            '<button class="cm-submit" id="cmSubmit" disabled>发布帖子</button>' +
+        '</div>' +
+      '</div></div>';
+  }
+
+  function dsToggleCompose() {
+    var el = document.getElementById('dsCompose');
+    if (!el) return;
+    var show = el.style.display === 'none';
+    el.style.display = show ? 'block' : 'none';
+    if (show) { var ta = document.getElementById('cmText'); if (ta) ta.focus(); }
+  }
+  window.dsToggleCompose = dsToggleCompose;
+
+  function renderDiscussHome() {
+    if (!view) return;
+    var topics = discussAllTopics();
+    var right = '<div class="ds-list-head"><span>最新主题</span><span>' + topics.length + ' 个</span></div>' +
+      discussTopicListHtml(topics, true);
+    view.innerHTML =
+      '<div class="panel ds-page">' +
+        '<div class="ds-hero">' +
+          '<div class="ds-hero-icon">💬</div>' +
+          '<div><div class="ds-hero-title">讨论区</div>' +
+          '<div class="ds-hero-sub">有问题就问，有想法就聊 · 共 ' + topics.length + ' 个帖子</div></div>' +
+        '</div>' +
+        '<div class="ds-layout">' +
+          discussSidebar(null) +
+          '<section class="ds-content">' + right + '</section>' +
+        '</div>' +
+      '</div>';
+  }
+
+  function renderDiscussBoard(board) {
+    if (!view) return;
+    var cfg = discussBoardCfg(board);
+    var topics = discussTopicsOf(board);
+    var right = '<div class="ds-board-head" style="--bc:' + cfg.color + '">' +
+        '<div class="ds-board-head-icon">' + cfg.icon + '</div>' +
+        '<div class="ds-board-head-body"><div class="ds-board-head-name">' + esc(cfg.key) + '</div>' +
+          '<div class="ds-board-head-desc">' + esc(cfg.desc) + '</div></div>' +
+        '<button class="ds-newbtn" onclick="dsToggleCompose()">＋ 发新帖</button>' +
+      '</div>' +
+      discussComposeHtml(board) +
+      '<div class="ds-list-head"><span>帖子</span><span>' + topics.length + ' 个</span></div>' +
+      discussTopicListHtml(topics, false);
+    view.innerHTML =
+      '<div class="panel ds-page">' +
+        '<div class="ds-layout">' +
+          discussSidebar(board) +
+          '<section class="ds-content">' + right + '</section>' +
+        '</div>' +
+      '</div>';
+    bindDiscussForm('topic', board, null);
+  }
+
+  function renderDiscussTopic(board, topicId) {
+    if (!view) return;
+    var d = getDiscuss();
+    var t = d.topics.filter(function (x) { return x.id === topicId; })[0];
+    if (!t) { navigate('comments', board); return; }
+    var cfg = discussBoardCfg(board);
+    var repliesHtml = (t.replies && t.replies.length)
+      ? '<ul class="ds-reply-list">' + t.replies.map(function (rp) {
+          var canDel = discussCanDelete(rp.authorId, rp.guestId);
+          return '<li class="ds-reply' + (canDel ? ' has-del' : '') + '">' +
+            '<div class="ds-reply-avatar' + (rp.authorId ? '' : ' anon') + '">' + (rp.authorId ? esc((rp.authorName || '🎓').slice(0, 1)) : '·') + '</div>' +
+            '<div class="ds-reply-body">' +
+              '<div class="ds-reply-head"><span class="ds-reply-name">' + esc(rp.authorName || '匿名') + '</span>' +
+                '<span class="ds-reply-tag' + (rp.authorId ? '' : ' anon') + '">' + (rp.authorId ? '用户' : '匿名') + '</span>' +
+                '<span class="ds-reply-time">' + esc(relativeTime(rp.ts)) + '</span>' +
+                (canDel ? '<button class="ds-del ds-del-sm" onclick="deleteReply(\'' + esc(board) + '\',\'' + esc(t.id) + '\',\'' + esc(rp.id) + '\')">删除</button>' : '') +
+              '</div>' +
+              '<div class="ds-reply-text">' + esc(rp.content) + '</div>' +
+            '</div>' +
+          '</li>';
+        }).join('') + '</ul>'
+      : '<div class="ds-empty"><div class="ds-empty-sub">还没有回复，来抢沙发 ✨</div></div>';
+    var u = getCurrentUser();
+    var guestName = lsGet('gz_guest_name', '') || '';
+    var idHtml = u
+      ? '<div class="cm-form-id cm-form-id-top">' +
+          '<span class="cm-form-avatar">' + esc(u.avatar || '🎓') + '</span>' +
+          '<span class="cm-form-name">以 <b>' + esc(getDisplayName(u) || u.username) + '</b> 身份回复</span>' +
+          '<label class="cm-anon"><input type="checkbox" id="cmAnon"> <span>匿名</span></label>' +
+        '</div>'
+      : '<div class="cm-form-id cm-form-id-top">' +
+          '<span class="cm-form-avatar cm-form-avatar-anon">·</span>' +
+          '<input class="cm-name-input" id="cmName" maxlength="20" placeholder="给自己起个昵称（可选）" value="' + esc(guestName) + '">' +
+          '<span class="cm-form-name">将以 <b>匿名</b> 身份回复</span>' +
+        '</div>';
+    var canDelT = discussCanDelete(t.authorId, t.guestId);
+    var right = '<div class="ds-topic-back"><a class="ds-back" onclick="navigate(\'comments\',\'' + esc(board) + '\')">← ' + esc(cfg.key) + '</a></div>' +
+      '<div class="ds-topic-head' + (canDelT ? ' has-del' : '') + '" style="--bc:' + cfg.color + '">' +
+        '<div class="ds-topic-title-lg">' + esc(t.title) + '</div>' +
+        '<div class="ds-topic-by"><span class="ds-tag" style="--bc:' + cfg.color + '">' + cfg.icon + ' ' + esc(t.board) + '</span>' +
+          '<span class="ds-topic-author">' + esc(t.authorName || '匿名') + '</span>' +
+          '<span class="ds-dot">·</span><span>' + esc(relativeTime(t.ts)) + '</span>' +
+          (canDelT ? '<button class="ds-del" onclick="deleteTopic(\'' + esc(board) + '\',\'' + esc(t.id) + '\')">删除</button>' : '') +
+        '</div>' +
+      '</div>' +
+      '<div class="ds-post"><div class="ds-post-body">' + esc(t.content) + '</div></div>' +
+      '<div class="ds-list-head"><span>回复</span><span>' + (t.replies ? t.replies.length : 0) + ' 条</span></div>' +
+      repliesHtml +
+      '<div class="cm-form-card ds-reply-form">' + idHtml +
+        '<textarea class="cm-textarea" id="cmText" maxlength="1000" placeholder="写下你的回复…" rows="3"></textarea>' +
+        '<div class="cm-form-foot"><div class="cm-counter"><span id="cmCount">0</span> / 1000</div>' +
+          '<button class="cm-submit" id="cmSubmit" disabled>回复</button></div>' +
+      '</div>';
+    view.innerHTML =
+      '<div class="panel ds-page">' +
+        '<div class="ds-layout">' +
+          discussSidebar(board) +
+          '<section class="ds-content">' + right + '</section>' +
+        '</div>' +
+      '</div>';
+    bindDiscussForm('reply', board, topicId);
+  }
+
+  function bindDiscussForm(mode, board, topicId) {
     var text = document.getElementById('cmText');
     var count = document.getElementById('cmCount');
     var btn = document.getElementById('cmSubmit');
-    if (!picker) return;
-
-    function paint(n) {
-      __commentPicked = n;
-      var stars = picker.querySelectorAll('.cm-pick-star');
-      stars.forEach(function (el) {
-        var v = parseInt(el.getAttribute('data-v'), 10);
-        el.classList.toggle('on', v <= n);
-        var svg = el.querySelector('svg');
-        if (svg) svg.setAttribute('fill', v <= n ? '#facc15' : 'transparent');
-      });
-      word.textContent = n ? starWord(n) : '轻点星星给个分';
-      word.classList.toggle('has', !!n);
-      refreshSubmit();
-    }
-
-    picker.addEventListener('click', function (e) {
-      var btn = e.target.closest('.cm-pick-star');
-      if (!btn) return;
-      paint(parseInt(btn.getAttribute('data-v'), 10));
-    });
-    picker.addEventListener('mouseover', function (e) {
-      var btn = e.target.closest('.cm-pick-star');
-      if (!btn) return;
-      var v = parseInt(btn.getAttribute('data-v'), 10);
-      var stars = picker.querySelectorAll('.cm-pick-star');
-      stars.forEach(function (el) {
-        var vv = parseInt(el.getAttribute('data-v'), 10);
-        el.classList.toggle('hover', vv <= v);
-        var svg = el.querySelector('svg');
-        if (svg) svg.setAttribute('fill', vv <= v ? '#facc15' : 'transparent');
-      });
-      word.textContent = starWord(v) || '轻点星星给个分';
-      word.classList.add('has');
-    });
-    picker.addEventListener('mouseleave', function () {
-      paint(__commentPicked);
-    });
-
-    text.addEventListener('input', function () {
-      count.textContent = text.value.length;
-      refreshSubmit();
-    });
-
-    btn.addEventListener('click', function () { submitComment(); });
-  }
-
-  function refreshSubmit() {
-    var btn = document.getElementById('cmSubmit');
-    var text = document.getElementById('cmText');
-    if (!btn || !text) return;
-    var ok = __commentPicked > 0 && text.value.trim().length > 0;
-    btn.disabled = !ok;
-    btn.classList.toggle('ready', ok);
-  }
-
-  var __cmSubmitting = false;
-  function submitComment() {
-    if (__cmSubmitting) return;
-    var text = document.getElementById('cmText');
+    var titleEl = document.getElementById('cmTitle');
     if (!text) return;
-    var content = text.value.trim();
-    if (!content || __commentPicked < 1) return;
-    if (content.length > 500) content = content.slice(0, 500);
-
-    var u = getCurrentUser();
-    var anon = document.getElementById('cmAnon');
-    var isAnon = u ? (anon && anon.checked) : true;
-    var c = {
-      id: 'c_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
-      ts: Date.now(),
-      authorId: isAnon ? null : (u ? u.id : null),
-      authorName: isAnon ? '匿名同学' : (u ? (u.nickname || u.username) : '匿名同学'),
-      avatar: isAnon ? null : (u ? (u.avatar || '🎓') : null),
-      stars: __commentPicked,
-      content: content
-    };
-
-    __cmSubmitting = true;
-    var list = getComments();
-    list.push(c);
-    saveComments(list);
-
-    var btn = document.getElementById('cmSubmit');
-    if (btn) { btn.disabled = true; btn.classList.add('sending'); btn.textContent = '已发布 ✓'; }
-
-    setTimeout(function () {
-      __cmSubmitting = false;
-      // 重新渲染整页（带新评论 + 更新统计）
-      renderComments();
-    }, 600);
+    function refresh() {
+      var ok = text.value.trim().length > 0;
+      if (btn) { btn.disabled = !ok; btn.classList.toggle('ready', ok); }
+      if (count) count.textContent = text.value.length;
+    }
+    text.addEventListener('input', refresh);
+    if (titleEl) titleEl.addEventListener('input', refresh);
+    if (btn) btn.addEventListener('click', function () {
+      var content = text.value.trim();
+      if (!content) return;
+      var id = discussIdentity();
+      var d = getDiscuss();
+      if (mode === 'topic') {
+        var title = titleEl && titleEl.value.trim() ? titleEl.value.trim() : (content.slice(0, 20) || '（无标题）');
+        d.topics.push({
+          id: 't_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+          board: board, ts: Date.now(),
+          authorId: id.authorId, authorName: id.authorName, avatar: id.avatar,
+          guestId: id.isAnon ? currentGuestId() : null,
+          title: title, content: content, replies: []
+        });
+        saveDiscuss(d);
+        renderComments(); // 重新渲染当前板块，立即显示新帖子（hash 未变不会触发 hashchange）
+      } else {
+        var t = d.topics.filter(function (x) { return x.id === topicId; })[0];
+        if (t) {
+          if (!t.replies) t.replies = [];
+          t.replies.push({
+            id: 'r_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+            ts: Date.now(), authorId: id.authorId, authorName: id.authorName, content: content,
+            guestId: id.isAnon ? currentGuestId() : null
+          });
+          saveDiscuss(d);
+          renderComments();
+        }
+      }
+    });
   }
 
   /* ---------- 设置 ---------- */
@@ -3387,7 +3486,7 @@
         '</div>' +
         '<h3 class="setting-section">ℹ️ 关于</h3>' +
         '<div class="setting-row">' +
-          '<div><b>高中预习网站</b><p>数据保存在本机浏览器中，无需登录即开即用。注册账号后可在本机多账号间切换。</p></div>' +
+          '<div><b>高中预习网站</b><p>数据保存在本机浏览器中，打开即用。注册账号后可在本机多账号间切换。</p></div>' +
           '<button class="btn-plain" onclick="navigate(\'about\')">查看</button>' +
         '</div>' +
       '</div>';
@@ -3405,7 +3504,7 @@
         '<h2>🎓 关于高中预习网站</h2>' +
         '<p>本站是面向准高中生与高中生的全学科预习平台，覆盖高中 ' + st.subjects + ' 门学科、' + st.volumes + ' 册教材，按新课标教材体系组织内容。</p>' +
         '<p>已完成上线：' + doneTotal + ' 个课时（含图文讲解与课后练习）。更多学科与册次正在陆续建设中。</p>' +
-        '<p>数据保存在本机浏览器中，无需登录，打开即用。</p>' +
+        '<p>数据保存在本机浏览器中，打开即用。</p>' +
       '</div>';
   }
 
@@ -3480,8 +3579,12 @@
 
   /* ---------- 启动 ---------- */
   window.addEventListener('hashchange', render);
-  document.addEventListener('DOMContentLoaded', render);
-  if (document.readyState !== 'loading') render();
+  function __safeRender() {
+    try { render(); }
+    catch (e) { window.dispatchEvent(new ErrorEvent('error', { message: (e && e.stack) ? e.stack : String(e) })); }
+  }
+  document.addEventListener('DOMContentLoaded', __safeRender);
+  if (document.readyState !== 'loading') __safeRender();
   // 若已有云端会话，静默恢复登录态与学习数据（刷新后保持登录）
   cbAutoRestore();
 })();

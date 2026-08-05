@@ -1,83 +1,113 @@
+/* 语文 · 高考复习 · 四、写作（zt4）：材料作文、命题/半命题、话题作文、任务驱动型作文 */
 (function () {
   var v = gzGetVolume('chinese', 'zt4');
   if (!v) return;
-  v.points.push(
 
-    /* ===================== 第一部分 · 审题与立意 ===================== */
+  /* —— 子板块 1：材料作文 —— */
+  v.points.push({
+    id: 'zt4-cailiao',
+    name: '材料作文',
+    chapter: '四、写作',
+    difficulty: '较难',
+    content: [
+      { type: 'heading', text: '一、题型概览' },
+      { type: 'paragraph', text: '材料作文提供一段文字、图画或组合材料，要求据此立意写作。它重在对材料的整体把握与个性化解读，是高考最常见的作文题型。' },
+      { type: 'list', items: ['通读材料，分清主次与关系', '提炼核心立意（最佳角度）', '拟写明确而有文采的标题', '安排"引—议—联—结"结构', '用论据与思辨支撑观点'] },
+      { type: 'keypoint', text: '<strong>立意三步</strong>：抓关键词句（反复出现、议论句）、看材料关系（对立统一、因果）、定最佳角度（贴合主旨且能写出深度）。切忌脱离材料另起炉灶。' },
+      { type: 'table', headers: ['环节', '要点', '常见失误'], rows: [
+        ['审题', '整体把握不偏题', '抓枝节弃主流'],
+        ['立意', '集中鲜明有深度', '多中心散乱'],
+        ['结构', '引议联结清晰', '堆砌材料无分析']
+      ] },
+      { type: 'tip', text: '<strong>开篇技巧</strong>：以"引述材料+亮明观点"破题，避免照抄全文；主体段采用"观点句+阐释句+事例句+分析句+结论句"五步法，每段都有思辨。' },
+      { type: 'warn', text: '易错点：立意偏离材料主旨；通篇不提材料"裸写"；论据与观点"两张皮"只摆不析；结构松散无中心。' },
+      { type: 'example', text: '示例（高考风格）：阅读下面的材料，自选角度写一篇不少于800字的文章。思路：先概括材料核心矛盾，提炼"坚守与变通"等立意，再拟题、列提纲、展开论述。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="200" fill="#f3f7fc"/><text x="20" y="32" font-size="18" fill="#2f5d9e" font-weight="bold">材料作文 · 写作流程</text><rect x="30" y="70" width="130" height="56" rx="8" fill="#dce8f7" stroke="#2f5d9e"/><text x="95" y="103" font-size="13" fill="#1f3a5f" text-anchor="middle">审题</text><rect x="185" y="70" width="130" height="56" rx="8" fill="#dce8f7" stroke="#2f5d9e"/><text x="250" y="103" font-size="13" fill="#1f3a5f" text-anchor="middle">立意</text><rect x="340" y="70" width="130" height="56" rx="8" fill="#dce8f7" stroke="#2f5d9e"/><text x="405" y="103" font-size="13" fill="#1f3a5f" text-anchor="middle">拟题</text><rect x="495" y="70" width="155" height="56" rx="8" fill="#e9f3e3" stroke="#3f7d1e"/><text x="572" y="103" font-size="13" fill="#2e3a22" text-anchor="middle">引议联结</text></svg>', caption: '材料作文按审题、立意、拟题到引议联结展开。' }
+    ],
+    exercises: [
+      { type: 'choice', question: '材料作文立意的首要原则是（ ）。', options: ['越新奇越好', '贴合材料主旨', '完全脱离材料', '只写自己想写的'], answer: '贴合材料主旨', explanation: '立意必须从材料整体出发提炼核心，贴合主旨方能不偏题；刻意求新而脱离材料、另起炉灶都会被判离题。' },
+      { type: 'choice', question: '下列开篇做法恰当的是（ ）。', options: ['照抄整段材料', '引述材料并亮明观点', '通篇不提材料', '先写 unrelated 故事'], answer: '引述材料并亮明观点', explanation: '材料作文开篇宜简引材料、迅速亮明中心论点，既回应题目要求又开宗明义；照抄或完全不提材料均不当。' },
+      { type: 'fill', question: '主体段可采用"观点句、阐释句、事例句、______句、结论句"五步法。', answer: '分析', explanation: '段落五步法中"分析句"最关键，须把事例与观点勾连起来说理，避免只摆论据不分析的"两张皮"现象。' },
+      { type: 'choice', question: '下列属于材料作文常见失误的是（ ）。', options: ['中心鲜明', '论据服务观点', '堆砌材料无分析', '结构清晰'], answer: '堆砌材料无分析', explanation: '只罗列事例而不做分析，导致论据与观点脱节，是材料作文典型失分点；其余三项均为正向做法。' },
+      { type: 'fill', question: '审题时可优先关注材料中反复出现的______与议论句。', answer: '关键词', explanation: '关键词句往往提示命题意图与核心矛盾，是提炼立意的最佳切入点，能避免抓枝节弃主流。' }
+    ]
+  });
 
-    { id: 'zt4-u1-l1', name: '写作专题（一）：审题与立意——方向比速度更重要', author: '高考复习', chapter: '第一部分 · 审题与立意', difficulty: '中等',
-      content: [
-        { type: 'heading', text: '一、新材料作文审题四法' },
-        { type: 'paragraph', text: '新材料作文（含寓言、故事、名言、漫画等）不给标题、不限定文体，只提供材料，要求自主立意。审题的核心是先“读准材料”，再“定准方向”，跑题是最大失分项。' },
-        { type: 'keypoint', label: '四步审题法', text: '<strong>抓关键词句法</strong>：圈出材料中反复出现的高频词、总结句、议论句与带情感倾向的词；<strong>因果分析法</strong>：由结果溯原因，找出材料核心事件的根本动因；<strong>辩证分析法</strong>：对看似对立的概念（如快与慢、强与弱）做辩证统一；<strong>归纳概括法</strong>：多则材料找交集，提炼共同主旨。' },
-        { type: 'table', headers: ['审题方法', '操作要点与示例'], rows: [['抓关键词句法', '圈高频词、总结句；如材料反复出现“慢”，主旨往往与“慢的价值”相关'], ['因果分析法', '由果溯因：“为何失败？”——根本原因在于急功近利'], ['辩证分析法', '对“快/慢”“强/弱”等对立概念统一，避免片面'], ['归纳概括法', '多则材料找交集，提炼共同主旨，防止偏废其一']] },
-        { type: 'svg', svg: '<svg viewBox="0 0 680 250" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="250" fill="#eef5f7"/><text x="340" y="26" text-anchor="middle" font-size="17" font-weight="bold" fill="#1f5f8b">新材料作文审题四法</text><rect x="40" y="55" width="290" height="46" rx="8" fill="#1f5f8b"/><text x="185" y="83" text-anchor="middle" font-size="12" fill="#fff">抓关键词句法</text><rect x="350" y="55" width="290" height="46" rx="8" fill="#4a8fa8"/><text x="495" y="83" text-anchor="middle" font-size="12" fill="#fff">因果分析法</text><rect x="40" y="115" width="290" height="46" rx="8" fill="#c07f4e"/><text x="185" y="143" text-anchor="middle" font-size="12" fill="#fff">辩证分析法</text><rect x="350" y="115" width="290" height="46" rx="8" fill="#7aa05a"/><text x="495" y="143" text-anchor="middle" font-size="12" fill="#fff">归纳概括法</text><text x="340" y="195" text-anchor="middle" font-size="13" fill="#555">由表及里、由果溯因、辩证统一、多材取交集</text></svg>', caption: '新材料作文审题四法：抓关键词句、因果分析、辩证分析、归纳概括。' },
-        { type: 'heading', text: '二、任务驱动型作文审题' },
-        { type: 'paragraph', text: '任务驱动型作文在材料中明确给出“任务指令”，要求就特定对象、以特定身份、用特定文体谈论特定内容。审题的第一要务是把任务指令逐条拆解并落实。' },
-        { type: 'list', items: ['明确任务指令四项：身份、对象、文体、内容范围，缺一不可', '就事论事：紧扣材料中的具体事件展开，切忌“借题发挥”离题万里', '针对性解决：提出切实可行的建议或看法，避免空谈理论', '文体意识：书信要有称呼落款，演讲稿要有开场白与呼告'] },
-        { type: 'example', label: '就事论事示范', text: '材料写“某同学因沉迷手机成绩下滑，家长怒砸手机”。任务要求“以同学身份写一封信劝导”。<br>正确写法：<strong>紧扣该同学的具体情境</strong>（时间被短视频挤占、与父母冲突），提出可操作的建议（制定使用契约、用番茄钟管理时间）；若大谈“科技发展史”或“中外教育制度”，则犯了“借题发挥”、未落实“对象与内容范围”的任务。' },
-        { type: 'warn', label: '易错提醒', text: '任务驱动型作文最常见的失分是<strong>“任务缺项”</strong>：漏了身份（该以晚辈口吻却用说教腔）、漏了对象（对全班讲而非对当事人讲）、漏了文体（写成议论文而非书信）。动笔前务必在草稿上列出四项任务并逐条打钩。' },
-        { type: 'heading', text: '三、命题作文与半命题作文审题' },
-        { type: 'paragraph', text: '命题作文给出完整标题，半命题留出空白由考生补全。二者审题重点在“题眼”——即标题中最关键、决定文章走向的那个词。' },
-        { type: 'keypoint', label: '两大审题抓手', text: '<strong>语法分析抓题眼</strong>：偏正短语抓修饰语（如“难忘的__”题眼在“难忘”而非补什么）；动宾短语抓动词（如“见证”题眼在“证”）。<strong>虚实转化</strong>：把抽象概念（韧性、温度、底色）转化为具体可写的人、事、物、景，避免空对空。' },
-        { type: 'list', items: ['“谈韧性”：虚→实，可写苏轼屡遭贬谪而豁达、华为十年备胎芯片', '“__的温度”：虚→实，可写一碗粥里母爱的温度、一句问候里城市的温度', '“底气”：虚→实，可写文化底气（敦煌守护）、科技底气（北斗导航）', '“这，才是成熟的模样”：题眼在“才”与“成熟”，须写出认知转变'] },
-        { type: 'svg', svg: '<svg viewBox="0 0 680 230" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="230" fill="#eef5f7"/><text x="340" y="26" text-anchor="middle" font-size="17" font-weight="bold" fill="#1f5f8b">作文审题三大类型</text><rect x="40" y="60" width="190" height="56" rx="8" fill="#1f5f8b"/><text x="135" y="84" text-anchor="middle" font-size="12" fill="#fff">新材料作文</text><text x="135" y="104" text-anchor="middle" font-size="10" fill="#fff">抓词·因果·辩证</text><rect x="245" y="60" width="190" height="56" rx="8" fill="#4a8fa8"/><text x="340" y="84" text-anchor="middle" font-size="12" fill="#fff">任务驱动型</text><text x="340" y="104" text-anchor="middle" font-size="10" fill="#fff">身份·对象·文体</text><rect x="450" y="60" width="190" height="56" rx="8" fill="#7aa05a"/><text x="545" y="84" text-anchor="middle" font-size="12" fill="#fff">命题/半命题</text><text x="545" y="104" text-anchor="middle" font-size="10" fill="#fff">抓题眼·虚实化</text><text x="340" y="170" text-anchor="middle" font-size="13" fill="#555">先判定类型，再调用对应审题方法，方能不跑题</text></svg>', caption: '审题先分型：新材料作文、任务驱动型、命题/半命题各有对应方法。' },
-        { type: 'heading', text: '四、立意三原则与五大角度' },
-        { type: 'paragraph', text: '立意是文章的灵魂。同样的材料，立意的高下直接决定得分档次。好立意既要“站得住”，又要“立得高”。' },
-        { type: 'keypoint', label: '立意三原则', text: '<strong>准确</strong>：切合材料核心，不偏不倚；<strong>深刻</strong>：透过现象看本质，不停留于表面；<strong>新颖</strong>：独到见解不落俗套，但新颖须以准确为前提，不能为了求新而曲解材料。' },
-        { type: 'list', items: ['由小到大：从个人小事上升到时代、家国之思', '由个体到社会：从“我”的经历延展到群体命运', '由现象到文化：从具体事件深挖背后的文化心理', '由当下到未来：立足现实，展望趋势与隐忧', '由浅层到哲理：由一事一议升华为普遍规律'] },
-        { type: 'table', headers: ['立意角度', '示例（以“工匠精神”为题）'], rows: [['由小到大', '从一位老匠人写起，上升到民族制造精神'], ['由个体到社会', '从个人敬业，谈行业风气与社会信任'], ['由现象到文化', '从“慢工”现象，谈浮躁文化之反思'], ['由当下到未来', '立足今日智造，展望匠魂代际传承'], ['由浅层到哲理', '由“技”入“道”，谈专注与自由的辩证']] },
-        { type: 'svg', svg: '<svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="200" fill="#eef5f7"/><text x="340" y="26" text-anchor="middle" font-size="17" font-weight="bold" fill="#1f5f8b">立意五大角度（由浅入深）</text><rect x="20" y="70" width="115" height="48" rx="8" fill="#7aa05a"/><text x="77" y="98" text-anchor="middle" font-size="11" fill="#fff">由小到大</text><rect x="150" y="70" width="115" height="48" rx="8" fill="#4a8fa8"/><text x="207" y="98" text-anchor="middle" font-size="11" fill="#fff">个体到社会</text><rect x="280" y="70" width="115" height="48" rx="8" fill="#c07f4e"/><text x="337" y="98" text-anchor="middle" font-size="11" fill="#fff">现象到文化</text><rect x="410" y="70" width="115" height="48" rx="8" fill="#7a6fae"/><text x="467" y="98" text-anchor="middle" font-size="11" fill="#fff">当下到未来</text><rect x="540" y="70" width="120" height="48" rx="8" fill="#1f5f8b"/><text x="600" y="98" text-anchor="middle" font-size="11" fill="#fff">浅层到哲理</text><path d="M135 94 L148 94" stroke="#1f5f8b" stroke-width="3"/><path d="M265 94 L278 94" stroke="#1f5f8b" stroke-width="3"/><path d="M395 94 L408 94" stroke="#1f5f8b" stroke-width="3"/><path d="M525 94 L538 94" stroke="#1f5f8b" stroke-width="3"/><text x="340" y="165" text-anchor="middle" font-size="13" fill="#555">角度越往后越深刻新颖，但须以准确为前提</text></svg>', caption: '立意五大角度由浅入深，越往后越显深刻，但准确是第一底线。' },
-        { type: 'tip', label: '学习提示', text: '审题立意可练“三分钟提纲法”：拿到题先花三分钟，在草稿纸中央写材料关键词，向左列“可写角度”，向右列“最佳立意”，再画箭头标出由小到大的升维路径。每周练五道题的提纲，不写全文也能快速提升立意能力。' },
-        { type: 'reading', text: '延伸思考：当“新颖”与“稳妥”冲突时（比如绝大多数考生都写“慢的价值”，而你想到“有准备的快”），是冒险求新还是求稳保准？请结合评分标准中“深刻”“新颖”的赋分逻辑，谈谈你的取舍原则。' }
-      ],
-      exercises: [
-        { type: 'choice', question: '新材料作文审题中，“抓关键词句法”最适用的材料特征是？', options: ['材料含多个毫无关联的故事', '材料有总结句、高频词或情感倾向词', '材料为纯数据图表', '材料为单一人物对话'], answer: '材料有总结句、高频词或情感倾向词', explanation: '“抓关键词句法”的核心是圈出材料中反复出现的高频词、总结句、议论句及带情感倾向的词，据此锁定主旨。若材料有总结句或高频词（如反复出现“慢”），主旨往往与之相关，故该项最适用。其余选项的材料特征更适合因果分析或归纳概括，故选“材料有总结句、高频词或情感倾向词”。' },
-        { type: 'fill', question: '任务驱动型作文必须逐一落实四项任务指令：身份、对象、文体、__。', answer: '内容范围', explanation: '任务驱动型作文在材料中给出明确任务，审题时须把四项指令逐条拆解：身份（以谁口吻）、对象（写给谁）、文体（书信/演讲稿/议论文等）、内容范围（谈论什么、不跑题）。四项缺一不可，漏任何一项都会被判“任务缺项”而降档，故填“内容范围”。' },
-        { type: 'choice', question: '下列对“立意三原则”表述正确的一项是？', options: ['准确、华丽、简短', '准确、深刻、新颖', '深刻、晦涩、独特', '准确、平淡、全面'], answer: '准确、深刻、新颖', explanation: '立意三原则为“准确、深刻、新颖”：准确指切合材料核心不偏题；深刻指透过现象看本质；新颖指独到见解不落俗套。三者中准确是底线，新颖须以准确为前提。“华丽”“晦涩”“平淡”均非原则表述，故选“准确、深刻、新颖”。' },
-        { type: 'fill', question: '半命题作文“___的温度”审题时，可用“虚实转化”法把抽象词“温度”具体化为可写的__与角度。', answer: '事例', explanation: '“温度”是抽象概念，半命题审题的“虚实转化”要求把虚词落实为具体可写的人、事、物、景。例如可写“一碗粥里母爱的温度”“一句问候里城市的温度”，即用真实事例承载抽象情感。这样写才不会空对空，故填“事例”。' },
-        { type: 'choice', question: '写作中“由个体到社会”属于立意的哪一维度？', options: ['三原则之一', '五大角度之一', '三大结构之一', '审题四法之一'], answer: '五大角度之一', explanation: '立意五大角度为：由小到大、由个体到社会、由现象到文化、由当下到未来、由浅层到哲理。“由个体到社会”即从“我”的经历延展到群体命运，是五大角度中的第二维，而非原则、结构或审题法，故选“五大角度之一”。' }
-      ]
-    },
+  /* —— 子板块 2：命题/半命题作文 —— */
+  v.points.push({
+    id: 'zt4-mingti',
+    name: '命题/半命题作文',
+    chapter: '四、写作',
+    difficulty: '中等',
+    content: [
+      { type: 'heading', text: '一、题型概览' },
+      { type: 'paragraph', text: '命题作文给出完整题目，半命题给出带空缺的题目（如"____之美"），要求补全后写作。二者都限定了写作方向与范围，重在审题精准与化虚为实。' },
+      { type: 'list', items: ['审清题目关键词的义涵与限制', '半命题选择熟悉而有素材的角度补全', '将抽象题目落为具体的人事物', '在限定范围内写出个性与深度'] },
+      { type: 'keypoint', text: '<strong>半命题补题策略</strong>：选自己有真材料、能写出彩的角度（如"细节之美"优于空泛"生活之美"）；避免与多数考生雷同，也要避免过于生僻。' },
+      { type: 'tip', text: '命题作文勿擅自改题；对"见证""留痕"等词要先界定再展开。可运用"以小见大"，用具体小事承载大主题，避免空喊口号。' },
+      { type: 'warn', text: '易错点：半命题补题过大过空导致无物可写；命题作文偷换概念（把"底线"写成"规则"）；审题忽略修饰语（"这也是一种____"的"也"）。' },
+      { type: 'example', text: '示例（高考风格）：请以"带着______出发"为题写一篇文章。思路：补全为"带着热爱出发"，用亲身经历化虚为实，以小见大展开论述。' }
+    ],
+    exercises: [
+      { type: 'choice', question: '半命题作文补题时应优先选择（ ）。', options: ['越大越好', '自己有素材能写深的角度', '最生僻的词', '随大流的热词'], answer: '自己有素材能写深的角度', explanation: '补题要结合自身积累，选能写出具体内容与思考的角度，才能避免空泛；过大过空或过于生僻都难以驾驭。' },
+      { type: 'choice', question: '命题作文《这也是一种幸福》中，"也"字提示作者应（ ）。', options: ['忽略它', '写出被忽视却确属幸福的视角', '改写题目', '只写常规幸福'], answer: '写出被忽视却确属幸福的视角', explanation: '"也"强调"同样、另类"，要求从易被忽略处发掘幸福，审题须抓住修饰限制词，否则易偏题。' },
+      { type: 'fill', question: '化虚为实是指把抽象题目落到具体的人、事、______上。', answer: '物（或景）', explanation: '抽象题目（如"美""温暖"）须借助具体人事景物承载，文章才有血有肉，避免空泛议论。' },
+      { type: 'choice', question: '下列说法错误的是（ ）。', options: ['命题不可擅自改题', '可小中见大', '审题要抓修饰语', '可把"底线"随意写成"规则"'], answer: '可把"底线"随意写成"规则"', explanation: '命题作文须紧扣题目概念，"底线"与"规则"义涵不同，偷换概念即离题；其余三项均为正确审题写作原则。' },
+      { type: 'fill', question: '半命题补题既要避免雷同，也要避免过于______难以下笔。', answer: '生僻', explanation: '补题走极端（过于生僻）会使自己也无材料可写，应在"有料"与"有新意"之间取平衡。' }
+    ]
+  });
 
-    /* ===================== 第二部分 · 构思与结构 ===================== */
+  /* —— 子板块 3：话题作文 —— */
+  v.points.push({
+    id: 'zt4-huati',
+    name: '话题作文',
+    chapter: '四、写作',
+    difficulty: '中等',
+    content: [
+      { type: 'heading', text: '一、题型概览' },
+      { type: 'paragraph', text: '话题作文围绕一个指定"话题"（如"包容""行走"）自由命题写作，限制比命题、材料作文宽松，但更易写得空泛发散，对聚敛立意要求更高。' },
+      { type: 'list', items: ['将宽泛话题收缩为具体角度', '自拟一个贴切而有文采的标题', '用一条主线统摄全篇', '以小切口写出深思考'] },
+      { type: 'keypoint', text: '<strong>话题作文易犯的错</strong>：把"话题"当"标题"直接使用（应自拟题）、立意四面开花无中心。对策是"大话题、小切口、深开掘"。' },
+      { type: 'tip', text: '面对宽泛话题，可用"提问法"收敛：是什么、为什么、怎么样、对谁而言。从中选定一个可驾驭的侧面，再拟题展开，避免泛泛而谈。' },
+      { type: 'warn', text: '易错点：直接用话题词作标题显得敷衍；多个中心齐头并进；例子与话题仅"擦边"未真正扣合。' },
+      { type: 'example', text: '示例（高考风格）：请以"行走"为话题写一篇文章。思路：不自拟"行走"为题，而是收敛为"在经典中行走"，以读书感悟为线展开。' }
+    ],
+    exercises: [
+      { type: 'choice', question: '话题作文处理宽泛话题的最佳策略是（ ）。', options: ['直接使用话题作标题', '大话题小切口深开掘', '写多个中心', '回避话题'], answer: '大话题小切口深开掘', explanation: '话题宽松易空泛，须把大话题收敛到具体可写的小角度并深入挖掘，才能写出深度，而非直接使用话题词或泛泛而谈。' },
+      { type: 'choice', question: '关于话题作文拟题，正确的是（ ）。', options: ['直接用话题词当标题', '另拟贴切有文采的标题', '不写标题', '用拼音作标题'], answer: '另拟贴切有文采的标题', explanation: '话题作文要求自拟标题，直接用话题词显得敷衍且不利立意聚焦，应另拟能体现角度与文采的标题。' },
+      { type: 'fill', question: '可用"提问法"（是什么、为什么、______）收敛宽泛话题。', answer: '怎么样（或对谁）', explanation: '对话题连续发问能快速找到可驾驭的侧面，从而确立具体立意，是防止空泛的有效方法。' },
+      { type: 'choice', question: '话题作文最应避免的是（ ）。', options: ['一线串珠', '多中心齐头并进', '以小见大', '紧扣话题'], answer: '多中心齐头并进', explanation: '多中心会使文章散乱无主脑，是话题作文典型失误；一线串珠、小中见大、紧扣话题均为正确做法。' },
+      { type: 'fill', question: '话题作文须用一条______统摄全篇，防止发散失焦。', answer: '主线（或中心）', explanation: '即便话题开放，全文也须有统一主线与中心思想，所有材料围绕它展开，方能结构紧凑、立意鲜明。' }
+    ]
+  });
 
-    { id: 'zt4-u1-l2', name: '写作专题（二）：构思与结构——框架稳则文章立', author: '高考复习', chapter: '第二部分 · 构思与结构', difficulty: '中等',
-      content: [
-        { type: 'heading', text: '一、三大经典结构总览' },
-        { type: 'paragraph', text: '好的结构让文章层次分明、逻辑清晰。高考议论文推荐三大经典结构：层进式、并列式、对照式。三者可单独使用，也可在一篇文章中组合。' },
-        { type: 'table', headers: ['结构类型', '具体模式', '适用场景'], rows: [['层进式（递进式）', '是什么→为什么→怎么办；由表及里、由浅入深', '哲理思辨类、社会现象类'], ['并列式', '中心论点拆2-3个并列分论点，角度不重叠', '素材丰富、角度多元的题目'], ['对照式（对比式）', '正面+反面论证，或先破后立', '争议性话题、需辨析的题目']] },
-        { type: 'svg', svg: '<svg viewBox="0 0 680 250" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="250" fill="#eef5f7"/><text x="340" y="26" text-anchor="middle" font-size="17" font-weight="bold" fill="#1f5f8b">议论文三大经典结构</text><rect x="40" y="55" width="190" height="56" rx="8" fill="#1f5f8b"/><text x="135" y="79" text-anchor="middle" font-size="12" fill="#fff">层进式</text><text x="135" y="99" text-anchor="middle" font-size="10" fill="#fff">是什么到怎么办</text><rect x="245" y="55" width="190" height="56" rx="8" fill="#4a8fa8"/><text x="340" y="79" text-anchor="middle" font-size="12" fill="#fff">并列式</text><text x="340" y="99" text-anchor="middle" font-size="10" fill="#fff">分论点平行</text><rect x="450" y="55" width="190" height="56" rx="8" fill="#c07f4e"/><text x="545" y="79" text-anchor="middle" font-size="12" fill="#fff">对照式</text><text x="545" y="99" text-anchor="middle" font-size="10" fill="#fff">正反·破立</text><text x="340" y="170" text-anchor="middle" font-size="13" fill="#555">按题目素材与角度特点选结构，框架稳则文章立</text></svg>', caption: '三大结构：层进式（递进）、并列式（平行）、对照式（对比/破立）。' },
-        { type: 'heading', text: '二、层进式（递进式）' },
-        { type: 'paragraph', text: '层进式按“引论→本论→结论”展开，本论部分层层深入。它最能体现思维的深度，是哲理思辨类与社会现象类作文的首选。' },
-        { type: 'keypoint', label: '层进式标杆模式', text: '五步法：①<strong>提出观点</strong>（亮明中心论点）；②<strong>阐释内涵</strong>（是什么）；③<strong>分析原因/意义</strong>（为什么）；④<strong>指出做法</strong>（怎么办）；⑤<strong>总结升华</strong>（回扣并拔高）。五步环环相扣，由浅入深。' },
-        { type: 'example', label: '层进式提纲示范', text: '以《论坚持》为例：①提出观点“坚持是成就事业的基石”；②阐释内涵“坚持是久久为功的恒心”；③分析原因“为何坚持能成事——量变到质变、逆境中蓄力”；④指出做法“如何坚持——目标拆解、抗干扰、复盘”；⑤总结升华“个人坚持汇成民族前行的力量”。五步层层递进，逻辑严整。' },
-        { type: 'heading', text: '三、并列式' },
-        { type: 'paragraph', text: '并列式把中心论点拆成2-3个互不重叠的分论点，每个分论点独立成段展开。适用于素材丰富、角度多元的题目。' },
-        { type: 'list', items: ['个人→集体→国家（由己及人及天下）', '历史→现实→未来（纵向时间轴）', '思想→行动→制度（由内而外）', '内因→外因（主客观统一）'] },
-        { type: 'example', label: '并列分论点示范', text: '以《谈合作》为例，三个并列分论点：①合作是个人突破瓶颈的阶梯（个人）；②合作是团队攻克难题的引擎（集体）；③合作是人类文明续写的密码（人类）。三者角度平行、互不重叠，构成清晰骨架。' },
-        { type: 'warn', label: '易错提醒', text: '并列式最忌<strong>分论点重叠或交叉</strong>：例如“勤奋使人进步”“努力使人成功”本质同一，不能并列。拟写后须用“互换检验法”——若两个分论点互换位置文章仍通顺，说明它们并非真正并列，须重新拆分角度。' },
-        { type: 'heading', text: '四、对照式（对比式）' },
-        { type: 'paragraph', text: '对照式通过正反对比或破立结合突出中心论点，适用于争议性话题、需要辨析正误的题目。' },
-        { type: 'list', items: ['正反对比：正面论证+反面论证，两相对照显优劣', '破立结合：先“破”错误观点（树靶子、打靶子），再“立”正确主张', '对比须聚焦同一标准，避免偷换概念'] },
-        { type: 'example', label: '破立结合示范', text: '写《拒绝盲从》：先“破”——树靶子“有人认为随大流最安全”，打靶子“盲从使人丧失独立判断，如股市跟风被套”；后“立”——建立正确主张“保持清醒、独立思考才是正道”，再辅以理性思考的方法。破立之间逻辑自洽，说服力陡增。' },
-        { type: 'svg', svg: '<svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="200" fill="#eef5f7"/><text x="340" y="26" text-anchor="middle" font-size="17" font-weight="bold" fill="#1f5f8b">对照式：先破后立</text><rect x="60" y="70" width="230" height="56" rx="8" fill="#b04a4a"/><text x="175" y="94" text-anchor="middle" font-size="13" fill="#fff">破：树靶·打靶（驳错误）</text><rect x="390" y="70" width="230" height="56" rx="8" fill="#7aa05a"/><text x="505" y="94" text-anchor="middle" font-size="13" fill="#fff">立：建正确主张</text><path d="M290 98 L388 98" stroke="#1f5f8b" stroke-width="3"/><path d="M380 92 L392 98 L380 104 Z" fill="#1f5f8b"/><text x="340" y="165" text-anchor="middle" font-size="13" fill="#555">正反对比突出中心，破立结合增强说服力</text></svg>', caption: '对照式先“破”错误观点（树靶、打靶），再“立”正确主张，正反相映。' },
-        { type: 'heading', text: '五、开头与结尾核心要求' },
-        { type: 'keypoint', label: '开头凤头', text: '开头要写成“凤头”：<strong>引材料（简）→析材料（精）→亮观点（明）</strong>。要求三个字——<strong>短</strong>（百字左右）、<strong>快</strong>（迅速入题）、<strong>亮</strong>（观点鲜明）。切忌长篇复述材料或绕圈子。' },
-        { type: 'keypoint', label: '结尾豹尾', text: '结尾要写成“豹尾”：<strong>总结升华、照应开头、发出号召</strong>。要求回扣中心、语言有力、引人深思，切忌另起新话题或草草收场。' },
-        { type: 'table', headers: ['部位', '核心动作', '三字/三词要求'], rows: [['开头（凤头）', '引材料→析材料→亮观点', '短、快、亮'], ['结尾（豹尾）', '总结升华→照应开头→发号召', '回扣、有力、深思']] },
-        { type: 'svg', svg: '<svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="200" fill="#eef5f7"/><text x="340" y="26" text-anchor="middle" font-size="17" font-weight="bold" fill="#1f5f8b">开头凤头·结尾豹尾</text><rect x="60" y="65" width="250" height="60" rx="8" fill="#1f5f8b"/><text x="185" y="90" text-anchor="middle" font-size="13" fill="#fff">凤头：引·析·亮</text><text x="185" y="110" text-anchor="middle" font-size="11" fill="#fff">短·快·亮，百字入题</text><rect x="370" y="65" width="250" height="60" rx="8" fill="#c07f4e"/><text x="495" y="90" text-anchor="middle" font-size="13" fill="#fff">豹尾：收·升·召</text><text x="495" y="110" text-anchor="middle" font-size="11" fill="#fff">回扣中心·有力·深思</text><text x="340" y="170" text-anchor="middle" font-size="13" fill="#555">首尾呼应成闭环，是阅卷第一印象的关键</text></svg>', caption: '开头“凤头”要求短快亮，结尾“豹尾”要求回扣、有力、深思，首尾成环。' },
-        { type: 'tip', label: '学习提示', text: '结构训练可用“骨架填充法”：先写一句话中心论点，再写2-3句分论点（标“并列/层进/对照”），最后写开头结尾各一句。全文骨架百字即可成型，再往里填素材。每周用此法搭三篇骨架，结构感会迅速稳固。' },
-        { type: 'reading', text: '延伸思考：考场作文常要求“结构清晰”，但过分模板化（如每段千篇一律“分论点+事例+结论”）又会被判“套路化”失分。请结合发展等级“有创意”的要求，谈谈如何在“结构清晰”与“构思新巧”之间取得平衡。' }
-      ],
-      exercises: [
-        { type: 'choice', question: '层进式（递进式）议论文标杆模式的第一步是？', options: ['提出观点', '分析原因', '指出做法', '总结升华'], answer: '提出观点', explanation: '层进式五步法为：①提出观点（亮明中心论点）；②阐释内涵（是什么）；③分析原因/意义（为什么）；④指出做法（怎么办）；⑤总结升华。第一步是“提出观点”，先亮明立场才能展开后续论证，故选“提出观点”。' },
-        { type: 'fill', question: '高考议论文开头要写成“凤头”，核心要求是三个字：__、快、亮。', answer: '短', explanation: '开头“凤头”三要求为“短、快、亮”：短指篇幅短（百字左右，不啰嗦）；快指迅速入题（不绕圈子）；亮指观点鲜明（一眼见主旨）。三者中“短”是首要，篇幅过长会冲淡重点，故填“短”。' },
-        { type: 'choice', question: '并列式结构拆分分论点的常见角度不包括？', options: ['个人→集体→国家', '历史→现实→未来', '思想→行动→制度', '主语→谓语→宾语'], answer: '主语→谓语→宾语', explanation: '并列式分论点常见拆分角度有：个人→集体→国家、历史→现实→未来、思想→行动→制度、内因→外因等，均为有意义的语义维度。“主语→谓语→宾语”是句子语法成分，不是立意角度，且分论点互换位置应不通顺才是真并列，故选“主语→谓语→宾语”。' },
-        { type: 'fill', question: '对照式中的“破立结合”是指先__（驳斥错误观点），后__（建立正确观点）。', answer: '破', explanation: '对照式的“破立结合”写作顺序为先“破”后“立”：“破”是树靶子、打靶子，驳斥材料或社会中的错误观点；“立”是在破的基础上建立正确主张。先破后立方显逻辑力量，故前半空填“破”（后半空对应“立”）。' },
-        { type: 'choice', question: '下列对“豹尾”（结尾）要求表述正确的是？', options: ['越长越好，尽情发挥', '须回扣中心、语言有力、引人深思', '可以另起新话题', '不必照应开头'], answer: '须回扣中心、语言有力、引人深思', explanation: '结尾“豹尾”要求总结升华、照应开头、发出号召，具体为回扣中心、语言有力、引人深思。它忌讳另起新话题（偏离主旨）、忌讳不照应开头（首尾断裂）、也非越长越好。故选“须回扣中心、语言有力、引人深思”。' }
-      ]
-    }
-
-  );
+  /* —— 子板块 4：任务驱动型作文 —— */
+  v.points.push({
+    id: 'zt4-renwu',
+    name: '任务驱动型作文',
+    chapter: '四、写作',
+    difficulty: '较难',
+    content: [
+      { type: 'heading', text: '一、题型概览' },
+      { type: 'paragraph', text: '任务驱动型作文在材料基础上设置具体写作任务：限定写作身份、对象、文体与目的（如"以青年身份给某某写一封信"）。强调针对性、对象感与现实关切。' },
+      { type: 'list', items: ['明确任务中的身份、对象、文体', '回应材料中的具体争议或情境', '文体特征鲜明（书信、发言稿等）', '有针对性地说理而非空论'] },
+      { type: 'keypoint', text: '<strong>任务四要素</strong>：我是谁（身份）、对谁说（对象）、说什么（针对材料争议）、怎么写（文体格式）。漏掉任一要素都会被判未完成指令。' },
+      { type: 'table', headers: ['文体', '格式要点', '语体'], rows: [
+        ['书信', '称呼、落款、此致', '亲切有交流感'],
+        ['发言稿', '开场白、称呼', '庄重有感染力'],
+        ['倡议书', '标题、倡议语', '号召性强']
+      ] },
+      { type: 'tip', text: '务必在文中"亮明身份与对象"，如"作为一名高三学生，我想对同为青年的你说"；就材料中的对立观点作出取舍与权衡，体现思辨，而非各打五十大板。' },
+      { type: 'warn', text: '易错点：忽略任务指令写成普通材料作文；文体格式缺失（无称呼落款）；只复述材料不表态；对象感缺失像在自言自语。' },
+      { type: 'example', text: '示例（高考风格）：请结合材料，以"当代青年"的身份写一封信，谈你对边疆支教的态度。思路：先亮身份对象，再就"值不值"作出权衡表态，最后以书信格式收束。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="200" fill="#fbf3f7"/><text x="20" y="32" font-size="18" fill="#9e2f6f" font-weight="bold">任务驱动型作文 · 任务四要素</text><rect x="30" y="70" width="150" height="56" rx="8" fill="#f3dce9" stroke="#9e2f6f"/><text x="105" y="103" font-size="13" fill="#5f1f46" text-anchor="middle">我是谁</text><rect x="200" y="70" width="150" height="56" rx="8" fill="#f3dce9" stroke="#9e2f6f"/><text x="275" y="103" font-size="13" fill="#5f1f46" text-anchor="middle">对谁说</text><rect x="370" y="70" width="150" height="56" rx="8" fill="#f3dce9" stroke="#9e2f6f"/><text x="445" y="103" font-size="13" fill="#5f1f46" text-anchor="middle">说什么</text><rect x="540" y="70" width="150" height="56" rx="8" fill="#e9f3e3" stroke="#3f7d1e"/><text x="615" y="103" font-size="13" fill="#2e3a22" text-anchor="middle">怎么写</text></svg>', caption: '任务驱动型作文须同时满足身份、对象、内容与文体的指令。' }
+    ],
+    exercises: [
+      { type: 'choice', question: '任务驱动型作文区别于普通材料作文的关键是（ ）。', options: ['不用材料', '必须完成具体写作任务指令', '字数更少', '不需立意'], answer: '必须完成具体写作任务指令', explanation: '任务驱动型作文在材料外附加身份、对象、文体等指令，写作须回应这些任务，忽略指令即未完成题目要求。' },
+      { type: 'choice', question: '以"青年身份给同龄人写一封信"须具备的要素是（ ）。', options: ['无称呼', '亮明身份对象加书信格式', '用文言文', '不表态'], answer: '亮明身份对象加书信格式', explanation: '书信须有称呼、落款等格式，并明确"我是青年、对同龄人说"，对象感与格式缺一不可。' },
+      { type: 'fill', question: '任务四要素：我是谁、对谁说、说什么、______。', answer: '怎么写（文体）', explanation: '除身份、对象、内容外，还须明确文体与写法（书信、发言稿等），四要素共同构成任务指令。' },
+      { type: 'choice', question: '下列对材料争议最恰当的表态是（ ）。', options: ['各打五十大板', '作出取舍与权衡', '全盘否定', '回避不谈'], answer: '作出取舍与权衡', explanation: '任务驱动型作文鼓励思辨，应就对立观点作出明确权衡而非和稀泥，方能体现深度与针对性。' },
+      { type: 'fill', question: '发言稿须有开场白与______，语体庄重有感染力。', answer: '称呼', explanation: '发言稿面向听众，需有称呼与开场白以建立现场感，这是其文体格式的基本要求。' }
+    ]
+  });
 })();
