@@ -118,7 +118,7 @@ var GZ_SUBJECTS = [
     ]
   },
   {
-    id: 'tech', name: '通用技术', icon: '🔧', color: '#8a949e',
+    id: 'tech', name: '通用技术', icon: '🔧', color: '#2f9e6b',
     desc: '高中通用技术，技术与设计',
     volumes: [
       { id: 'bx1', name: '必修 技术与设计1', desc: '技术及其性质、设计过程、设计的交流与评价', points: [] },

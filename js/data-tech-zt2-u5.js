@@ -1,0 +1,43 @@
+/* 通用技术 · 高三复习 · 结构流程系统 · 结构的设计 */
+(function () {
+  var v = gzGetVolume('tech', 'zt2');
+  if (!v) return;
+  v.points.push({
+    id: 'zt2-u5',
+    name: '结构的设计',
+    chapter: '二、结构及其设计 · 结构的设计',
+    difficulty: '基础',
+    content: [
+      { type: 'heading', text: '一、从“认识结构”到“设计结构”' },
+      { type: 'paragraph', text: '前面几节我们学会了看结构：认得出类型，判断得出受力，说得清稳不稳、牢不牢。这一节要往前迈一步，自己动手设计一个结构。学业水平考试里，结构设计常以简答题、方案分析题的形式出现，题干给一个具体需求，让你说出设计时要考虑哪些因素，或者评价一个方案好不好。' },
+      { type: 'paragraph', text: '设计结构不是随便画个样子，而是要在一堆要求之间做权衡。这些要求可以归成四组：稳定性、强度、安全性；适用性、耐久性；成本控制要求、环境因素；美学、个性化需求。下面逐组来看它们分别管什么，以及在实际设计中怎么落实。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="300" fill="#e8f3ee"/><text x="340" y="30" font-size="17" font-weight="bold" fill="#2f6b4f" text-anchor="middle">结构设计应考虑的主要因素</text><text x="340" y="52" font-size="12" fill="#1e3a2b" text-anchor="middle">四组要求互相牵制，设计就是在其中做权衡</text><rect x="24" y="70" width="310" height="100" rx="12" fill="#cdeadd" stroke="#2f9e6b" stroke-width="1.6"/><text x="179" y="98" font-size="15" font-weight="bold" fill="#2f6b4f" text-anchor="middle">① 稳定性 · 强度 · 安全性</text><text x="179" y="124" font-size="12" fill="#1e3a2b" text-anchor="middle">不能倒、不能断、用起来不伤人</text><text x="179" y="148" font-size="12" fill="#1e3a2b" text-anchor="middle">这是底线，不满足其他都白搭</text><rect x="346" y="70" width="310" height="100" rx="12" fill="#cdeadd" stroke="#2f9e6b" stroke-width="1.6"/><text x="501" y="98" font-size="15" font-weight="bold" fill="#2f6b4f" text-anchor="middle">② 适用性 · 耐久性</text><text x="501" y="124" font-size="12" fill="#1e3a2b" text-anchor="middle">好不好用，能不能用得久</text><text x="501" y="148" font-size="12" fill="#1e3a2b" text-anchor="middle">尺寸合身、材料防锈防腐</text><rect x="24" y="186" width="310" height="100" rx="12" fill="#cdeadd" stroke="#2f9e6b" stroke-width="1.6"/><text x="179" y="214" font-size="15" font-weight="bold" fill="#2f6b4f" text-anchor="middle">③ 成本控制 · 环境因素</text><text x="179" y="240" font-size="12" fill="#1e3a2b" text-anchor="middle">花多少钱，对环境有没有影响</text><text x="179" y="264" font-size="12" fill="#1e3a2b" text-anchor="middle">省材料、可回收、适应当地气候</text><rect x="346" y="186" width="310" height="100" rx="12" fill="#cdeadd" stroke="#2f9e6b" stroke-width="1.6"/><text x="501" y="214" font-size="15" font-weight="bold" fill="#2f6b4f" text-anchor="middle">④ 美学 · 个性化需求</text><text x="501" y="240" font-size="12" fill="#1e3a2b" text-anchor="middle">好不好看，合不合使用者口味</text><text x="501" y="264" font-size="12" fill="#1e3a2b" text-anchor="middle">造型、色彩，以及特殊人群的需要</text></svg>', caption: '图1　结构设计要考虑的四组主要因素。' },
+      { type: 'heading', text: '二、第一组：稳定性、强度、安全性' },
+      { type: 'paragraph', text: '这三个是设计的底线要求，一条不满足，其他做得再漂亮也没用。稳定性保证结构不倾倒，强度保证结构不断裂，安全性则更进一步，要求使用过程中不会伤到人。' },
+      { type: 'paragraph', text: '怎么落实？前面学过的知识全部用得上。要提高稳定性，就从三大因素入手：降低重心、扩大支撑面、多用三角形。要提高强度，同样有三条路：选合适的形状（三角形、拱形，截面用工字形或管形）、选合适的材料（受压部位用混凝土，受拉部位用钢筋）、选合适的连接方式（要固定就用刚连接的榫接、焊接）。' },
+      { type: 'paragraph', text: '安全性容易被忽略。设计校园里的花坛座椅，除了坐上去不塌不倒，还要把边角做成圆角，防止同学奔跑时磕碰受伤；儿童滑梯的护栏间距要小，防止小孩钻出去。这些都属于安全性考虑。' },
+      { type: 'keypoint', label: '重点·底线三要素怎么答', text: '答“如何提高结构的稳定性”，写<strong>降低重心、扩大支撑面、采用三角形等稳定形状</strong>；答“如何提高结构的强度”，写<strong>改进形状（含截面形状）、选用合适材料、改进连接方式</strong>；答安全性，写<strong>避免尖角利边、设置防护、留足余量</strong>。这三条模板背熟，简答题基本不丢分。' },
+      { type: 'heading', text: '三、第二组：适用性与耐久性' },
+      { type: 'paragraph', text: '适用性说的是好不好用，也就是这个结构能不能满足它本来的用途。给小学生设计的课桌椅，如果按成年人的尺寸做，坐上去脚够不着地，那就是适用性差。给教室设计的书架，如果搁板间距太小放不进大开本的图册，也是适用性差。' },
+      { type: 'paragraph', text: '耐久性说的是能不能用得久。露天的健身器材如果用普通钢材而不做防锈处理，一个雨季下来就锈迹斑斑；木质长椅如果不刷漆，很快会受潮开裂。所以耐久性主要靠选耐候的材料和做好表面处理来保证。' },
+      { type: 'heading', text: '四、第三组：成本控制要求与环境因素' },
+      { type: 'paragraph', text: '成本控制要求就是要花得起。同样一个书架，用整块实木最结实，可价格高；用密度板便宜，但承重差。设计时要在满足强度的前提下尽量省材料，这也是框架结构比实体结构应用更广的原因之一：用细长构件搭出空间，材料省、自重轻、造价低。' },
+      { type: 'paragraph', text: '环境因素包含两层意思。一层是结构要适应所在环境：沿海地区风大盐雾重，就要考虑抗风和防腐；北方冬天要考虑积雪压在屋顶上的荷载。另一层是结构不要破坏环境：尽量选可回收材料，减少污染，废弃后能拆解再利用。' },
+      { type: 'heading', text: '五、第四组：美学与个性化需求' },
+      { type: 'paragraph', text: '结构不仅要能用，还要好看。造型、比例、色彩搭配都属于美学考虑。赵州桥的拱形既受力合理又线条优美，悉尼歌剧院的壳体屋顶像一片片风帆，都是把力学与美感结合得很好的例子。' },
+      { type: 'paragraph', text: '个性化需求指的是针对特定使用者的特殊要求。给盲人设计的扶手要加防滑纹和盲文标识，给轮椅使用者设计的坡道坡度要平缓，给宿舍设计的储物柜可以做成模块化让同学自由组合。能不能想到使用者的特殊需要，往往是方案评价题的得分点。' },
+      { type: 'list', items: ['稳定性、强度、安全性：不倒、不断、不伤人，是必须先满足的底线', '适用性、耐久性：尺寸合身好用，材料耐候能用得久', '成本控制要求、环境因素：造价能承受，适应当地气候，材料可回收少污染', '美学、个性化需求：造型色彩美观，照顾特殊使用者的需要'] },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="320" fill="#e8f3ee"/><text x="340" y="30" font-size="17" font-weight="bold" fill="#2f6b4f" text-anchor="middle">实例：设计一个校园阅读角书架</text><text x="340" y="52" font-size="12" fill="#1e3a2b" text-anchor="middle">把四组因素逐条落到具体做法上</text><rect x="40" y="76" width="150" height="200" rx="6" fill="#cdeadd" stroke="#2f9e6b" stroke-width="2"/><line x1="40" y1="126" x2="190" y2="126" stroke="#2f9e6b" stroke-width="3"/><line x1="40" y1="176" x2="190" y2="176" stroke="#2f9e6b" stroke-width="3"/><line x1="40" y1="226" x2="190" y2="226" stroke="#2f9e6b" stroke-width="3"/><rect x="20" y="276" width="190" height="16" rx="4" fill="#2f9e6b"/><text x="115" y="306" font-size="12" fill="#1e3a2b" text-anchor="middle">下宽上窄，底座加重</text><line x1="200" y1="120" x2="236" y2="112" stroke="#2f6b4f" stroke-width="1.5"/><text x="244" y="104" font-size="13" font-weight="bold" fill="#2f6b4f">稳定性</text><text x="244" y="124" font-size="12" fill="#1e3a2b">底座加重降低重心，底面做宽扩大支撑面</text><line x1="200" y1="170" x2="236" y2="162" stroke="#2f6b4f" stroke-width="1.5"/><text x="244" y="154" font-size="13" font-weight="bold" fill="#2f6b4f">强度与安全性</text><text x="244" y="174" font-size="12" fill="#1e3a2b">背板加斜撑成三角，搁板与立柱榫接，边角磨圆</text><line x1="200" y1="220" x2="236" y2="212" stroke="#2f6b4f" stroke-width="1.5"/><text x="244" y="204" font-size="13" font-weight="bold" fill="#2f6b4f">适用性与耐久性</text><text x="244" y="224" font-size="12" fill="#1e3a2b">层高按图册尺寸定，表面刷清漆防潮</text><line x1="200" y1="268" x2="236" y2="262" stroke="#2f6b4f" stroke-width="1.5"/><text x="244" y="254" font-size="13" font-weight="bold" fill="#2f6b4f">成本·环境·美学</text><text x="244" y="274" font-size="12" fill="#1e3a2b">选价格适中的可回收板材，配色与教室协调</text><text x="244" y="296" font-size="12" fill="#1e3a2b">底层留空放大部头书，方便同学取阅</text></svg>', caption: '图2　以校园阅读角书架为例，把结构设计的各项要求落到具体做法上。' },
+      { type: 'tip', label: '技巧·方案题的答题套路', text: '遇到“请说明设计某某结构时应考虑哪些因素”这类题，<strong>按四组顺序往下写，每组结合题目情境举一个具体做法</strong>，不要只罗列名词。例如设计公园长椅：稳定性上底座加宽加重；强度上椅面用横档加固、连接处焊接；适用性上高度按成年人坐姿确定；耐久性上做防腐处理；成本上用普通防腐木；环境上选可回收材料；美学上造型与园林风格协调。这样答分数最高。' },
+      { type: 'warn', label: '易错·别把各项要求对立起来', text: '很多同学答题时容易走极端，比如写“为了强度高，材料越厚越好”。<strong>结构设计是权衡而不是单项冲刺。</strong>材料一味加厚，成本上去了、自重大了、还可能不美观；一味追求便宜，强度和安全性又保不住。正确的思路是：<strong>先守住稳定性、强度、安全性这条底线，再在满足适用和耐久的前提下压低成本、兼顾环境，最后考虑美观和个性化。</strong>' },
+      { type: 'example', label: '例题·评价一个结构设计方案', text: '题目：某同学为学校天台设计一个晾晒衣物的支架，方案是：用细钢管焊成长方形框架，四条腿直上直下、底面与顶面一样大，钢管不做任何表面处理，造价很低。请指出这个方案的不足并提出改进意见。<br>解析：不足有三点。第一，<strong>稳定性不够</strong>：四条腿直上直下，底面不大，重心也不低，天台风大容易被吹倒。第二，<strong>强度不够</strong>：长方形框架受横向力时容易变形，四边形不是稳定形状。第三，<strong>耐久性差</strong>：钢管露天使用不做防锈处理，很快会锈蚀。改进意见：把四条腿做成下宽上窄的形式以<strong>扩大支撑面</strong>，底部加配重<strong>降低重心</strong>；在框架侧面加斜拉杆构成<strong>三角形</strong>提高强度；钢管做<strong>镀锌或喷漆防锈处理</strong>提高耐久性。同时把管口封堵、边角处理圆滑，兼顾<strong>安全性</strong>。' }
+    ],
+    exercises: [
+      { type: 'choice', question: '进行结构设计时，下列哪一组要求属于必须首先满足的底线要求？', options: ['美学、个性化需求', '稳定性、强度、安全性', '成本控制要求、环境因素', '造型新颖、色彩鲜艳'], answer: '稳定性、强度、安全性', explanation: '结构设计要考虑的因素很多，但稳定性、强度、安全性是底线：结构不能倾倒、不能断裂、使用中不能伤人。这三条只要有一条不满足，方案再美观、再便宜也不能采用。适用性、耐久性、成本控制、环境因素、美学与个性化需求都要在守住这条底线的前提下再去权衡。' },
+      { type: 'choice', question: '为学校天台设计晾衣支架时，把四条支腿做成下宽上窄，并在底部加配重块。这样做主要是为了满足哪方面的要求？', options: ['美学要求，看起来更好看', '成本控制要求，可以少用材料', '稳定性要求，扩大支撑面并降低重心', '个性化需求，方便特殊人群使用'], answer: '稳定性要求，扩大支撑面并降低重心', explanation: '支腿做成下宽上窄，增大了结构与地面接触形成的支撑面；底部加配重块，降低了整体的重心位置。支撑面变大、重心变低，重心垂线更不容易跑出底面范围，天台风大时不易被吹倒，这正是稳定性方面的考虑。' },
+      { type: 'choice', question: '给露天健身器材选用镀锌钢管并做喷漆处理，主要体现了结构设计中的哪项要求？', options: ['耐久性要求', '适用性要求', '个性化需求', '稳定性要求'], answer: '耐久性要求', explanation: '露天器材长期经受日晒雨淋，普通钢材容易锈蚀。镀锌和喷漆是表面防护处理，目的是让器材使用更长时间不损坏，属于耐久性方面的考虑。适用性关注好不好用、尺寸合不合适；稳定性关注会不会倾倒；个性化需求关注特定使用者的特殊要求。' },
+      { type: 'fill', question: '结构设计首先要保证结构不倾倒、不断裂、不伤人，即满足___、___和安全性的要求。', answer: '稳定性；强度', explanation: '稳定性指结构在荷载作用下维持原有平衡状态的能力，保证不倾倒；强度指结构抵抗被外力破坏的能力，保证不断裂；安全性进一步要求使用过程中不伤人，例如边角做圆、设置防护。这三项是结构设计的底线要求。' },
+      { type: 'fill', question: '设计校园长椅时，选用价格适中的可回收材料，既控制了造价，又减少了对环境的破坏，这体现了___要求和___因素两方面的考虑。', answer: '成本控制；环境', explanation: '成本控制要求关注造价是否能承受，做法包括在满足强度的前提下节省材料、选用价格适中的材料；环境因素既指结构要适应所在环境（如抗风、防腐、承受积雪），也指结构不要破坏环境（选可回收材料、减少污染）。选用价格适中的可回收材料同时照顾了这两方面。' }
+    ]
+  });
+})();

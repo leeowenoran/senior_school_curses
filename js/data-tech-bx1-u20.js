@@ -1,0 +1,39 @@
+/* 通用技术 · 必修 技术与设计1 · 第六章 技术交流与评价 · 第四节 技术产品的使用与维护 */
+(function () {
+  var v = gzGetVolume('tech', 'bx1');
+  if (!v) return;
+  v.points.push({
+    id: 'bx1-u20',
+    name: '第四节 技术产品的使用与维护',
+    chapter: '第六章 技术交流与评价',
+    difficulty: '基础',
+    content: [
+      { type: 'heading', text: '一、买回来只是开始' },
+      { type: 'paragraph', text: '同样一辆自行车，有的同学骑三年还跟新的一样，有的同学骑半年就链条锈死、闸皮磨光。差别在哪里？不在车，在人——在会不会用、有没有养。技术产品的寿命，一半靠设计和制造，另一半靠使用和维护。' },
+      { type: 'paragraph', text: '这一节内容不难，但很实用。它讲三件事：怎样正确使用，怎样做日常维护，还有哪些保养常识需要知道。学完之后，家里的电器、自己的自行车、教室的仪器，你都能照顾得更好。' },
+      { type: 'heading', text: '二、正确使用：从读说明书开始' },
+      { type: 'paragraph', text: '正确使用技术产品的第一条原则很简单：按照产品说明书正确操作。上一节我们学过，说明书里写清了产品的性能、结构、使用方法和维护保养要求。买回一件东西先翻说明书，几分钟的事，能避免大部分误操作。' },
+      { type: 'list', items: ['使用前先读说明书，弄清各个按钮和部件的作用，别凭感觉乱按', '按规定的条件使用，不超载、不超速、不超温、不超时间', '按正确的顺序操作，比如先插电源再开机，用完先关机再拔插头', '注意说明书里的安全警示，该接地的要接地，该断电的要断电', '不擅自拆改产品结构，改装往往会破坏原有的安全设计', '发现异常声音、异味、发烫时立即停机检查，不要带病使用'] },
+      { type: 'keypoint', label: '重点·正确使用的核心', text: '正确使用技术产品的核心要求就是一句话：<strong>按照产品说明书正确操作</strong>。说明书是设计者留给使用者的指南，它规定了产品的使用条件、操作步骤和安全事项。<strong>凡是超出说明书规定条件的使用，都属于不当使用</strong>，既容易损坏产品，也可能带来安全隐患。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 250" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="250" fill="#e8f3ee"/><text x="340" y="32" font-size="17" font-weight="bold" fill="#2f6b4f" text-anchor="middle">用好一件技术产品的三件事</text><rect x="24" y="66" width="200" height="150" rx="12" fill="#cdeadd" stroke="#2f9e6b" stroke-width="1.5"/><text x="124" y="96" font-size="15" font-weight="bold" fill="#2f6b4f" text-anchor="middle">正确使用</text><text x="124" y="124" font-size="11" fill="#1e3a2b" text-anchor="middle">按产品说明书操作</text><text x="124" y="148" font-size="11" fill="#1e3a2b" text-anchor="middle">不超载不超温</text><text x="124" y="172" font-size="11" fill="#1e3a2b" text-anchor="middle">不擅自拆改</text><text x="124" y="196" font-size="11" fill="#1e3a2b" text-anchor="middle">异常立即停机</text><rect x="240" y="66" width="200" height="150" rx="12" fill="#cdeadd" stroke="#2f9e6b" stroke-width="1.5"/><text x="340" y="96" font-size="15" font-weight="bold" fill="#2f6b4f" text-anchor="middle">日常维护</text><text x="340" y="124" font-size="11" fill="#1e3a2b" text-anchor="middle">定期清洁</text><text x="340" y="148" font-size="11" fill="#1e3a2b" text-anchor="middle">定期润滑</text><text x="340" y="172" font-size="11" fill="#1e3a2b" text-anchor="middle">定期检查</text><text x="340" y="196" font-size="11" fill="#1e3a2b" text-anchor="middle">关键在于按时做</text><rect x="456" y="66" width="200" height="150" rx="12" fill="#cdeadd" stroke="#2f9e6b" stroke-width="1.5"/><text x="556" y="96" font-size="15" font-weight="bold" fill="#2f6b4f" text-anchor="middle">保养常识</text><text x="556" y="124" font-size="11" fill="#1e3a2b" text-anchor="middle">防潮</text><text x="556" y="148" font-size="11" fill="#1e3a2b" text-anchor="middle">防尘</text><text x="556" y="172" font-size="11" fill="#1e3a2b" text-anchor="middle">防腐蚀</text><text x="556" y="196" font-size="11" fill="#1e3a2b" text-anchor="middle">存放环境要合适</text></svg>', caption: '图1　技术产品的正确使用、日常维护与保养常识三大要点。' },
+      { type: 'heading', text: '三、日常维护：定期清洁、润滑、检查' },
+      { type: 'paragraph', text: '日常维护讲的是平时怎么养，可以归纳成三个动作：清洁、润滑、检查。三个动作前面都有两个字很重要，叫“定期”——维护的价值就在于按时去做，等到坏了再修就晚了。' },
+      { type: 'table', headers: ['维护动作', '为什么要做', '生活中的例子', '大致周期'], rows: [['定期清洁', '灰尘油污会影响散热、加速磨损、堵塞通道', '擦净电风扇扇叶、清洗空调滤网、扫除电脑机箱积灰', '每月至每季一次'], ['定期润滑', '减少摩擦、降低磨损、防止锈死和异响', '给自行车链条上油、给抽屉滑轨加润滑油', '每季至半年一次'], ['定期检查', '及早发现松动、老化、磨损，把故障消灭在萌芽', '检查螺栓是否松动、电线是否破皮、闸皮是否磨薄', '每月一次或使用前']] },
+      { type: 'paragraph', text: '以自行车为例，一次完整的日常维护是这样的：先用抹布擦掉车架和轮圈上的泥（清洁），再给链条和轴承上一点润滑油（润滑），然后捏一捏刹车看灵不灵、拧一拧螺丝看松不松、按一按轮胎看气足不足（检查）。十分钟做完，能让车多骑好几年。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 220" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="220" fill="#e8f3ee"/><text x="340" y="32" font-size="17" font-weight="bold" fill="#2f6b4f" text-anchor="middle">日常维护三动作：清洁 → 润滑 → 检查</text><rect x="40" y="66" width="170" height="110" rx="12" fill="#cdeadd" stroke="#2f9e6b" stroke-width="1.5"/><text x="125" y="98" font-size="14" font-weight="bold" fill="#2f6b4f" text-anchor="middle">定期清洁</text><text x="125" y="126" font-size="11" fill="#1e3a2b" text-anchor="middle">擦掉灰尘油污</text><text x="125" y="150" font-size="11" fill="#1e3a2b" text-anchor="middle">保证散热与通畅</text><text x="222" y="126" font-size="18" fill="#2f9e6b" text-anchor="middle">→</text><rect x="240" y="66" width="170" height="110" rx="12" fill="#cdeadd" stroke="#2f9e6b" stroke-width="1.5"/><text x="325" y="98" font-size="14" font-weight="bold" fill="#2f6b4f" text-anchor="middle">定期润滑</text><text x="325" y="126" font-size="11" fill="#1e3a2b" text-anchor="middle">给转动部位上油</text><text x="325" y="150" font-size="11" fill="#1e3a2b" text-anchor="middle">减少摩擦防锈死</text><text x="422" y="126" font-size="18" fill="#2f9e6b" text-anchor="middle">→</text><rect x="440" y="66" width="170" height="110" rx="12" fill="#cdeadd" stroke="#2f9e6b" stroke-width="1.5"/><text x="525" y="98" font-size="14" font-weight="bold" fill="#2f6b4f" text-anchor="middle">定期检查</text><text x="525" y="126" font-size="11" fill="#1e3a2b" text-anchor="middle">查松动老化磨损</text><text x="525" y="150" font-size="11" fill="#1e3a2b" text-anchor="middle">故障消灭在萌芽</text><text x="340" y="202" font-size="12" fill="#1e3a2b" text-anchor="middle">关键词是“定期”：坏了再修，不如按时保养</text></svg>', caption: '图2　日常维护的三个动作及其作用。' },
+      { type: 'heading', text: '四、保养常识：防潮、防尘、防腐蚀' },
+      { type: 'paragraph', text: '保养常识主要针对存放和使用环境，可以概括为三防：防潮、防尘、防腐蚀。它们对应的是三种最常见的“慢性伤害”。' },
+      { type: 'list', items: ['防潮：潮气会让金属生锈、电路板受潮短路、木材发霉变形。做法是放在干燥通风处，梅雨季节可放干燥剂，淋湿后及时擦干晾干', '防尘：灰尘会堵住散热孔、磨损运动部件、影响电接触。做法是加防尘罩、定期除尘，精密仪器用完及时装盒', '防腐蚀：酸碱物质和盐分会腐蚀金属表面。做法是远离酸碱、及时清除污渍，金属件表面刷漆、镀层或涂防锈油加以保护'] },
+      { type: 'warn', label: '易错·别忽视这些细节', text: '几个常被忽略但常考的点：<strong>清洁电器前必须先断电</strong>，带电擦洗极其危险；<strong>不能用湿抹布直接擦拭电器内部</strong>，也不要用酸碱性清洁剂擦金属表面；<strong>润滑不是油越多越好</strong>，多余的油反而粘灰加速磨损；<strong>长期不用的产品也要定期通电或活动一下</strong>，一直闲置同样会老化。' },
+      { type: 'tip', label: '提示·用九个字串起本节', text: '这一节的全部内容可以浓缩成九个字：<strong>会使用、勤维护、懂保养</strong>。“会使用”落在按说明书操作；“勤维护”落在定期清洁、润滑、检查；“懂保养”落在防潮、防尘、防腐蚀。考试遇到情境题，先判断它问的是使用环节、维护环节还是保养环节，再对号入座地答。' },
+      { type: 'example', label: '例题·分析产品损坏的原因', text: '题目：小华家的电风扇放在阳台上，一夏天下来出现三个问题：扇叶上积了厚厚一层灰，转起来嗡嗡响；转轴发涩，起动很慢；金属护网出现锈斑。请分析原因并给出改进办法。<br>解析：三个问题分别对应三个环节。扇叶积灰、转动噪声大，是<strong>没有定期清洁</strong>造成的，应<strong>定期拆下扇叶和网罩擦洗</strong>，清洁前务必<strong>先拔掉电源插头</strong>。转轴发涩、起动慢，是<strong>缺少定期润滑</strong>，应在转轴等运动部位<strong>适量加注润滑油</strong>，注意不要过量。护网生锈是阳台潮气重、雨水侵蚀导致的<strong>腐蚀</strong>，属于<strong>防潮与防腐蚀</strong>没做好，应把风扇移到<strong>干燥通风、不淋雨的位置存放</strong>，锈斑除净后涂防锈油或补漆，季末收纳时套上防尘罩。' }
+    ],
+    exercises: [
+      { type: 'choice', question: '使用一件新买的技术产品时，首先应该做的是？', options: ['凭经验直接通电试用，边用边摸索', '认真阅读产品说明书，按说明书正确操作', '先把外壳拆开看看内部结构', '先给所有转动部位加满润滑油'], answer: '认真阅读产品说明书，按说明书正确操作', explanation: '产品说明书写明了产品的性能、结构、使用方法、维护保养和安全注意事项，是设计者留给使用者的操作指南。使用前先读说明书，能避免大多数误操作。凭经验乱试容易损坏产品甚至发生危险，擅自拆开外壳会破坏原有的安全设计，润滑也应按说明书规定的部位和用量进行。' },
+      { type: 'choice', question: '下列做法中，属于技术产品日常维护的是？', options: ['购买产品时对比不同品牌的价格', '把电风扇的扇叶换成自制的木质扇叶', '定期给自行车链条上油并检查螺栓是否松动', '把说明书上的安全警示撕掉以免影响美观'], answer: '定期给自行车链条上油并检查螺栓是否松动', explanation: '日常维护的三个基本动作是定期清洁、定期润滑、定期检查。给链条上油属于润滑，查看螺栓是否松动属于检查，都是典型的日常维护。比价属于选购环节，自行更换扇叶属于擅自改装，撕掉安全警示更是错误做法。' },
+      { type: 'choice', question: '把精密电子仪器存放在干燥通风处并放置干燥剂，主要是为了？', options: ['防潮', '防尘', '防腐蚀', '防超载'], answer: '防潮', explanation: '干燥通风的环境和干燥剂的作用都是降低湿度，防止潮气使金属生锈、电路板受潮短路，属于防潮措施。防尘靠加防尘罩、定期除尘；防腐蚀靠远离酸碱、刷漆镀层或涂防锈油；超载则属于使用条件问题，与存放环境无关。' },
+      { type: 'fill', question: '技术产品的日常维护主要包括定期___、定期润滑和定期___三项内容。', answer: '清洁；检查', explanation: '日常维护的三个动作是定期清洁、定期润滑、定期检查。清洁除去灰尘油污以保证散热和通畅，润滑减少运动部件的摩擦与磨损，检查用于及早发现松动、老化和磨损，把故障消灭在萌芽状态。' },
+      { type: 'fill', question: '技术产品的保养常识通常概括为三防，即防潮、___和防___。', answer: '防尘；腐蚀', explanation: '保养常识针对存放和使用环境，可概括为防潮、防尘、防腐蚀。防潮避免生锈、短路和发霉，防尘避免堵塞散热孔和加速磨损，防腐蚀要求远离酸碱盐分并对金属表面做刷漆、镀层或涂防锈油等保护。' }
+    ]
+  });
+})();

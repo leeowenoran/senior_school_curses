@@ -117,26 +117,37 @@
     }
   }
 
+  // 保持用户当前的滚动位置：展开/收起侧边栏、点开课时等都不会再强制回到顶部。
+  // 仅当新页面比原来的滚动位置更矮时，才回到顶部（避免短页面停在底部显得空白）。
+  function restoreScrollKeep(prevScroll) {
+    var maxY = Math.max(0, (document.documentElement.scrollHeight || document.body.scrollHeight || 0) - window.innerHeight);
+    if (prevScroll > maxY) window.scrollTo(0, 0);
+    else window.scrollTo(0, prevScroll);
+  }
+
   function render() {
     _renderToken++;
     var r = parseHash();
+    var prevScroll = window.scrollY || window.pageYOffset || 0;
     setNavActive(r.route);
     if (r.route === 'subject' && r.param && gzGetSubject(r.param)) expandedSid = r.param;
     renderSidebar(r);
     renderTopbarUser();
-    if (r.route === 'lesson' && r.param && r.param2 != null && r.param3 != null) renderLesson(r.param, r.param2, parseInt(r.param3, 10));
-    else if (r.route === 'vol' && r.param && r.param2 != null) renderVolume(r.param, r.param2);
-    else if (r.route === 'subject' && r.param) renderSubject(r.param);
-    else if (r.route === 'subjects') renderSubjects();
-    else if (r.route === 'about') renderAbout();
-    else if (r.route === 'bank') renderBank(r.param);
-    else if (r.route === 'wrongbook') renderWrongbook();
-    else if (r.route === 'progress') renderProgress();
-    else if (r.route === 'comments') renderComments();
-    else if (r.route === 'settings') renderSettings();
-    else renderHome();
     document.body.classList.remove('sidebar-open');
-    window.scrollTo(0, 0);
+    if (r.route === 'lesson' && r.param && r.param2 != null && r.param3 != null) {
+      window.__pendingScroll = prevScroll; // 课时内容异步加载，待注入完成后再恢复滚动位置
+      renderLesson(r.param, r.param2, parseInt(r.param3, 10));
+    }
+    else if (r.route === 'vol' && r.param && r.param2 != null) { renderVolume(r.param, r.param2); restoreScrollKeep(prevScroll); }
+    else if (r.route === 'subject' && r.param) { renderSubject(r.param); restoreScrollKeep(prevScroll); }
+    else if (r.route === 'subjects') { renderSubjects(); restoreScrollKeep(prevScroll); }
+    else if (r.route === 'about') { renderAbout(); restoreScrollKeep(prevScroll); }
+    else if (r.route === 'bank') { renderBank(r.param); restoreScrollKeep(prevScroll); }
+    else if (r.route === 'wrongbook') { renderWrongbook(); restoreScrollKeep(prevScroll); }
+    else if (r.route === 'progress') { renderProgress(); restoreScrollKeep(prevScroll); }
+    else if (r.route === 'comments') { renderComments(); restoreScrollKeep(prevScroll); }
+    else if (r.route === 'settings') { renderSettings(); restoreScrollKeep(prevScroll); }
+    else { renderHome(); restoreScrollKeep(prevScroll); }
     // 滚动监听：控制「返回顶部」按钮 + 主区顶部条变 fixed
     if (!window.__scrollBound) {
       window.addEventListener('scroll', function () {
@@ -172,6 +183,9 @@
   function renderSidebar(r, opts) {
     var sb = document.getElementById('sidebar');
     if (!sb) return;
+    // 保存当前滚动位置
+    var subjList = sb.querySelector('.sb-subj-list');
+    var scrollTop = subjList ? subjList.scrollTop : 0;
     var cur = (r && r.route === 'subject') ? r.param
       : (r && (r.route === 'vol' || r.route === 'lesson')) ? r.param : null;
     var openSet = getOpenSids();
@@ -223,7 +237,6 @@
 
     var FUNCS = [
       { route: 'bank',      icon: '📝', name: '题库' },
-      { route: 'wrongbook', icon: '📕', name: '错题本' },
       { route: 'progress',  icon: '📊', name: '学习进度' },
       { route: 'comments',  icon: '💬', name: '留言板' },
       { route: 'settings',  icon: '⚙️', name: '设置' }
@@ -249,16 +262,21 @@
         '<ul class="sb-list sb-func-list">' + funcs + '</ul>' +
       '</div>' +
       '<button class="sb-expand-btn" onclick="window.__toggleSidebarCollapse()" title="展开侧边栏">»</button>';
+    // 恢复滚动位置
+    var newSubjList = sb.querySelector('.sb-subj-list');
+    if (newSubjList) newSubjList.scrollTop = scrollTop;
     bindSidebarTooltip();
   }
 
   // 整体折叠/展开侧边栏
   function toggleSidebarCollapse() {
+    var scrollY = window.scrollY || window.pageYOffset;
     var collapsed = !document.body.classList.contains('sb-collapsed');
     document.body.classList.toggle('sb-collapsed', collapsed);
     try { localStorage.setItem('gz_sb_collapsed', collapsed ? '1' : '0'); } catch (e) {}
     var r = parseHash();
     renderSidebar(r);
+    window.scrollTo(0, scrollY);
   }
   window.__toggleSidebarCollapse = toggleSidebarCollapse;
 
@@ -272,11 +290,14 @@
     navigate('subject', sid);
   };
 
-  // 点击小三角形：仅展开/收起，不导航
+  // 点击小三角形：仅展开/收起，不导航（直接操作DOM，不重建侧边栏，避免滚动位置丢失）
   window.__sbToggle = function (sid) {
     toggleOpenSid(sid);
-    var r = parseHash();
-    renderSidebar(r, { manualToggle: true });
+    var li = document.querySelector('.sb-subject[data-sid="' + sid + '"]');
+    if (li) {
+      var openSet = getOpenSids();
+      li.classList.toggle('open', openSet.indexOf(sid) >= 0);
+    }
   };
 
   window.__toggleSidebar = function (force) {
@@ -1048,6 +1069,11 @@
           '<section class="exercises" id="exercises"><h2 class="ex-title">📝 课后练习（' + (p.exercises || []).length + ' 题）</h2>' + exHTML + '</section>' +
           '<div class="lesson-nav">' + prev + next + '</div>' +
         '</article>';
+      // 恢复打开课时前的滚动位置（不再强制回到顶部）
+      if (window.__pendingScroll != null) {
+        restoreScrollKeep(window.__pendingScroll);
+        window.__pendingScroll = null;
+      }
     });
   }
 
@@ -1214,9 +1240,10 @@
   window.__markLessonRead = function (sid, vid, idx) {
     markProgress(sid, vid, idx);
     toast('✓ 已标记为完成');
-    // 重新渲染当前页（按钮变为"已学完"）
+    // 重新渲染当前页（按钮变为"已学完"），保持当前滚动位置不跳顶
+    // 复用课时异步渲染后的滚动恢复机制
+    window.__pendingScroll = window.scrollY || window.pageYOffset || 0;
     renderLesson(sid, vid, idx);
-    window.scrollTo(0, 0);
   };
   function renderProgressSideNote() { /* 进度在「学习进度」页实时读取，无需在此刷新 */ }
 
@@ -1896,76 +1923,222 @@
     // 最近收藏 3 条
     var recent = favs.slice(-3).reverse();
 
-    // 1) 简洁页头
-    var headerHtml = '<div class="bank-head">' +
-      '<div class="bh-title"><span class="bh-icon">📝</span><h2>题库</h2></div>' +
-      '<p class="bh-sub">收录你做过的题目，按学科分类练习高中常考题型</p>' +
-    '</div>';
+    // 1) 标签页导航
+    var tabsHtml = renderBankTabs('home');
 
-    // 2) 横向数据条（4 个数字 + 标签，中间分隔线）
-    var stats = [
-      { num: favCount,   label: '收藏',   icon: '⭐', tone: 'amber' },
-      { num: done,       label: '答题',   icon: '✍️', tone: 'blue' },
-      { num: wrongCount, label: '错题',   icon: '📕', tone: 'red' },
-      { num: streak,     label: '连续',   icon: '🔥', tone: 'purple' }
-    ];
-    var statsHtml = '<div class="bank-stats-strip">' + stats.map(function (s, i) {
-      return '<div class="bss-item ' + s.tone + (i < stats.length - 1 ? ' has-divider' : '') + '">' +
-        '<div class="bss-icon">' + s.icon + '</div>' +
-        '<div class="bss-body"><div class="bss-num">' + s.num + '</div><div class="bss-lbl">' + s.label + '</div></div>' +
-      '</div>';
-    }).join('') + '</div>';
-
-    // 3) 快速进入（两个并排卡）
-    var entriesHtml = '<div class="bank-entries">' +
-      '<a class="bank-entry" onclick="navigate(\'bank\', \'fav\')">' +
-        '<div class="be-icon" style="background:linear-gradient(135deg,#fbbf24 0%,#f59e0b 100%);">⭐</div>' +
-        '<div class="be-body">' +
-          '<div class="be-title">我的收藏 <span class="be-num">' + favCount + '</span></div>' +
-          '<div class="be-sub">集中复习你做过的题目</div>' +
-        '</div>' +
-        '<div class="be-arrow">→</div>' +
-      '</a>' +
-      '<a class="bank-entry" onclick="navigate(\'bank\', \'common\')">' +
-        '<div class="be-icon" style="background:linear-gradient(135deg,#4a7de0 0%,#9c56d4 100%);">📚</div>' +
-        '<div class="be-body">' +
-          '<div class="be-title">高中常考题型 <span class="be-num">' + totalCats + '</span></div>' +
-          '<div class="be-sub">按学科 + 题型分类整理</div>' +
-        '</div>' +
-        '<div class="be-arrow">→</div>' +
-      '</a>' +
-    '</div>';
-
-    // 4) 学科网格（干净版，去掉大装饰圆点）
-    var subjGridHtml = '<div class="bank-section">' +
-      '<div class="bank-section-head">' +
-        '<h3>📚 按学科浏览</h3>' +
-        '<span class="bank-section-tip">共 ' + subjectKeys.length + ' 个学科 · ' + totalCats + ' 个题型</span>' +
+    // 2) 欢迎区域 - 精致Hero设计
+    var welcomeHtml = '<div class="bank-hero-refined">' +
+      '<div class="bhr-bg">' +
+        '<div class="bhr-circle c1"></div>' +
+        '<div class="bhr-circle c2"></div>' +
+        '<div class="bhr-circle c3"></div>' +
       '</div>' +
-      '<div class="bank-subj-grid">' + subjectKeys.map(function (k) {
-        var s = GZ_COMMON_TYPES[k];
-        return '<a class="bank-subj-card" style="--sc:' + esc(s.color) + ';" onclick="navigate(\'bank\', \'common\')">' +
-          '<div class="bsc-top">' +
-            '<span class="bsc-icon">' + s.icon + '</span>' +
-            '<span class="bsc-name">' + esc(s.name) + '</span>' +
-            '<span class="bsc-count">' + s.cats.length + ' 题型</span>' +
+      '<div class="bhr-content">' +
+        '<div class="bhr-badge">' +
+          '<span class="bhr-badge-icon">📚</span>' +
+          '<span class="bhr-badge-text">高中题库</span>' +
+        '</div>' +
+        '<h1 class="bhr-title">题库中心</h1>' +
+        '<p class="bhr-subtitle">收录你做过的每一道题，按学科分类练习高中常考题型</p>' +
+        '<div class="bhr-stats-mini">' +
+          '<div class="bsm-item">' +
+            '<span class="bsm-num">' + subjectKeys.length + '</span>' +
+            '<span class="bsm-label">学科</span>' +
           '</div>' +
-          '<div class="bsc-cats">' + s.cats.slice(0, 4).map(function (c) {
-            return '<span>' + esc(c.name) + '</span>';
-          }).join('') + (s.cats.length > 4 ? '<span class="bsc-more">+' + (s.cats.length - 4) + '</span>' : '') + '</div>' +
-        '</a>';
+          '<div class="bsm-divider"></div>' +
+          '<div class="bsm-item">' +
+            '<span class="bsm-num">' + totalCats + '</span>' +
+            '<span class="bsm-label">题型</span>' +
+          '</div>' +
+          '<div class="bsm-divider"></div>' +
+          '<div class="bsm-item">' +
+            '<span class="bsm-num">' + done + '</span>' +
+            '<span class="bsm-label">已做</span>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="bhr-illustration">' +
+        '<svg viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg">' +
+          '<defs>' +
+            '<linearGradient id="bookGrad" x1="0%" y1="0%" x2="100%" y2="100%">' +
+              '<stop offset="0%" style="stop-color:#4a7de0;stop-opacity:0.9" />' +
+              '<stop offset="100%" style="stop-color:#9c56d4;stop-opacity:0.9" />' +
+            '</linearGradient>' +
+          '</defs>' +
+          '<rect x="60" y="50" width="120" height="100" rx="8" fill="url(#bookGrad)" opacity="0.15"/>' +
+          '<rect x="70" y="60" width="100" height="80" rx="6" fill="white" opacity="0.3"/>' +
+          '<circle cx="120" cy="100" r="25" fill="white" opacity="0.4"/>' +
+          '<text x="120" y="110" font-size="32" text-anchor="middle" fill="#4a7de0">📖</text>' +
+          '<circle cx="85" cy="75" r="4" fill="#f59e0b" opacity="0.8"/>' +
+          '<circle cx="155" cy="75" r="4" fill="#10b981" opacity="0.8"/>' +
+          '<circle cx="85" cy="125" r="4" fill="#ef4444" opacity="0.8"/>' +
+          '<circle cx="155" cy="125" r="4" fill="#9c56d4" opacity="0.8"/>' +
+        '</svg>' +
+      '</div>' +
+    '</div>';
+
+    // 3) 数据统计卡片 - 精致设计
+    var statsHtml = '<div class="bank-stats-refined">' +
+      '<div class="bsr-card fav">' +
+        '<div class="bsr-icon-wrap">' +
+          '<svg class="bsr-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
+            '<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>' +
+          '</svg>' +
+        '</div>' +
+        '<div class="bsr-content">' +
+          '<div class="bsr-number">' + favCount + '</div>' +
+          '<div class="bsr-label">我的收藏</div>' +
+        '</div>' +
+        '<div class="bsr-trend">↑ 精选</div>' +
+      '</div>' +
+      '<div class="bsr-card done">' +
+        '<div class="bsr-icon-wrap">' +
+          '<svg class="bsr-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
+            '<path d="M9 11l3 3L22 4"/>' +
+            '<path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>' +
+          '</svg>' +
+        '</div>' +
+        '<div class="bsr-content">' +
+          '<div class="bsr-number">' + done + '</div>' +
+          '<div class="bsr-label">已答题目</div>' +
+        '</div>' +
+        '<div class="bsr-trend">↑ 持续</div>' +
+      '</div>' +
+      '<div class="bsr-card wrong">' +
+        '<div class="bsr-icon-wrap">' +
+          '<svg class="bsr-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
+            '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>' +
+            '<polyline points="14 2 14 8 20 8"/>' +
+            '<line x1="9" y1="15" x2="15" y2="15"/>' +
+          '</svg>' +
+        '</div>' +
+        '<div class="bsr-content">' +
+          '<div class="bsr-number">' + wrongCount + '</div>' +
+          '<div class="bsr-label">错题待攻克</div>' +
+        '</div>' +
+        '<div class="bsr-trend">⚡ 突破</div>' +
+      '</div>' +
+      '<div class="bsr-card streak">' +
+        '<div class="bsr-icon-wrap">' +
+          '<svg class="bsr-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
+            '<path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>' +
+          '</svg>' +
+        '</div>' +
+        '<div class="bsr-content">' +
+          '<div class="bsr-number">' + streak + '</div>' +
+          '<div class="bsr-label">连续打卡</div>' +
+        '</div>' +
+        '<div class="bsr-trend">🔥 坚持</div>' +
+      '</div>' +
+    '</div>';
+
+    // 4) 快速入口 - 精致卡片设计
+    var entriesHtml = '<div class="bank-entries-refined">' +
+      '<div class="ber-card" onclick="navigate(\'bank\', \'fav\')">' +
+        '<div class="ber-icon-wrap fav">' +
+          '<div class="ber-icon">⭐</div>' +
+          '<div class="ber-icon-ring"></div>' +
+        '</div>' +
+        '<div class="ber-content">' +
+          '<h3 class="ber-title">我的收藏</h3>' +
+          '<p class="ber-desc">集中复习做过的精选题目</p>' +
+          '<div class="ber-meta">' +
+            '<span class="ber-count">' + favCount + '</span>' +
+            '<span class="ber-unit">道题</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="ber-arrow">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
+            '<path d="M5 12h14M12 5l7 7-7 7"/>' +
+          '</svg>' +
+        '</div>' +
+      '</div>' +
+      '<div class="ber-card" onclick="navigate(\'bank\', \'common\')">' +
+        '<div class="ber-icon-wrap common">' +
+          '<div class="ber-icon">📚</div>' +
+          '<div class="ber-icon-ring"></div>' +
+        '</div>' +
+        '<div class="ber-content">' +
+          '<h3 class="ber-title">常考题型</h3>' +
+          '<p class="ber-desc">按学科和题型分类整理</p>' +
+          '<div class="ber-meta">' +
+            '<span class="ber-count">' + totalCats + '</span>' +
+            '<span class="ber-unit">个题型</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="ber-arrow">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
+            '<path d="M5 12h14M12 5l7 7-7 7"/>' +
+          '</svg>' +
+        '</div>' +
+      '</div>' +
+      '<div class="ber-card" onclick="navigate(\'bank\', \'wrong\')">' +
+        '<div class="ber-icon-wrap wrong">' +
+          '<div class="ber-icon">📕</div>' +
+          '<div class="ber-icon-ring"></div>' +
+        '</div>' +
+        '<div class="ber-content">' +
+          '<h3 class="ber-title">错题本</h3>' +
+          '<p class="ber-desc">重做巩固，逐个消灭错题</p>' +
+          '<div class="ber-meta">' +
+            '<span class="ber-count">' + wrongCount + '</span>' +
+            '<span class="ber-unit">道错题</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="ber-arrow">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
+            '<path d="M5 12h14M12 5l7 7-7 7"/>' +
+          '</svg>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+
+    // 5) 学科网格 - 精致卡片
+    var subjGridHtml = '<div class="bank-section-refined">' +
+      '<div class="bsr-header">' +
+        '<div class="bsr-title-wrap">' +
+          '<h3 class="bsr-title">📚 按学科浏览</h3>' +
+          '<span class="bsr-subtitle">共 ' + subjectKeys.length + ' 个学科 · ' + totalCats + ' 个题型</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="bank-subj-refined">' + subjectKeys.map(function (k) {
+        var s = GZ_COMMON_TYPES[k];
+        return '<div class="bsr-card-subj" style="--sc:' + esc(s.color) + ';" onclick="navigate(\'bank\', \'common\')">' +
+          '<div class="bsr-card-bg"></div>' +
+          '<div class="bsr-card-content">' +
+            '<div class="bsr-card-header">' +
+              '<div class="bsr-card-icon-wrap" style="background:' + esc(s.color) + '15;">' +
+                '<span class="bsr-card-icon">' + s.icon + '</span>' +
+              '</div>' +
+              '<div class="bsr-card-info">' +
+                '<div class="bsr-card-name">' + esc(s.name) + '</div>' +
+                '<div class="bsr-card-count">' + s.cats.length + ' 个题型</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="bsr-card-tags">' + s.cats.slice(0, 3).map(function (c) {
+              return '<span class="bsr-card-tag">' + esc(c.name) + '</span>';
+            }).join('') + (s.cats.length > 3 ? '<span class="bsr-card-tag more">+' + (s.cats.length - 3) + '</span>' : '') + '</div>' +
+          '</div>' +
+        '</div>';
       }).join('') + '</div>' +
     '</div>';
 
-    // 5) 最近收藏（垂直列表）
+    // 6) 最近收藏 - 精致时间线
     var recentHtml = '';
     if (recent.length) {
-      recentHtml = '<div class="bank-section">' +
-        '<div class="bank-section-head">' +
-          '<h3>⭐ 最近收藏</h3>' +
-          '<a class="bank-section-more" onclick="navigate(\'bank\', \'fav\')">查看全部 →</a>' +
+      recentHtml = '<div class="bank-section-refined">' +
+        '<div class="bsr-header">' +
+          '<div class="bsr-title-wrap">' +
+            '<h3 class="bsr-title">⭐ 最近收藏</h3>' +
+          '</div>' +
+          '<a class="bsr-more" onclick="navigate(\'bank\', \'fav\')">' +
+            '<span>查看全部</span>' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
+              '<path d="M5 12h14M12 5l7 7-7 7"/>' +
+            '</svg>' +
+          '</a>' +
         '</div>' +
-        '<div class="bank-recent-list">' + recent.map(function (f) {
+        '<div class="bank-timeline-refined">' + recent.map(function (f) {
           // 老数据兼容：缺字段时从 lesson 补
           if (!f.question || !f.sName) {
             var fS = f.sid, fV = f.vid, fI = f.idx;
@@ -1990,24 +2163,29 @@
           var sName = f.sName || f.sid || '未知学科';
           var vName = f.vName || f.vid || '';
           var qText = f.question || '（题目内容已丢失）';
-          return '<a class="bank-recent-item" style="--sc:' + color + ';" onclick="navigate(\'bank\', \'fav\')">' +
-            '<span class="bri-icon">' + icon + '</span>' +
-            '<div class="bri-body">' +
-              '<div class="bri-meta">' + esc(sName) + (vName ? ' · ' + esc(vName) : '') +
-                '<span class="bri-type">' + (f.type === 'choice' ? '选择' : '填空') + '</span>' +
+          return '<div class="btr-item" style="--sc:' + color + ';">' +
+            '<div class="btr-line"></div>' +
+            '<div class="btr-dot"></div>' +
+            '<div class="btr-content" onclick="navigate(\'bank\', \'fav\')">' +
+              '<div class="btr-header">' +
+                '<span class="btr-icon">' + icon + '</span>' +
+                '<span class="btr-subject">' + esc(sName) + '</span>' +
+                (vName ? '<span class="btr-vol">' + esc(vName) + '</span>' : '') +
+                '<span class="btr-type">' + (f.type === 'choice' ? '选择' : '填空') + '</span>' +
               '</div>' +
-              '<div class="bri-q">' + esc(qText.length > 80 ? qText.slice(0, 80) + '…' : qText) + '</div>' +
+              '<div class="btr-question">' + esc(qText.length > 100 ? qText.slice(0, 100) + '…' : qText) + '</div>' +
+              '<div class="btr-time">' + timeAgo(f.addedAt) + '</div>' +
             '</div>' +
-            '<span class="bri-time">' + timeAgo(f.addedAt) + '</span>' +
-          '</a>';
+          '</div>';
         }).join('') + '</div>' +
       '</div>';
     }
 
     view.innerHTML = '' +
       '<div class="crumb"><a onclick="navigate(\'home\')">首页</a> / 题库</div>' +
-      '<div class="panel">' +
-        headerHtml +
+      '<div class="panel bank-refined-design">' +
+        tabsHtml +
+        welcomeHtml +
         statsHtml +
         entriesHtml +
         subjGridHtml +
@@ -2089,9 +2267,12 @@
         return '<span class="bank-cat-chip' + (filterSid === k ? ' active' : '') + '" style="--sc:' + s.color + ';" onclick="window.__setBankFavFilter(\'' + k + '\')">' + s.icon + ' ' + s.name + '（' + n + '）</span>';
       }).join('');
 
+    var tabsHtml = renderBankTabs('fav');
+
     view.innerHTML = '' +
       '<div class="crumb"><a onclick="navigate(\'home\')">首页</a> / <a onclick="navigate(\'bank\', \'home\')">题库</a> / 我的收藏</div>' +
-      '<div class="panel">' +
+      '<div class="panel bank-new-design">' +
+        tabsHtml +
         '<h2>⭐ 我的收藏 <span class="bank-mode-count">' + favs.length + '</span></h2>' +
         '<p>共收录 ' + favs.length + ' 道题目。可按学科筛选，点击右上角★取消收藏。</p>' +
         '<div class="bank-cat-list" style="margin-top:14px;">' + filterChips + '</div>' +
@@ -2138,9 +2319,12 @@
       '</section>';
     }).join('');
 
+    var tabsHtml = renderBankTabs('common');
+
     view.innerHTML = '' +
       '<div class="crumb"><a onclick="navigate(\'home\')">首页</a> / <a onclick="navigate(\'bank\', \'home\')">题库</a> / 高中常考题型</div>' +
-      '<div class="panel">' +
+      '<div class="panel bank-new-design">' +
+        tabsHtml +
         '<div class="bank-hero" style="background: linear-gradient(120deg, #f0f4ff 0%, #f7eaff 100%);">' +
           '<div class="bank-hero-text">' +
             '<div class="bank-hero-greet">📚 高考备考</div>' +
@@ -2158,10 +2342,152 @@
     if (block) block.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
+  // 题库标签页导航
+  function renderBankTabs(active) {
+    var wrong = lsGet('gz_wrongbook', []);
+    var favs = getFavs();
+    return '<div class="bank-tabs">' +
+      '<a class="bank-tab' + (active === 'home' ? ' active' : '') + '" onclick="navigate(\'bank\')">' +
+        '<span class="bt-icon">🏠</span><span class="bt-text">题库首页</span>' +
+      '</a>' +
+      '<a class="bank-tab' + (active === 'fav' ? ' active' : '') + '" onclick="navigate(\'bank\', \'fav\')">' +
+        '<span class="bt-icon">⭐</span><span class="bt-text">我的收藏</span>' +
+        (favs.length > 0 ? '<span class="bt-badge">' + favs.length + '</span>' : '') +
+      '</a>' +
+      '<a class="bank-tab' + (active === 'common' ? ' active' : '') + '" onclick="navigate(\'bank\', \'common\')">' +
+        '<span class="bt-icon">📚</span><span class="bt-text">常考题型</span>' +
+      '</a>' +
+      '<a class="bank-tab' + (active === 'wrong' ? ' active' : '') + '" onclick="navigate(\'bank\', \'wrong\')">' +
+        '<span class="bt-icon">📕</span><span class="bt-text">错题本</span>' +
+        (wrong.length > 0 ? '<span class="bt-badge red">' + wrong.length + '</span>' : '') +
+      '</a>' +
+    '</div>';
+  }
+
   function renderBank(mode) {
     if (mode === 'fav') renderBankFav();
     else if (mode === 'common') renderBankCommon();
+    else if (mode === 'wrong') renderBankWrong();
     else renderBankHome();
+  }
+
+  // 错题本 - 整合到题库中
+  function renderBankWrong() {
+    var wrong = lsGet('gz_wrongbook', []);
+    // 数据残缺时从 lesson 数据补全
+    wrong.forEach(function (w) {
+      if (!w.question || !w.answer) {
+        var parts = (w.key || '').split('/');
+        if (parts.length === 3) {
+          var f = findLesson(parts[0], parts[1], parseInt(parts[2], 10));
+          if (f) {
+            w.subjectName = w.subjectName || f.subject.name;
+            w.lessonName = w.lessonName || f.point.name;
+            var q = (f.point.exercises || [])[w.qi];
+            if (q) {
+              w.question = w.question || q.question;
+              w.answer = w.answer || q.answer;
+              w.type = w.type || q.type;
+              w.options = w.options || q.options || [];
+            }
+          }
+        }
+      }
+    });
+    // 按学科筛选
+    var filterSid = (window.__wrongFilter) || 'all';
+    var filtered = filterSid === 'all' ? wrong : wrong.filter(function (w) { return w.key && w.key.split('/')[0] === filterSid; });
+    // 统计各学科
+    var subjCount = {};
+    wrong.forEach(function (w) {
+      var sid = w.key ? w.key.split('/')[0] : '_';
+      subjCount[sid] = (subjCount[sid] || 0) + 1;
+    });
+    var subjChips = '<span class="bank-cat-chip' + (filterSid === 'all' ? ' active' : '') + '" onclick="window.__setWrongFilter(\'all\')">全部（' + wrong.length + '）</span>' +
+      Object.keys(subjCount).map(function (k) {
+        if (k === '_') return '';
+        var subj = GZ_SUBJECTS.find(function (s) { return s.id === k; });
+        if (!subj) return '';
+        return '<span class="bank-cat-chip' + (filterSid === k ? ' active' : '') + '" style="--sc:' + subj.color + ';" onclick="window.__setWrongFilter(\'' + k + '\')">' + subj.icon + ' ' + esc(subj.name) + '（' + subjCount[k] + '）</span>';
+      }).join('');
+
+    // 标签页导航
+    var tabsHtml = renderBankTabs('wrong');
+
+    // 错题本头部
+    var headerHtml = '<div class="wrong-header-new">' +
+      '<div class="whn-content">' +
+        '<h1 class="whn-title">📕 错题本</h1>' +
+        '<p class="whn-subtitle">收录你做错的题目，重做巩固、逐个消灭</p>' +
+      '</div>' +
+      '<div class="whn-stats">' +
+        '<div class="whn-stat">' +
+          '<div class="whs-number">' + wrong.length + '</div>' +
+          '<div class="whs-label">总错题数</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+
+    // 操作栏
+    var toolbarHtml = wrong.length > 0 ? '<div class="wrong-toolbar-new">' +
+      '<button class="btn-primary" onclick="window.__redoAllWrong()">⚡ 全部去重做</button>' +
+      '<button class="btn-danger" onclick="window.__clearAllWrong()">🗑️ 清空错题本</button>' +
+    '</div>' : '';
+
+    // 学科筛选
+    var filterHtml = wrong.length > 0 ? '<div class="bank-cat-list">' + subjChips + '</div>' : '';
+
+    // 错题列表
+    var body;
+    if (!wrong.length) {
+      body = '<div class="empty-state-new">' +
+        '<div class="esn-icon">🎉</div>' +
+        '<h3>错题本是空的</h3>' +
+        '<p>开始做题后，答错的题目会自动收录到这里，方便反复巩固。</p>' +
+      '</div>';
+    } else if (!filtered.length) {
+      body = '<div class="empty-state-new">' +
+        '<div class="esn-icon">📭</div>' +
+        '<h3>该学科下暂无错题</h3>' +
+        '<p>继续加油，保持全对！</p>' +
+      '</div>';
+    } else {
+      body = '<div class="wrong-list-new">' + filtered.map(function (w) {
+        var realIdx = wrong.indexOf(w);
+        var redo = '';
+        if (w.key) {
+          var parts = w.key.split('/');
+          redo = '<button class="wrong-redo-btn" onclick="navigate(\'lesson\',\'' + esc(parts[0]) + '\',\'' + esc(parts[1]) + '\',' + esc(parts[2]) + ')">去重做 →</button>';
+        }
+        return '<div class="wrong-card-new">' +
+          '<button class="wcn-remove" title="从错题本移除" onclick="window.__removeWrong(' + realIdx + ')">✕</button>' +
+          '<div class="wcn-question">' + esc(w.question || '（题目内容已丢失，请到对应课时页重做）') + '</div>' +
+          '<div class="wcn-meta">' +
+            '<span class="wcn-subject">' + esc(w.subjectName || w.key || '') + '</span>' +
+            (w.lessonName ? '<span class="wcn-lesson">' + esc(w.lessonName) + '</span>' : '') +
+          '</div>' +
+          '<div class="wcn-answer">' +
+            '<span class="wcn-label">正确答案：</span>' +
+            '<span class="wcn-value">' + esc(w.answer || '—') + '</span>' +
+          '</div>' +
+          (w.myAnswer ? '<div class="wcn-my-answer">' +
+            '<span class="wcn-label">你的答案：</span>' +
+            '<span class="wcn-value wrong">' + esc(w.myAnswer) + '</span>' +
+          '</div>' : '') +
+          redo +
+        '</div>';
+      }).join('') + '</div>';
+    }
+
+    view.innerHTML = '' +
+      '<div class="crumb"><a onclick="navigate(\'home\')">首页</a> / <a onclick="navigate(\'bank\')">题库</a> / 错题本</div>' +
+      '<div class="panel bank-new-design">' +
+        tabsHtml +
+        headerHtml +
+        toolbarHtml +
+        filterHtml +
+        body +
+      '</div>';
   }
 
   /* ---------- 错题本 ---------- */

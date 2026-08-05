@@ -1,0 +1,36 @@
+/* 信息技术 · 高三复习 · 信息系统与安全 · 第1节 信息社会的定义与特征 */
+(function () {
+  var v = gzGetVolume('it', 'zt2');
+  if (!v) return;
+  v.points.push({
+    id: 'zt2-u1',
+    name: '第1节 信息社会的定义与特征',
+    chapter: '二、信息社会与信息系统基础',
+    difficulty: '基础',
+    content: [
+      { type: 'heading', text: '一、什么是信息社会' },
+      { type: 'paragraph', text: '信息社会，就是一个以“创造、分配、使用、整合和处理信息”来开展经济、政治、文化等各种活动的社会形态。通俗点说，在这个社会里，人们的工作、学习和生活都离不开信息的流动——比如用手机查公交、用网课学习、用电脑办公，核心都是“信息在跑”。' },
+      { type: 'paragraph', text: '信息社会的本质有两点：一是人人都可以创造、获取和分享信息，不像过去只有少数人掌握信息；二是现实空间（真实世界）和虚拟空间（网络世界）交织在一起、同时存在。比如你在手机上点外卖，现实里的餐厅和虚拟的订单系统就连接在了一起。' },
+      { type: 'keypoint', label: '重点·信息社会的核心', text: '<strong>信息社会的核心是“以信息活动为基础”。</strong>判断一个社会是不是信息社会，就看人们是不是主要靠信息的创造、流通和使用来推动生活和发展，而不是只靠体力或传统方式。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="300" fill="#eef2fc"/><text x="340" y="30" font-size="17" font-weight="bold" fill="#3d4f8a" text-anchor="middle">信息社会的四大特征</text><rect x="30" y="70" width="290" height="80" rx="10" fill="#d5dcf5" stroke="#6266d9" stroke-width="1.5"/><text x="175" y="98" font-size="14" font-weight="bold" fill="#6266d9" text-anchor="middle">数字生活</text><text x="175" y="122" font-size="11" fill="#2a3454" text-anchor="middle">工具/方式/内容全面数字化</text><text x="175" y="139" font-size="11" fill="#2a3454" text-anchor="middle">如移动支付、在线直播学习</text><rect x="360" y="70" width="290" height="80" rx="10" fill="#d5dcf5" stroke="#6266d9" stroke-width="1.5"/><text x="505" y="98" font-size="14" font-weight="bold" fill="#6266d9" text-anchor="middle">信息经济</text><text x="505" y="122" font-size="11" fill="#2a3454" text-anchor="middle">以知识为基础、创新为动力</text><text x="505" y="139" font-size="11" fill="#2a3454" text-anchor="middle">如电商直播、大数据精准营销</text><rect x="30" y="170" width="290" height="80" rx="10" fill="#d5dcf5" stroke="#6266d9" stroke-width="1.5"/><text x="175" y="198" font-size="14" font-weight="bold" fill="#6266d9" text-anchor="middle">网络社会</text><text x="175" y="222" font-size="11" fill="#2a3454" text-anchor="middle">网络化成为社会运行基本形式</text><text x="175" y="239" font-size="11" fill="#2a3454" text-anchor="middle">如校园局域网、社交软件</text><rect x="360" y="170" width="290" height="80" rx="10" fill="#d5dcf5" stroke="#6266d9" stroke-width="1.5"/><text x="505" y="198" font-size="14" font-weight="bold" fill="#6266d9" text-anchor="middle">在线政府</text><text x="505" y="222" font-size="11" fill="#2a3454" text-anchor="middle">数字化治理与公共服务</text><text x="505" y="239" font-size="11" fill="#2a3454" text-anchor="middle">如政务APP、政府官网公示</text></svg>', caption: '图1　信息社会的四大特征：数字生活、信息经济、网络社会、在线政府。' },
+      { type: 'heading', text: '二、信息社会的四大特征' },
+      { type: 'paragraph', text: '第一，数字生活：人们的工具、方式和内容都全面数字化。比如出门不用带现金，用微信或支付宝扫码就能付钱；上课不用只靠书本，可以看在线直播学习。第二，信息经济：以知识为基础、以创新为核心驱动力，像电商直播卖货、平台用大数据给你推喜欢的商品。' },
+      { type: 'paragraph', text: '第三，网络社会：网络化成为社会运行的基本形式，比如学校用校园局域网连电脑，大家用社交软件和朋友联系。第四，在线政府：政府用数字化方式治理和提供公共服务，比如政务APP办事、政府官网公示政策。这四点合起来，就是信息社会最明显的样子。' },
+      { type: 'tip', label: '提示·理解四大特征', text: '<strong>记特征有一个小窍门：数字生活讲“个人怎么用”，信息经济讲“钱怎么赚”，网络社会讲“人怎么连”，在线政府讲“政府怎么管”。</strong>四个角度分别对应日常、生产、社交、治理，不容易混。' },
+      { type: 'heading', text: '三、信息技术的发展脉络' },
+      { type: 'paragraph', text: '信息技术的发展可以分成三个阶段。第一阶段以计算机为核心（1946年到1990年代）：用电子管、集成电路造出计算机，又有了局域网，实现的是“人机对话”，也就是人操作机器。第二阶段以互联网为核心（1990年代到2010年代）：TCP/IP协议和3G、4G网络普及，实现的是“机机对话”，电脑之间互相通信。' },
+      { type: 'paragraph', text: '第三阶段以数据为核心（2010年代至今）：出现了大数据、云计算、人工智能、物联网，实现的是“物物对话”，比如智能手环把健康数据传上云。三阶段一步步从“人用机器”走到“万物互联”。' },
+      { type: 'svg', svg: '<svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg"><rect width="680" height="300" fill="#eef2fc"/><text x="340" y="30" font-size="17" font-weight="bold" fill="#3d4f8a" text-anchor="middle">信息技术发展的三个阶段</text><rect x="20" y="70" width="190" height="120" rx="10" fill="#d5dcf5" stroke="#6266d9" stroke-width="1.5"/><text x="115" y="98" font-size="13" font-weight="bold" fill="#6266d9" text-anchor="middle">计算机为核心</text><text x="115" y="122" font-size="11" fill="#2a3454" text-anchor="middle">1946-1990s</text><text x="115" y="144" font-size="11" fill="#2a3454" text-anchor="middle">局域网</text><text x="115" y="166" font-size="11" fill="#2a3454" text-anchor="middle">人机对话</text><line x1="210" y1="130" x2="248" y2="130" stroke="#6266d9" stroke-width="1.5"/><text x="229" y="122" font-size="12" fill="#6266d9" text-anchor="middle">▶</text><rect x="250" y="70" width="190" height="120" rx="10" fill="#d5dcf5" stroke="#6266d9" stroke-width="1.5"/><text x="345" y="98" font-size="13" font-weight="bold" fill="#6266d9" text-anchor="middle">互联网为核心</text><text x="345" y="122" font-size="11" fill="#2a3454" text-anchor="middle">1990s-2010s</text><text x="345" y="144" font-size="11" fill="#2a3454" text-anchor="middle">TCP/IP、3G4G</text><text x="345" y="166" font-size="11" fill="#2a3454" text-anchor="middle">机机对话</text><line x1="440" y1="130" x2="478" y2="130" stroke="#6266d9" stroke-width="1.5"/><text x="459" y="122" font-size="12" fill="#6266d9" text-anchor="middle">▶</text><rect x="480" y="70" width="180" height="120" rx="10" fill="#d5dcf5" stroke="#6266d9" stroke-width="1.5"/><text x="570" y="98" font-size="13" font-weight="bold" fill="#6266d9" text-anchor="middle">数据为核心</text><text x="570" y="122" font-size="11" fill="#2a3454" text-anchor="middle">2010s至今</text><text x="570" y="144" font-size="11" fill="#2a3454" text-anchor="middle">大数据云AI物联网</text><text x="570" y="166" font-size="11" fill="#2a3454" text-anchor="middle">物物对话</text><text x="340" y="240" font-size="12" fill="#2a3454" text-anchor="middle">从“人用机器”走向“万物互联”</text></svg>', caption: '图2　信息技术三阶段：计算机核心→互联网核心→数据核心，对话方式从人机到机机再到物物。' },
+      { type: 'warn', label: '易错·三阶段混淆', text: '容易把三个阶段的时间和功能记反。记住关键词就行：1946起是“计算机/人机”，90年代起是“互联网/机机”，2010年起是“数据/物物”。考试常考“物物对话”对应哪个阶段，答案是第三阶段数据为核心。' },
+      { type: 'example', label: '例题·判断特征', text: '题目：小明用政务APP在线办理了身份证补办，这主要体现了信息社会的哪一特征？<br>解析：政府通过数字化手段提供公共服务，属于“在线政府”这一特征。数字生活侧重个人日常使用，信息经济侧重生产赚钱，网络社会侧重人与人之间的连接，都不符合“政府办事”的情境。所以答案是在线政府。' },
+      { type: 'table', headers: ['阶段', '时间', '关键词', '对话方式'], rows: [['计算机为核心', '1946-1990s', '局域网、集成电路', '人机对话'], ['互联网为核心', '1990s-2010s', 'TCP/IP、3G/4G', '机机对话'], ['数据为核心', '2010s至今', '大数据、云、AI', '物物对话']] }
+    ],
+    exercises: [
+      { type: 'choice', question: '信息社会的核心是？', options: ['以物质生产为基础', '以信息活动为基础', '以农业生产为基础', '以体力劳动为基础'], answer: '以信息活动为基础', explanation: '信息社会是通过创造、分配、使用、整合和处理信息来开展各种社会活动的形态，核心是“以信息活动为基础”，而不是靠农业或体力劳动。' },
+      { type: 'choice', question: '“用大数据分析用户喜好，进行精准商品推荐”主要体现了信息社会的哪一特征？', options: ['数字生活', '信息经济', '网络社会', '在线政府'], answer: '信息经济', explanation: '信息经济以知识为基础、以创新为核心驱动力，大数据精准营销正是用信息创造经济价值，属于信息经济；数字生活讲个人使用，网络社会讲连接，在线政府讲治理。' },
+      { type: 'choice', question: '信息技术以数据为核心的阶段（2010s至今）实现的对话方式是？', options: ['人机对话', '机机对话', '物物对话', '人人对话'], answer: '物物对话', explanation: '三阶段对应：计算机核心阶段是人机对话，互联网核心阶段是机机对话，数据核心阶段是物物对话（如物联网设备之间互相通信）。' },
+      { type: 'fill', question: '信息社会的四大特征分别是：数字生活、信息经济、网络社会和___。', answer: '在线政府', explanation: '信息社会的四大特征为数字生活、信息经济、网络社会、在线政府，分别从个人使用、经济生产、社会连接、政府治理四个角度描述。' },
+      { type: 'fill', question: '信息技术发展三阶段中，以互联网为核心的阶段（1990s-2010s）实现了___对话，而以计算机为核心的阶段实现了___对话。', answer: '机机；人机', explanation: '计算机为核心阶段（1946-1990s）是人机对话，互联网为核心阶段（1990s-2010s）是机机对话，数据为核心阶段（2010s至今）是物物对话。' }
+    ]
+  });
+})();
