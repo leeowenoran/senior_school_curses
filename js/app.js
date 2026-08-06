@@ -1072,11 +1072,20 @@
       var blocks = origBlock + (p.content || []).map(renderContentBlock).join('');
       var exHTML = renderExercises(p, sid, vid, idx);
 
-      // 标记已读按钮（看完内容但不做题也能算完成）
+      // 课时完成判定：有练习→做完全部练习才算学完；无练习→手动“我已读完”
+      var exCount = (p.exercises || []).length;
       var isDone = !!lsGet('gz_progress', {})[lessonKey(sid, vid, idx)];
-      var readBtn = isDone
-        ? '<span class="read-toggle is-done">✓ 已学完</span>'
-        : '<button class="read-toggle" onclick="window.__markLessonRead(\'' + esc(sid) + '\',\'' + esc(vid) + '\',' + idx + ')">我已读完，标记为完成</button>';
+      var readBtn;
+      if (exCount === 0) {
+        readBtn = isDone
+          ? '<span class="read-toggle is-done">✓ 已学完</span>'
+          : '<button class="read-toggle" onclick="window.__markLessonRead(\'' + esc(sid) + '\',\'' + esc(vid) + '\',' + idx + ')">我已读完，标记为完成</button>';
+      } else {
+        var doneN = lessonAnsweredCount(sid, vid, idx, exCount);
+        readBtn = (doneN >= exCount)
+          ? '<span class="read-toggle is-done">✓ 已学完（' + exCount + '/' + exCount + ' 题已完成）</span>'
+          : '<span class="read-toggle in-progress">📝 已完成 ' + doneN + ' / ' + exCount + ' 题，做完全部即标记学完</span>';
+      }
 
       // 上一课 / 下一课
       var pts = v.points || [];
@@ -1090,10 +1099,10 @@
             '<h1 class="lesson-title">' + esc(p.name) + '</h1>' +
             (p.author ? '<div class="lesson-author">' + esc(p.author) + '</div>' : '') +
             (p.difficulty ? '<span class="lp-diff lp-diff-' + esc(p.difficulty) + '">难度：' + esc(p.difficulty) + '</span>' : '') +
-            '<div class="lesson-read">' + readBtn + '</div>' +
+            '<div class="lesson-read" id="lessonReadBox">' + readBtn + '</div>' +
           '</header>' +
           '<div class="lesson-body">' + blocks + '</div>' +
-          '<section class="exercises" id="exercises"><h2 class="ex-title">📝 课后练习（' + (p.exercises || []).length + ' 题）</h2>' + exHTML + '</section>' +
+          '<section class="exercises" id="exercises"><h2 class="ex-title">📝 课后练习（' + exCount + ' 题）<span class="ex-progress" id="exProgress">' + (exCount ? '已完成 ' + lessonAnsweredCount(sid, vid, idx, exCount) + ' / ' + exCount + ' 题' : '') + '</span></h2>' + exHTML + '</section>' +
           '<div class="lesson-nav">' + prev + next + '</div>' +
         '</article>';
       // 恢复打开课时前的滚动位置（不再强制回到顶部）
@@ -1135,28 +1144,62 @@
   function renderExercises(p, sid, vid, idx) {
     var ex = p.exercises || [];
     if (!ex.length) return '<div class="b-empty">本课暂无练习。</div>';
-    var key = lessonKey(sid, vid, idx);
+    var ansMap = getLessonAnswers(sid, vid, idx);
     return ex.map(function (q, i) {
-      var opts = '';
-      if (q.type === 'choice') {
-        opts = (q.options || []).map(function (o, oi) {
-          return '<button class="opt" data-q="' + i + '" data-val="' + esc(o) + '">' +
-                   '<span class="opt-key">' + String.fromCharCode(65 + oi) + '</span>' +
-                   '<span class="opt-txt">' + esc(o) + '</span></button>';
-        }).join('');
-      } else {
-        opts = '<input class="fill-input" id="fill-' + i + '" placeholder="请输入答案" />';
-      }
-      var faved = isFav(key, i);
-      return '<div class="quiz" data-q="' + i + '" data-type="' + q.type + '">' +
-        '<div class="quiz-q"><span class="quiz-no">' + (i + 1) + '</span><span>' + esc(q.question) + '</span>' +
-        '<button class="quiz-fav' + (faved ? ' is-fav' : '') + '" title="' + (faved ? '取消收藏' : '收藏本题') + '" onclick="window.__toggleFav(\'' + esc(sid) + '\',\'' + esc(vid) + '\',' + idx + ',' + i + ')">' + (faved ? '★' : '☆') + '</button>' +
-        '</div>' +
-        '<div class="quiz-opts">' + opts + '</div>' +
-        '<div class="quiz-actions"><button class="quiz-submit" onclick="window.__submitQuiz(\'' + esc(sid) + '\',\'' + esc(vid) + '\',' + idx + ',' + i + ')">提交</button><span class="quiz-feedback" id="fb-' + i + '"></span></div>' +
-        '<div class="quiz-exp" id="exp-' + i + '"></div>' +
-      '</div>';
+      return buildQuiz(q, i, sid, vid, idx, ansMap[i]);
     }).join('');
+  }
+
+  // 构建单题展示：未作答显示提交按钮；已作答显示对错结果与解析（刷新后保持状态）
+  function buildQuiz(q, i, sid, vid, idx, ans) {
+    var key = lessonKey(sid, vid, idx);
+    var faved = isFav(key, i);
+    var opts;
+    if (q.type === 'choice') {
+      opts = (q.options || []).map(function (o, oi) {
+        var cls = 'opt';
+        var sel = false;
+        if (ans) {
+          if (String(o) === String(q.answer)) cls += ' is-correct-opt';
+          if (String(ans.myAnswer) === String(o)) { sel = true; if (!ans.correct) cls += ' is-wrong-opt'; }
+          cls += ' disabled';
+        }
+        return '<button class="' + cls + (sel ? ' sel' : '') + '" data-q="' + i + '" data-val="' + esc(o) + '">' +
+                 '<span class="opt-key">' + String.fromCharCode(65 + oi) + '</span>' +
+                 '<span class="opt-txt">' + esc(o) + '</span></button>';
+      }).join('');
+    } else {
+      opts = '<input class="fill-input" id="fill-' + i + '" placeholder="请输入答案" value="' + esc(ans ? ans.myAnswer : '') + '"' + (ans ? ' disabled' : '') + ' />';
+    }
+    var status = ans
+      ? (ans.correct ? '<span class="quiz-status ok" title="已答对">✓</span>' : '<span class="quiz-status no" title="答错已入错题本">✗</span>')
+      : '';
+    var actions = ans ? '' :
+      '<div class="quiz-actions"><button class="quiz-submit" onclick="window.__submitQuiz(\'' + esc(sid) + '\',\'' + esc(vid) + '\',' + idx + ',' + i + ')">提交</button><span class="quiz-feedback" id="fb-' + i + '"></span></div>';
+    var result = ans ? quizResultBlock(q, ans) : '';
+    var expBody = (ans && q.explanation) ? '<div class="quiz-exp-label">📝 解析</div><div class="quiz-exp-body">' + esc(q.explanation) + '</div>' : '';
+    return '<div class="quiz' + (ans ? (ans.correct ? ' is-correct' : ' is-wrong') : '') + '" data-q="' + i + '" data-type="' + q.type + '">' +
+      '<div class="quiz-q"><span class="quiz-no">' + (i + 1) + '</span>' + status + '<span>' + esc(q.question) + '</span>' +
+      '<button class="quiz-fav' + (faved ? ' is-fav' : '') + '" title="' + (faved ? '取消收藏' : '收藏本题') + '" onclick="window.__toggleFav(\'' + esc(sid) + '\',\'' + esc(vid) + '\',' + idx + ',' + i + ')">' + (faved ? '★' : '☆') + '</button>' +
+      '</div>' +
+      '<div class="quiz-opts">' + opts + '</div>' +
+      actions +
+      result +
+      '<div class="quiz-exp" id="exp-' + i + '">' + expBody + '</div>' +
+    '</div>';
+  }
+
+  function quizResultBlock(q, ans) {
+    var bigIcon = ans.correct ? '<div class="quiz-result-icon ok">✓</div>' : '<div class="quiz-result-icon no">✗</div>';
+    var compare = ans.correct
+      ? '<div class="quiz-result-text ok">回答正确，干得漂亮！</div>'
+      : '<div class="quiz-result-text no">回答错误</div>' +
+        '<div class="quiz-compare">' +
+          '<div class="qc-row"><span class="qc-label">你的答案</span><span class="qc-val mine">' + esc(ans.myAnswer) + '</span></div>' +
+          '<div class="qc-row"><span class="qc-label">正确答案</span><span class="qc-val right">' + esc(String(q.answer)) + '</span></div>' +
+        '</div>' +
+        '<div class="quiz-wrongbook-note">📕 已在错题本中，<a onclick="navigate(\'wrongbook\')">去复习</a></div>';
+    return '<div class="quiz-feedback ' + (ans.correct ? 'ok' : 'no') + '">' + bigIcon + compare + '</div>';
   }
 
   window.__submitQuiz = function (sid, vid, idx, qi) {
@@ -1166,21 +1209,12 @@
     if (!q) return;
     var box = document.querySelector('.quiz[data-q="' + qi + '"]');
     if (!box) return;
-    var fb = document.getElementById('fb-' + qi);
-    var exp = document.getElementById('exp-' + qi);
     var correct, myAnswer = '';
     if (q.type === 'choice') {
       var sel = box.querySelector('.opt.sel');
       if (!sel) { toast('请先选择一个选项'); return; }
       myAnswer = sel.getAttribute('data-val');
       correct = (myAnswer === String(q.answer));
-      // 高亮正确选项
-      var keys = box.querySelectorAll('.opt');
-      for (var kk = 0; kk < keys.length; kk++) {
-        var optEl = keys[kk];
-        if (optEl.getAttribute('data-val') === String(q.answer)) optEl.classList.add('is-correct-opt');
-        else if (optEl.classList.contains('sel') && !correct) optEl.classList.add('is-wrong-opt');
-      }
     } else {
       var inp = document.getElementById('fill-' + qi);
       var val = (inp.value || '').trim();
@@ -1189,54 +1223,86 @@
       var ans = String(q.answer).trim();
       correct = (val === ans || (ans.indexOf('|') >= 0 && ans.split('|').map(function (x) { return x.trim(); }).indexOf(val) >= 0));
     }
-    box.classList.add(correct ? 'is-correct' : 'is-wrong');
-    var keys2 = box.querySelectorAll('.opt');
-    for (var k = 0; k < keys2.length; k++) keys2[k].classList.add('disabled');
-    var inpt = box.querySelector('.fill-input');
-    if (inpt) inpt.disabled = true;
-    var sb = box.querySelector('.quiz-submit'); if (sb) sb.disabled = true;
+    // 记录每题作答（用于“做完全部题目才算学完”）
+    var rec = { correct: correct, myAnswer: myAnswer, ts: Date.now() };
+    setLessonAnswer(sid, vid, idx, qi, rec);
     // 记录做题日志（用于 7 天节奏图）
     logQuiz(sid, vid, idx, qi, correct);
-    // 大图标 + 答案对比
-    var bigIcon = correct
-      ? '<div class="quiz-result-icon ok">✓</div>'
-      : '<div class="quiz-result-icon no">✗</div>';
-    var answerCompare = correct
-      ? '<div class="quiz-result-text ok">回答正确，干得漂亮！</div>'
-      : '<div class="quiz-result-text no">回答错误</div>' +
-        '<div class="quiz-compare">' +
-          '<div class="qc-row"><span class="qc-label">你的答案</span><span class="qc-val mine">' + esc(myAnswer) + '</span></div>' +
-          '<div class="qc-row"><span class="qc-label">正确答案</span><span class="qc-val right">' + esc(String(q.answer)) + '</span></div>' +
-        '</div>';
-    var wrongBadge = '';
-    fb.innerHTML = bigIcon + answerCompare;
-    fb.className = 'quiz-feedback ' + (correct ? 'ok' : 'no');
-    exp.innerHTML = '<div class="quiz-exp-label">📝 解析</div><div class="quiz-exp-body">' + esc(q.explanation || '') + '</div>';
+    // 答错自动收录错题本
     if (!correct) {
       var wrong = lsGet('gz_wrongbook', []);
       var key = lessonKey(sid, vid, idx);
       var dup = wrong.some(function (w) { return w.key === key && w.qi === qi; });
       if (!dup) {
-        wrong.push({ key: key, qi: qi, question: q.question, answer: q.answer, myAnswer: myAnswer, subjectName: f.subject.name, lessonName: f.point.name, type: q.type });
-        wrongBadge = '<div class="quiz-wrongbook-note">📕 已加入错题本，<a onclick="navigate(\'wrongbook\')">去查看</a></div>';
-      } else {
-        wrongBadge = '<div class="quiz-wrongbook-note">📕 已在错题本中</div>';
+        wrong.push({ key: key, qi: qi, sid: sid, question: q.question, answer: q.answer, myAnswer: myAnswer, subjectName: f.subject.name, lessonName: f.point.name, type: q.type, options: q.options || [], ts: Date.now() });
+        lsSet('gz_wrongbook', wrong);
       }
-      lsSet('gz_wrongbook', wrong);
       toast('已加入错题本');
     }
-    if (wrongBadge) exp.insertAdjacentHTML('beforeend', wrongBadge);
-    // 标记课时完成（提交后即记录）
-    markProgress(sid, vid, idx);
-    renderProgressSideNote();
-    // 自动滚动到题目顶部
-    try { box.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) {}
+    // 用“已作答”状态重建该题展示
+    var wrap = document.createElement('div');
+    wrap.innerHTML = buildQuiz(q, qi, sid, vid, idx, rec);
+    var newBox = wrap.firstElementChild;
+    if (newBox) {
+      box.replaceWith(newBox);
+      try { newBox.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) {}
+    }
+    // 重新判定课时是否学完（需做完全部题目）
+    var total = (f.point.exercises || []).length;
+    recomputeLessonDone(sid, vid, idx, total);
+    updateLessonCompletionUI(sid, vid, idx, total);
   };
 
   function markProgress(sid, vid, idx) {
     var prog = lsGet('gz_progress', {});
     prog[lessonKey(sid, vid, idx)] = { ts: Date.now() };
     lsSet('gz_progress', prog);
+  }
+
+  /* ---------- 每题作答记录（用于“做完全部题目才算学完”） ---------- */
+  function getLessonAnswers(sid, vid, idx) {
+    var all = lsGet('gz_lesson_answers', {});
+    return all[lessonKey(sid, vid, idx)] || {};
+  }
+  function setLessonAnswer(sid, vid, idx, qi, rec) {
+    var all = lsGet('gz_lesson_answers', {});
+    var k = lessonKey(sid, vid, idx);
+    if (!all[k]) all[k] = {};
+    all[k][qi] = rec;
+    lsSet('gz_lesson_answers', all);
+  }
+  function lessonAnsweredCount(sid, vid, idx, total) {
+    var ans = getLessonAnswers(sid, vid, idx);
+    var n = 0;
+    for (var i = 0; i < total; i++) if (ans[i]) n++;
+    return n;
+  }
+  // 课时“学完”判定：仅当该课时所有课后练习都至少提交过一次（对错都算）
+  function recomputeLessonDone(sid, vid, idx, total) {
+    if (!total) return; // 无练习的课时由“我已读完”手动判定
+    var ans = getLessonAnswers(sid, vid, idx);
+    var allDone = true;
+    for (var i = 0; i < total; i++) { if (!ans[i]) { allDone = false; break; } }
+    var prog = lsGet('gz_progress', {});
+    if (allDone) prog[lessonKey(sid, vid, idx)] = { ts: Date.now() };
+    else delete prog[lessonKey(sid, vid, idx)];
+    lsSet('gz_progress', prog);
+  }
+  // 提交后只更新课时头部的完成度提示，不整页重渲染（避免滚动跳动）
+  function updateLessonCompletionUI(sid, vid, idx, total) {
+    var box = document.getElementById('lessonReadBox');
+    var exP = document.getElementById('exProgress');
+    var doneN = lessonAnsweredCount(sid, vid, idx, total);
+    if (box) {
+      if (total === 0) {
+        /* 无练习：保持手动按钮，不在此处理 */
+      } else if (doneN >= total) {
+        box.innerHTML = '<span class="read-toggle is-done">✓ 已学完（' + total + '/' + total + ' 题已完成）</span>';
+      } else {
+        box.innerHTML = '<span class="read-toggle in-progress">📝 已完成 ' + doneN + ' / ' + total + ' 题，做完全部即标记学完</span>';
+      }
+    }
+    if (exP) exP.textContent = '已完成 ' + doneN + ' / ' + total + ' 题';
   }
 
   /* 给旧的 gz_progress 记录补时间戳（按签到日期均匀回填到历史中） */
@@ -3347,7 +3413,30 @@
       if (toggleBtn) toggleBtn.textContent = '隐藏答案';
     }
 
-    toast(correct === true ? '✓ 正确' : (correct === false ? '✗ 错误' : '✓ 已记录'));
+    // 答错自动收录题库错题到错题本（与课时练习统一进“错题本”）
+    if (correct === false) {
+      var bp = String(key).split('#');
+      var bSid = bp[0].split('::')[0];
+      var bSubj = (window.GZ_SUBJECTS || []).filter(function (s) { return s.id === bSid; })[0];
+      var qsArr = (window.GZ_COMMON_QUESTIONS || {})[bp[0]];
+      var qObj = (qsArr && qsArr[parseInt(bp[1], 10)]) ? qsArr[parseInt(bp[1], 10)] : null;
+      var wq = qObj ? qObj.q : (item.querySelector('.cc-q-body') ? item.querySelector('.cc-q-body').textContent : '');
+      var wa = qObj ? qObj.a : '';
+      var wrong = lsGet('gz_wrongbook', []);
+      var dup = wrong.some(function (w) { return w.kind === 'bank' && w.key === key; });
+      if (!dup) {
+        wrong.push({
+          kind: 'bank', key: key, qi: -1, sid: bSid,
+          subjectName: bSubj ? bSubj.name : bSid,
+          question: wq, answer: wa, myAnswer: myAnswer, type: type,
+          options: (qObj && qObj.opts) ? qObj.opts : [], ts: Date.now()
+        });
+        lsSet('gz_wrongbook', wrong);
+      }
+      toast('✗ 错误，已加入错题本');
+    } else {
+      toast(correct === true ? '✓ 正确' : '✓ 已记录');
+    }
   };
 
   function __typeHasMatchSearch(k, q) {
@@ -3574,11 +3663,11 @@
     });
     // 按学科筛选
     var filterSid = (window.__wrongFilter) || 'all';
-    var filtered = filterSid === 'all' ? wrong : wrong.filter(function (w) { return w.key && w.key.split('/')[0] === filterSid; });
+    var filtered = filterSid === 'all' ? wrong : wrong.filter(function (w) { return (w.sid || (w.key ? w.key.split('/')[0] : '')) === filterSid; });
     // 统计各学科
     var subjCount = {};
     wrong.forEach(function (w) {
-      var sid = w.key ? w.key.split('/')[0] : '_';
+      var sid = w.sid || (w.key ? w.key.split('/')[0] : '_');
       subjCount[sid] = (subjCount[sid] || 0) + 1;
     });
     var subjChips = '<span class="bank-cat-chip' + (filterSid === 'all' ? ' active' : '') + '" onclick="window.__setWrongFilter(\'all\')">全部（' + wrong.length + '）</span>' +
@@ -3633,12 +3722,15 @@
       body = '<div class="wrong-list-new">' + filtered.map(function (w) {
         var realIdx = wrong.indexOf(w);
         var parts = w.key ? w.key.split('/') : null;
+        var isBank = w.kind === 'bank';
         var redo = '';
-        if (parts) {
+        if (isBank) {
+          redo = '<button class="wrong-redo-btn" onclick="navigate(\'bank\')">去题库重做 →</button>';
+        } else if (parts) {
           redo = '<button class="wrong-redo-btn" onclick="navigate(\'lesson\',\'' + esc(parts[0]) + '\',\'' + esc(parts[1]) + '\',' + esc(parts[2]) + ')">去重做 →</button>';
         }
         var favBtn = '';
-        if (parts) {
+        if (!isBank && parts) {
           var faved = isFav(w.key, w.qi);
           favBtn = '<button class="wcn-fav-btn' + (faved ? ' is-fav' : '') + '" title="' + (faved ? '取消收藏' : '加入收藏') + '" onclick="window.__toggleFav(\'' + esc(parts[0]) + '\',\'' + esc(parts[1]) + '\',' + parseInt(parts[2], 10) + ',' + (w.qi != null ? w.qi : -1) + ')">' + (faved ? '★ 已收藏' : '☆ 加入收藏') + '</button>';
         }
@@ -3708,11 +3800,11 @@
     });
     // 按学科筛选
     var filterSid = (window.__wrongFilter) || 'all';
-    var filtered = filterSid === 'all' ? wrong : wrong.filter(function (w) { return w.key && w.key.split('/')[0] === filterSid; });
+    var filtered = filterSid === 'all' ? wrong : wrong.filter(function (w) { return (w.sid || (w.key ? w.key.split('/')[0] : '')) === filterSid; });
     // 统计各学科
     var subjCount = {};
     wrong.forEach(function (w) {
-      var sid = w.key ? w.key.split('/')[0] : '_';
+      var sid = w.sid || (w.key ? w.key.split('/')[0] : '_');
       subjCount[sid] = (subjCount[sid] || 0) + 1;
     });
     var subjChips = '<span class="bank-cat-chip' + (filterSid === 'all' ? ' active' : '') + '" onclick="window.__setWrongFilter(\'all\')">全部（' + wrong.length + '）</span>' +
@@ -3732,7 +3824,9 @@
       body = filtered.map(function (w) {
         var realIdx = wrong.indexOf(w);
         var redo = '';
-        if (w.key) {
+        if (w.kind === 'bank') {
+          redo = '<button class="wrong-go" onclick="navigate(\'bank\')">去题库重做 →</button>';
+        } else if (w.key) {
           var parts = w.key.split('/');
           redo = '<button class="wrong-go" onclick="navigate(\'lesson\',\'' + esc(parts[0]) + '\',\'' + esc(parts[1]) + '\',' + esc(parts[2]) + ')">去重做 →</button>';
         }
@@ -3765,6 +3859,7 @@
     if (!wrong.length) return;
     // 取第一道去重做（连续点会一道道做）
     var first = wrong[0];
+    if (first.kind === 'bank') { toast('正在前往题库重做…'); navigate('bank'); return; }
     if (!first.key) { toast('无有效错题可重做'); return; }
     var p = first.key.split('/');
     toast('正在重做第 1 / ' + wrong.length + ' 题…');

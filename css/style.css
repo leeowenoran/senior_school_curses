@@ -2170,6 +2170,12 @@ body.theme-dark .b-original-src { color: #b8a06a; }
 .quiz-exp { margin-top: 0; max-height: 0; overflow: hidden; transition: max-height .25s ease; }
 .quiz.is-correct .quiz-exp, .quiz.is-wrong .quiz-exp { max-height: 600px; margin-top: 14px; }
 .quiz-exp-label { font-size: 12.5px; font-weight: 800; color: var(--primary); margin-bottom: 4px; }
+.quiz-status { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: #fff; }
+.quiz-status.ok { background: #10b981; }
+.quiz-status.no { background: #ef4444; }
+.ex-progress { font-size: 14px; font-weight: 700; color: #6b7280; margin-left: 10px; }
+.read-toggle.in-progress { background: #fff7ed; border: 1px dashed #f59e0b; color: #b45309; cursor: default; }
+.read-toggle.in-progress:hover { background: #fff7ed; }
 .quiz-exp > div:last-child { font-size: 14px; line-height: 1.85; color: #444; }
 .quiz-ans { margin-top: 8px; font-size: 13.5px; font-weight: 700; color: #d0402b; }
 
