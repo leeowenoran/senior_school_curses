@@ -2120,6 +2120,23 @@ body.theme-dark .b-original-title { color: #e3c98f; }
 body.theme-dark .b-original-text { color: #e8e0cf; }
 body.theme-dark .b-original-src { color: #b8a06a; }
 
+/* 原文：分段 + 逐段分析 + 完整全文（折叠） */
+.orig-segs { margin: 14px 0 4px; }
+.orig-seg { padding: 12px 14px; margin-bottom: 14px; background: rgba(255,255,255,.55); border: 1px solid #ece0c6; border-radius: 8px; }
+.orig-seg-idx { font-size: 12px; font-weight: 700; color: #b9893f; margin-bottom: 6px; letter-spacing: 1px; }
+.orig-seg-text { font-family: "Kaiti SC","STKaiti","PingFang SC",serif; font-size: 16px; line-height: 2.05; color: #3c3322; text-align: justify; letter-spacing: .5px; white-space: pre-line; }
+.orig-seg-note { margin-top: 10px; padding: 9px 12px; background: #eef4fb; border-left: 3px solid #4a7de0; border-radius: 0 6px 6px 0; font-size: 14px; line-height: 1.85; color: #34465e; }
+.orig-note-label { font-weight: 700; color: #4a7de0; margin-right: 6px; }
+.orig-full { margin-top: 8px; border: 1px dashed #d8c79f; border-radius: 8px; background: rgba(255,255,255,.4); }
+.orig-full-label { cursor: pointer; font-size: 14px; font-weight: 700; color: #6b4f1d; padding: 10px 14px; list-style: none; }
+.orig-full-label::-webkit-details-marker { display: none; }
+.orig-full > .b-original-text { padding: 0 14px 12px; }
+body.theme-dark .orig-seg { background: rgba(255,255,255,.05); border-color: rgba(184,137,63,.3); }
+body.theme-dark .orig-seg-text { color: #e8e0cf; }
+body.theme-dark .orig-seg-note { background: rgba(74,125,224,.14); border-left-color: #6f9bf0; color: #cdd8ec; }
+body.theme-dark .orig-full { background: rgba(255,255,255,.04); border-color: rgba(184,137,63,.35); }
+body.theme-dark .orig-full-label { color: #e3c98f; }
+
 /* 图示 */
 .b-figure { margin: 22px 0; text-align: center; }
 .b-svg { display: inline-block; max-width: 100%; padding: 16px; background: var(--card);

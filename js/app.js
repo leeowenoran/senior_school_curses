@@ -1068,7 +1068,7 @@
 
       // 语文课时：在开头补上对应课时的「原文」（来自集中映射 GZ_CHINESE_ORIGINALS）
       var origObj = (sid === 'chinese' && window.GZ_CHINESE_ORIGINALS && GZ_CHINESE_ORIGINALS[p.id]) ? GZ_CHINESE_ORIGINALS[p.id] : null;
-      var origBlock = origObj ? renderContentBlock({ type: 'original', title: origObj.title, text: origObj.text, src: origObj.src }) : '';
+      var origBlock = origObj ? renderContentBlock(Object.assign({ type: 'original' }, origObj)) : '';
       var blocks = origBlock + (p.content || []).map(renderContentBlock).join('');
       var exHTML = renderExercises(p, sid, vid, idx);
 
@@ -1132,10 +1132,31 @@
       case 'example':   return blockTip('b-example', '例题', b.text || '');
       case 'reading':   return blockTip('b-reading', '阅读', b.text || '');
       case 'poem':      return '<div class="b-poem">' + esc(b.text).replace(/\n/g, '<br>') + '</div>';
-      case 'original':  return '<div class="b-original"><div class="box-label">📜 原文</div>' +
-        (b.title ? '<div class="b-original-title">' + esc(b.title) + '</div>' : '') +
-        '<div class="b-original-text">' + esc(b.text).replace(/\n/g, '<br>') + '</div>' +
-        (b.src ? '<div class="b-original-src">' + esc(b.src) + '</div>' : '') + '</div>';
+      case 'original': {
+        var o = b, html = '';
+        html += '<div class="b-original"><div class="box-label">📜 原文</div>';
+        if (o.title) html += '<div class="b-original-title">' + esc(o.title) + '</div>';
+        if (o.segments && o.segments.length) {
+          html += '<div class="orig-segs">';
+          o.segments.forEach(function (s, i) {
+            html += '<div class="orig-seg">';
+            html += '<div class="orig-seg-idx">第 ' + (i + 1) + ' 段</div>';
+            html += '<div class="orig-seg-text">' + esc(s.text || '').replace(/\n/g, '<br>') + '</div>';
+            if (s.note) html += '<div class="orig-seg-note"><span class="orig-note-label">💡 分析</span>' + esc(s.note) + '</div>';
+            html += '</div>';
+          });
+          html += '</div>';
+        } else if (o.text) {
+          html += '<div class="b-original-text">' + esc(o.text).replace(/\n/g, '<br>') + '</div>';
+        }
+        var fullTxt = o.full || (o.segments ? o.segments.map(function (s) { return s.text; }).join('\n\n') : '');
+        if (fullTxt) {
+          html += '<details class="orig-full"><summary class="orig-full-label">📖 完整全文（含全部段落）</summary><div class="b-original-text">' + esc(fullTxt).replace(/\n/g, '<br>') + '</div></details>';
+        }
+        if (o.src) html += '<div class="b-original-src">' + esc(o.src) + '</div>';
+        html += '</div>';
+        return html;
+      }
       default:          return '';
     }
   }
