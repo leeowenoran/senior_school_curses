@@ -127,6 +127,9 @@
     if (param != null) h += '/' + encodeURIComponent(param);
     if (param2 != null) h += '/' + encodeURIComponent(param2);
     if (param3 != null) h += '/' + encodeURIComponent(param3);
+    // 若目标 hash 与当前相同（如重复点击同一菜单），hashchange 不会触发，
+    // 这里直接重渲染，保证视图一定刷新（避免“点了没反应、刷新才出来”）。
+    if (location.hash === h) { if (typeof render === 'function') render(); return; }
     location.hash = h;
   };
 
@@ -167,6 +170,7 @@
     else if (r.route === 'wrongbook') { renderWrongbook(); restoreScrollKeep(prevScroll); }
     else if (r.route === 'progress') { renderProgress(); restoreScrollKeep(prevScroll); }
     else if (r.route === 'comments') { renderComments(r); restoreScrollKeep(prevScroll); }
+    else if (r.route === 'admin') { renderAdmin(); restoreScrollKeep(prevScroll); }
     else if (r.route === 'settings') { renderSettings(); restoreScrollKeep(prevScroll); }
     else { renderHome(); restoreScrollKeep(prevScroll); }
     // 滚动监听：控制「返回顶部」按钮 + 主区顶部条变 fixed
@@ -1340,6 +1344,7 @@
     var found = null;
     for (var k in users) if (users[k].username === phone) { found = users[k]; break; }
     if (!found) return { ok: false, msg: '该手机号尚未在本机注册（云端可能不可达，请联网后重试）' };
+    if (isUserBanned(phone)) return { ok: false, msg: '该账号已被封禁' };
     if (found.password !== hashPassword(password)) return { ok: false, msg: '密码错误' };
     found.lastLoginAt = new Date().toISOString();
     users[found.id] = found;
@@ -1397,11 +1402,28 @@
     for (var k in users) if (users[k].username === name) return users[k];
     return null;
   }
+  // 健壮封禁判定：只要任意一条「id / username / phone 命中 ident」的记录被封，即视为封号。
+  // 防止同一手机号存在重复记录（云端记录 gz_users[phone] 与本机注册记录 gz_users['local_'+phone] / gz_users['u_xxx']）时漏判。
+  function isUserBanned(ident) {
+    if (!ident) return false;
+    var users = getAllUsers();
+    for (var k in users) {
+      var u = users[k];
+      if (u && (u.id === ident || u.username === ident || u.phone === ident) && u.banned) return true;
+    }
+    return false;
+  }
   // 管理员账号白名单：必须与云函数 gzApi 里的 ADMIN_IDS 保持一致。
   // 这类账号不是手机号，只能登录、不能注册（云端 register 仍强制 11 位手机号）。
   var ADMIN_IDS = ['king'];
   function isAdminId(s) {
     return ADMIN_IDS.indexOf(String(s || '').trim().toLowerCase()) >= 0;
+  }
+  // 稳健判断：账号的 id / username / phone 任一命中白名单即视为管理员。
+  // 否则云端登录的 king 会被存成 id='local_king'，导致所有 isAdminId(u.id) 失效、后台入口不显示。
+  function isAdminUser(u) {
+    if (!u) return false;
+    return isAdminId(u.id) || isAdminId(u.username) || isAdminId(u.phone);
   }
 
   // 把手机号格式化为 138****1234 形式
@@ -1455,6 +1477,7 @@
     if (!username || !password) return { ok: false, msg: '请输入用户名和密码' };
     var user = findUserByName(username);
     if (!user) return { ok: false, msg: '用户不存在' };
+    if (isUserBanned(username)) return { ok: false, msg: '该账号已被封禁' };
     if (user.password !== hashPassword(password)) return { ok: false, msg: '密码错误' };
     var users = getAllUsers();
     user.lastLoginAt = new Date().toISOString();
@@ -1516,6 +1539,7 @@
               '<div class="auth-user-handle">@' + esc(u.username) + '</div>' +
             '</div>' +
           '</div>' +
+          (isAdminUser(u) ? '<button class="auth-menu-item" onclick="navigate(\'admin\')">🛡️ 管理后台</button>' : '') +
           '<button class="auth-menu-item" onclick="window.__openProfileModal()">⚙️ 账号设置</button>' +
           '<button class="auth-menu-item danger" onclick="window.__logoutAndToast()">↩ 退出登录</button>' +
         '</div>' +
@@ -1557,9 +1581,11 @@
   /* ----- 社交数据（localStorage，随浏览器账号共享） ----- */
   function getSocial() {
     var s = lsGet('gz_social', null);
-    if (!s) s = { follows: {}, followers: {}, messages: {}, notifications: [] };
-    s.follows = s.follows || {}; s.followers = s.followers || {};
-    s.messages = s.messages || {}; s.notifications = s.notifications || [];
+    if (!s || typeof s !== 'object') s = {};
+    s.follows = (s.follows && typeof s.follows === 'object') ? s.follows : {};
+    s.followers = (s.followers && typeof s.followers === 'object') ? s.followers : {};
+    s.messages = (s.messages && typeof s.messages === 'object') ? s.messages : {};
+    s.notifications = Array.isArray(s.notifications) ? s.notifications : [];
     return s;
   }
   function setSocial(s) { lsSet('gz_social', s); }
@@ -1589,6 +1615,7 @@
   function sendMessage(toId, text) {
     text = (text || '').trim(); if (!text) return;
     var me = getCurrentUser(); if (!me || me.id === toId) return;
+    if (me.muted) { toast('你已被禁言，暂不能发送私信'); return; }
     var s = getSocial();
     var k = convKey(me.id, toId);
     s.messages[k] = s.messages[k] || [];
@@ -1611,7 +1638,9 @@
     return getSocial().notifications.filter(function (n) { return n.toId === me; });
   }
   function unreadNotif() {
-    return myNotifications().filter(function (n) { return !n.read; }).length;
+    // 注意：'dm' 类通知是私信本身的重复（私信未读已由 unreadDm 统计），
+    // 不计入红点，避免同一条私信被算两次；只统计 follow / reply 等独立事件。
+    return myNotifications().filter(function (n) { return n.type !== 'dm' && !n.read; }).length;
   }
   function myConversations() {
     var me = getCurrentUserId(); if (!me) return [];
@@ -1668,9 +1697,9 @@
     if (!b) return;
     var u = getCurrentUser();
     if (!u) { b.style.display = 'none'; return; }
-    var n = unreadNotif() + unreadDm();
+    var n = unreadNotif() + unreadDm() + unreadNotices();
     if (n > 0) { b.style.display = ''; b.textContent = n > 99 ? '99+' : String(n); }
-    else { b.style.display = 'none'; }
+    else { b.style.display = 'none'; b.textContent = ''; }
   }
   window.__updateBellBadge = updateBellBadge;
 
@@ -1706,11 +1735,13 @@
   window.__closeUserProfile = closeUserProfile;
   function upToggleFollow() {
     var fid = window.__upUserId; if (!fid) return;
-    if (isFollowing(fid)) unfollowUser(fid); else followUser(fid);
+    var wasFollowing = isFollowing(fid);
+    if (wasFollowing) unfollowUser(fid); else followUser(fid);
     var btn = document.getElementById('upFollowBtn');
     var now = isFollowing(fid);
     btn.className = 'up-btn ' + (now ? 'following' : 'primary');
     btn.textContent = now ? '✓ 已关注' : '＋ 关注';
+    if (!wasFollowing && now) toast('已关注，TA 已固定到「私信」列表，可随时给 TA 发消息');
     updateBellBadge();
   }
   window.__upToggleFollow = upToggleFollow;
@@ -1881,6 +1912,12 @@
       } catch (e) { cloudErr = e; }
 
       if (usedCloud) {
+        // 云端登录成功后，仍需校验本机封号标记（banned 只存于本机 gz_users，云端无此字段）
+        if (isUserBanned(u)) {
+          if (btn) { btn.disabled = false; btn.textContent = _authMode === 'register' ? '注 册' : '登 录'; }
+          if (msg) { msg.className = 'auth-msg err'; msg.textContent = '该账号已被封禁'; }
+          return;
+        }
         cbApplyCloudUser(u, u);
         try {
           var doc = await window.cbLoadUserData();
@@ -2010,20 +2047,25 @@
   }
   window.__resetAvatar = resetAvatar;
   function handleAvatarUpload(e) {
-    var file = e.target.files && e.target.files[0]; if (!file) return;
+    var input = e.target;
+    var file = input.files && input.files[0]; if (!file) return;
     if (!/^image\//.test(file.type)) { toast('请选择图片文件'); return; }
     var reader = new FileReader();
     reader.onload = function () {
       var img = new Image();
       img.onload = function () {
-        var size = 160, scale = Math.min(size / img.width, size / img.height, 1);
+        var W = img.naturalWidth || img.width, H = img.naturalHeight || img.height;
+        if (!W || !H) { toast('图片读取失败'); return; }
+        // 中心正方形裁剪，避免放进圆形头像框时被裁掉脸
+        var side = Math.min(W, H);
+        var sx = (W - side) / 2, sy = (H - side) / 2;
+        var target = 256;
         var canvas = document.createElement('canvas');
-        canvas.width = Math.max(1, Math.round(img.width * scale));
-        canvas.height = Math.max(1, Math.round(img.height * scale));
+        canvas.width = target; canvas.height = target;
         var ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, sx, sy, side, side, 0, 0, target, target);
         var dataUrl;
-        try { dataUrl = canvas.toDataURL('image/jpeg', 0.85); } catch (err) { dataUrl = reader.result; }
+        try { dataUrl = canvas.toDataURL('image/jpeg', 0.9); } catch (err) { dataUrl = reader.result; }
         pendingAvatar = dataUrl;
         renderProfileBigAvatar();
       };
@@ -2032,6 +2074,8 @@
     };
     reader.onerror = function () { toast('文件读取失败'); };
     reader.readAsDataURL(file);
+    // 允许再次选择同一张图片时重新触发 change
+    setTimeout(function () { try { input.value = ''; } catch (e) {} }, 0);
   }
 
   function doProfileSave() {
@@ -2068,24 +2112,74 @@
   }
   window.__doProfileSave = doProfileSave;
 
-  /* ---------- 消息中心（铃铛） ---------- */
+  /* ---------- 全局系统通知（管理员广播，所有登录用户可见） ---------- */
+  function getNotices() {
+    var n = lsGet('gz_notices', null);
+    if (n === null) {
+      n = [{ id: 'nt_welcome', text: '欢迎来到高考复习网站！这里有系统通知、私信和讨论区。管理员会在这里发布重要通知 🎓', ts: Date.now() - 86400000, by: 'king', byName: '官方' }];
+      lsSet('gz_notices', n);
+    }
+    if (!Array.isArray(n)) n = [];
+    return n;
+  }
+  function addAdminNotice(text) {
+    text = (text || '').trim(); if (!text) return false;
+    var u = getCurrentUser();
+    if (!u || !isAdminUser(u)) { toast('仅管理员可发布系统通知'); return false; }
+    var list = getNotices();
+    list.unshift({ id: 'nt_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), text: text, ts: Date.now(), by: u.id, byName: getDisplayName(u) });
+    if (list.length > 50) list = list.slice(0, 50);
+    lsSet('gz_notices', list);
+    return true;
+  }
+  window.__addAdminNotice = addAdminNotice;
+  function unreadNotices() {
+    var me = getCurrentUserId(); if (!me) return 0;
+    var read = (getSocial().noticeRead) || [];
+    return getNotices().filter(function (x) { return read.indexOf(x.id) < 0; }).length;
+  }
+  function markNoticesRead() {
+    var s = getSocial();
+    s.noticeRead = s.noticeRead || [];
+    getNotices().forEach(function (x) { if (s.noticeRead.indexOf(x.id) < 0) s.noticeRead.push(x.id); });
+    setSocial(s);
+  }
+  // 标记“个人通知”（关注 / 私信等）为已读
+  function markMyNotifRead() {
+    var me = getCurrentUserId(); if (!me) return;
+    var s = getSocial(); var changed = false;
+    s.notifications.forEach(function (n) { if (n.toId === me && !n.read) { n.read = true; changed = true; } });
+    if (changed) setSocial(s);
+  }
+  // 标记当前用户所有私信会话为已读
+  function markAllDmRead() {
+    var me = getCurrentUserId(); if (!me) return;
+    var s = getSocial(); var changed = false;
+    Object.keys(s.messages).forEach(function (k) {
+      if (k.indexOf(me) < 0) return;
+      (s.messages[k] || []).forEach(function (m) { if (m.to === me && !m.read) { m.read = true; changed = true; } });
+    });
+    if (changed) setSocial(s);
+  }
+
+  /* ---------- 消息中心（铃铛 / 洛谷风格） ---------- */
   function openMessageCenter(tab, preselect) {
-    if (!getCurrentUser()) { if (window.__openAuthModal) window.__openAuthModal(); toast('请先登录后再查看消息'); return; }
     var m = document.getElementById('msgCenter');
     if (!m) {
       m = document.createElement('div'); m.id = 'msgCenter'; m.className = 'auth-modal mc-modal';
       document.body.appendChild(m);
     }
     m.innerHTML =
-      '<div class="auth-mask" onclick="window.__closeMessageCenter()"></div>' +
+      '<div class="mc-mask" onclick="window.__closeMessageCenter()"></div>' +
       '<div class="mc-card">' +
-        '<button class="auth-close" onclick="window.__closeMessageCenter()" title="关闭">×</button>' +
-        '<div class="mc-layout">' +
+        '<div class="mc-head">' +
+          '<div class="mc-head-title">消息中心</div>' +
+          '<button class="mc-close" onclick="window.__closeMessageCenter()" title="关闭" aria-label="关闭">×</button>' +
+        '</div>' +
+        '<div class="mc-body">' +
           '<aside class="mc-side">' +
-            '<div class="mc-side-title">消息中心</div>' +
-            '<button class="mc-nav" data-tab="notif" onclick="window.__mcTab(\'notif\')">🔔 系统通知 <span class="mc-badge" id="mcNotifBadge"></span></button>' +
-            '<button class="mc-nav" data-tab="dm" onclick="window.__mcTab(\'dm\')">💬 好友私信 <span class="mc-badge" id="mcDmBadge"></span></button>' +
-            '<button class="mc-nav ghost" onclick="window.__mcDiscover()">➕ 发现用户</button>' +
+            '<button class="mc-nav" data-tab="notif" onclick="window.__mcTab(\'notif\')"><span class="mc-nav-ic">🔔</span>系统通知<span class="mc-badge" id="mcNotifBadge"></span></button>' +
+            '<button class="mc-nav" data-tab="dm" onclick="window.__mcTab(\'dm\')"><span class="mc-nav-ic">💬</span>私信<span class="mc-badge" id="mcDmBadge"></span></button>' +
           '</aside>' +
           '<div class="mc-main" id="mcMain"></div>' +
         '</div>' +
@@ -2093,6 +2187,13 @@
     m.classList.add('show');
     window.__mcState = { tab: tab || 'notif', preselect: preselect || null };
     renderMc();
+    // 进入消息中心即把全部未读标记已读，铃铛红点（小数字）随即消失（仿洛谷）
+    markNoticesRead();
+    markMyNotifRead();
+    markAllDmRead();
+    setMcTabBadge('mcNotifBadge', unreadNotif() + unreadNotices());
+    setMcTabBadge('mcDmBadge', unreadDm());
+    updateBellBadge();
   }
   window.__openMessageCenter = openMessageCenter;
 
@@ -2112,43 +2213,106 @@
     document.querySelectorAll('.mc-nav[data-tab]').forEach(function (b) {
       b.classList.toggle('active', b.getAttribute('data-tab') === st.tab);
     });
-    updateBellBadge();
+    // 先渲染当前 tab（内部会把已查看的未读标记清除）
     if (st.tab === 'notif') renderMcNotif(); else renderMcDm();
+    // 设置两个 tab 上的红点：显示“另一 tab”尚未查看的未读数
+    setMcTabBadge('mcNotifBadge', unreadNotif() + unreadNotices());
+    setMcTabBadge('mcDmBadge', unreadDm());
+    updateBellBadge();
+  }
+  function setMcTabBadge(id, n) {
+    var el = document.getElementById(id); if (!el) return;
+    if (n > 0) { el.style.display = ''; el.textContent = n > 99 ? '99+' : String(n); }
+    else { el.style.display = 'none'; }
   }
 
+  function mcGuestPrompt() {
+    return '<div class="mc-empty"><div class="mc-empty-ic">🔒</div><div class="mc-empty-txt">登录后即可查看消息、私信和关注好友</div>' +
+      '<button class="mc-login-btn" onclick="window.__openAuthModal()">登录 / 注册</button></div>';
+  }
   function renderMcNotif() {
     var main = document.getElementById('mcMain'); if (!main) return;
-    var ns = myNotifications();
-    var s = getSocial();
-    ns.forEach(function (n) { n.read = true; });
-    setSocial(s);
-    var nb = document.getElementById('mcNotifBadge');
-    if (nb) nb.textContent = '';
-    if (!ns.length) { main.innerHTML = '<div class="mc-empty">📭 暂时没有系统通知</div>'; return; }
-    main.innerHTML = '<div class="mc-list">' + ns.map(function (n) {
-      var icon = n.type === 'dm' ? '💬' : n.type === 'follow' ? '➕' : (n.type === 'reply' ? '💬' : '🔔');
-      return '<div class="mc-item">' +
-        '<div class="mc-item-icon">' + icon + '</div>' +
-        '<div class="mc-item-body"><div class="mc-item-text">' + esc(n.text) + '</div>' +
-        '<div class="mc-item-time">' + esc(relativeTime(n.ts)) + '</div></div>' +
+    if (!getCurrentUser()) { main.innerHTML = mcGuestPrompt(); return; }
+    markNoticesRead();
+    markMyNotifRead();
+    var u = getCurrentUser();
+    var isAdmin = isAdminUser(u);
+    // 合并：管理员全局通知 + 个人通知（回复 / 关注 / 私信）
+    var notices = getNotices().map(function (n) {
+      return { kind: 'notice', text: n.text, ts: n.ts, byName: n.byName || '官方' };
+    });
+    var pers = myNotifications().map(function (n) {
+      return { kind: 'personal', type: n.type, text: n.text, ts: n.ts };
+    });
+    var items = notices.concat(pers).sort(function (a, b) { return b.ts - a.ts; });
+    var html = '';
+    if (isAdmin) {
+      html += '<div class="mc-composer">' +
+        '<textarea id="mcNoticeInput" class="mc-composer-input" placeholder="以管理员身份发布一条系统通知…" maxlength="200"></textarea>' +
+        '<button class="mc-composer-send" onclick="window.__mcAdminSend()">发布通知</button>' +
         '</div>';
-    }).join('') + '</div>';
+    }
+    if (!items.length) {
+      html += '<div class="mc-empty"><div class="mc-empty-ic">📭</div><div class="mc-empty-txt">暂时没有消息</div></div>';
+    } else {
+      html += '<div class="mc-list">' + items.map(function (it) {
+        if (it.kind === 'notice') {
+          return '<div class="mc-item official">' +
+            '<div class="mc-item-av official">📢</div>' +
+            '<div class="mc-item-body"><div class="mc-item-top"><span class="mc-item-name">系统通知</span><span class="mc-tag">官方</span><span class="mc-item-time">' + esc(relativeTime(it.ts)) + '</span></div>' +
+            '<div class="mc-item-text">' + esc(it.text) + '</div></div></div>';
+        }
+        var icon = it.type === 'follow' ? '➕' : (it.type === 'dm' ? '💬' : '🔔');
+        var name = it.type === 'follow' ? '新关注' : (it.type === 'dm' ? '新私信' : '系统通知');
+        return '<div class="mc-item">' +
+          '<div class="mc-item-av">' + icon + '</div>' +
+          '<div class="mc-item-body"><div class="mc-item-top"><span class="mc-item-name">' + name + '</span><span class="mc-item-time">' + esc(relativeTime(it.ts)) + '</span></div>' +
+          '<div class="mc-item-text">' + esc(it.text) + '</div></div></div>';
+      }).join('') + '</div>';
+    }
+    main.innerHTML = html;
+    updateBellBadge();
   }
+  window.__mcAdminSend = function () {
+    var inp = document.getElementById('mcNoticeInput'); if (!inp) return;
+    if (addAdminNotice(inp.value)) { inp.value = ''; renderMcNotif(); updateBellBadge(); toast('已发布系统通知'); }
+  };
 
   function renderMcDm() {
     var main = document.getElementById('mcMain'); if (!main) return;
-    var convs = myConversations();
+    if (!getCurrentUser()) { main.innerHTML = mcGuestPrompt(); return; }
+    // 进入私信 tab 即把未读私信标记为已读（满足“查看后红点消失”）
+    markAllDmRead();
+    var me = getCurrentUserId();
+    var s = getSocial();
+    // 会话列表 = 我关注的人（固定/像微信好友）+ 有消息往来的其他人，去重合并
+    var convMap = {};
+    Object.keys(s.messages).forEach(function (k) {
+      if (k.indexOf(me) < 0) return;
+      var ids = k.split('|');
+      var other = ids[0] === me ? ids[1] : ids[0];
+      if (convMap[other]) return;
+      var msgs = s.messages[k] || [];
+      convMap[other] = { other: other, last: msgs[msgs.length - 1] || null, count: msgs.length };
+    });
+    (s.follows[me] || []).forEach(function (f) {
+      if (!convMap[f]) convMap[f] = { other: f, last: null, count: 0 };
+    });
+    var convs = Object.keys(convMap).map(function (k) { return convMap[k]; });
+    convs.sort(function (a, b) { return (b.last ? b.last.ts : 0) - (a.last ? a.last.ts : 0); });
     var st = window.__mcState || {};
     var sel = st.preselect || (convs.length ? convs[0].other : null);
-    var html = '<div class="mc-dm">';
+    var html = '<div class="mc-dm-head"><button class="mc-discover-btn" onclick="window.__mcDiscover()">＋ 发现用户 / 发起私信</button></div>';
+    html += '<div class="mc-dm">';
     html += '<div class="mc-conv-list">';
-    if (!convs.length) html += '<div class="mc-empty small">还没有会话，去「发现用户」找人私信吧</div>';
+    if (!convs.length) html += '<div class="mc-empty small"><div class="mc-empty-ic">💬</div>还没有会话，点上方按钮找人私信吧</div>';
     convs.forEach(function (c) {
       var u = getUserById(c.other);
       var name = u ? getDisplayName(u) : (c.other || '用户');
+      var unread = (function () { var ms = (getSocial().messages[convKey(getCurrentUserId(), c.other)] || []); return ms.filter(function (m) { return m.to === getCurrentUserId() && !m.read; }).length; })();
       html += '<button class="mc-conv ' + (c.other === sel ? 'active' : '') + '" onclick="window.__mcOpenConv(\'' + esc(c.other) + '\')">' +
         '<span class="mc-conv-av">' + userAvatarHtml(u) + '</span>' +
-        '<div class="mc-conv-info"><div class="mc-conv-name">' + esc(name) + '</div>' +
+        '<div class="mc-conv-info"><div class="mc-conv-name">' + esc(name) + (unread ? '<span class="mc-dot"></span>' : '') + '</div>' +
         '<div class="mc-conv-last">' + esc(c.last ? c.last.text : '') + '</div></div></button>';
     });
     html += '</div>';
@@ -2158,16 +2322,16 @@
   }
 
   function renderMcChat(otherId) {
-    if (!otherId) return '<div class="mc-chat-empty">选择一个会话开始私信</div>';
+    if (!otherId) return '<div class="mc-chat-empty"><div class="mc-empty-ic">💬</div>选择一个会话开始私信</div>';
     var me = getCurrentUserId();
     var u = getUserById(otherId);
     var name = u ? getDisplayName(u) : (otherId || '用户');
     markConvRead(otherId);
     var s = getSocial();
     var msgs = s.messages[convKey(me, otherId)] || [];
-    var html = '<div class="mc-chat-head"><span class="mc-chat-av">' + userAvatarHtml(u) + '</span><div>' + esc(name) + '</div></div>';
+    var html = '<div class="mc-chat-head"><span class="mc-chat-av">' + userAvatarHtml(u) + '</span><div class="mc-chat-name">' + esc(name) + '</div></div>';
     html += '<div class="mc-chat-body" id="mcChatBody">';
-    if (!msgs.length) html += '<div class="mc-chat-empty">还没有消息，发一条打个招呼吧 👋</div>';
+    if (!msgs.length) html += '<div class="mc-chat-empty"><div class="mc-empty-ic">👋</div>还没有消息，发一条打个招呼吧</div>';
     msgs.forEach(function (m) {
       var mine = m.from === me;
       html += '<div class="mc-msg ' + (mine ? 'me' : 'them') + '">' +
@@ -2176,7 +2340,7 @@
     });
     html += '</div>';
     html += '<div class="mc-chat-input">' +
-      '<input type="text" id="mcMsgInput" placeholder="发消息给 ' + esc(name) + '…" maxlength="500" />' +
+      '<input type="text" id="mcMsgInput" placeholder="发消息给 ' + esc(name) + '…" maxlength="500" onkeydown="if(event.key===\'Enter\')window.__mcSend(\'' + esc(otherId) + '\')" />' +
       '<button class="mc-send" onclick="window.__mcSend(\'' + esc(otherId) + '\')">发送</button></div>';
     return html;
   }
@@ -2201,9 +2365,10 @@
 
   function mcDiscover() {
     var main = document.getElementById('mcMain'); if (!main) return;
+    if (!getCurrentUser()) { main.innerHTML = mcGuestPrompt(); return; }
     var users = knownUsers();
-    if (!users.length) { main.innerHTML = '<div class="mc-empty">暂无可添加的用户，先去讨论区发帖或注册其他账号吧</div>'; return; }
-    var html = '<div class="mc-disc"><div class="mc-disc-title">发现用户</div><div class="mc-disc-list">';
+    if (!users.length) { main.innerHTML = '<div class="mc-empty"><div class="mc-empty-ic">🔍</div>暂无可添加的用户，先去讨论区发帖或注册其他账号吧</div>'; return; }
+    var html = '<div class="mc-disc-head">发现用户</div><div class="mc-disc-list">';
     users.forEach(function (u) {
       var fid = u.id;
       var following = isFollowing(fid);
@@ -2624,6 +2789,11 @@
   function renderBankFav() {
     var favs = getFavs();
     var filterSid = (window.__bankFavFilter) || 'all';
+    // 若当前筛选的科目已无收藏（如取消了该科目最后一道题），回退到「全部」
+    if (filterSid !== 'all' && !favs.some(function (f) { return f.sid === filterSid; })) {
+      filterSid = 'all';
+      window.__bankFavFilter = 'all';
+    }
     var filtered = filterSid === 'all' ? favs : favs.filter(function (f) { return f.sid === filterSid; });
     var body;
     if (!favs.length) {
@@ -2675,11 +2845,12 @@
       }).join('') + '</div>';
     }
 
-    // 学科筛选芯片
+    // 学科筛选芯片：仅在有收藏题目后才显示对应科目（不为空的科目才出现）
     var filterChips = '<span class="bank-cat-chip' + (filterSid === 'all' ? ' active' : '') + '" onclick="window.__setBankFavFilter(\'all\')">全部（' + favs.length + '）</span>' +
       Object.keys(GZ_COMMON_TYPES).map(function (k) {
         var s = GZ_COMMON_TYPES[k];
         var n = favs.filter(function (f) { return f.sid === k; }).length;
+        if (n <= 0) return ''; // 该科目还没有收藏题目，先不显示
         return '<span class="bank-cat-chip' + (filterSid === k ? ' active' : '') + '" style="--sc:' + s.color + ';" onclick="window.__setBankFavFilter(\'' + k + '\')">' + s.icon + ' ' + s.name + '（' + n + '）</span>';
       }).join('');
 
@@ -2700,42 +2871,113 @@
     renderBankFav();
   };
 
+  // ===== 常考题型：筛选栏 + 科目多选弹窗 =====
+  var COMMON_DIFFS = [
+    { id: 'all', name: '全部' },
+    { id: 'easy', name: '简单' },
+    { id: 'medium', name: '中等' },
+    { id: 'hard', name: '偏难' },
+    { id: 'expert', name: '困难' }
+  ];
+  if (!window.__commonFilter) window.__commonFilter = { difficulty: 'all', types: [], search: '' };
+  if (window.__commonModal === undefined) window.__commonModal = null;
+
+  function commonTypeLabel(k) {
+    var p = String(k).split('::');
+    var s = GZ_COMMON_TYPES[p[0]];
+    if (!s) return k;
+    var c = (s.cats || []).filter(function (x) { return x.id === p[1]; })[0];
+    return s.name + '·' + (c ? c.name : p[1]);
+  }
+
+  function renderCommonContent() {
+    var f = window.__commonFilter;
+    var items = f.types.map(function (k) { return { k: k, label: commonTypeLabel(k) }; });
+    if (f.search && f.search.trim()) {
+      var q = f.search.trim().toLowerCase();
+      items = items.filter(function (it) { return it.label.toLowerCase().indexOf(q) >= 0; });
+    }
+    if (!items.length) {
+      if (!f.types.length) return '<div class="cc-empty">🧭 请先在上方选择科目与常考题型，开始筛选题目。<br>难度、科目与搜索都会作用于题目列表。</div>';
+      return '<div class="cc-empty">🔍 没有匹配「' + esc(f.search) + '」的题型，换个关键词试试。</div>';
+    }
+    var cards = items.map(function (it) {
+      var p = String(it.k).split('::');
+      var s = GZ_COMMON_TYPES[p[0]];
+      var c = (s.cats || []).filter(function (x) { return x.id === p[1]; })[0];
+      var color = (s && s.color) || '#6b7280';
+      var icon = (c && c.icon) || '📝';
+      var diffName = '';
+      if (f.difficulty !== 'all') {
+        var d = COMMON_DIFFS.filter(function (x) { return x.id === f.difficulty; })[0];
+        if (d) diffName = ' · ' + d.name;
+      }
+      return '<div class="cc-type-card" style="--sc:' + color + '" onclick="toast(\'' + esc(c ? c.name : s.name) + ' 题目正在建设中…\')">' +
+        '<div class="cc-tc-icon">' + icon + '</div>' +
+        '<div class="cc-tc-body"><div class="cc-tc-subj">' + esc(s ? s.name : '') + '</div><div class="cc-tc-name">' + esc(c ? c.name : '') + diffName + '</div></div>' +
+        '<div class="cc-tc-arrow">→</div>' +
+      '</div>';
+    }).join('');
+    return '<div class="cc-type-grid">' + cards + '</div>';
+  }
+
   function renderBankCommon() {
     var keys = Object.keys(GZ_COMMON_TYPES);
-    var totalCats = keys.reduce(function (n, k) { return n + GZ_COMMON_TYPES[k].cats.length; }, 0);
+    var f = window.__commonFilter;
+    var m = window.__commonModal;
 
-    // 学科横向 tab
-    var tabs = keys.map(function (k) {
-      var s = GZ_COMMON_TYPES[k];
-      return '<span class="bank-subj-tab" style="--sc:' + esc(s.color) + ';" onclick="window.__bankCommonSubject(\'' + k + '\')">' +
-        esc(s.icon) + ' ' + esc(s.name) +
-      '</span>';
+    // 题目难度范围
+    var diffChips = COMMON_DIFFS.map(function (d) {
+      return '<span class="cc-diff-chip' + (f.difficulty === d.id ? ' active' : '') + '" onclick="window.__commonSetDiff(\'' + d.id + '\')">' + d.name + '</span>';
     }).join('');
 
-    // 每个学科一个分类块
-    var blocks = keys.map(function (k) {
-      var s = GZ_COMMON_TYPES[k];
-      var cats = s.cats.map(function (c, i) {
-        var hot = (i === 0) ? '<span class="bank-cat-hot">热门</span>' : '';
-        return '<div class="bank-cat-card" style="--sc:' + esc(s.color) + ';" onclick="toast(\'' + esc(c.name) + ' 题目正在建设中…\')">' +
-          '<div class="bank-cat-card-icon">' + c.icon + '</div>' +
-          '<div class="bank-cat-card-name">' + esc(c.name) + hot + '</div>' +
-          '<div class="bank-cat-card-arrow">→</div>' +
-        '</div>';
+    // 已选择标签
+    var selTags = f.types.length
+      ? f.types.map(function (k) {
+          var sk = String(k).split('::')[0];
+          var sc = ((GZ_COMMON_TYPES[sk] || {}).color) || '#6b7280';
+          return '<span class="cc-sel-tag" style="--sc:' + sc + '">' + esc(commonTypeLabel(k)) + '<i onclick="window.__removeType(\'' + esc(k) + '\')">✕</i></span>';
+        }).join('')
+      : '<span class="cc-sel-empty">尚未选择任何题型</span>';
+
+    // 科目多选弹窗
+    var modalHtml = '';
+    if (m) {
+      var subjItems = keys.map(function (k) {
+        var s = GZ_COMMON_TYPES[k];
+        var on = m.subjects.indexOf(k) >= 0;
+        return '<div class="cc-subj-item' + (on ? ' active' : '') + '" style="--sc:' + s.color + '" onclick="window.__toggleModalSubject(\'' + k + '\')">' +
+          '<span class="cc-subj-check">' + (on ? '✓' : '') + '</span>' + s.icon + ' ' + esc(s.name) + '</div>';
       }).join('');
-      return '<section class="bank-common-block" data-sid="' + esc(k) + '" style="--sc:' + esc(s.color) + ';">' +
-        '<header class="bank-common-block-head">' +
-          '<div class="bank-common-block-icon">' + s.icon + '</div>' +
-          '<div>' +
-            '<div class="bank-common-block-title">' + esc(s.name) + '常考题型</div>' +
-            '<div class="bank-common-block-tip">共 ' + s.cats.length + ' 个常考题型 · 点击进入练习</div>' +
+      var typeTags = m.subjects.length
+        ? m.subjects.map(function (k) {
+            var s = GZ_COMMON_TYPES[k];
+            return (s.cats || []).map(function (c) {
+              var tk = k + '::' + c.id;
+              var on = m.types.indexOf(tk) >= 0;
+              return '<span class="cc-type-tag' + (on ? ' active' : '') + '" style="--sc:' + s.color + '" onclick="window.__toggleModalType(\'' + tk + '\')">' + esc(c.name) +
+                (on ? ' <i onclick="event.stopPropagation();window.__toggleModalType(\'' + tk + '\')">✕</i>' : '') + '</span>';
+            }).join('');
+          }).join('')
+        : '<div class="cc-type-empty">← 请在左侧选择科目，将自动列出该科目下的常考题型</div>';
+      modalHtml =
+        '<div class="cc-modal-mask" id="ccModalMask" onclick="if(event.target===this)window.__closeSubjectModal()">' +
+          '<div class="cc-modal">' +
+            '<div class="cc-modal-head">选择科目与题型<span class="cc-modal-tip">可多选</span></div>' +
+            '<div class="cc-modal-body">' +
+              '<div class="cc-modal-col cc-modal-col-subj"><div class="cc-modal-col-title">科目</div>' + subjItems + '</div>' +
+              '<div class="cc-modal-col cc-modal-col-type"><div class="cc-modal-col-title">题型（选择科目后自动显示，可多选）</div><div class="cc-type-tags">' + typeTags + '</div></div>' +
+            '</div>' +
+            '<div class="cc-modal-foot">' +
+              '<span class="cc-modal-count">已选 ' + m.types.length + ' 个题型</span>' +
+              '<span class="cc-modal-foot-btns"><button class="cc-btn-ghost" onclick="window.__closeSubjectModal()">取消</button><button class="cc-btn-primary" onclick="window.__confirmSubjectModal()">确定</button></span>' +
+            '</div>' +
           '</div>' +
-        '</header>' +
-        '<div class="bank-cat-grid">' + cats + '</div>' +
-      '</section>';
-    }).join('');
+        '</div>';
+    }
 
     var tabsHtml = renderBankTabs('common');
+    var totalCats = keys.reduce(function (n, k) { return n + GZ_COMMON_TYPES[k].cats.length; }, 0);
 
     view.innerHTML = '' +
       '<div class="crumb"><a onclick="navigate(\'home\')">首页</a> / <a onclick="navigate(\'bank\', \'home\')">题库</a> / 高中常考题型</div>' +
@@ -2745,17 +2987,60 @@
           '<div class="bank-hero-text">' +
             '<div class="bank-hero-greet">📚 高考备考</div>' +
             '<h2 class="bank-hero-title">高中常考题型</h2>' +
-            '<p class="bank-hero-desc">按学科与题型分类整理的高中常考题，可在线作答、即时反馈。<br>目前已上线 ' + keys.length + ' 个学科 · ' + totalCats + ' 个常考题型。</p>' +
+            '<p class="bank-hero-desc">按科目、题型与难度筛选常考题，可在线作答、即时反馈。<br>目前已上线 ' + keys.length + ' 个学科 · ' + totalCats + ' 个常考题型。</p>' +
           '</div>' +
           '<div class="bank-hero-deco">📚</div>' +
         '</div>' +
-        '<div class="bank-subj-tabs">' + tabs + '</div>' +
-        blocks +
-      '</div>';
+        '<div class="cc-filterbar">' +
+          '<span class="cc-filter-label">筛选条件</span>' +
+          '<div class="cc-field"><span class="cc-field-label">题目难度范围</span><div class="cc-diff-chips">' + diffChips + '</div></div>' +
+          '<div class="cc-field"><div class="cc-box cc-subject-trigger" onclick="window.__openSubjectModal()"><span class="cc-box-text">科目 / 题型' + (f.types.length ? '（已选 ' + f.types.length + '）' : '') + '</span><span class="cc-box-caret">▾</span></div></div>' +
+          '<div class="cc-field cc-search-field"><input class="cc-search-input" id="ccSearch" placeholder="输入题号或题目名搜索" value="' + esc(f.search || '') + '" oninput="window.__commonSearch(this.value)"></div>' +
+        '</div>' +
+        '<div class="cc-selected-row"><span class="cc-selected-label">已选择</span>' + selTags + '</div>' +
+        '<div class="cc-content" id="ccContent">' + renderCommonContent() + '</div>' +
+      '</div>' +
+      modalHtml;
   }
-  window.__bankCommonSubject = function (sid) {
-    var block = document.querySelector('.bank-common-block[data-sid="' + sid + '"]');
-    if (block) block.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  window.__openSubjectModal = function () {
+    var f = window.__commonFilter;
+    var subjects = [];
+    f.types.forEach(function (k) { var s = String(k).split('::')[0]; if (subjects.indexOf(s) < 0) subjects.push(s); });
+    window.__commonModal = { subjects: subjects, types: f.types.slice() };
+    renderBankCommon();
+  };
+  window.__closeSubjectModal = function () { window.__commonModal = null; renderBankCommon(); };
+  window.__toggleModalSubject = function (sid) {
+    var m = window.__commonModal; if (!m) return;
+    var i = m.subjects.indexOf(sid);
+    if (i >= 0) { m.subjects.splice(i, 1); m.types = m.types.filter(function (k) { return String(k).split('::')[0] !== sid; }); }
+    else { m.subjects.push(sid); }
+    renderBankCommon();
+  };
+  window.__toggleModalType = function (tk) {
+    var m = window.__commonModal; if (!m) return;
+    var sid = String(tk).split('::')[0];
+    if (m.subjects.indexOf(sid) < 0) m.subjects.push(sid);
+    var i = m.types.indexOf(tk);
+    if (i >= 0) m.types.splice(i, 1); else m.types.push(tk);
+    renderBankCommon();
+  };
+  window.__confirmSubjectModal = function () {
+    window.__commonFilter.types = window.__commonModal ? window.__commonModal.types.slice() : [];
+    window.__commonModal = null;
+    renderBankCommon();
+  };
+  window.__removeType = function (k) {
+    var f = window.__commonFilter;
+    f.types = f.types.filter(function (x) { return x !== k; });
+    renderBankCommon();
+  };
+  window.__commonSetDiff = function (d) { window.__commonFilter.difficulty = d; renderBankCommon(); };
+  window.__commonSearch = function (v) {
+    window.__commonFilter.search = v;
+    var el = document.getElementById('ccContent');
+    if (el) el.innerHTML = renderCommonContent();
   };
 
   // 题库标签页导航
@@ -3549,7 +3834,7 @@
   function discussCanDelete(authorId, guestId) {
     var u = getCurrentUser();
     if (u) {
-      if (isAdminId(u.id) || isAdminId(u.username)) return true; // 管理员可删任何帖
+      if (isAdminUser(u)) return true; // 管理员可删任何帖
       return u.id === authorId;
     }
     return authorId === null && !!guestId && guestId === currentGuestId();
@@ -3803,6 +4088,8 @@
     if (btn) btn.addEventListener('click', function () {
       var content = text.value.trim();
       if (!content) return;
+      var cu = getCurrentUser();
+      if (cu && cu.muted) { toast('你已被禁言，暂不能发表内容'); return; }
       var id = discussIdentity();
       var d = getDiscuss();
       if (mode === 'topic') {
@@ -3897,6 +4184,76 @@
   window.__clearProgress = function () { lsSet('gz_progress', {}); toast('学习进度已清除'); };
   window.__clearWrongbook = function () { lsSet('gz_wrongbook', []); toast('错题本已清空'); };
 
+  /* ---------- 管理后台（仅管理员 king 可访问） ---------- */
+  var _admFilter = '';
+  function adminRowsHtml(users, me) {
+    var ids = Object.keys(users).filter(function (id) {
+      if (!_admFilter) return true;
+      var u = users[id], f = _admFilter.toLowerCase();
+      return (getDisplayName(u).toLowerCase().indexOf(f) >= 0) ||
+        (u.username || '').toLowerCase().indexOf(f) >= 0 ||
+        (id || '').toLowerCase().indexOf(f) >= 0;
+    }).sort(function (a, b) {
+      var ta = users[a].createdAt || '', tb = users[b].createdAt || '';
+      return tb < ta ? -1 : (tb > ta ? 1 : 0);
+    });
+    if (!ids.length) return '<tr><td colspan="5" class="adm-empty">没有匹配的账号</td></tr>';
+    return ids.map(function (id) {
+      var u = users[id];
+      var self = (id === (me && me.id));
+      var badges = '';
+      if (u.banned) badges += '<span class="adm-badge ban">已封号</span>';
+      if (u.muted) badges += '<span class="adm-badge mute">已禁言</span>';
+      if (!badges) badges = '<span class="adm-badge ok">正常</span>';
+      var actions = '';
+      if (!self) {
+        actions += '<button class="adm-btn' + (u.muted ? ' on' : '') + '" onclick="window.__adminSetFlag(\'' + esc(id) + '\',\'muted\',' + (!u.muted) + ')">' + (u.muted ? '解禁言' : '禁言') + '</button>';
+        actions += '<button class="adm-btn danger' + (u.banned ? ' on' : '') + '" onclick="window.__adminSetFlag(\'' + esc(id) + '\',\'banned\',' + (!u.banned) + ')">' + (u.banned ? '解封' : '封号') + '</button>';
+      } else {
+        actions = '<span class="adm-self">（当前管理员）</span>';
+      }
+      return '<tr>' +
+        '<td class="adm-av">' + userAvatarHtml(u) + '</td>' +
+        '<td><div class="adm-name">' + esc(getDisplayName(u)) + '</div><div class="adm-sub">@' + esc(u.username) + ' · ' + esc(id) + '</div></td>' +
+        '<td>' + esc((u.createdAt || '').slice(0, 10)) + '</td>' +
+        '<td class="adm-badges">' + badges + '</td>' +
+        '<td class="adm-actions">' + actions + '</td>' +
+        '</tr>';
+    }).join('');
+  }
+  function renderAdmin() {
+    var me = getCurrentUser();
+    if (!me || !isAdminUser(me)) {
+      view.innerHTML = '<div class="panel"><h2>⛔ 无权限</h2><p>只有管理员可以访问管理后台。</p></div>';
+      return;
+    }
+    var users = getAllUsers();
+    view.innerHTML =
+      '<div class="crumb"><a onclick="navigate(\'home\')">首页</a> / 管理后台</div>' +
+      '<div class="panel adm-panel">' +
+        '<h2>🛡️ 管理后台</h2>' +
+        '<p class="adm-tip">本机共 <b>' + Object.keys(users).length + '</b> 个账号。' +
+        '<b>封号</b>：该账号将无法再登录；<b>禁言</b>：该账号将无法发帖 / 评论 / 私信。操作仅在本机浏览器生效。</p>' +
+        '<div class="adm-search"><input id="admSearch" placeholder="搜索昵称 / 用户名 / id…" value="' + esc(_admFilter) + '" oninput="window.__adminSearch(this.value)" /></div>' +
+        '<table class="adm-table"><thead><tr><th></th><th>账号</th><th>注册时间</th><th>状态</th><th>操作</th></tr></thead>' +
+        '<tbody id="admTbody">' + adminRowsHtml(users, me) + '</tbody></table>' +
+      '</div>';
+  }
+  window.__adminSearch = function (v) {
+    _admFilter = (v || '').trim();
+    var tb = document.getElementById('admTbody');
+    if (tb) tb.innerHTML = adminRowsHtml(getAllUsers(), getCurrentUser());
+  };
+  window.__adminSetFlag = function (id, flag, val) {
+    var users = getAllUsers();
+    if (!users[id]) return;
+    if (id === (getCurrentUser() && getCurrentUser().id)) return; // 不能操作自己
+    users[id][flag] = val;
+    lsSet('gz_users', users);
+    toast((flag === 'banned' ? (val ? '已封号' : '已解封') : (val ? '已禁言' : '已解禁言')) + '：' + getDisplayName(users[id]));
+    renderAdmin();
+  };
+
   /* ---------- 关于 ---------- */
   function renderAbout() {
     var st = gzStats();
@@ -3979,6 +4336,11 @@
   };
   initTheme();
   backfillProgressTs();
+  // 启动即检查：当前登录账号若已被封号，强制退出（仅本机生效）
+  (function () {
+    var _u = getCurrentUser();
+    if (_u && _u.banned) { setCurrentUserId(null); try { toast('该账号已被封禁，已强制退出'); } catch (e) {} }
+  })();
 
   /* ---------- 启动 ---------- */
   window.addEventListener('hashchange', render);
