@@ -2457,12 +2457,25 @@
     'chinese': {
       name: '语文', icon: '📖', color: '#dc2626',
       cats: [
-        { id: 'gscrc', name: '古诗词默写', icon: '✍️' },
-        { id: 'wywyd', name: '文言文阅读', icon: '📜' },
-        { id: 'xdwyd', name: '现代文阅读', icon: '📰' },
-        { id: 'cyyy', name: '成语运用', icon: '🔤' },
-        { id: 'bjxg', name: '病句修改', icon: '🔧' },
-        { id: 'zw', name: '命题作文', icon: '📝' }
+        // 一、现代文阅读
+        { id: 'xxwl', name: '信息类文本阅读', icon: '📰', group: '现代文阅读' },
+        { id: 'wxwl', name: '文学类文本阅读', icon: '📚', group: '现代文阅读' },
+        // 二、古诗文阅读
+        { id: 'wyw', name: '文言文阅读', icon: '📜', group: '古诗文阅读' },
+        { id: 'gdsc', name: '古代诗歌阅读', icon: '📝', group: '古诗文阅读' },
+        { id: 'mpjj', name: '名篇名句默写', icon: '✍️', group: '古诗文阅读' },
+        // 三、语言文字运用
+        { id: 'szxs', name: '字音字形', icon: '🔤', group: '语言文字运用' },
+        { id: 'cybx', name: '词语成语辨析', icon: '🔡', group: '语言文字运用' },
+        { id: 'bjxg', name: '病句辨析与修改', icon: '🔧', group: '语言文字运用' },
+        { id: 'yjsx', name: '语句衔接与排序', icon: '🔗', group: '语言文字运用' },
+        { id: 'xzsf', name: '修辞手法', icon: '💡', group: '语言文字运用' },
+        { id: 'yylt', name: '语言表达运用', icon: '🗣️', group: '语言文字运用' },
+        // 四、写作
+        { id: 'clzw', name: '材料作文', icon: '📝', group: '写作' },
+        { id: 'zmbt', name: '命题/半命题作文', icon: '📋', group: '写作' },
+        { id: 'htgw', name: '话题作文', icon: '💬', group: '写作' },
+        { id: 'rwpq', name: '任务驱动型作文', icon: '🎯', group: '写作' }
       ]
     },
     'math': {
@@ -2952,11 +2965,20 @@
       var typeTags = m.subjects.length
         ? m.subjects.map(function (k) {
             var s = GZ_COMMON_TYPES[k];
-            return (s.cats || []).map(function (c) {
-              var tk = k + '::' + c.id;
-              var on = m.types.indexOf(tk) >= 0;
-              return '<span class="cc-type-tag' + (on ? ' active' : '') + '" style="--sc:' + s.color + '" onclick="window.__toggleModalType(\'' + tk + '\')">' + esc(c.name) +
-                (on ? ' <i onclick="event.stopPropagation();window.__toggleModalType(\'' + tk + '\')">✕</i>' : '') + '</span>';
+            var groups = {}, gorder = [];
+            (s.cats || []).forEach(function (c) {
+              var g = c.group || '全部';
+              if (gorder.indexOf(g) < 0) gorder.push(g);
+              (groups[g] = groups[g] || []).push(c);
+            });
+            return gorder.map(function (g) {
+              var tags = groups[g].map(function (c) {
+                var tk = k + '::' + c.id;
+                var on = m.types.indexOf(tk) >= 0;
+                return '<span class="cc-type-tag' + (on ? ' active' : '') + '" style="--sc:' + s.color + '" onclick="window.__toggleModalType(\'' + tk + '\')">' + esc(c.name) +
+                  (on ? ' <i onclick="event.stopPropagation();window.__toggleModalType(\'' + tk + '\')">✕</i>' : '') + '</span>';
+              }).join('');
+              return (gorder.length > 1 ? '<div class="cc-type-group-title">' + esc(g) + '</div>' : '') + '<div class="cc-type-group">' + tags + '</div>';
             }).join('');
           }).join('')
         : '<div class="cc-type-empty">← 请在左侧选择科目，将自动列出该科目下的常考题型</div>';
@@ -2992,10 +3014,15 @@
           '<div class="bank-hero-deco">📚</div>' +
         '</div>' +
         '<div class="cc-filterbar">' +
-          '<span class="cc-filter-label">筛选条件</span>' +
-          '<div class="cc-field"><span class="cc-field-label">题目难度范围</span><div class="cc-diff-chips">' + diffChips + '</div></div>' +
-          '<div class="cc-field"><div class="cc-box cc-subject-trigger" onclick="window.__openSubjectModal()"><span class="cc-box-text">科目 / 题型' + (f.types.length ? '（已选 ' + f.types.length + '）' : '') + '</span><span class="cc-box-caret">▾</span></div></div>' +
-          '<div class="cc-field cc-search-field"><input class="cc-search-input" id="ccSearch" placeholder="输入题号或题目名搜索" value="' + esc(f.search || '') + '" oninput="window.__commonSearch(this.value)"></div>' +
+          '<div class="cc-filter-row">' +
+            '<span class="cc-filter-label">筛选条件</span>' +
+            '<span class="cc-field-label">题目难度范围</span>' +
+            '<div class="cc-diff-chips">' + diffChips + '</div>' +
+          '</div>' +
+          '<div class="cc-filter-row">' +
+            '<div class="cc-box cc-subject-trigger" onclick="window.__openSubjectModal()"><span class="cc-box-text">科目 / 题型' + (f.types.length ? '（已选 ' + f.types.length + '）' : '') + '</span><span class="cc-box-caret">▾</span></div>' +
+            '<div class="cc-search-field"><input class="cc-search-input" id="ccSearch" placeholder="按题号或题目名搜索" value="' + esc(f.search || '') + '" oninput="window.__commonSearch(this.value)"></div>' +
+          '</div>' +
         '</div>' +
         '<div class="cc-selected-row"><span class="cc-selected-label">已选择</span>' + selTags + '</div>' +
         '<div class="cc-content" id="ccContent">' + renderCommonContent() + '</div>' +
