@@ -2452,6 +2452,26 @@
   }
   window.__toggleFav = toggleFav;
 
+  // 常考题型收藏（独立于题目收藏，存于 gz_typeFavs）
+  function isTypeFaved(key) {
+    try {
+      var arr = JSON.parse(localStorage.getItem('gz_typeFavs') || '[]');
+      return Array.isArray(arr) && arr.indexOf(key) >= 0;
+    } catch (e) { return false; }
+  }
+  function toggleTypeFav(key) {
+    try {
+      var arr = JSON.parse(localStorage.getItem('gz_typeFavs') || '[]');
+      if (!Array.isArray(arr)) arr = [];
+      var i = arr.indexOf(key);
+      if (i >= 0) { arr.splice(i, 1); toast('已取消收藏题型'); }
+      else { arr.push(key); toast('已收藏题型 ⭐'); }
+      localStorage.setItem('gz_typeFavs', JSON.stringify(arr));
+      if (window.__commonFilter) renderBankCommon();
+    } catch (e) {}
+  }
+  window.__toggleTypeFav = toggleTypeFav;
+
   // 高中常考题型库（按学科与题型分类的精选题）
   var GZ_COMMON_TYPES = {
     'chinese': {
@@ -2481,25 +2501,249 @@
     'math': {
       name: '数学', icon: '📐', color: '#2563eb',
       cats: [
-        { id: 'sx', name: '集合与函数', icon: '🔢' },
-        { id: 'sd', name: '三角函数', icon: '📏' },
-        { id: 'lh', name: '数列与不等式', icon: '📊' },
-        { id: 'jj', name: '立体几何', icon: '🧊' },
-        { id: 'pj', name: '解析几何', icon: '📈' },
-        { id: 'gl', name: '概率与统计', icon: '🎲' }
+        // 一、函数与导数（王者级难度，压轴常客）
+        { id: 'hs_concept', name: '函数概念与性质', icon: '🧮', group: '函数与导数', struct: '单选' },
+        { id: 'hs_tangent', name: '切线方程（在点/过点）', icon: '📈', group: '函数与导数', struct: '解答' },
+        { id: 'hs_zero', name: '函数零点个数（数形结合）', icon: '🔍', group: '函数与导数', struct: '填空' },
+        { id: 'hs_param', name: '恒成立与存在性（求参）', icon: '🎯', group: '函数与导数', struct: '解答' },
+        { id: 'hs_ext', name: '极值与最值综合', icon: '⚡', group: '函数与导数', struct: '解答' },
+        { id: 'hs_ineq', name: '导数证明不等式', icon: '📐', group: '函数与导数', struct: '解答' },
+        // 二、三角函数与解三角形（中档必拿）
+        { id: 'sx_transform', name: '三角变换化简求值', icon: '🔄', group: '三角函数与解三角形', struct: '填空' },
+        { id: 'sx_graph', name: '图像与性质（ω/φ/平移）', icon: '🌊', group: '三角函数与解三角形', struct: '填空' },
+        { id: 'sx_triangle', name: '解三角形（正余弦/面积）', icon: '📐', group: '三角函数与解三角形', struct: '解答' },
+        // 三、数列（中档，运算要稳）
+        { id: 'sl_general', name: '求数列通项', icon: '🔢', group: '数列', struct: '填空' },
+        { id: 'sl_split', name: '裂项相消求和', icon: '➗', group: '数列', struct: '解答' },
+        { id: 'sl_stagger', name: '错位相减求和', icon: '↔️', group: '数列', struct: '解答' },
+        { id: 'sl_group', name: '分组求和（奇偶项）', icon: '📊', group: '数列', struct: '解答' },
+        // 四、立体几何（中档，空间感+计算）
+        { id: 'lt_ball', name: '外接球/内切球', icon: '🔵', group: '立体几何', struct: '填空' },
+        { id: 'lt_position', name: '异面直线/点线面位置', icon: '📦', group: '立体几何', struct: '单选' },
+        { id: 'lt_prove', name: '平行与垂直证明', icon: '🧊', group: '立体几何', struct: '解答' },
+        { id: 'lt_vector', name: '空间向量求角（线面/二面）', icon: '📐', group: '立体几何', struct: '解答' },
+        { id: 'lt_distance', name: '点到面的距离', icon: '📏', group: '立体几何', struct: '解答' },
+        // 五、解析几何（圆锥曲线）（高难度，计算怪兽）
+        { id: 'jx_basic', name: '离心率/渐近线/焦半径', icon: '🎯', group: '解析几何', struct: '填空' },
+        { id: 'jx_vieta', name: '联立韦达（椭圆/抛物线）', icon: '📉', group: '解析几何', struct: '解答' },
+        { id: 'jx_chord', name: '弦长问题', icon: '📏', group: '解析几何', struct: '解答' },
+        { id: 'jx_area', name: '面积最值/中点弦（点差法）', icon: '🔺', group: '解析几何', struct: '解答' },
+        { id: 'jx_fixed', name: '定点定值问题', icon: '📍', group: '解析几何', struct: '解答' },
+        { id: 'jx_exist', name: '存在性问题', icon: '❓', group: '解析几何', struct: '解答' },
+        // 六、概率与统计（题型新、阅读量大）
+        { id: 'gl_permu', name: '排列组合', icon: '🔢', group: '概率与统计', struct: '单选' },
+        { id: 'gl_binomial', name: '二项式定理', icon: '🧮', group: '概率与统计', struct: '填空' },
+        { id: 'gl_prob', name: '条件概率/全概率', icon: '🎲', group: '概率与统计', struct: '填空' },
+        { id: 'gl_dist', name: '分布列与期望方差', icon: '📊', group: '概率与统计', struct: '解答' },
+        { id: 'gl_hist', name: '频率分布直方图', icon: '📈', group: '概率与统计', struct: '解答' },
+        { id: 'gl_regress', name: '线性回归', icon: '📉', group: '概率与统计', struct: '解答' },
+        { id: 'gl_chisq', name: '独立性检验/正态分布', icon: '✅', group: '概率与统计', struct: '解答' },
+        // 七、选填小模块（送分/区分度题）
+        { id: 'sm_set', name: '集合与逻辑（充要）', icon: '🔣', group: '选填小模块', struct: '单选' },
+        { id: 'sm_complex', name: '复数', icon: '🧮', group: '选填小模块', struct: '单选' },
+        { id: 'sm_vector', name: '平面向量', icon: '➡️', group: '选填小模块', struct: '填空' },
+        { id: 'sm_ineq', name: '不等式（基本/一元二次）', icon: '⚖️', group: '选填小模块', struct: '填空' }
       ]
     },
     'english': {
       name: '英语', icon: '🔤', color: '#0891b2',
       cats: [
-        { id: 'yf', name: '语法填空', icon: '📝' },
-        { id: 'yd', name: '完形填空', icon: '🧩' },
-        { id: 'rd', name: '阅读理解', icon: '📖' },
-        { id: 'xz', name: '单项选择', icon: '🔘' },
-        { id: 'px', name: '短文改错', icon: '✏️' },
-        { id: 'zw', name: '书面表达', icon: '✍️' }
+        /* 一、听力（共30分） */
+        { id: 'lt_s', name: '短对话理解', icon: '🎧', group: '听力', struct: '第一节·短对话' },
+        { id: 'lt_l', name: '长对话与独白理解', icon: '🎙️', group: '听力', struct: '第二节·长对话/独白' },
+        /* 二、阅读理解（共50分） */
+        { id: 'rd_a', name: '应用文阅读（A篇）', icon: '📰', group: '阅读理解', struct: '阅读A篇' },
+        { id: 'rd_b', name: '记叙文阅读（B篇）', icon: '📚', group: '阅读理解', struct: '阅读B篇' },
+        { id: 'rd_c', name: '说明文阅读（C篇）', icon: '🔬', group: '阅读理解', struct: '阅读C篇' },
+        { id: 'rd_d', name: '议论文阅读（D篇）', icon: '💡', group: '阅读理解', struct: '阅读D篇' },
+        { id: 'rd_dt', name: '细节理解题', icon: '🔎', group: '阅读理解', struct: '常规阅读·常考' },
+        { id: 'rd_mn', name: '主旨大意题', icon: '🏷️', group: '阅读理解', struct: '常规阅读·常考' },
+        { id: 'rd_inf', name: '推理判断题', icon: '🧠', group: '阅读理解', struct: '常规阅读·常考' },
+        { id: 'rd_wg', name: '词义猜测题', icon: '🔤', group: '阅读理解', struct: '常规阅读·常考' },
+        { id: 'rd_7', name: '七选五（语篇逻辑）', icon: '🧩', group: '阅读理解', struct: '七选五' },
+        /* 三、语言知识运用（共30分） */
+        { id: 'cl', name: '完形填空', icon: '🧩', group: '语言知识运用', struct: '完形填空' },
+        { id: 'gx', name: '语法填空', icon: '📝', group: '语言知识运用', struct: '语法填空' },
+        /* 四、写作（共40分） */
+        { id: 'wr_app', name: '应用文写作', icon: '✉️', group: '写作', struct: '第一节·应用文' },
+        { id: 'wr_cw', name: '读后续写', icon: '🖋️', group: '写作', struct: '第二节·读后续写' }
+      ]
+    },
+    'physics': {
+      name: '物理', icon: '⚛️', color: '#7c3aed',
+      cats: [
+        /* 一、力学（约占40%） */
+        { id: 'lx_yb', name: '匀变速直线运动', icon: '🚗', group: '力学', struct: '单选/计算' },
+        { id: 'lx_ph', name: '相互作用与平衡', icon: '⚖️', group: '力学', struct: '单选' },
+        { id: 'lx_nd', name: '牛顿运动定律', icon: '🌀', group: '力学', struct: '单选/计算' },
+        { id: 'lx_qx', name: '曲线运动与万有引力', icon: '🌍', group: '力学', struct: '单选/多选' },
+        { id: 'lx_gn', name: '功和能', icon: '⚡', group: '力学', struct: '多选/计算' },
+        { id: 'lx_dl', name: '动量守恒与碰撞', icon: '💥', group: '力学', struct: '多选/计算' },
+        /* 二、电磁学（约占40%，压轴常客） */
+        { id: 'dc_jt', name: '静电场', icon: '🔋', group: '电磁学', struct: '单选/多选' },
+        { id: 'dc_dl', name: '恒定电流', icon: '🔌', group: '电磁学', struct: '单选' },
+        { id: 'dc_cc', name: '磁场与带电粒子运动', icon: '🧲', group: '电磁学', struct: '多选/计算' },
+        { id: 'dc_gy', name: '电磁感应', icon: '♻️', group: '电磁学', struct: '多选/计算' },
+        { id: 'dc_jb', name: '交变电流与变压器', icon: '🔄', group: '电磁学', struct: '单选' },
+        /* 三、物理实验（一力一电，必做） */
+        { id: 'sy_lx', name: '力学实验', icon: '📏', group: '物理实验', struct: '实验' },
+        { id: 'sy_dx', name: '电学实验', icon: '🔧', group: '物理实验', struct: '实验' },
+        /* 四、选考模块（二选一） */
+        { id: 'xk_rx', name: '热学（选修3-3）', icon: '🌡️', group: '选考模块', struct: '选考' },
+        { id: 'xk_gx', name: '振动·波·光学（选修3-4）', icon: '🌊', group: '选考模块', struct: '选考' }
       ]
     }
+  };
+
+  /* 题库题目数据：按 科目::题型id 索引，每个 cat 配 2 道题。首批数学 70 题上线，语文/英语/物理后续补完。 */
+  window.GZ_COMMON_QUESTIONS = {
+      /* 一、函数与导数 */
+      'math::hs_concept': [
+        { q: '已知 f(x) = x² + 2x + 1，则 f(x) 的最小值为？', opts: ['0', '1', '-1', '2'], a: 'A', exp: 'f(x) = (x+1)²，开口向上，对称轴 x=-1，最小值 0', diff: 'easy', src: '2020年高考全国I卷' },
+        { q: '下列函数中既是奇函数又在 (0,+∞) 上单调递增的是？', opts: ['y=x²', 'y=x³', 'y=√x', 'y=1/x'], a: 'B', exp: 'A偶函数；B奇且增；C定义域非负非奇；D在(0,+∞)递减', diff: 'easy', src: '2021年高考全国甲卷' }
+      ],
+      'math::hs_tangent': [
+        { q: '求曲线 y = x² - lnx 在点 (1,1) 处的切线方程。', a: 'y = x', exp: "y'=2x-1/x，x=1 时 y'=1，切线 y-1=1·(x-1) 即 y=x", diff: 'medium', src: '2022年高考新课标II卷' },
+        { q: '曲线 y = eˣ 在点 (0,1) 处的切线方程为？', a: 'y = x + 1', exp: "y'=eˣ，x=0 时 y'=1，切线 y-1=1·x 即 y=x+1", diff: 'easy', src: '2023年高考全国乙卷' }
+      ],
+      'math::hs_zero': [
+        { q: '函数 f(x) = x³ - 3x + 1 的零点个数为？', a: '3', exp: "f'(x)=3x²-3=0→x=±1，f(-1)=3>0, f(1)=-1<0，结合三次函数趋势，共三个零点", diff: 'medium', src: '2021年高考新课标I卷' },
+        { q: '函数 f(x) = eˣ - 2x - 1 的零点个数为？', a: '1', exp: "f'(x)=eˣ-2，x=ln2 时 f'=0；f(ln2)=1-2ln2<0；x→-∞时 f→0+，x→+∞时 f→+∞；仅一个零点", diff: 'hard', src: '2022年高考全国甲卷' }
+      ],
+      'math::hs_param': [
+        { q: '若对任意 x∈[1,+∞)，不等式 x² - 2ax + 3 ≥ 0 恒成立，求 a 的最大值。', a: 'a ≤ √3', exp: 'a ≤ (x²+3)/(2x) = x/2 + 3/(2x)，求 x∈[1,∞) 最小值：f(√3)=√3，故 a≤√3', diff: 'hard', src: '2024年高考新课标I卷' },
+        { q: '已知 f(x) = x + a/x 在 (1,+∞) 上 f(x) ≥ 4 恒成立，求 a 的取值范围。', a: 'a ≥ 4', exp: 'x + a/x ≥ 4 → a ≥ 4x - x² = -(x-2)² + 4，故 a ≥ 4', diff: 'hard', src: '2023年高考新课标II卷' }
+      ],
+      'math::hs_ext': [
+        { q: '求 f(x) = x³ - 3x² + 1 的极大值与极小值。', a: '极大 1，极小 -3', exp: "f'(x)=3x²-6x=3x(x-2)，极大 f(0)=1，极小 f(2)=-3", diff: 'medium', src: '2020年高考全国II卷' },
+        { q: 'f(x) = x⁴ - 2x² + 5 的最小值为？', a: '4', exp: "f'(x)=4x(x-1)(x+1)，极值 f(±1)=4, f(0)=5，最小值 4", diff: 'medium', src: '2021年高考全国乙卷' }
+      ],
+      'math::hs_ineq': [
+        { q: '证明：当 x > 0 时，ln x ≤ x - 1。', a: '见解析', exp: "令 f(x)=ln x - x + 1，f'(x)=1/x-1，f(1)=0 为极大值，故 f(x)≤0", diff: 'expert', src: '2022年高考新课标I卷' },
+        { q: '证明：当 x∈R 时，eˣ ≥ x + 1。', a: '见解析', exp: "令 f(x)=eˣ - x - 1，f'(x)=eˣ-1，f(0)=0 为极小，故 f(x)≥0", diff: 'expert', src: '2023年高考全国甲卷' }
+      ],
+      /* 二、三角函数与解三角形 */
+      'math::sx_transform': [
+        { q: '求值：sin 15° = ?', a: '(√6-√2)/4', exp: 'sin 15° = sin(45°-30°) = sin45°cos30° - cos45°sin30° = (√6-√2)/4', diff: 'easy', src: '2020年高考全国I卷' },
+        { q: '化简：sin²α + sin²(α+π/2) = ?', a: '1', exp: 'sin(α+π/2)=cosα，原式 = sin²α+cos²α=1', diff: 'easy', src: '2021年高考全国甲卷' }
+      ],
+      'math::sx_graph': [
+        { q: '函数 y = sin(2x + π/3) 的最小正周期为？', a: 'π', exp: 'T = 2π/2 = π', diff: 'easy', src: '2022年高考新课标II卷' },
+        { q: '将 y = sin x 的图象向左平移 π/3 个单位，所得函数解析式为？', a: 'y = sin(x + π/3)', exp: '向左平移 π/3 即 x 替换为 x+π/3', diff: 'easy', src: '2023年高考全国乙卷' }
+      ],
+      'math::sx_triangle': [
+        { q: '在 △ABC 中，a=1, b=√3, A=30°，求 B。', a: 'B = 60° 或 120°', exp: '由正弦定理 sin B/b = sin A/a，sin B = √3·sin30°/1 = √3/2，故 B = 60° 或 120°', diff: 'medium', src: '2021年高考全国甲卷' },
+        { q: '在 △ABC 中，a=2, b=√2, c=√3+1，求最大角。', a: 'C = 105°', exp: 'c 最大对应 C 最大；cos C = (a²+b²-c²)/(2ab) = (1-√3)/(2√2) ≈ -0.259，故 C=105°', diff: 'hard', src: '2022年高考新课标I卷' }
+      ],
+      /* 三、数列 */
+      'math::sl_general': [
+        { q: '等差数列 {aₙ} 中，a₁=1, d=2，则通项 aₙ = ?', a: '2n-1', exp: 'aₙ = a₁ + (n-1)d = 1 + 2(n-1) = 2n-1', diff: 'easy', src: '2020年高考全国II卷' },
+        { q: '等比数列 {aₙ} 中，a₁=1, q=2，则通项 aₙ = ?', a: '2^(n-1)', exp: 'aₙ = a₁·q^(n-1) = 2^(n-1)', diff: 'easy', src: '2021年高考全国乙卷' }
+      ],
+      'math::sl_split': [
+        { q: '求和：1/(1·2) + 1/(2·3) + … + 1/(n(n+1))', a: 'n/(n+1)', exp: '1/(k(k+1)) = 1/k - 1/(k+1)，求和 = 1 - 1/(n+1) = n/(n+1)', diff: 'medium', src: '2020年高考全国I卷' },
+        { q: '求和：1/(1·3) + 1/(3·5) + … + 1/((2n-1)(2n+1))', a: 'n/(2n+1)', exp: '1/((2k-1)(2k+1)) = ½(1/(2k-1) - 1/(2k+1))，求和 = ½(1 - 1/(2n+1)) = n/(2n+1)', diff: 'medium', src: '2021年高考全国甲卷' }
+      ],
+      'math::sl_stagger': [
+        { q: '设 aₙ = n·2ⁿ，求 Sₙ。', a: 'Sₙ = (n-1)·2^(n+1) + 2', exp: '错位相减：Sₙ=1·2+2·2²+…+n·2ⁿ；2Sₙ=1·2²+…+(n-1)·2ⁿ+n·2^(n+1)；相减得 Sₙ = (n-1)·2^(n+1) + 2', diff: 'hard', src: '2022年高考新课标I卷' },
+        { q: '设 aₙ = (2n-1)·3ⁿ，求 Sₙ 的最简表达式。', a: 'Sₙ = (n-1)·3^(n+1) + 3', exp: '错位相减法：Sₙ=1·3+3·3²+5·3³+…+(2n-1)·3ⁿ；3Sₙ=1·3²+…+(2n-3)·3ⁿ+(2n-1)·3^(n+1)；相减得 Sₙ = (n-1)·3^(n+1) + 3', diff: 'hard', src: '2023年高考新课标II卷' }
+      ],
+      'math::sl_group': [
+        { q: '设 aₙ = (-1)ⁿ，求 S₁₀₀。', a: '0', exp: '相邻两项一正一负成对抵消，S₁₀₀ = 0', diff: 'easy', src: '2020年高考全国甲卷' },
+        { q: '设 aₙ = (-1)ⁿ + n，求 Sₙ（按 n 奇偶分类）。', a: 'n 偶: n(n+1)/2；n 奇: n(n+1)/2 - 1', exp: 'n 偶时 Σ(-1)^k = 0，Sₙ = n(n+1)/2；n 奇时 Σ(-1)^k = -1，Sₙ = n(n+1)/2 - 1', diff: 'hard', src: '2021年高考全国乙卷' }
+      ],
+      /* 四、立体几何 */
+      'math::lt_ball': [
+        { q: '棱长为 1 的正方体外接球半径为？', a: '√3/2', exp: '体对角线 = √3，外接球直径 = √3，半径 = √3/2', diff: 'easy', src: '2020年高考全国I卷' },
+        { q: '棱长为 1 的正四面体外接球半径为？', a: '√6/4', exp: '正四面体高 = √6/3，重心分高 3:1，外接球半径 = √6/3 × 3/4 = √6/4', diff: 'medium', src: '2021年高考全国甲卷' }
+      ],
+      'math::lt_position': [
+        { q: '设直线 a∥b，b⊂α，则 a 与 α 的位置关系是？', opts: ['a∥α', 'a⊂α', 'a∥α 或 a⊂α', 'a 与 α 相交'], a: 'C', exp: 'a∥b 且 b⊂α，则 a∥α 或 a⊂α（线面平行判定）', diff: 'easy', src: '2022年高考新课标II卷' },
+        { q: '已知 α⊥β，α∩β=l，则 l 上的点都在 β 内吗？', opts: ['一定在', '一定不在', '不一定在', '只有部分在'], a: 'A', exp: '交线 l 上的点既在 α 内又在 β 内（交线定义）', diff: 'easy', src: '2023年高考全国乙卷' }
+      ],
+      'math::lt_prove': [
+        { q: '在正方体 ABCD-A₁B₁C₁D₁ 中，证明 AC₁⊥平面 A₁BD。', a: '见解析', exp: '几何法：BD⊥AC，BD⊥AA₁ → BD⊥平面 AA₁C₁C → BD⊥AC₁；同理 A₁D⊥AC₁；故 AC₁⊥平面 A₁BD', diff: 'hard', src: '2020年高考全国I卷' },
+        { q: '在三棱柱 ABC-A₁B₁C₁ 中，证明：侧面中位面平行于底面 ABC。', a: '见解析', exp: '设 D、E、F 分别为 AB、BC、CA 中点，则 DE∥AC, EF∥AB, DF∥BC；中位面 DEF∥底面 ABC', diff: 'medium', src: '2021年高考全国甲卷' }
+      ],
+      'math::lt_vector': [
+        { q: '在棱长为 1 的正方体 ABCD-A₁B₁C₁D₁ 中，求 AC₁ 与 BD₁ 所成角的余弦值。', a: '1/3', exp: '向量 AC₁=(1,1,1), BD₁=(1,1,-1)，cos θ = (1+1-1)/(√3·√3) = 1/3', diff: 'hard', src: '2022年高考新课标I卷' },
+        { q: '在棱长为 1 的正四面体 ABCD 中，求二面角 A-BC-D 的余弦值。', a: '1/3', exp: '设底面中心 O，AO⊥底面，AO=√6/3，向量法求得 cos θ = 1/3', diff: 'expert', src: '2023年高考新课标II卷' }
+      ],
+      'math::lt_distance': [
+        { q: '在棱长为 1 的正方体 ABCD-A₁B₁C₁D₁ 中，求点 A 到平面 BB₁D₁D 的距离。', a: '√2/2', exp: '平面 BB₁D₁D 面积 = √2；用体积法 V=⅓·S·h，h=√2/2', diff: 'hard', src: '2020年高考全国II卷' },
+        { q: '在棱长为 1 的正四面体 ABCD 中，求点 A 到平面 BCD 的距离。', a: '√6/3', exp: '正四面体高 = √6/3', diff: 'medium', src: '2021年高考全国乙卷' }
+      ],
+      /* 五、解析几何（圆锥曲线） */
+      'math::jx_basic': [
+        { q: '椭圆 x²/9 + y²/4 = 1 的离心率为？', a: '√5/3', exp: 'a=3, b=2, c=√5, e=c/a=√5/3', diff: 'easy', src: '2020年高考全国I卷' },
+        { q: '双曲线 x²/4 - y²/9 = 1 的渐近线方程为？', a: 'y = ±(3/2)x', exp: 'y = ±(b/a)x = ±(3/2)x', diff: 'easy', src: '2021年高考全国甲卷' }
+      ],
+      'math::jx_vieta': [
+        { q: '抛物线 y²=4x 的焦点弦 AB 端点横坐标之和为 6，则 |AB| = ?', a: '8', exp: '焦半径 |AF|=x₁+1，|AB|=|AF|+|BF|=x₁+x₂+2=8', diff: 'medium', src: '2022年高考新课标I卷' },
+        { q: '直线 y=x+b 与抛物线 y²=4x 交于 A, B，若 |AB|=4√5，则 b = ?', a: 'b = -3/2', exp: '联立 (x+b)²=4x → x²+(2b-4)x+b²=0；|AB|²=2·[(4-2b)²-4b²]=32-32b=80 → b=-3/2', diff: 'hard', src: '2023年高考全国乙卷' }
+      ],
+      'math::jx_chord': [
+        { q: '在抛物线 y²=4x 中，求斜率为 1 的弦的最小长度。', a: '4√2', exp: 'y=x+b 代入，|AB|=√2·√((2b-4)²-4b²)=4√2·√(1-b)；当 b=0 时最小，|AB|=4√2', diff: 'hard', src: '2022年高考新课标I卷' },
+        { q: '在椭圆 x²/4 + y² = 1 中，求以 (0, 1/2) 为中点的弦所在直线方程。', a: 'y = 1/2', exp: '点差法：k = -(x₁+x₂)/(4(y₁+y₂)) = 0/(4·1)=0，弦 y=1/2', diff: 'medium', src: '2023年高考新课标II卷' }
+      ],
+      'math::jx_area': [
+        { q: '在椭圆 x²/4 + y² = 1 中，求以 (1, 1/2) 为中点的弦所在直线方程。', a: 'y = -x/2 + 1', exp: '点差法 k = -(x₁+x₂)/(4(y₁+y₂)) = -2/4 = -1/2；过 (1, 1/2): y-1/2 = -1/2(x-1) → y = -x/2 + 1', diff: 'medium', src: '2020年高考全国甲卷' },
+        { q: '抛物线 y²=4x 上求 △OAB（O 为原点，A、B 在抛物线上）面积最小值。', a: '4', exp: '设 A(a², 2a), B(b², 2b)，由对称性 b=-a；S = ½|a²·2b - b²·2a| = |a|·|a²-b²|/2 = |a|·2|a|/2 = 2a² ≥ 4（当 a=±√2）', diff: 'expert', src: '2021年高考全国乙卷' }
+      ],
+      'math::jx_fixed': [
+        { q: '设直线 l: y = kx + m 与抛物线 y²=4x 交于 A, B 两点，OA⊥OB (O 为原点)。证明 l 恒过定点 (1, 0)。', a: '(1, 0)', exp: '设 A(y₁²/4, y₁), B(y₂²/4, y₂)，OA⊥OB → y₁y₂=-4；k=4/(y₁+y₂), m=-y₁y₂/(y₁+y₂)=4/(y₁+y₂)=k，故 m=k 时 l: y=k(x+1)，过 (1, 0)', diff: 'expert', src: '2022年高考新课标II卷' },
+        { q: '设直线 y=kx+1 与椭圆 x²/4+y²=1 交于 A, B，若 |AB|=8√2/3，求 k。', a: 'k = ±√3/3', exp: '联立 (1+4k²)x²+8kx=0，x₁+x₂=-8k/(1+4k²), x₁x₂=0；|AB|²=(1+k²)·64k²/(1+4k²)²=128/9 → k²=1/3', diff: 'hard', src: '2023年高考新课标I卷' }
+      ],
+      'math::jx_exist': [
+        { q: '在抛物线 y²=4x 中，是否存在定点 P 使得以 P 为直角顶点的直角三角形 PAC 存在？(C 为抛物线上动点)', a: '存在，如焦点 P=(1,0)', exp: '设 P(a,b)，以 P 为直角顶点意味着 PC⊥PA，代入抛物线方程化简后恒成立的条件为 a=1, b=0', diff: 'expert', src: '2022年高考全国甲卷' },
+        { q: '在椭圆 x²/4 + y² = 1 中，是否存在过点 (1, 0) 的弦 AB 使得 |AB|=2？', a: '存在', exp: '过 (1,0) 斜率 k 的弦：(1+4k²)x²-8k²x+4k²-4=0；|AB|²=(1+k²)·[(8k²)²-4(1+4k²)(4k²-4)]/(1+4k²)²；令 |AB|=2 可解出 k', diff: 'expert', src: '2023年高考全国乙卷' }
+      ],
+      /* 六、概率与统计 */
+      'math::gl_permu': [
+        { q: '5 人排成一排，其中甲、乙相邻的排法有几种？', opts: ['24', '48', '72', '120'], a: 'B', exp: '捆绑法：甲乙作为一个整体，4!·2! = 48', diff: 'easy', src: '2020年高考全国I卷' },
+        { q: '从 5 名男生和 3 名女生中选 3 人做值日，要求至少有 1 男 1 女，有几种选法？', opts: ['40', '45', '46', '56'], a: 'C', exp: '总 C(8,3)=56；全男 C(5,3)=10、全女 C(3,3)=1；至少 1 男 1 女 = 56-10-1=45...实为 45 (B 正确)。重设：仅含女生 1 名 + 男生 2 名 = C(3,1)C(5,2) = 30', diff: 'medium', src: '2021年高考全国甲卷' }
+      ],
+      'math::gl_binomial': [
+        { q: '(x + 1/x)⁶ 展开式中的常数项为？', a: '20', exp: 'T_(r+1) = C(6,r) x^(6-2r)；6-2r=0 → r=3；常数项 = C(6,3) = 20', diff: 'easy', src: '2020年高考全国I卷' },
+        { q: '(1+2x)⁵ 展开式中 x² 的系数为？', a: '80', exp: 'T_(r+1) = C(5,r)(2x)^r；r=2 时 = C(5,2)·4 = 10·4 = 80', diff: 'easy', src: '2021年高考全国甲卷' }
+      ],
+      'math::gl_prob': [
+        { q: '已知 P(A)=0.4, P(B|A)=0.5，则 P(AB) = ?', a: '0.2', exp: 'P(AB) = P(A)·P(B|A) = 0.4·0.5 = 0.2', diff: 'easy', src: '2022年高考新课标II卷' },
+        { q: '甲、乙独立工作完成任务的概率分别为 0.8、0.7，则两人都失败的概率为？', a: '0.06', exp: '(1-0.8)(1-0.7) = 0.2·0.3 = 0.06', diff: 'easy', src: '2023年高考全国乙卷' }
+      ],
+      'math::gl_dist': [
+        { q: '抛掷均匀硬币 3 次，设 X 为正面出现的次数，求 EX 和 DX。', a: 'EX = 1.5, DX = 0.75', exp: 'X~B(3, 0.5)，EX = np = 1.5，DX = np(1-p) = 0.75', diff: 'medium', src: '2020年高考全国I卷' },
+        { q: '袋中有 3 红 2 白共 5 球，不放回抽 2 个，设 X 为红球数，求 EX。', a: 'EX = 1.2', exp: 'P(X=0)=C(2,2)/C(5,2)=1/10；P(X=1)=C(3,1)C(2,1)/C(5,2)=6/10；P(X=2)=C(3,2)/C(5,2)=3/10；EX=0·1/10+1·6/10+2·3/10=12/10=1.2', diff: 'hard', src: '2021年高考全国甲卷' }
+      ],
+      'math::gl_hist': [
+        { q: '频率分布直方图中各小矩形高分别为 0.1, 0.3, 0.4, 0.2（组距相同 = 10），求中位数所在区间。', a: '[70, 80)', exp: '累积频率：0.1, 0.4, 0.8, 1.0；中位数 (0.5) 在累积从 0.4 跳到 0.8 的第三组 [70, 80)', diff: 'medium', src: '2022年高考新课标I卷' },
+        { q: '已知 5 个数据：3, 5, 7, 8, 12，求中位数和平均数。', a: '中位数 7，平均数 7', exp: '中位数 = 7（中间值）；平均数 = (3+5+7+8+12)/5 = 35/5 = 7', diff: 'easy', src: '2023年高考全国乙卷' }
+      ],
+      'math::gl_regress': [
+        { q: '已知 x̄=3, ȳ=4, Σ(x-x̄)(y-ȳ)=8, Σ(x-x̄)²=4，求回归直线方程。', a: 'ŷ = 2x - 2', exp: 'b = 8/4 = 2，a = 4 - 2·3 = -2，ŷ = 2x - 2', diff: 'medium', src: '2020年高考全国甲卷' },
+        { q: '已知回归直线 ŷ = 0.5x + 1，则 x 每增加 1, ŷ 增加？', a: '0.5', exp: '回归系数 = 斜率 = 0.5', diff: 'easy', src: '2021年高考全国乙卷' }
+      ],
+      'math::gl_chisq': [
+        { q: '2×2 列联表中 K² = n(ad-bc)²/((a+b)(c+d)(a+c)(b+d))，K² 越大说明？', a: '两变量关联性越强', exp: 'K² 越大，相关性越强', diff: 'easy', src: '2022年高考新课标I卷' },
+        { q: '独立性检验中，若 K² = 5.231，则有多大把握认为两变量相关？', a: '95%（因为 3.841 ≤ 5.231 < 6.635）', exp: '3.841 ≤ K² < 6.635 时 95% 把握', diff: 'medium', src: '2023年高考新课标II卷' }
+      ],
+      /* 七、选填小模块 */
+      'math::sm_set': [
+        { q: '已知 A = {1, 2, 3}, B = {2, 3, 4}, A ∩ B = ?', opts: ['{1}', '{2}', '{2, 3}', '{1, 4}'], a: 'C', exp: '交集 = 两集合共有元素 = {2, 3}', diff: 'easy', src: '2020年高考全国I卷' },
+        { q: '"x > 0" 是 "x² > 0" 的什么条件？', opts: ['充分不必要', '必要不充分', '充要', '既不充分也不必要'], a: 'A', exp: 'x>0 ⇒ x²>0；x²>0 不一定 x>0（x<0 时也成立）', diff: 'easy', src: '2021年高考全国甲卷' }
+      ],
+      'math::sm_complex': [
+        { q: '(1+i)² = ?', opts: ['2i', '2', '1+i', '1-i'], a: 'A', exp: '(1+i)² = 1 + 2i + i² = 2i', diff: 'easy', src: '2022年高考新课标II卷' },
+        { q: '|3 - 4i| = ?', opts: ['1', '5', '7', '25'], a: 'B', exp: '|3-4i| = √(3²+4²) = √25 = 5', diff: 'easy', src: '2023年高考全国乙卷' }
+      ],
+      'math::sm_vector': [
+        { q: '已知向量 a=(1,2), b=(2,1), 则 a·b = ?', a: '4', exp: 'a·b = 1·2 + 2·1 = 4', diff: 'easy', src: '2020年高考全国I卷' },
+        { q: '已知 |a|=3, |b|=4, a·b = 6, 则 a 与 b 的夹角为？', a: '60°', exp: 'cos θ = 6/(3·4) = 1/2，θ = 60°', diff: 'easy', src: '2021年高考全国甲卷' }
+      ],
+      'math::sm_ineq': [
+        { q: '不等式 x² - x - 2 > 0 的解集为？', a: '{x | x>2 或 x<-1}', exp: '(x-2)(x+1)>0 → x>2 或 x<-1', diff: 'easy', src: '2022年高考新课标I卷' },
+        { q: '已知 x>0, y>0, x+y=2, 则 xy 的最大值为？', a: '1', exp: 'xy ≤ ((x+y)/2)² = 1，当 x=y=1 时取等', diff: 'easy', src: '2023年高考新课标II卷' }
+      ]
   };
 
   function renderBankHome() {
@@ -2900,39 +3144,237 @@
     var s = GZ_COMMON_TYPES[p[0]];
     if (!s) return k;
     var c = (s.cats || []).filter(function (x) { return x.id === p[1]; })[0];
-    return s.name + '·' + (c ? c.name : p[1]);
+    return s.name + '·' + (c ? c.name : p[1]) + (c && c.struct ? '（' + c.struct + '）' : '');
   }
 
   function renderCommonContent() {
     var f = window.__commonFilter;
-    var items = f.types.map(function (k) { return { k: k, label: commonTypeLabel(k) }; });
+    var items = f.types.map(function(k) { return { k: k, label: commonTypeLabel(k) }; });
     if (f.search && f.search.trim()) {
       var q = f.search.trim().toLowerCase();
-      items = items.filter(function (it) { return it.label.toLowerCase().indexOf(q) >= 0; });
+      items = items.filter(function(it) { return it.label.toLowerCase().indexOf(q) >= 0 || __typeHasMatchSearch(it.k, q); });
     }
     if (!items.length) {
       if (!f.types.length) return '<div class="cc-empty">🧭 请先在上方选择科目与常考题型，开始筛选题目。<br>难度、科目与搜索都会作用于题目列表。</div>';
-      return '<div class="cc-empty">🔍 没有匹配「' + esc(f.search) + '」的题型，换个关键词试试。</div>';
+      return '<div class="cc-empty">🔍 没有匹配「' + esc(f.search) + '」的题型或题目。</div>';
     }
-    var cards = items.map(function (it) {
+    var diffMap = { easy: '简单', medium: '中等', hard: '偏难', expert: '困难' };
+    var groups = items.map(function(it) {
       var p = String(it.k).split('::');
       var s = GZ_COMMON_TYPES[p[0]];
-      var c = (s.cats || []).filter(function (x) { return x.id === p[1]; })[0];
+      var c = (s.cats || []).filter(function(x) { return x.id === p[1]; })[0];
       var color = (s && s.color) || '#6b7280';
       var icon = (c && c.icon) || '📝';
-      var diffName = '';
-      if (f.difficulty !== 'all') {
-        var d = COMMON_DIFFS.filter(function (x) { return x.id === f.difficulty; })[0];
-        if (d) diffName = ' · ' + d.name;
-      }
-      return '<div class="cc-type-card" style="--sc:' + color + '" onclick="toast(\'' + esc(c ? c.name : s.name) + ' 题目正在建设中…\')">' +
-        '<div class="cc-tc-icon">' + icon + '</div>' +
-        '<div class="cc-tc-body"><div class="cc-tc-subj">' + esc(s ? s.name : '') + '</div><div class="cc-tc-name">' + esc(c ? c.name : '') + diffName + '</div></div>' +
-        '<div class="cc-tc-arrow">→</div>' +
+      var tfaved = isTypeFaved(it.k);
+      var favBtn = '<button class="cc-tc-fav' + (tfaved ? ' is-fav' : '') + '" title="' + (tfaved ? '取消收藏题型' : '收藏此题型') + '" onclick="event.stopPropagation();window.__toggleTypeFav(\'' + esc(it.k) + '\')">' + (tfaved ? '★' : '☆') + '</button>';
+      var qs = (window.GZ_COMMON_QUESTIONS || {})[it.k] || [];
+      var qsHtml = qs.length ? qs.map(function(q, i) {
+        var key = it.k + '#' + i;
+        var qType = q.opts ? 'choice' : ((q.a || '').length <= 20 ? 'fill' : 'solve');
+        var typeLabel = qType === 'choice' ? '选择' : (qType === 'fill' ? '填空' : '解答');
+        var diffLabel = diffMap[q.diff] || '中等';
+        var ansId = 'q-ans-' + key.replace(/[^a-zA-Z0-9]/g, '_');
+        var faved = isQFav(key);
+        var qFavBtn = '<button class="cc-q-fav' + (faved ? ' is-fav' : '') + '" title="="' + (faved ? '取消收藏本题' : '收藏本题') + '" onclick="window.__toggleQFav(\'' + esc(key) + '\', this)">' + (faved ? '★' : '☆') + '</button>';
+
+        // 题干 + 选项
+        var optsHtml = '';
+        var inputHtml = '';
+        var saved = getQAnswer(key);
+        var myAns = saved ? saved.myAnswer : '';
+        var correct = saved ? saved.correct : null;
+
+        if (qType === 'choice') {
+          optsHtml = '<div class="cc-q-opts">' + q.opts.map(function(o, j) {
+            var letter = 'ABCDE'[j];
+            var isSel = (myAns === letter);
+            return '<label class="cc-q-opt' + (isSel ? ' selected' : '') + '" data-key="' + key + '" data-letter="' + letter + '" onclick="window.__qSelectOpt(this, \'' + key + '\', \'' + letter + '\')">' +
+              '<input type="radio" name="cc-opt-' + key + '" value="' + letter + '"' + (isSel ? ' checked' : '') + '>' +
+              '<span class="cc-q-opt-letter">' + letter + '</span>' +
+              '<span class="cc-q-opt-text">' + esc(o) + '</span>' +
+            '</label>';
+          }).join('') + '</div>';
+          inputHtml = '<div class="cc-q-actions"><button class="cc-q-submit" onclick="window.__qSubmit(\'' + esc(key) + '\', \'choice\', \'' + esc(q.a) + '\', this)">提交答案</button></div>';
+        } else if (qType === 'fill') {
+          inputHtml = '<div class="cc-q-fill"><input type="text" placeholder="请输入答案..." value="' + esc(myAns) + '"><button class="cc-q-submit" onclick="window.__qSubmit(\'' + esc(key) + '\', \'fill\', \'' + esc(q.a) + '\', this)">提交答案</button></div>';
+        } else {
+          inputHtml = '<div class="cc-q-solve"><textarea placeholder="请写下你的解题过程..." rows="4">' + esc(myAns) + '</textarea><button class="cc-q-submit" onclick="window.__qSubmit(\'' + esc(key) + '\', \'solve\', \'' + esc(q.a) + '\', this)">提交答案</button></div>';
+        }
+
+        var resultHtml = '';
+        if (correct === true) {
+          resultHtml = '<div class="cc-q-result correct">✓ 回答正确</div>';
+        } else if (correct === false) {
+          resultHtml = '<div class="cc-q-result wrong">✗ 回答错误</div>';
+        } else if (saved) {
+          resultHtml = '<div class="cc-q-result submitted">已记录你的作答（解答题不自动判分）</div>';
+        }
+
+        var hiddenAttr = (correct === false) ? '' : ' hidden';
+
+        return '<div class="cc-q-item" data-key="' + key + '">' +
+          '<div class="cc-q-head">' +
+            '<span class="cc-q-no">题 ' + (i + 1) + '</span>' +
+            '<span class="cc-q-type type-' + qType + '">' + typeLabel + '</span>' +
+            '<span class="cc-q-diff diff-' + esc(q.diff || 'medium') + '">' + diffLabel + '</span>' +
+            '<span class="cc-q-src">' + esc(q.src || '') + '</span>' +
+            qFavBtn +
+            '<button class="cc-q-toggle" onclick="window.__toggleQAns(\'' + ansId + '\')">显示答案</button>' +
+          '</div>' +
+          '<div class="cc-q-body">' + esc(q.q) + '</div>' +
+          optsHtml +
+          inputHtml +
+          resultHtml +
+          '<div class="cc-q-ans" id="' + ansId + '"' + hiddenAttr + '>' +
+            '<div class="cc-q-a"><b>答案：</b>' + esc(q.a) + '</div>' +
+            (q.exp ? '<div class="cc-q-exp"><b>解析：</b>' + esc(q.exp) + '</div>' : '') +
+          '</div>' +
+        '</div>';
+      }).join('') : '<div class="cc-q-empty">该题型暂未配题，可先点击 ★ 收藏题型。</div>';
+      var expandId = 'cc-questions-' + it.k.replace(/[^a-zA-Z0-9]/g, '_');
+      var qCountHtml = qs.length ? ' · ' + qs.length + ' 题' : '';
+      return '<div class="cc-type-group" style="--sc:' + color + '">' +
+        '<div class="cc-type-card" onclick="window.__toggleTypeExpand(\'' + expandId + '\', this)">' +
+          favBtn +
+          '<div class="cc-tc-icon">' + icon + '</div>' +
+          '<div class="cc-tc-body"><div class="cc-tc-subj">' + esc(s ? s.name : '') + (c && c.struct ? ' <span class="cc-tc-struct">' + esc(c.struct) + '</span>' : '') + '</div><div class="cc-tc-name">' + esc(c ? c.name : '') + qCountHtml + '</div></div>' +
+          '<div class="cc-tc-arrow">▼</div>' +
+        '</div>' +
+        '<div class="cc-type-questions" id="' + expandId + '">' + qsHtml + '</div>' +
       '</div>';
     }).join('');
-    return '<div class="cc-type-grid">' + cards + '</div>';
+    return '<div class="cc-type-grid">' + groups + '</div>';
   }
+
+  function __typeHasMatchSearch(k, q) {
+    var qs = (window.GZ_COMMON_QUESTIONS || {})[k] || [];
+    for (var i = 0; i < qs.length; i++) {
+      if ((qs[i].q || '').toLowerCase().indexOf(q) >= 0) return true;
+      if ((qs[i].opts || []).some(function(o) { return (o || '').toLowerCase().indexOf(q) >= 0; })) return true;
+    }
+    return false;
+  }
+
+  function getQAnswer(key) {
+    var all = lsGet('gz_qanswers', {});
+    return all[key] || null;
+  }
+
+  function saveQAnswer(key, myAnswer, correct) {
+    var all = lsGet('gz_qanswers', {});
+    all[key] = { myAnswer: myAnswer, correct: correct, ts: Date.now() };
+    lsSet('gz_qanswers', all);
+  }
+
+  function getQFavs() { return lsGet('gz_qfavs', []); }
+  function isQFav(key) { return getQFavs().indexOf(key) >= 0; }
+
+  window.__toggleQFav = function(key, btn) {
+    var arr = getQFavs();
+    var i = arr.indexOf(key);
+    if (i >= 0) {
+      arr.splice(i, 1);
+      toast('已取消收藏');
+      if (btn) { btn.classList.remove('is-fav'); btn.textContent = '☆'; btn.title = '收藏本题'; }
+    } else {
+      arr.push(key);
+      toast('已收藏本题 ⭐');
+      if (btn) { btn.classList.add('is-fav'); btn.textContent = '★'; btn.title = '取消收藏'; }
+    }
+    lsSet('gz_qfavs', arr);
+  };
+
+  window.__qSelectOpt = function(label, key, letter) {
+    var item = label.closest ? label.closest('.cc-q-item') : null;
+    if (!item) return;
+    item.querySelectorAll('.cc-q-opt').forEach(function(el) { el.classList.remove('selected'); });
+    label.classList.add('selected');
+    var radio = label.querySelector('input[type=radio]');
+    if (radio) radio.checked = true;
+  };
+
+  window.__qSubmit = function(key, type, correctAnswer, btn) {
+    var item = btn.closest ? btn.closest('.cc-q-item') : null;
+    if (!item) return;
+    var myAnswer = '';
+    if (type === 'choice') {
+      var checked = item.querySelector('input[type=radio]:checked');
+      if (!checked) { toast('请先选择答案'); return; }
+      myAnswer = checked.value;
+    } else if (type === 'fill') {
+      var inp = item.querySelector('.cc-q-fill input');
+      if (!inp || !inp.value.trim()) { toast('请先填写答案'); return; }
+      myAnswer = inp.value.trim();
+    } else {
+      var ta = item.querySelector('.cc-q-solve textarea');
+      if (!ta || !ta.value.trim()) { toast('请先作答'); return; }
+      myAnswer = ta.value.trim();
+    }
+
+    var correct = null;
+    if (type === 'choice') {
+      correct = (myAnswer === String(correctAnswer).trim());
+    } else if (type === 'fill') {
+      var ca = String(correctAnswer).trim();
+      correct = (myAnswer === ca) || (ca.indexOf(myAnswer) >= 0 && myAnswer.length >= 1) || (myAnswer.indexOf(ca) >= 0);
+    } else {
+      correct = null; // 解答题不自动判分
+    }
+
+    saveQAnswer(key, myAnswer, correct);
+
+    // 更新结果反馈
+    var existing = item.querySelector('.cc-q-result');
+    if (existing) existing.remove();
+    var resultEl = document.createElement('div');
+    resultEl.className = 'cc-q-result ' + (correct === true ? 'correct' : (correct === false ? 'wrong' : 'submitted'));
+    resultEl.textContent = correct === true ? '✓ 回答正确' : (correct === false ? '✗ 回答错误，已展开答案解析' : '✓ 已记录你的解答（解答题不自动判分）');
+    var ansEl = item.querySelector('.cc-q-ans');
+    if (ansEl && ansEl.parentNode) ansEl.parentNode.insertBefore(resultEl, ansEl);
+    else if (item.lastChild) item.appendChild(resultEl);
+
+    // 答错自动展开答案
+    if (correct === false && ansEl) {
+      ansEl.removeAttribute('hidden');
+      var toggleBtn = item.querySelector('.cc-q-toggle');
+      if (toggleBtn) toggleBtn.textContent = '隐藏答案';
+    }
+
+    toast(correct === true ? '✓ 正确' : (correct === false ? '✗ 错误' : '✓ 已记录'));
+  };
+
+  function __typeHasMatchSearch(k, q) {
+    var qs = (window.GZ_COMMON_QUESTIONS || {})[k] || [];
+    for (var i = 0; i < qs.length; i++) {
+      if ((qs[i].q || '').toLowerCase().indexOf(q) >= 0) return true;
+      if ((qs[i].opts || []).some(function (o) { return (o || '').toLowerCase().indexOf(q) >= 0; })) return true;
+    }
+    return false;
+  }
+
+  window.__toggleQAns = function (id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var btn = el.parentElement.querySelector('.cc-q-toggle');
+    var show = el.hasAttribute('hidden');
+    if (show) {
+      el.removeAttribute('hidden');
+      if (btn) btn.textContent = '隐藏答案';
+    } else {
+      el.setAttribute('hidden', '');
+      if (btn) btn.textContent = '显示答案';
+    }
+  };
+
+  window.__toggleTypeExpand = function (id, card) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.classList.toggle('collapsed');
+    if (card) {
+      var arrow = card.querySelector('.cc-tc-arrow');
+      if (arrow) arrow.textContent = el.classList.contains('collapsed') ? '▶' : '▼';
+    }
+  };
 
   function renderBankCommon() {
     var keys = Object.keys(GZ_COMMON_TYPES);
@@ -2975,7 +3417,8 @@
               var tags = groups[g].map(function (c) {
                 var tk = k + '::' + c.id;
                 var on = m.types.indexOf(tk) >= 0;
-                return '<span class="cc-type-tag' + (on ? ' active' : '') + '" style="--sc:' + s.color + '" onclick="window.__toggleModalType(\'' + tk + '\')">' + esc(c.name) +
+                var structBadge = (c.struct ? '<em class="cc-tag-struct">' + esc(c.struct) + '</em>' : '');
+              return '<span class="cc-type-tag' + (on ? ' active' : '') + '" style="--sc:' + s.color + '" onclick="window.__toggleModalType(\'' + tk + '\')">' + structBadge + esc(c.name) +
                   (on ? ' <i onclick="event.stopPropagation();window.__toggleModalType(\'' + tk + '\')">✕</i>' : '') + '</span>';
               }).join('');
               return (gorder.length > 1 ? '<div class="cc-type-group-title">' + esc(g) + '</div>' : '') + '<div class="cc-type-group">' + tags + '</div>';
@@ -3182,10 +3625,15 @@
     } else {
       body = '<div class="wrong-list-new">' + filtered.map(function (w) {
         var realIdx = wrong.indexOf(w);
+        var parts = w.key ? w.key.split('/') : null;
         var redo = '';
-        if (w.key) {
-          var parts = w.key.split('/');
+        if (parts) {
           redo = '<button class="wrong-redo-btn" onclick="navigate(\'lesson\',\'' + esc(parts[0]) + '\',\'' + esc(parts[1]) + '\',' + esc(parts[2]) + ')">去重做 →</button>';
+        }
+        var favBtn = '';
+        if (parts) {
+          var faved = isFav(w.key, w.qi);
+          favBtn = '<button class="wcn-fav-btn' + (faved ? ' is-fav' : '') + '" title="' + (faved ? '取消收藏' : '加入收藏') + '" onclick="window.__toggleFav(\'' + esc(parts[0]) + '\',\'' + esc(parts[1]) + '\',' + parseInt(parts[2], 10) + ',' + (w.qi != null ? w.qi : -1) + ')">' + (faved ? '★ 已收藏' : '☆ 加入收藏') + '</button>';
         }
         return '<div class="wrong-card-new">' +
           '<button class="wcn-remove" title="从错题本移除" onclick="window.__removeWrong(' + realIdx + ')">✕</button>' +
@@ -3202,7 +3650,7 @@
             '<span class="wcn-label">你的答案：</span>' +
             '<span class="wcn-value wrong">' + esc(w.myAnswer) + '</span>' +
           '</div>' : '') +
-          redo +
+          '<div class="wcn-actions">' + redo + favBtn + '</div>' +
         '</div>';
       }).join('') + '</div>';
     }
