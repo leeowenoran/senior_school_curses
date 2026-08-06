@@ -20,3 +20,17 @@ _local_backup_*/
 
 # Seed/preview templates (dev artifacts)
 _seed*.html
+
+# Untracked helpers not for production
+1necho
+server_nocache.py
+cloudbaserc.json
+
+# Dev-only folders (not served on CloudBase)
+backend/
+docs/
+cloud_functions/
+scripts/
+
+# History deployment snapshots (workspace-only, never served)
+gz_site_v*/

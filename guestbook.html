@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>留言板</title>
+<style>
+  :root{
+    --bg:#faf6f0; --card:#ffffff; --line:#ece3d8; --primary:#8b4515;
+    --primary-soft:#a0713c; --accent:#c8956d; --dark:#3d2c18; --muted:#8a7a68;
+    --anon:#2e7d32; --radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--dark);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:28px 18px 60px;}
+  .head{display:flex; align-items:center; gap:14px; margin-bottom:18px;}
+  .head-icon{
+    width:46px; height:46px; border-radius:12px; flex:none;
+    display:flex; align-items:center; justify-content:center; font-size:24px;
+    background:linear-gradient(135deg,#f3e4d2,#e9d3bd);
+  }
+  .title{font-size:22px; font-weight:700; letter-spacing:.5px;}
+  .sub{font-size:13px; color:var(--muted); margin-top:2px;}
+
+  .form-card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:16px; box-shadow:0 6px 22px rgba(139,69,21,.06); margin-bottom:22px;
+  }
+  .form-id{display:flex; align-items:center; gap:10px; margin-bottom:12px; flex-wrap:wrap;}
+  .avatar{
+    width:34px; height:34px; border-radius:50%; flex:none; display:flex; align-items:center;
+    justify-content:center; font-size:18px; background:#f0e6da; color:var(--primary);
+  }
+  .avatar.anon{color:var(--anon);}
+  .name-input{
+    flex:1; min-width:160px; border:1px solid var(--line); border-radius:10px;
+    padding:8px 12px; font-size:14px; color:var(--dark); background:#fdfbf8; outline:none;
+  }
+  .name-input:focus{border-color:var(--accent);}
+  .id-note{font-size:12px; color:var(--muted);}
+  .id-note b{color:var(--anon);}
+  textarea{
+    width:100%; border:1px solid var(--line); border-radius:10px; padding:12px;
+    font-size:14px; color:var(--dark); background:#fdfbf8; resize:vertical; outline:none;
+    font-family:inherit;
+  }
+  textarea:focus{border-color:var(--accent);}
+  .form-foot{display:flex; align-items:center; justify-content:space-between; margin-top:10px;}
+  .counter{font-size:12px; color:var(--muted);}
+  .submit{
+    border:none; border-radius:10px; padding:9px 18px; font-size:14px; font-weight:600;
+    color:#fff; background:var(--primary); cursor:pointer; transition:opacity .15s, transform .05s;
+  }
+  .submit:disabled{opacity:.45; cursor:not-allowed;}
+  .submit.ready{background:var(--primary);}
+  .submit:not(:disabled):active{transform:translateY(1px);}
+
+  .list-head{display:flex; align-items:baseline; justify-content:space-between; margin:6px 2px 12px;}
+  .list-title{font-size:15px; font-weight:700;}
+  .list-count{font-size:13px; color:var(--muted);}
+
+  .list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:12px;}
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:14px 16px; display:flex; gap:12px; box-shadow:0 3px 14px rgba(139,69,21,.04);
+  }
+  .card-avatar{
+    width:38px; height:38px; border-radius:50%; flex:none; display:flex; align-items:center;
+    justify-content:center; font-size:18px; font-weight:700; background:#f0e6da; color:var(--primary);
+  }
+  .card-avatar.anon{color:var(--anon);}
+  .card-body{flex:1; min-width:0;}
+  .card-head{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:4px;}
+  .card-name{font-weight:600; font-size:14px;}
+  .tag{font-size:11px; padding:1px 7px; border-radius:999px; background:#f0e6da; color:var(--primary);}
+  .tag.anon{background:#e6f2e7; color:var(--anon);}
+  .card-time{font-size:12px; color:var(--muted); margin-left:auto;}
+  .card-text{font-size:14px; color:#4a3a28; white-space:pre-wrap; word-break:break-word;}
+
+  .empty{text-align:center; padding:50px 20px; color:var(--muted);}
+  .empty svg{margin-bottom:10px;}
+  .empty-title{font-size:15px; font-weight:600; color:var(--dark);}
+  .empty-sub{font-size:13px; margin-top:4px;}
+  .toast{
+    position:fixed; left:50%; bottom:28px; transform:translateX(-50%) translateY(20px);
+    background:var(--dark); color:#fff; padding:10px 18px; border-radius:999px; font-size:13px;
+    opacity:0; pointer-events:none; transition:opacity .2s, transform .2s; z-index:99;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div class="head-icon">💬</div>
+    <div>
+      <div class="title">留言板</div>
+      <div class="sub">对网站有什么建议？你的每条反馈我们都会看到 ✨</div>
+    </div>
+  </div>
+
+  <div class="form-card">
+    <div class="form-id">
+      <span class="avatar anon" id="formAvatar">·</span>
+      <input class="name-input" id="cmName" maxlength="20" placeholder="给自己起个昵称（可选）">
+      <span class="id-note">将以 <b>匿名</b> 身份发布</span>
+    </div>
+    <textarea id="cmText" maxlength="500" rows="3" placeholder="说点什么… 说说哪里好用、想加什么功能、遇到什么问题都可以 :)"></textarea>
+    <div class="form-foot">
+      <div class="counter"><span id="cmCount">0</span> / 500</div>
+      <button class="submit" id="cmSubmit" disabled>发布留言</button>
+    </div>
+  </div>
+
+  <div class="list-head">
+    <span class="list-title">全部留言</span>
+    <span class="list-count" id="cmTotal">0 条</span>
+  </div>
+  <ul class="list" id="cmList"></ul>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = 'gz_comments';
+  var NAME_KEY = 'gz_guest_name';
+
+  function lsGet(k, fb){ try{ var v = localStorage.getItem(k); return v==null?fb:JSON.parse(v); }catch(e){ return fb; } }
+  function lsSet(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+
+  function esc(s){
+    return String(s==null?'':s).replace(/[&<>"]/g, function(c){
+      return c==='&'?'&amp;':c==='<'?'&lt;':c==='>'?'&gt;':'&quot;';
+    });
+  }
+
+  function relativeTime(ts){
+    var d = Date.now() - ts, s = Math.floor(d/1000);
+    if (s < 60) return '刚刚';
+    var m = Math.floor(s/60); if (m < 60) return m + ' 分钟前';
+    var h = Math.floor(m/60); if (h < 24) return h + ' 小时前';
+    var day = Math.floor(h/24); if (day < 30) return day + ' 天前';
+    var dt = new Date(ts);
+    return (dt.getMonth()+1) + '月' + dt.getDate() + '日';
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+  var listEl = $('cmList'), totalEl = $('cmTotal'), textEl = $('cmText'),
+      countEl = $('cmCount'), btn = $('cmSubmit'), nameEl = $('cmName'),
+      avatarEl = $('formAvatar'), toastEl = $('toast');
+
+  // 记住昵称
+  var savedName = lsGet(NAME_KEY, '');
+  if (savedName) nameEl.value = savedName;
+
+  function toast(msg){
+    toastEl.textContent = msg; toastEl.classList.add('show');
+    clearTimeout(toast._t); toast._t = setTimeout(function(){ toastEl.classList.remove('show'); }, 1600);
+  }
+
+  function refresh(){
+    var len = textEl.value.trim().length;
+    countEl.textContent = len;
+    var ok = len > 0;
+    btn.disabled = !ok;
+    btn.classList.toggle('ready', ok);
+  }
+
+  function render(){
+    var list = (lsGet(KEY, []) || []).slice().sort(function(a,b){ return b.ts - a.ts; });
+    totalEl.textContent = list.length + ' 条';
+    if (list.length === 0){
+      listEl.innerHTML =
+        '<div class="empty">' +
+        '<svg width="110" height="110" viewBox="0 0 120 120" fill="none">' +
+          '<circle cx="60" cy="60" r="46" fill="#f6ede1" stroke="#e6d8c6" stroke-width="1.5"/>' +
+          '<path d="M40 50 Q40 38 52 38 H80 Q92 38 92 50 V66 Q92 78 80 78 H58 L46 86 V78 H52 Q40 78 40 66 Z" fill="#fff" stroke="#8b4515" stroke-width="2"/>' +
+          '<circle cx="56" cy="58" r="3" fill="#8b4515"/><circle cx="68" cy="58" r="3" fill="#8b4515"/>' +
+          '<path d="M52 66 Q60 71 68 66" stroke="#c8956d" stroke-width="2" stroke-linecap="round" fill="none"/>' +
+        '</svg>' +
+        '<div class="empty-title">还没有留言</div>' +
+        '<div class="empty-sub">来当第一个吧 ✨</div>' +
+        '</div>';
+      return;
+    }
+    listEl.innerHTML = list.map(function(c){
+      var name = c.authorName || '匿名';
+      var initial = name.slice(0,1);
+      var isAnon = !c.authorId;
+      return '<li class="card">' +
+        '<div class="card-avatar' + (isAnon?' anon':'') + '">' + (isAnon?'·':esc(initial)) + '</div>' +
+        '<div class="card-body">' +
+          '<div class="card-head">' +
+            '<span class="card-name">' + esc(name) + '</span>' +
+            '<span class="tag' + (isAnon?' anon':'') + '">' + (isAnon?'匿名':'用户') + '</span>' +
+            '<span class="card-time">' + esc(relativeTime(c.ts)) + '</span>' +
+          '</div>' +
+          '<div class="card-text">' + esc(c.content) + '</div>' +
+        '</div>' +
+      '</li>';
+    }).join('');
+  }
+
+  var submitting = false;
+  function submit(){
+    if (submitting) return;
+    var content = textEl.value.trim();
+    if (!content) return;
+    if (content.length > 500) content = content.slice(0,500);
+    var guestName = (nameEl.value || '').trim();
+    if (guestName) lsSet(NAME_KEY, guestName);
+    var authorName = guestName || '匿名';
+    var c = {
+      id: 'c_' + Date.now().toString(36) + Math.random().toString(36).slice(2,6),
+      ts: Date.now(),
+      authorId: null,
+      authorName: authorName,
+      avatar: null,
+      stars: 0,
+      content: content
+    };
+    var list = lsGet(KEY, []) || [];
+    list.push(c);
+    lsSet(KEY, list);
+    textEl.value = '';
+    refresh();
+    render();
+    toast('已发布 ✓');
+  }
+
+  textEl.addEventListener('input', refresh);
+  btn.addEventListener('click', submit);
+  nameEl.addEventListener('input', function(){ avatarEl.textContent = nameEl.value.trim() ? nameEl.value.trim().slice(0,1) : '·'; });
+
+  refresh();
+  render();
+})();
+</script>
+</body>
+</html>

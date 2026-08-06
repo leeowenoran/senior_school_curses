@@ -1066,7 +1066,10 @@
       pushRecent(sid, vid, idx, p.name);
       var crumb = '<a onclick="navigate(\'home\')">首页</a> / <a onclick="navigate(\'subject\',\'' + esc(sid) + '\')">' + esc(s.name) + '</a> / <a href="' + volUrl(sid, vid) + '">' + esc(v.name) + '</a> / ' + esc(p.name);
 
-      var blocks = (p.content || []).map(renderContentBlock).join('');
+      // 语文课时：在开头补上对应课时的「原文」（来自集中映射 GZ_CHINESE_ORIGINALS）
+      var origObj = (sid === 'chinese' && window.GZ_CHINESE_ORIGINALS && GZ_CHINESE_ORIGINALS[p.id]) ? GZ_CHINESE_ORIGINALS[p.id] : null;
+      var origBlock = origObj ? renderContentBlock({ type: 'original', title: origObj.title, text: origObj.text, src: origObj.src }) : '';
+      var blocks = origBlock + (p.content || []).map(renderContentBlock).join('');
       var exHTML = renderExercises(p, sid, vid, idx);
 
       // 标记已读按钮（看完内容但不做题也能算完成）
@@ -1120,6 +1123,10 @@
       case 'example':   return blockTip('b-example', '例题', b.text || '');
       case 'reading':   return blockTip('b-reading', '阅读', b.text || '');
       case 'poem':      return '<div class="b-poem">' + esc(b.text).replace(/\n/g, '<br>') + '</div>';
+      case 'original':  return '<div class="b-original"><div class="box-label">📜 原文</div>' +
+        (b.title ? '<div class="b-original-title">' + esc(b.title) + '</div>' : '') +
+        '<div class="b-original-text">' + esc(b.text).replace(/\n/g, '<br>') + '</div>' +
+        (b.src ? '<div class="b-original-src">' + esc(b.src) + '</div>' : '') + '</div>';
       default:          return '';
     }
   }
