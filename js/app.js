@@ -1136,6 +1136,9 @@
         var o = b, html = '';
         html += '<div class="b-original"><div class="box-label">📜 原文</div>';
         if (o.title) html += '<div class="b-original-title">' + esc(o.title) + '</div>';
+        if (o.copyright) {
+          html += '<div class="orig-cr-banner">⚠️ 本篇作者仍在著作权保护期内（或系当代作品），此处仅依教材提供<b>节选</b>并附解析，供课堂学习使用；完整原文请购买正版图书或到图书馆借阅。</div>';
+        }
         if (o.segments && o.segments.length) {
           html += '<div class="orig-segs">';
           o.segments.forEach(function (s, i) {
@@ -1150,10 +1153,10 @@
           html += '<div class="b-original-text">' + esc(o.text).replace(/\n/g, '<br>') + '</div>';
         }
         var fullTxt = o.full || (o.segments ? o.segments.map(function (s) { return s.text; }).join('\n\n') : '');
-        if (fullTxt) {
+        if (fullTxt && !o.copyright) {
           html += '<details class="orig-full"><summary class="orig-full-label">📖 完整全文（含全部段落）</summary><div class="b-original-text">' + esc(fullTxt).replace(/\n/g, '<br>') + '</div></details>';
         }
-        if (o.src) html += '<div class="b-original-src">' + esc(o.src) + '</div>';
+        if (o.src) html += '<div class="b-original-src">出处：' + esc(o.src) + '</div>';
         html += '</div>';
         return html;
       }

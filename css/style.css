@@ -2136,6 +2136,14 @@ body.theme-dark .orig-seg-text { color: #e8e0cf; }
 body.theme-dark .orig-seg-note { background: rgba(74,125,224,.14); border-left-color: #6f9bf0; color: #cdd8ec; }
 body.theme-dark .orig-full { background: rgba(255,255,255,.04); border-color: rgba(184,137,63,.35); }
 body.theme-dark .orig-full-label { color: #e3c98f; }
+.orig-cr-banner {
+  margin: 10px 0 2px; padding: 10px 13px; font-size: 13px; line-height: 1.75;
+  color: #8a5a17; background: #fdf3e0; border: 1px solid #eccf9a; border-left: 3px solid #d99a36;
+  border-radius: 0 7px 7px 0;
+}
+.orig-cr-banner b { color: #b9791f; }
+body.theme-dark .orig-cr-banner { color: #e6cfa0; background: rgba(217,154,54,.13); border-color: rgba(217,154,54,.4); border-left-color: #d99a36; }
+body.theme-dark .orig-cr-banner b { color: #f0c878; }
 
 /* 图示 */
 .b-figure { margin: 22px 0; text-align: center; }
