@@ -2037,6 +2037,10 @@ body.theme-dark .sb-divider { background: var(--line); }
   border-left: 5px solid var(--sc, var(--primary)); line-height: 1.4;
 }
 .b-heading:first-child { margin-top: 0; }
+.b-subheading {
+  font-size: 16px; font-weight: 800; margin: 22px 0 10px; padding-left: 10px;
+  border-left: 4px solid var(--sc, var(--primary)); line-height: 1.4; color: #1f2733;
+}
 .b-paragraph { margin: 12px 0; line-height: 1.95; color: #2f3540; }
 .b-paragraph strong, .b-keypoint strong, .b-tip strong, .b-warn strong,
 .b-list strong, .b-example strong, .b-reading strong {
