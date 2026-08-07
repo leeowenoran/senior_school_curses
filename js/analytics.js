@@ -18,7 +18,7 @@
 
   // ===== 1) 自建轻量访客统计（数据存自有 CloudBase）=====
   var CB_API = 'https://shanghai-env1-d3gq2odzh654c9264-1462691854.ap-shanghai.app.tcloudbase.com/api';
-  var VISIT_DISABLED = true;  // 已切到百度统计，关闭自建写入（避免重复统计）
+  var VISIT_DISABLED = false; // 自建统计为主：访客数据写入你自己的 CloudBase（无 PV 门槛，随时可看）
 
   function getVid() {
     try {
