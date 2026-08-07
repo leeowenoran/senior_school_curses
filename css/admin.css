@@ -352,6 +352,15 @@ table.tbl td.mono {
 
 .muted { color: var(--text-3); font-size: 12.5px; }
 .seg.small button { padding: 5px 12px; font-size: 12.5px; }
+
+/* 百度统计指向页（访客流量标签改指百度后台） */
+.baidu-box { max-width: 560px; margin: 10px auto; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 30px 28px; text-align: center; }
+.baidu-ic { font-size: 40px; margin-bottom: 8px; }
+.baidu-box h3 { font-size: 18px; color: var(--text); margin-bottom: 10px; }
+.baidu-lead { font-size: 13.5px; color: var(--text-2); line-height: 1.7; margin: 0 0 14px; }
+.baidu-tip { margin-top: 16px; line-height: 1.6; }
+.btn-primary { display: inline-block; margin-top: 6px; padding: 10px 22px; background: var(--accent); color: #fff; border-radius: var(--radius); font-size: 14px; font-weight: 600; text-decoration: none; transition: opacity .15s; }
+.btn-primary:hover { opacity: .9; }
 @media (max-width: 760px) {
   .traf-cols { grid-template-columns: 1fr; }
 }

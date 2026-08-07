@@ -18,7 +18,7 @@
 
   // ===== 1) 自建轻量访客统计（数据存自有 CloudBase）=====
   var CB_API = 'https://shanghai-env1-d3gq2odzh654c9264-1462691854.ap-shanghai.app.tcloudbase.com/api';
-  var VISIT_DISABLED = false; // 设为 true 可临时关闭自建统计
+  var VISIT_DISABLED = true;  // 已切到百度统计，关闭自建写入（避免重复统计）
 
   function getVid() {
     try {
@@ -67,9 +67,9 @@
   sendVisit();                                  // 首屏
   window.addEventListener('hashchange', sendVisit); // SPA 路由切换
 
-  // ===== 2) 百度统计（可选·已停用；保留配置位以便日后启用）=====
-  var BAIDU_ID = '';   // 留空即停用；想用百度再填回站点 ID
-  var EMBED_URL = '';  // 百度「报告分享」嵌入链接（可选）
+  // ===== 2) 百度统计（主用 · 数据在百度统计后台查看）=====
+  var BAIDU_ID = '73dd0bb5171a275b2a5a0c4f92503d85'; // 你的百度统计站点 ID
+  var EMBED_URL = '';  // 百度「报告分享」嵌入链接（可选，暂不嵌后台）
   window.GZ_ANALYTICS = { baiduId: BAIDU_ID, embedUrl: EMBED_URL };
 
   if (BAIDU_ID) {

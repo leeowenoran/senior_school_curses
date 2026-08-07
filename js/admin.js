@@ -474,24 +474,17 @@
 
   function renderTraffic() {
     destroyTrafficCharts();
-    var seg = [7, 30, 90].map(function (n) {
-      return '<button data-td="' + n + '" class="' + (n === trafficDays ? 'on' : '') + '">' + n + ' 天</button>';
-    }).join('');
-    var head = '<span class="hint">这里显示有多少人来看你的网站 · 数据只存在你自己云库里</span>' +
-      '<div class="spacer"></div>' +
-      '<div class="seg small" id="trafSeg">' + seg + '</div>';
-    $('body').innerHTML =
-      '<div class="cards" id="trafCards"></div>' +
-      panel('网站访客情况', head, '<div id="trafBody"><div class="empty"><div class="spin"></div>加载访客统计…</div></div>');
-    Array.prototype.forEach.call(document.querySelectorAll('#trafSeg button'), function (b) {
-      b.onclick = function () {
-        trafficDays = parseInt(b.getAttribute('data-td'), 10) || 30;
-        Array.prototype.forEach.call(document.querySelectorAll('#trafSeg button'), function (x) { x.classList.remove('on'); });
-        b.classList.add('on');
-        loadTraffic();
-      };
-    });
-    loadTraffic();
+    var head = '<span class="hint">本站访客统计已接入百度统计 · 数据在百度后台，不在本站</span>';
+    var inner =
+      '<div class="baidu-box">' +
+        '<div class="baidu-ic">📊</div>' +
+        '<h3>访客数据请在「百度统计」后台查看</h3>' +
+        '<p class="baidu-lead">专业报表（访问趋势、来源、设备、地域、实时访客、热门页面等）都在百度统计里看，比本站后台更全更漂亮。</p>' +
+        '<p class="muted">你的站点 ID：73dd0bb5171a275b2a5a0c4f92503d85</p>' +
+        '<a class="btn-primary" href="https://tongji.baidu.com/" target="_blank" rel="noopener">打开百度统计后台 ↗</a>' +
+        '<p class="muted baidu-tip">提示：百度统计对二级域名（tcloudbaseapp.com）可能需要在百度后台做「域名验证」后，才显示完整报告。</p>' +
+      '</div>';
+    $('body').innerHTML = panel('网站访客情况', head, inner);
   }
 
   function loadTraffic() {
