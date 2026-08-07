@@ -16,6 +16,7 @@
     days: 30,
     data: null,
     demo: false,
+    view: 'learning',   // 'learning' = 学习行为；'traffic' = 访客流量（统一看板的两个标签页）
     sortKey: 'lessons',
     sortDir: -1,
     keyword: ''
@@ -444,6 +445,68 @@
       inner + '</div>';
   }
 
+  /* ---------- 访客流量看板（统一看板的第二个标签页） ---------- */
+  function setView(v) {
+    state.view = v;
+    highlightView(v);
+    if (v === 'traffic') { renderTraffic(); return; }
+    // 切回学习行为：已有数据直接重渲染，否则按当前登录态重新拉取
+    if (state.data) { renderAll(); loadContent(); }
+    else if (localStorage.getItem(TOKEN_KEY)) loadOverview();
+    else enterDemo(false);
+  }
+  function highlightView(v) {
+    state.view = (typeof v === 'string') ? v : state.view;
+    Array.prototype.forEach.call(document.querySelectorAll('#viewSeg button'), function (x) {
+      x.classList.toggle('on', x.getAttribute('data-view') === state.view);
+    });
+  }
+
+  function renderTraffic() {
+    var cfg = window.GZ_ANALYTICS || {};
+    var id = cfg.baiduId || '';
+    var embed = cfg.embedUrl || '';
+
+    var statusCard = id
+      ? card('c1', '🔧 百度统计 ID', '已配置', '', '站点 ID：' + esc(id.slice(0, 6)) + '…（详见 js/analytics.js）')
+      : card('c1', '🔧 百度统计 ID', '未配置', '', '编辑 js/analytics.js 填入 BAIDU_ID 即开始统计');
+
+    var metrics = [
+      '页面浏览量 PV / 独立访客 UV',
+      '实时在线访客',
+      '来源网站与搜索引擎（微信/搜索/直链）',
+      '地域分布（省 / 市）',
+      '设备 / 浏览器 / 网络运营商',
+      '受访页面与离开页 Top（定位热门科目）',
+      '页面点击热力图',
+      '新老访客与访问时长'
+    ];
+    var metricHtml = '<ul class="traf-metrics">' +
+      metrics.map(function (m) { return '<li>' + esc(m) + '</li>'; }).join('') + '</ul>';
+
+    var embedHtml = embed
+      ? '<div class="traf-embed"><iframe src="' + esc(embed) + '" width="100%" height="640" ' +
+        'frameborder="0" allowfullscreen loading="lazy"></iframe></div>'
+      : '<div class="empty"><span class="big">🖼️</span>' +
+        '想在本页<b>内联看板</b>？去百度统计「报告分享」生成【嵌入链接】，填到 ' +
+        '<code>js/analytics.js</code> 的 <code>EMBED_URL</code> 即可（注意：要填「分享嵌入链接」，' +
+        '不是登录页地址，否则会被浏览器拦截）。</div>';
+
+    var head = '<span class="hint">数据由第三方百度统计提供 · 与学习行为并排即「统一看板」</span>' +
+      '<div class="spacer"></div>' +
+      '<a class="btn sm" href="https://tongji.baidu.com/" target="_blank" rel="noopener">在百度统计查看完整报表 ↗</a>';
+
+    $('body').innerHTML =
+      '<div class="cards">' + statusCard +
+        card('c2', '🌐 数据来源', '百度统计', '', '第三方 · 免费 · 国内稳定') +
+      '</div>' +
+      panel('访客流量看板', head,
+        '<div class="traf-cols">' +
+          '<div class="traf-col"><h3>可统计的指标</h3>' + metricHtml + '</div>' +
+          '<div class="traf-col"><h3>内联报表</h3>' + embedHtml + '</div>' +
+        '</div>');
+  }
+
   function renderAll() {
     renderBanners();
     var contentInner = (state.data && state.data.content)
@@ -792,6 +855,7 @@
     $('gDemo').onclick = function () { enterDemo(false); };
 
     $('btnReload').onclick = function () {
+      highlightView('learning');
       if (state.demo && !localStorage.getItem(TOKEN_KEY)) { enterDemo(false); return; }
       loadOverview();
     };
@@ -804,6 +868,7 @@
     };
     Array.prototype.forEach.call(document.querySelectorAll('#rangeSeg button'), function (b) {
       b.onclick = function () {
+        highlightView('learning');
         Array.prototype.forEach.call(document.querySelectorAll('#rangeSeg button'), function (x) {
           x.classList.remove('on');
         });
@@ -812,6 +877,10 @@
         if (state.demo) { state.data = buildDemo(state.days); renderAll(); }
         else loadOverview();
       };
+    });
+
+    Array.prototype.forEach.call(document.querySelectorAll('#viewSeg button'), function (b) {
+      b.onclick = function () { setView(b.getAttribute('data-view')); };
     });
 
     if (localStorage.getItem(TOKEN_KEY)) {

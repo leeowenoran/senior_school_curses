@@ -40,6 +40,10 @@
           <small id="whoami">—</small>
         </div>
         <div class="spacer"></div>
+        <div class="seg" id="viewSeg">
+          <button data-view="learning" class="on">📊 学习行为</button>
+          <button data-view="traffic">🌐 访客流量</button>
+        </div>
         <div class="seg" id="rangeSeg">
           <button data-days="7">7 天</button>
           <button data-days="30" class="on">30 天</button>
@@ -74,6 +78,8 @@
   <!-- 学科名称 / 配色的权威来源；data-meta 提供全站课时总量用于计算完成率 -->
   <script src="js/data-gz.js"></script>
   <script src="js/data-meta.js"></script>
+  <!-- 访问统计配置（百度统计 ID / 内联报表链接）的唯一来源，后台流量面板读取它 -->
+  <script src="js/analytics.js?v=20260807l"></script>
   <script src="js/admin.js"></script>
 </body>
 </html>

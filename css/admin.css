@@ -306,3 +306,23 @@ table.tbl td.mono {
 .bad.wrong { background: #fde8e8; color: var(--danger); }
 .bad.ok { background: #e6f6ec; color: var(--ok); }
 
+/* ============ 访客流量看板（与学习行为并排的统一看板） ============ */
+.traf-cols { display: grid; grid-template-columns: 280px 1fr; gap: 20px; align-items: start; }
+.traf-col h3 { font-size: 13.5px; color: var(--text-2); margin-bottom: 10px; }
+.traf-metrics { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+.traf-metrics li {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 8px 11px; font-size: 13px; color: var(--text); position: relative; padding-left: 24px;
+}
+.traf-metrics li::before {
+  content: "✓"; position: absolute; left: 9px; top: 8px; color: var(--ok); font-weight: 700;
+}
+.traf-embed {
+  background: #0f1729; border: 1px solid var(--line); border-radius: var(--radius-lg);
+  overflow: hidden; min-height: 200px;
+}
+.traf-embed iframe { border: 0; display: block; width: 100%; min-height: 620px; background: #fff; }
+@media (max-width: 760px) {
+  .traf-cols { grid-template-columns: 1fr; }
+}
+
