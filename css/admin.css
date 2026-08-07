@@ -130,6 +130,7 @@ body {
 .card .v small { font-size: 14px; font-weight: 500; color: var(--text-3); margin-left: 2px; }
 .card .s { font-size: 12px; color: var(--text-3); margin-top: 2px; }
 .card .s.up { color: var(--ok); }
+.card .s.down { color: var(--danger); }
 
 /* ---------- 图表 ---------- */
 .chart { width: 100%; display: block; overflow: visible; }
@@ -329,8 +330,12 @@ table.tbl td.mono {
 /* 自建访客统计 · 简洁版（大数字卡片 + 一张趋势图 + 文字排行榜） */
 .card.t-today-pv::after { background: var(--accent); }
 .card.t-today-uv::after { background: var(--ok); }
-.card.t-pv::after { background: var(--warn); }
-.card.t-uv::after { background: #8b5cf6; }
+.card.t-pv::after { background: var(--accent); }
+.card.t-uv::after { background: var(--ok); }
+.card.t-ip::after { background: #0ea5e9; }
+.card.t-cum::after { background: var(--warn); }
+.card.t-stay::after { background: #8b5cf6; }
+.card.t-new::after { background: #ec4899; }
 
 .traf-sec { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 18px 20px; margin-bottom: 18px; }
 .traf-h { font-size: 15px; color: var(--text); margin-bottom: 4px; font-weight: 600; }

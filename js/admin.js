@@ -515,15 +515,31 @@
   }
 
   function friendlyPath(p) {
-    p = (p || '').replace(/^#\/?/, '');
-    if (!p) return '首页';
+    p = (p || '').replace(/^#\/?/, '').replace(/^[\/]+/, '');
+    if (!p || p === 'index.html' || p === 'index') return '首页';
     var map = {
       'bank': '题库', 'video': '视频课', 'course': '课程', 'subject': '学科',
       'lesson': '课时', 'profile': '我的', 'login': '登录页', 'guide': '使用指南',
       'about': '关于', 'rank': '排行榜', 'wrong': '错题本', 'fav': '收藏夹', 'exam': '试卷'
     };
-    var seg = p.split('/')[0];
+    var seg = p.split('/')[0].split('?')[0];
     return map[seg] || seg;
+  }
+  function fmtDur(sec) {
+    sec = sec || 0;
+    if (sec < 60) return sec + ' 秒';
+    var m = Math.floor(sec / 60), s = sec % 60;
+    if (m < 60) return m + ' 分 ' + s + ' 秒';
+    var h = Math.floor(m / 60);
+    return h + ' 时 ' + (m % 60) + ' 分';
+  }
+  function delta(a, b) {
+    a = a || 0; b = b || 0;
+    if (!b) return { cls: '', txt: '昨日无数据' };
+    var d = Math.round((a - b) * 1000 / b) / 10;
+    if (d > 0) return { cls: 'up', txt: '较昨日 +' + d + '%' };
+    if (d < 0) return { cls: 'down', txt: '较昨日 ' + d + '%' };
+    return { cls: '', txt: '与昨日持平' };
   }
 
   function paintRank(elId, arr, unit) {
@@ -543,19 +559,26 @@
 
   function paintTraffic(s) {
     destroyTrafficCharts();
-    var pv = s.pv || 0;
-    var uv = s.uv || 0;
-    var trend = s.trend || [];
     var rangeDays = s.rangeDays || 30;
-    var today = trend.length ? trend[trend.length - 1] : { pv: 0, uv: 0 };
+    var t = s.today || { pv: 0, uv: 0, ip: 0 };
+    var y = s.yesterday || { pv: 0, uv: 0, ip: 0 };
+    var tot = s.total || { pv: 0, uv: 0, ip: 0 };
+    var trend = s.trend || [];
+    var hourly = s.hourly || [];
+    var realtime = s.realtime || [];
+    var nvo = s.newVsOld || { new: 0, old: 0 };
+    var newPct = (nvo.new + nvo.old) ? Math.round(nvo.new * 1000 / (nvo.new + nvo.old)) / 10 : 0;
 
+    var dPv = delta(t.pv, y.pv), dUv = delta(t.uv, y.uv), dIp = delta(t.ip, y.ip);
     $('trafCards').innerHTML =
-      card('t-today-pv', '今天被打开几次', String(today.pv), '', '网页今天被打开的次数') +
-      card('t-today-uv', '今天有几个人看', String(today.uv), '', '今天不同的访客人数') +
-      card('t-pv', '近' + rangeDays + '天总打开', String(pv), '', '累计被打开的次数') +
-      card('t-uv', '近' + rangeDays + '天总人数', String(uv), '', '累计不同访客（已去重）');
+      card('t-pv', '👁 今日浏览量(PV)', String(t.pv), '', dPv.txt, dPv.cls) +
+      card('t-uv', '🧑 今日访客(UV)', String(t.uv), '', dUv.txt, dUv.cls) +
+      card('t-ip', '🌍 今日独立IP', String(t.ip), '', dIp.txt, dIp.cls) +
+      card('t-cum', '📊 累计浏览量', String(tot.pv), '', '近 ' + rangeDays + ' 天 · ' + tot.uv + ' 人') +
+      card('t-stay', '⏱ 平均停留', fmtDur(s.avgDuration), '', '跳出率 ' + (s.bounceRate || 0) + '%') +
+      card('t-new', '🆕 新访客占比', newPct + '%', '', '新 ' + nvo.new + ' · 老 ' + nvo.old);
 
-    if (!pv) {
+    if (!tot.pv) {
       $('trafBody').innerHTML = '<div class="empty">近 ' + rangeDays +
         ' 天还没有访客记录。让用户访问你的网站，几分钟后这里就会出数字了。</div>';
       return;
@@ -565,40 +588,90 @@
       return;
     }
 
+    function rtRows() {
+      if (!realtime.length) return '<p class="muted">最近还没有访客进来</p>';
+      return '<div class="tbl-wrap"><table class="tbl rt">' +
+        '<thead><tr><th>时间</th><th>地域</th><th>来源</th><th>看的页面</th><th>设备</th><th>浏览器</th></tr></thead><tbody>' +
+        realtime.map(function (r) {
+          return '<tr>' +
+            '<td class="mono">' + (r.ts ? new Date(r.ts).toLocaleString('zh-CN', { hour12: false }) : '—') + '</td>' +
+            '<td>' + esc(r.region || '未知') + '</td>' +
+            '<td>' + esc(r.source || '直接访问') + '</td>' +
+            '<td>' + esc(friendlyPath(r.path)) + '</td>' +
+            '<td>' + esc(r.device || '未知') + '</td>' +
+            '<td>' + esc(r.browser || '未知') + '</td>' +
+          '</tr>';
+        }).join('') + '</tbody></table></div>';
+    }
+    function rankPanel(title, cap, id) {
+      return panel(title, '<span class="hint">' + (cap || '') + '</span>', '<div id="' + id + '" class="rank"></div>');
+    }
+
     $('trafBody').innerHTML =
-      '<div class="traf-sec">' +
-        '<h3 class="traf-h">📈 最近 ' + rangeDays + ' 天，每天来看的人数</h3>' +
-        '<p class="traf-cap">折线往上 = 最近看的人变多了；往下 = 变少了。</p>' +
-        '<div class="cv"><canvas id="trafTrend"></canvas></div>' +
+      panel('流量趋势', '<span class="hint">近 ' + rangeDays + ' 天每天的变化</span>',
+        '<p class="traf-cap">折线往上 = 最近看的人变多了；往下 = 变少了。三条线分别是浏览量、访客数、独立IP。</p>' +
+        '<div class="cv"><canvas id="trafTrend"></canvas></div>') +
+      '<div class="traf-cols">' +
+        panel('时段分布', '<span class="hint">按访问发生的钟点（北京时间）</span>',
+          '<p class="traf-cap">哪个钟点来看的人最多，一眼就能看出来。</p>' +
+          '<div class="cv"><canvas id="trafHourly"></canvas></div>') +
+        panel('实时访客', '<span class="hint">最近进来的 ' + realtime.length + ' 个人</span>',
+          '<p class="traf-cap">谁、在哪儿、从哪来、看的哪个页面，实时滚动。</p>' + rtRows()) +
       '</div>' +
       '<div class="traf-cols">' +
-        '<div class="traf-col">' +
-          '<h3 class="traf-h">📄 大家最爱看的页面</h3>' +
-          '<p class="traf-cap">按被打开次数从高到低排。</p>' +
-          '<div id="trafPages" class="rank"></div>' +
-        '</div>' +
-        '<div class="traf-col">' +
-          '<h3 class="traf-h">📱 大家用什么设备看</h3>' +
-          '<p class="traf-cap">手机 / 电脑 / 平板各占多少。</p>' +
-          '<div id="trafDevices" class="rank"></div>' +
-        '</div>' +
-      '</div>';
+        rankPanel('来源分析', '大家从哪儿点进来的', 'trafSources') +
+        rankPanel('地域分布', '访客都在哪些省份', 'trafRegions') +
+      '</div>' +
+      '<div class="traf-cols">' +
+        rankPanel('受访页面 Top', '被打开最多的页面', 'trafPages') +
+        rankPanel('入口页面 Top', '大家第一次进来看的页面', 'trafEntry') +
+      '</div>' +
+      '<div class="traf-cols">' +
+        rankPanel('设备', '手机 / 电脑 / 平板', 'trafDevices') +
+        rankPanel('浏览器', '大家用哪种浏览器', 'trafBrowsers') +
+      '</div>' +
+      '<div class="traf-cols">' +
+        rankPanel('操作系统', '手机 / 电脑用的系统', 'trafOs') +
+        rankPanel('屏幕分辨率', '大家屏幕多大', 'trafRes') +
+      '</div>' +
+      rankPanel('新老访客', '第一次来的 vs 回来过的', 'trafNewOld');
 
     trafficCharts.trend = new Chart(document.getElementById('trafTrend'), {
       type: 'line',
       data: {
         labels: trend.map(function (x) { return (x.day || '').slice(5); }),
         datasets: [
-          { label: '每天来看的人数', data: trend.map(function (x) { return x.uv; }), borderColor: '#10b981', backgroundColor: 'rgba(16,185,129,.12)', fill: true, tension: .3 },
-          { label: '每天打开的次数', data: trend.map(function (x) { return x.pv; }), borderColor: '#3b82f6', backgroundColor: 'rgba(59,130,246,.08)', fill: true, tension: .3 }
+          { label: '浏览量(PV)', data: trend.map(function (x) { return x.pv; }), borderColor: '#3b82f6', backgroundColor: 'rgba(59,130,246,.10)', fill: true, tension: .3 },
+          { label: '访客(UV)', data: trend.map(function (x) { return x.uv; }), borderColor: '#10b981', backgroundColor: 'rgba(16,185,129,.10)', fill: true, tension: .3 },
+          { label: '独立IP', data: trend.map(function (x) { return x.ip; }), borderColor: '#9c56d4', backgroundColor: 'rgba(156,86,212,.10)', fill: true, tension: .3 }
         ]
       },
       options: { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
         plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } }
     });
 
+    trafficCharts.hourly = new Chart(document.getElementById('trafHourly'), {
+      type: 'bar',
+      data: {
+        labels: hourly.map(function (x) { return x.hour + '时'; }),
+        datasets: [{ label: '访问次数', data: hourly.map(function (x) { return x.pv; }), backgroundColor: 'rgba(74,125,224,.75)', borderRadius: 4 }]
+      },
+      options: { responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } }
+    });
+
+    paintRank('trafSources', s.sources || [], '次');
+    paintRank('trafRegions', s.regions || [], '次');
     paintRank('trafPages', (s.topPages || []).map(function (x) { return { name: friendlyPath(x.name), value: x.value }; }), '次');
+    paintRank('trafEntry', (s.entryPages || []).map(function (x) { return { name: friendlyPath(x.name), value: x.value }; }), '次');
     paintRank('trafDevices', s.devices || [], '次');
+    paintRank('trafBrowsers', s.browsers || [], '次');
+    paintRank('trafOs', s.os || [], '次');
+    paintRank('trafRes', s.resolutions || [], '次');
+    paintRank('trafNewOld', [
+      { name: '🆕 新访客', value: nvo.new },
+      { name: '👴 老访客', value: nvo.old }
+    ], '人');
   }
 
   function renderAll() {

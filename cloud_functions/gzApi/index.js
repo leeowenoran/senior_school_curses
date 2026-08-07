@@ -17,8 +17,10 @@ const app = cloudbase.init({});
 const db = app.database();
 const AUTH = db.collection('users_auth');
 const DATA = db.collection('users_data');
-// 自建轻量访客统计：匿名访客的页面浏览事件（path/referrer/ua/vid/ts/day）
+// 自建访客统计：匿名访客的页面浏览事件（path/referrer/ua/vid/sid/entry/isNew/screen/lang/ip/ts/day）
 const VISIT = db.collection('visit_logs');
+// IP 归属地缓存：_id = ip，{ region, ts }。避免每次统计都重复请求外部归属地接口。
+const IPGEO = db.collection('ip_geo');
 
 /**
  * 服务端签名密钥。
@@ -571,21 +573,30 @@ function apiResponse(result, isHttp) {
 
 /* ===================== 自建轻量访客统计 ===================== */
 
-// 解析 User-Agent：返回 { device, browser }
+// 解析 User-Agent：返回 { device, browser, os }
 function parseUA(ua) {
   ua = (ua || '').toLowerCase();
   var device = '桌面端';
-  if (/mobile|android|iphone|ipod|blackberry|windows phone|webos|harmony|hongmeng/.test(ua)) device = '手机';
-  else if (/ipad|tablet|kindle|playbook|silk/.test(ua)) device = '平板';
+  if (/ipad|tablet|kindle|playbook|silk/.test(ua)) device = '平板';
+  else if (/mobile|android|iphone|ipod|blackberry|windows phone|webos|harmony|hongmeng/.test(ua)) device = '手机';
   var browser = '其他';
-  if (/edg\//.test(ua)) browser = 'Edge';
+  if (/micromessenger/.test(ua)) browser = '微信内置';
+  else if (/qqbrowser|\bqq\//.test(ua)) browser = 'QQ浏览器';
+  else if (/ucbrowser|ucweb/.test(ua)) browser = 'UC浏览器';
+  else if (/edg\//.test(ua)) browser = 'Edge';
   else if (/opr\/|opera/.test(ua)) browser = 'Opera';
-  else if (/chrome\/|crios\/|chromium/.test(ua)) browser = 'Chrome';
   else if (/firefox\/|fxios/.test(ua)) browser = 'Firefox';
+  else if (/chrome\/|crios\/|chromium/.test(ua)) browser = 'Chrome';
   else if (/safari\//.test(ua) && !/chrome\//.test(ua)) browser = 'Safari';
-  else if (/micromessenger/.test(ua)) browser = '微信内置';
   else if (/msie|trident/.test(ua)) browser = 'IE';
-  return { device: device, browser: browser };
+  var os = '其他';
+  if (/windows nt|windows phone/.test(ua)) os = 'Windows';
+  else if (/iphone|ipad|ipod/.test(ua)) os = 'iOS';           // 注意：需在 mac 之前判断（iOS UA 含 "like Mac OS X"）
+  else if (/harmony|hongmeng|openharmony/.test(ua)) os = 'HarmonyOS';
+  else if (/android/.test(ua)) os = 'Android';                // 注意：需在 linux 之前判断（安卓 UA 含 "Linux"）
+  else if (/mac os x|macintosh/.test(ua)) os = 'macOS';
+  else if (/linux/.test(ua)) os = 'Linux';
+  return { device: device, browser: browser, os: os };
 }
 
 function hostOf(url) {
@@ -596,14 +607,95 @@ function hostOf(url) {
   } catch (e) { return ''; }
 }
 
-// 记录一次页面访问（开放接口，无需登录/管理员）
-async function handleLogVisit(payload) {
+// 把来源域名归类为「直接访问 / 搜索引擎 / 社交 / 其它站点」的可读名称（对标百度统计来源分析）
+function classifySource(host, siteHost) {
+  if (!host || host === siteHost) return '直接访问';
+  var h = String(host).toLowerCase();
+  var map = [
+    ['baidu.', '百度搜索'], ['google.', '谷歌搜索'], ['bing.', '必应搜索'],
+    ['sogou.', '搜狗搜索'], ['so.com', '360搜索'], ['haosou', '360搜索'], ['sm.cn', '神马搜索'],
+    ['yandex', 'Yandex'], ['duckduckgo', 'DuckDuckGo'],
+    ['micromessenger', '微信'], ['weixin', '微信'], ['mp.weixin', '微信公众号'],
+    ['qq.com', 'QQ/腾讯'], ['weibo', '微博'], ['zhihu', '知乎'],
+    ['douyin', '抖音'], ['xiaohongshu', '小红书'], ['bilibili', '哔哩哔哩'], ['toutiao', '今日头条']
+  ];
+  for (var i = 0; i < map.length; i++) { if (h.indexOf(map[i][0]) >= 0) return map[i][1]; }
+  return host;
+}
+
+// 从 HTTP 访问事件里提取真实客户端 IP
+function getClientIp(event) {
+  try {
+    var hd = (event && event.headers) || {};
+    var xff = hd['x-forwarded-for'] || hd['X-Forwarded-For'] || hd['x-real-ip'] || hd['X-Real-IP'] || '';
+    if (xff) return String(xff).split(',')[0].trim();
+    if (event && event.requestContext && event.requestContext.sourceIp) return String(event.requestContext.sourceIp);
+  } catch (e) { /* 忽略 */ }
+  return '';
+}
+
+// 单个 IP 的归属地查询（外部接口，1.5s 超时保护；失败返回空串，绝不抛错）
+async function geoLookup(ip) {
+  if (!ip) return '';
+  if (/^(10\.|127\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.|::1$|fe80|fc|fd)/i.test(ip)) return '内网/本地';
+  if (typeof fetch !== 'function') return '';
+  var ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+  var timer = ctrl ? setTimeout(function () { try { ctrl.abort(); } catch (e) { /* 忽略 */ } }, 1500) : null;
+  try {
+    var url = 'https://opendata.baidu.com/api.php?query=' + encodeURIComponent(ip) + '&co=&resource_id=6006&oe=utf8';
+    var r = await fetch(url, ctrl ? { signal: ctrl.signal } : {});
+    var j = await r.json();
+    if (timer) { clearTimeout(timer); timer = null; }
+    if (j && String(j.status) === '0' && j.data && j.data[0] && j.data[0].location) {
+      var loc = String(j.data[0].location).split(' ')[0];   // "江苏省苏州市 电信" -> "江苏省苏州市"
+      if (loc && !/CZ88|NET|保留|未知/i.test(loc)) return loc;
+    }
+    return '';
+  } catch (e) {
+    if (timer) { clearTimeout(timer); }
+    return '';
+  }
+}
+
+// 批量把 IP 解析为归属地：先读 ip_geo 缓存，未命中的每次最多外查 15 个并写回缓存
+async function resolveRegions(ips) {
+  var out = {};
+  if (!ips || !ips.length) return out;
+  var cache = {};
+  try {
+    var cres = await IPGEO.limit(1000).get();
+    ((cres && cres.data) || []).forEach(function (d) { if (d && d._id) cache[d._id] = d.region; });
+  } catch (e) {
+    try { await db.createCollection('ip_geo'); } catch (e2) { /* 已存在则忽略 */ }
+  }
+  var miss = ips.filter(function (ip) { return !(ip in cache); });
+  var toLookup = miss.slice(0, 15);
+  var looked = await Promise.all(toLookup.map(function (ip) { return geoLookup(ip); }));
+  for (var i = 0; i < toLookup.length; i++) {
+    var reg = looked[i];
+    if (reg) {
+      cache[toLookup[i]] = reg;
+      try { await IPGEO.doc(toLookup[i]).set({ _id: toLookup[i], region: reg, ts: Date.now() }); } catch (e) { /* 忽略 */ }
+    }
+  }
+  ips.forEach(function (ip) { out[ip] = cache[ip] || '未知'; });
+  return out;
+}
+
+// 记录一次页面访问（开放接口，无需登录/管理员）。clientIp 由 main 从请求头注入。
+async function handleLogVisit(payload, clientIp) {
   var p = payload || {};
   var rec = {
     path: String(p.path || '').slice(0, 400) || '(unknown)',
     referrer: String(p.referrer || '').slice(0, 500),
     ua: String(p.ua || '').slice(0, 500),
     vid: String(p.vid || '').slice(0, 64),
+    sid: String(p.sid || '').slice(0, 64),
+    entry: p.entry ? 1 : 0,
+    isNew: p.isNew ? 1 : 0,
+    screen: String(p.screen || '').slice(0, 20),
+    lang: String(p.lang || '').slice(0, 20),
+    ip: String(clientIp || '').slice(0, 64),
     ts: (typeof p.ts === 'number' && p.ts > 0) ? p.ts : Date.now(),
     day: String(p.day || '').slice(0, 12)
   };
@@ -620,7 +712,7 @@ async function handleLogVisit(payload) {
   }
 }
 
-// 聚合访客统计（仅管理员）
+// 聚合访客统计（仅管理员）——输出对标百度统计的多维报表
 async function handleVisitStats(payload) {
   var admin = requireAdmin(payload && payload.token);
   if (!admin) return { ok: false, msg: '无权限：需要管理员身份' };
@@ -630,9 +722,10 @@ async function handleVisitStats(payload) {
   var end = Date.now();
   var start = end - days * 86400000;
 
+  // 拉取范围内记录（按 ts 倒序分页，遇到更早的记录即停）
   var recs = [];
   var skip = 0; var PAGE = 1000; var guard = 0;
-  while (guard < 80) {
+  while (guard < 120) {
     var res = await VISIT.orderBy('ts', 'desc').skip(skip).limit(PAGE).get();
     var data = (res && res.data) || [];
     var hitOlder = false;
@@ -645,41 +738,112 @@ async function handleVisitStats(payload) {
     skip += PAGE; guard++;
   }
 
-  var pv = recs.length;
-  var uvSet = {};
-  var daily = {};
-  var pageCnt = {};
-  var refCnt = {};
-  var devCnt = {};
-  var brCnt = {};
   var SITE_HOST = hostOf('https://shanghai-env1-d3gq2odzh654c9264-1462691854.tcloudbaseapp.com/');
+  function recDay(r) {
+    return (r.day && /^\d{4}-\d{2}-\d{2}/.test(r.day)) ? r.day.slice(0, 10) : dayKey(r.ts || end);
+  }
+  var todayKey = dayKey(end);
+  var yestKey = dayKey(end - 86400000);
+
+  var daily = {};                 // day -> { pv, uv:{}, ip:{} }
+  var hourCnt = []; for (var hh = 0; hh < 24; hh++) hourCnt.push(0);
+  var pageCnt = {}, entryCnt = {}, refCnt = {}, devCnt = {}, brCnt = {}, osCnt = {}, resCnt = {};
+  var uvSet = {}, ipSet = {}, allVids = {}, newVids = {}, ipCount = {};
+  var sessions = {};              // sid -> { min, max, count }
 
   recs.forEach(function (r) {
-    if (r.vid) uvSet[r.vid] = 1;
-    var day = (r.day && /^\d{4}-\d{2}-\d{2}/.test(r.day)) ? r.day.slice(0, 10) : new Date((r.ts || end) - 0).toISOString().slice(0, 10);
-    if (!daily[day]) daily[day] = { pv: 0, uv: {} };
+    var day = recDay(r);
+    if (!daily[day]) daily[day] = { pv: 0, uv: {}, ip: {} };
     daily[day].pv++;
-    if (r.vid) daily[day].uv[r.vid] = 1;
-    var pg = (r.path || '(unknown)');
+    if (r.vid) { daily[day].uv[r.vid] = 1; uvSet[r.vid] = 1; allVids[r.vid] = 1; if (r.isNew) newVids[r.vid] = 1; }
+    var ip = r.ip || '';
+    if (ip) { daily[day].ip[ip] = 1; ipSet[ip] = 1; ipCount[ip] = (ipCount[ip] || 0) + 1; }
+    // 时段（东八区）
+    hourCnt[new Date((r.ts || end) + 8 * 3600 * 1000).getUTCHours()]++;
+    // 页面
+    var pg = r.path || '(unknown)';
     pageCnt[pg] = (pageCnt[pg] || 0) + 1;
-    var h = hostOf(r.referrer);
-    var ref = h && h !== SITE_HOST ? h : '直接访问';
-    refCnt[ref] = (refCnt[ref] || 0) + 1;
+    // UA
     var ua = parseUA(r.ua);
     devCnt[ua.device] = (devCnt[ua.device] || 0) + 1;
     brCnt[ua.browser] = (brCnt[ua.browser] || 0) + 1;
+    osCnt[ua.os] = (osCnt[ua.os] || 0) + 1;
+    if (r.screen) resCnt[r.screen] = (resCnt[r.screen] || 0) + 1;
+    // 会话（无 sid 的历史记录按 vid+day 兜底）
+    var sid = r.sid || ('_' + (r.vid || 'x') + '_' + day);
+    var t = (typeof r.ts === 'number') ? r.ts : end;
+    if (!sessions[sid]) sessions[sid] = { min: t, max: t, count: 0 };
+    sessions[sid].count++;
+    if (t < sessions[sid].min) sessions[sid].min = t;
+    if (t > sessions[sid].max) sessions[sid].max = t;
+    // 入口页 & 来源（仅统计入口跳）
+    if (r.entry) {
+      entryCnt[pg] = (entryCnt[pg] || 0) + 1;
+      refCnt[classifySource(hostOf(r.referrer), SITE_HOST)] = (refCnt[classifySource(hostOf(r.referrer), SITE_HOST)] || 0) + 1;
+    }
   });
 
-  var uv = Object.keys(uvSet).length;
+  // 若全是老数据（没有入口跳），退化为按全部记录统计来源/入口，避免看板空白
+  if (!Object.keys(entryCnt).length) {
+    recs.forEach(function (r) {
+      var pg = r.path || '(unknown)';
+      entryCnt[pg] = (entryCnt[pg] || 0) + 1;
+      refCnt[classifySource(hostOf(r.referrer), SITE_HOST)] = (refCnt[classifySource(hostOf(r.referrer), SITE_HOST)] || 0) + 1;
+    });
+  }
 
+  // IP -> 归属地
+  var ipGeo = await resolveRegions(Object.keys(ipCount));
+  var regionCnt = {};
+  Object.keys(ipCount).forEach(function (ip) {
+    var reg = ipGeo[ip] || '未知';
+    regionCnt[reg] = (regionCnt[reg] || 0) + ipCount[ip];
+  });
+
+  // 概况：今日 / 昨日 / 区间累计
+  function dayStat(k) {
+    var d = daily[k] || { pv: 0, uv: {}, ip: {} };
+    return { pv: d.pv, uv: Object.keys(d.uv).length, ip: Object.keys(d.ip).length };
+  }
+  var today = dayStat(todayKey);
+  var yesterday = dayStat(yestKey);
+  var total = { pv: recs.length, uv: Object.keys(uvSet).length, ip: Object.keys(ipSet).length };
+
+  // 跳出率 & 人均停留（基于会话）
+  var sArr = Object.keys(sessions).map(function (k) { return sessions[k]; });
+  var totalSess = sArr.length;
+  var bounces = sArr.filter(function (s) { return s.count <= 1; }).length;
+  var bounceRate = totalSess ? Math.round(bounces * 1000 / totalSess) / 10 : 0;
+  var durSum = sArr.reduce(function (a, s) { return a + Math.max(0, s.max - s.min); }, 0);
+  var avgDuration = totalSess ? Math.round(durSum / totalSess / 1000) : 0;   // 秒
+
+  // 趋势（补齐每天）
   var trend = [];
   for (var k = days - 1; k >= 0; k--) {
-    var dt = new Date(end - k * 86400000);
-    var dk = dt.toISOString().slice(0, 10);
-    var row = daily[dk] || { pv: 0, uv: {} };
-    var duv = 0; for (var u in row.uv) duv++;
-    trend.push({ day: dk, pv: row.pv, uv: duv });
+    var key = dayKey(end - k * 86400000);
+    var row = daily[key] || { pv: 0, uv: {}, ip: {} };
+    trend.push({ day: key, pv: row.pv, uv: Object.keys(row.uv).length, ip: Object.keys(row.ip).length });
   }
+
+  // 时段分布
+  var hourly = hourCnt.map(function (v, h) { return { hour: h, pv: v }; });
+
+  // 实时访客（最近 20 条；recs 已按 ts 倒序）
+  var realtime = recs.slice(0, 20).map(function (r) {
+    var ua = parseUA(r.ua);
+    return {
+      ts: r.ts || 0,
+      region: (r.ip && ipGeo[r.ip]) || '未知',
+      source: classifySource(hostOf(r.referrer), SITE_HOST),
+      path: r.path || '',
+      device: ua.device,
+      browser: ua.browser
+    };
+  });
+
+  // 新老访客
+  var newN = Object.keys(newVids).length;
+  var allN = Object.keys(allVids).length;
 
   function top(obj, n) {
     return Object.keys(obj).map(function (k) { return { name: k, value: obj[k] }; })
@@ -690,13 +854,25 @@ async function handleVisitStats(payload) {
     ok: true,
     stats: {
       rangeDays: days,
-      pv: pv,
-      uv: uv,
+      today: today,
+      yesterday: yesterday,
+      total: total,
+      pv: total.pv,           // 兼容旧字段
+      uv: total.uv,
+      bounceRate: bounceRate,
+      avgDuration: avgDuration,
       trend: trend,
-      topPages: top(pageCnt, 15),
+      hourly: hourly,
+      realtime: realtime,
+      topPages: top(pageCnt, 12),
+      entryPages: top(entryCnt, 12),
       sources: top(refCnt, 10),
+      regions: top(regionCnt, 12),
       devices: top(devCnt, 6),
-      browsers: top(brCnt, 8)
+      browsers: top(brCnt, 8),
+      os: top(osCnt, 8),
+      resolutions: top(resCnt, 10),
+      newVsOld: { new: newN, old: Math.max(0, allN - newN) }
     }
   };
 }
@@ -726,7 +902,7 @@ exports.main = async (event, context) => {
       case 'adminOverview': return apiResponse(await handleAdminOverview(payload), isHttp);
       case 'adminUserDetail': return apiResponse(await handleAdminUserDetail(payload), isHttp);
       case 'adminContent': return apiResponse(await handleAdminContent(payload), isHttp);
-      case 'logVisit': return apiResponse(await handleLogVisit(payload), isHttp);
+      case 'logVisit': return apiResponse(await handleLogVisit(payload, getClientIp(event)), isHttp);
       case 'visitStats': return apiResponse(await handleVisitStats(payload), isHttp);
       default: return apiResponse({ ok: false, msg: '未知操作: ' + action }, isHttp);
     }
