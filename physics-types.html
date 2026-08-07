@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高中物理（新高考·2026）题型设计手册</title>
+<style>
+  :root{
+    --bg:#0f1729; --panel:#16213e; --panel2:#1b2a4a; --ink:#e8eef7; --muted:#9fb0c8;
+    --line:#2a3c5e; --accent:#4ea1ff; --accent2:#7c9cff; --warn:#f0a23b; --danger:#ef6f6f;
+    --ok:#5fd08a; --chip:#22324f;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",Segoe UI,sans-serif;
+    background:linear-gradient(180deg,#0c1322,#0f1729);color:var(--ink);line-height:1.7;}
+  header{padding:38px 22px 26px;text-align:center;background:radial-gradient(120% 140% at 50% 0%,#13315e 0%,#0f1729 60%);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 8px;font-size:27px;letter-spacing:1px}
+  header p{margin:4px 0;color:var(--muted);font-size:14px}
+  .wrap{max-width:1080px;margin:0 auto;padding:22px 18px 80px}
+  nav{position:sticky;top:0;z-index:20;background:rgba(15,23,41,.92);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);padding:10px 14px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  nav a{color:var(--muted);text-decoration:none;font-size:13px;padding:5px 11px;border:1px solid var(--line);border-radius:20px}
+  nav a:hover{color:var(--ink);border-color:var(--accent)}
+  section{margin:34px 0;scroll-margin-top:60px}
+  h2{font-size:21px;border-left:5px solid var(--accent);padding-left:12px;margin:0 0 16px}
+  h3{font-size:17px;color:var(--accent);margin:22px 0 10px}
+  h4{font-size:15px;color:var(--accent2);margin:16px 0 8px}
+  p,li{font-size:14.5px;color:#dbe5f2}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13.5px;background:var(--panel);border-radius:10px;overflow:hidden}
+  th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+  th{background:var(--panel2);color:#cfe0f5;font-weight:600}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0;
+    box-shadow:0 6px 18px rgba(0,0,0,.25)}
+  .card.select{border-left:4px solid var(--accent)}
+  .card.multi{border-left:4px solid var(--accent2)}
+  .card.required{border-left:4px solid var(--warn)}
+  .card.elective{border-left:4px solid var(--ok)}
+  .card.calc{border-left:4px solid var(--danger)}
+  .tag{display:inline-block;font-size:12px;padding:2px 9px;border-radius:12px;background:var(--chip);color:#bcd0ec;margin:0 4px 6px 0}
+  .tag.score{background:#1f3a32;color:var(--ok)}
+  .tag.cr{background:#3a2a1f;color:var(--warn)}
+  .tag.dan{background:#1f2e44;color:var(--accent)}
+  .tag.duo{background:#241f3a;color:var(--accent2)}
+  .example{background:#0c1626;border:1px dashed var(--accent2);border-radius:10px;padding:13px 15px;margin:10px 0}
+  .example .q{color:#eaf2ff;font-weight:600}
+  .example .a{color:var(--ok)}
+  .example .r{color:var(--muted);font-size:13.5px}
+  code,.formula{font-family:"SFMono-Regular",Consolas,monospace;background:#0b1424;color:#bfe0ff;padding:1px 6px;border-radius:5px;font-size:13px}
+  .formula{padding:2px 7px;display:inline-block;margin:2px 0}
+  .steps{counter-reset:s;list-style:none;padding-left:0}
+  .steps li{position:relative;padding:8px 10px 8px 42px;margin:7px 0;background:var(--panel2);border-radius:9px}
+  .steps li::before{counter-increment:s;content:counter(s);position:absolute;left:10px;top:8px;width:22px;height:22px;
+    background:var(--accent);color:#06231d;font-weight:700;border-radius:50%;text-align:center;line-height:22px;font-size:13px}
+  .banner{background:linear-gradient(90deg,#1d2e44,#16313a);border:1px solid #2c5b6b;border-radius:12px;padding:14px 18px;margin:14px 0;color:#cdeede}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+  .mini{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:14px}
+  .mini h4{margin-top:0}
+  .note{font-size:13px;color:var(--muted);border-left:3px solid var(--line);padding-left:10px;margin:8px 0}
+  .kp{display:inline-block;background:#241f33;color:#d7c4f5;border:1px solid #4a3a6b;padding:2px 10px;border-radius:12px;font-size:12.5px;margin:3px}
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 0}
+  footer{text-align:center;color:var(--muted);font-size:12.5px;padding:30px 10px}
+  .sub{color:var(--muted);font-size:13px;margin:2px 0 12px}
+  .flow{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:12px 0}
+  .flow .node{display:inline-block;background:var(--panel);border:1px solid var(--accent);border-radius:8px;padding:6px 12px;margin:6px 4px;font-size:13.5px}
+  .flow .arrow{color:var(--accent);font-weight:700;margin:0 2px}
+</style>
+</head>
+<body>
+<nav>
+  <a href="#overview">试卷结构</a>
+  <a href="#sel">一·选择题</a>
+  <a href="#exp">二·实验题</a>
+  <a href="#calc">三·计算题</a>
+  <a href="#elec">四·选考题</a>
+  <a href="#mod">知识模块</a>
+  <a href="#model">四大模型</a>
+  <a href="#time">时间策略</a>
+  <a href="#flow">破题流程图</a>
+</nav>
+
+<header>
+  <h1>⚡ 高中物理（新高考·2026）题型设计手册</h1>
+  <p>满分 100 分 · 选择题 + 实验题 + 计算题 + 选考题 · 题型结构极其稳定，严格按"试题功能"与"知识模块"划分</p>
+  <p>本手册按你提供的"物理题型全家桶"大纲，为<b>每一种题型</b>给出：分值定位 · 考查点 · 典型例题（含解析）· 破题模板</p>
+</header>
+
+<div class="wrap">
+
+<!-- ============ 概览 ============ -->
+<section id="overview">
+  <h2>📋 试卷结构总览（怎么考）</h2>
+  <table>
+    <tr><th>题型</th><th>题量与分值</th><th>核心特点与时间策略</th></tr>
+    <tr>
+      <td><b>单项选择题</b></td>
+      <td>约 7 题 × 4 分<br>（共 28 分）</td>
+      <td>考查单一知识点或简单推理。<b>前 5 题保底拿分</b>；后 2 题稍有陷阱（如单位换算、矢量方向）。</td>
+    </tr>
+    <tr>
+      <td><b>多项选择题</b></td>
+      <td>约 3 题 × 6 分<br>（共 18 分）</td>
+      <td>全对得 6 分，选不全得 3 分（<b>漏选比错选划算</b>）。常考<b>图像问题</b>与<b>动态分析</b>，一题涵盖多个考点。</td>
+    </tr>
+    <tr>
+      <td><b>实验题（必做）</b></td>
+      <td>2 题，约 15 分</td>
+      <td><b>"一力一电"</b>。含填空、连线、作图、数据处理。整张卷子<b>最容易靠"背模板"拿分</b>的板块。</td>
+    </tr>
+    <tr>
+      <td><b>计算题（必做）</b></td>
+      <td>2 题，约 30 分</td>
+      <td><b>第 1 题中档</b>（力学综合），<b>第 2 题压轴</b>（电磁场综合）。考查多过程、多物体、多规律综合运用。</td>
+    </tr>
+    <tr>
+      <td><b>选考题（二选一）</b></td>
+      <td>1 题（选择+计算）<br>约 13 分</td>
+      <td>从<b>热学</b>（选修 3-3）和<b>光学 / 机械波</b>（选修 3-4）中任选一模块作答。</td>
+    </tr>
+  </table>
+  <div class="note">一句话定位：物理是"受力分析 + 运动分析"——无论哪种题型，核心永远是两条线：先受力（对象），再运动（过程）。捋清这两条线，高分稳了。</div>
+</section>
+
+<!-- ============ 一、选择题 ============ -->
+<section id="sel">
+  <h2>一、选择题（共 46 分 · 单选 + 多选）</h2>
+  <p class="sub">选择题是"保底区"也是"拉分区"。单选题重基础概念与简单推理；多选题重综合与图像，<b>拿不准的选项坚决不选，保住 3 分</b>。</p>
+
+  <div class="card select">
+    <span class="tag dan">每年必考</span><span class="tag score">28 分</span><span class="tag">送分 + 陷阱</span>
+    <h3>① 单项选择题（7 题 × 4 分）</h3>
+    <p><b>考查点：</b>单一知识点或简单推理。前 5 题以<b>基础概念</b>为主（运动学、受力、能量、电路基础）；后 2 题常埋<b>单位换算</b>、<b>矢量方向</b>陷阱。</p>
+    <div class="example">
+      <p class="q">关于速度、速度变化量和加速度，下列说法正确的是（&nbsp;&nbsp;）</p>
+      <p>A. 物体的速度越大，加速度越大<br>
+         B. 物体的速度变化量越大，加速度越大<br>
+         C. 物体的速度变化越快，加速度越大<br>
+         D. 加速度方向与速度变化量方向相反</p>
+      <p class="a">答案：C</p>
+      <p class="r">解析：加速度 <code>a = Δv / Δt</code>，描述的是速度<b>变化快慢</b>，方向与 Δv 相同。A 速度大加速度可为零（匀速）；B Δv 大但若经历时间也大，a 不一定大；C 正确；D 加速度与 Δv <b>同向</b>。</p>
+    </div>
+    <p><b>破题模板：</b>①先判"问的是谁"（速度 / 速度变化 / 加速度，三者概念不同）；②矢量题盯"方向"；③单位换算统一到国际单位再算；④前 5 题控制在每题 1–2 分钟。</p>
+  </div>
+
+  <div class="card multi">
+    <span class="tag duo">拉分</span><span class="tag score">18 分</span><span class="tag">图像 · 动态分析</span>
+    <h3>② 多项选择题（3 题 × 6 分）</h3>
+    <p><b>评分规则：</b>全对得 6 分，<b>选不全得 3 分</b>，有错选得 0 分。<b>漏选比错选划算</b>——拿不准的选项坚决不选，先保 3 分。</p>
+    <p><b>常考：</b>v-t / x-t 图像综合、受力动态分析、功能关系、电磁感应图像、振动与波。</p>
+    <div class="example">
+      <p class="q">一质点做直线运动，其 v-t 图像为过原点的倾斜直线，则（&nbsp;&nbsp;）</p>
+      <p>A. 质点做匀加速直线运动&nbsp;&nbsp;&nbsp;&nbsp;B. 加速度恒定<br>
+         C. 位移与时间成正比&nbsp;&nbsp;&nbsp;&nbsp;D. 任意相等时间内速度变化相等</p>
+      <p class="a">答案：A、B、D</p>
+      <p class="r">解析：v-t 过原点倾斜直线 ⇒ a 恒定 ⇒ 匀加速（A、B 对）；<code>x = ½at²</code> ∝ t²，不与 t 成正比（C 错）；<code>Δv = a·Δt</code>，相等时间内 Δv 相等（D 对）。若只选 A、B 也能拿 3 分，错选 C 则 0 分。</p>
+    </div>
+    <p><b>破题模板：</b>①用<b>排除法</b>和<b>量纲法</b>（单位不对直接排）先缩小；②图像题"看斜率、看面积、看截距"；③拿不准就选确定的，绝不加不确定的选项。</p>
+  </div>
+</section>
+
+<!-- ============ 二、实验题 ============ -->
+<section id="exp">
+  <h2>二、实验题（必做 · 2 题，约 15 分 · "一力一电"）</h2>
+  <p class="sub">整张卷子<b>最容易靠"背模板"拿分</b>的板块。实验原理一定在课本内，电学实验先画电路图，再根据闭合电路欧姆定律列方程。</p>
+
+  <div class="grid2">
+    <div class="card required">
+      <span class="tag score">约 7–8 分</span><span class="tag">力学实验</span>
+      <h3>板块 1 · 力学实验</h3>
+      <p><b>常考：</b>打点计时器测速度/加速度（<b>逐差法</b>）、验证牛顿第二定律（平衡摩擦力、m≪M）、验证机械能守恒、弹簧弹力与伸长量关系、平抛运动描迹。</p>
+      <div class="example">
+        <p class="q">打点计时器频率 50 Hz，相邻计数点间还有 4 个点未画出（即 T = 0.1 s）。测得 x₁=1.20、x₂=1.60、x₃=2.00、x₄=2.40、x₅=2.80、x₆=3.20（单位 cm），用逐差法求加速度 a。</p>
+        <p class="a">a = [(x₄+x₅+x₆) − (x₁+x₂+x₃)] / (9T²) = (8.40 − 4.80) / (9×0.01) = 3.60 / 0.09 = <b>0.40 m/s²</b></p>
+        <p class="r">解析：把 6 段均分为前后两组，隔项相减可最大程度减小误差，分母 9T²（不是 3T²）。</p>
+      </div>
+      <p><b>破题模板：</b>①先确认 T（"还有 n 个点未画出" ⇒ T=(n+1)×0.02 s）；②逐差法分组求 a；③验证机械能守恒比"重力势能减少量 mgh"与"动能增加量 ½mv²"；④平抛用"水平匀速、竖直自由落体"分别处理。</p>
+    </div>
+
+    <div class="card required">
+      <span class="tag score">约 7–8 分</span><span class="tag">电学实验</span>
+      <h3>板块 2 · 电学实验（难度较高）</h3>
+      <p><b>常考：</b>伏安法测电阻（<b>内外接法</b>判断）、测电源电动势 E 和内阻 r（<b>U-I 图像</b>，纵轴截距为 E、斜率为 r）、多用电表使用、电表改装（扩大量程）、创新实验（半偏法）。</p>
+      <div class="example">
+        <p class="q">用伏安法测电源电动势 E 和内阻 r，作出 U-I 图线：纵轴截距为 1.50 V，图线斜率大小为 0.50 Ω，求 E、r。</p>
+        <p class="a">由 <code>U = E − Ir</code> 得：<b>E = 1.50 V</b>，<b>r = 0.50 Ω</b></p>
+        <p class="r">解析：纵截距即断路电压 = E；斜率绝对值 = 内阻 r。电流表相对电源外接时测的是"电动势与内阻"，但存在系统误差，题目通常直接用图像读数。</p>
+      </div>
+      <p><b>破题模板：</b>①内外接法：测大电阻用<b>内接</b>（A 内接，测值偏大），测小电阻用<b>外接</b>（A 外接，测值偏小）；②E-r 一律画 <code>U-I</code> 图，截距 E、斜率 r；③电表改装：并联小电阻<b>分流</b>（扩电流）、串联大电阻<b>分压</b>（扩电压）。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 三、计算题 ============ -->
+<section id="calc">
+  <h2>三、计算题（必做 · 2 题，约 30 分）</h2>
+  <p class="sub">第 1 题中档（力学综合），第 2 题压轴（电磁场综合）。考查多过程、多物体、多规律综合运用。<b>列好受力分析和核心方程就能拿大部分分，公式也有分。</b></p>
+
+  <div class="card calc">
+    <span class="tag score">约 15 分</span><span class="tag">力学综合</span><span class="tag">第 1 题</span>
+    <h3>第 1 题 · 力学综合（中档）</h3>
+    <p><b>考查点：</b>匀变速、牛顿定律、动能定理 / 机械能守恒、动量守恒的组合，常见于"<b>板块模型</b>""传送带""多过程运动"。</p>
+    <div class="example">
+      <p class="q">质量 M=2 kg 的木板静止在光滑水平面，质量 m=1 kg 的小物块以 v₀=3 m/s 滑上木板，物块与木板间动摩擦因数 μ=0.2（取 g=10 m/s²）。求：①最终共同速度；②物块相对木板滑行的距离。</p>
+      <p class="a">① 动量守恒：mv₀ = (M+m)V ⇒ V = 1×3 / 3 = <b>1 m/s</b><br>
+         ② 能量守恒：½mv₀² − ½(M+m)V² = μmg·s<sub>相</sub><br>
+         ⇒ 4.5 − 1.5 = 0.2×1×10×s<sub>相</sub> ⇒ 3 = 2s<sub>相</sub> ⇒ <b>s<sub>相</sub> = 1.5 m</b></p>
+      <p class="r">解析：水平面光滑 ⇒ 系统动量守恒求末速；相对滑动生热 = 摩擦力 × 相对位移，能量差额全部转化为内能。</p>
+    </div>
+    <p><b>破题模板：</b>①分阶段画受力图；②衔接处"速度是桥梁"（前一过程末速度 = 后一过程初速度）；③优先用<b>动能定理</b>（不必管过程细节）；④多物体先看动量是否守恒。</p>
+  </div>
+
+  <div class="card calc">
+    <span class="tag score">约 15 分</span><span class="tag">电磁场综合</span><span class="tag">第 2 题 · 压轴</span>
+    <h3>第 2 题 · 电磁场综合（压轴）</h3>
+    <p><b>考查点：</b>带电粒子在电场中<b>偏转</b>（类平抛）、在磁场中<b>圆周运动</b>（找圆心、求半径、定轨迹），常与力学规律综合。</p>
+    <div class="example">
+      <p class="q">质量为 m、电荷量为 q 的粒子，以速度 v<b>垂直</b>射入磁感应强度为 B 的匀强磁场（不计重力），求圆周运动半径 R 和周期 T。</p>
+      <p class="a">洛伦兹力提供向心力：<code>qvB = mv² / R</code> ⇒ <b>R = mv / (qB)</b><br>
+         <b>T = 2πR / v = 2πm / (qB)</b>（与速度 v 无关）</p>
+      <p class="r">解析：洛伦兹力永不做功，只改变速度方向；周期由 m、q、B 决定，与速率无关——这是磁场题的高频结论。</p>
+    </div>
+    <p><b>破题模板：</b>①电场用<b>平抛公式</b>（分解位移与速度）；②磁场用<b>几何圆规</b>——"找圆心：洛伦兹力⊥速度，连两速度垂线的交点即圆心"；③复合场中"电场力 + 重力 + 洛伦兹力"分别分析，洛伦兹力不做功。</p>
+  </div>
+</section>
+
+<!-- ============ 四、选考题 ============ -->
+<section id="elec">
+  <h2>四、选考题（二选一 · 约 13 分）</h2>
+  <p class="sub">从<b>热学</b>（选修 3-3）和<b>光学 / 机械波</b>（选修 3-4）中任选一模块作答。<b>固定刷自己擅长的模块，考场上不要临时换。</b></p>
+
+  <div class="grid2">
+    <div class="card elective">
+      <span class="tag">选修 3-3 · 热学</span>
+      <h3>选考 A · 热学</h3>
+      <p><b>考查点：</b>分子动理论、布朗运动、<b>理想气体状态方程</b> <code>PV/T = C</code>、热力学定律（ΔU = W + Q）、油膜法测分子直径。</p>
+      <div class="example">
+        <p class="q">一定质量的理想气体经历等压膨胀过程，则（&nbsp;&nbsp;）</p>
+        <p>A. 内能增大&nbsp;&nbsp;B. 吸收热量&nbsp;&nbsp;C. 对外做功&nbsp;&nbsp;D. 分子平均动能增大</p>
+        <p class="a">答案：A、B、C、D</p>
+        <p class="r">解析：等压膨胀 ⇒ 体积增大、温度升 ⇒ 分子平均动能增大 ⇒ 内能增大（A、D）；体积增大对外做功（C）；由 ΔU = W + Q，W&lt;0、ΔU&gt;0 ⇒ Q&gt;0 吸热（B）。</p>
+      </div>
+      <p><b>破题模板：</b>①气体状态变化用 <code>PV/T = C</code> 列式；②内能变化看温度（理想气体内能只与温度有关）；③热力学第一定律 ΔU = W + Q，气体膨胀 W 为负。</p>
+    </div>
+
+    <div class="card elective">
+      <span class="tag">选修 3-4 · 振动波与光学</span>
+      <h3>选考 B · 光学 / 机械波</h3>
+      <p><b>考查点：</b>简谐振动与波动图像（振动与波动互推、多解性）、波的干涉/衍射、<b>光的折射</b> <code>n = sin i / sin r</code>、<b>全反射</b> <code>sin C = 1/n</code>、双缝干涉测波长。</p>
+      <div class="example">
+        <p class="q">光从空气射入折射率 n=√2 的介质，入射角 i=45°，求折射角 r；若该光从介质射向空气，求临界角 C。</p>
+        <p class="a">折射：<code>n = sin i / sin r</code> ⇒ sin r = sin45°/√2 = (√2/2)/√2 = 1/2 ⇒ <b>r = 30°</b><br>
+           全反射：<code>sin C = 1/n = 1/√2</code> ⇒ <b>C = 45°</b></p>
+        <p class="r">解析：光从光疏到光密折射角变小；从光密到光疏且入射角 ≥ 临界角时发生全反射。</p>
+      </div>
+      <p><b>破题模板：</b>①折射先列 <code>n = sin i / sin r</code>；②全反射先判"光密→光疏"且算临界角；③波动题"读波长 λ、周期 T，波速 v=λ/T"，多解性别漏。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 知识模块 ============ -->
+<section id="mod">
+  <h2>⚙️ 按知识模块划分（考什么 · 底层逻辑）</h2>
+  <p class="sub">这是所有题型的<b>底层逻辑</b>——无论出现在选择题还是计算题中，万变不离其宗。力学与电磁学各约占 40%。</p>
+
+  <div class="card required">
+    <span class="tag score">约占 40%</span><span class="tag">重中之重</span>
+    <h3>1 · 力学</h3>
+    <div class="grid2">
+      <div class="mini">
+        <h4>匀变速直线运动</h4>
+        <p>刹车问题、自由落体、竖直上抛，<b>追及相遇</b>（临界条件：速度相等）。</p>
+      </div>
+      <div class="mini">
+        <h4>相互作用与平衡</h4>
+        <p>受力分析（重力、弹力、摩擦力）、静态平衡（<b>正交分解法</b>）、动态平衡（解析法/图解法）。</p>
+      </div>
+      <div class="mini">
+        <h4>牛顿定律</h4>
+        <p>瞬时加速度、连接体（<b>整体隔离法</b>）、传送带模型、板块模型（临界摩擦力判断）。</p>
+      </div>
+      <div class="mini">
+        <h4>曲线运动与万有引力</h4>
+        <p>小船过河、平抛（分解位移与速度）、圆周运动（向心力来源）、天体质量/密度、卫星变轨（高轨低速大周期）。</p>
+      </div>
+      <div class="mini">
+        <h4>功与能</h4>
+        <p>机车启动（恒定功率/恒定加速度）、<b>动能定理</b>（优先选）、机械能守恒（条件判断）、功能关系（摩擦生热 = 相对位移 × 摩擦力）。</p>
+      </div>
+      <div class="mini">
+        <h4>动量</h4>
+        <p>弹性/非弹性/完全非弹性碰撞、人船模型、子弹打木块、流体冲击力（动量定理）。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card calc">
+    <span class="tag score">约占 40%</span><span class="tag">压轴常客</span>
+    <h3>2 · 电磁学</h3>
+    <div class="grid2">
+      <div class="mini">
+        <h4>静电场</h4>
+        <p>电场线/等势面判断电势高低、电容器动态分析（U 不变 / Q 不变）、带电粒子在电场中加速与偏转（类平抛）。</p>
+      </div>
+      <div class="mini">
+        <h4>恒定电流</h4>
+        <p>电路动态分析（<b>串反并同</b>）、功率最大值（内外电阻相等）、含容电路（电容器相当于断路）。</p>
+      </div>
+      <div class="mini">
+        <h4>磁场</h4>
+        <p>安培力（左手定则）、洛伦兹力（永不做功）。<b>压轴核心</b>：带电粒子在有界磁场中的运动，找圆心、求半径、定轨迹（几何关系是难点）。</p>
+      </div>
+      <div class="mini">
+        <h4>电磁感应</h4>
+        <p>楞次定律（增反减同）、感应电动势（法拉第定律 + 切割公式 <code>E = BLv</code>）。常考<b>图像问题</b>（i-t、F-t 图）、<b>单杆/双杆模型</b>（<code>q = ΔΦ/R</code>）。</p>
+      </div>
+      <div class="mini">
+        <h4>交变电流</h4>
+        <p>正弦式交流电四值（瞬时值、峰值、有效值、平均值）、理想变压器（电压/电流/匝数比）、远距离输电（<code>P<sub>损</sub> = I²R</code>）。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">实验题与选考题的知识模块详见上方第二、四节。简言之：<b>实验 = 力学实验 + 电学实验</b>；<b>选考 = 热学(3-3) 或 光学/机械波(3-4)</b>。</div>
+</section>
+
+<!-- ============ 四大模型 ============ -->
+<section id="model">
+  <h2>🧩 物理"四大模型"与破题心法</h2>
+  <p class="sub">物理题虽千变万化，但核心就是考查"<b>对象</b>"和"<b>过程</b>"。所有题型无非是以下模型的排列组合。</p>
+  <div class="grid2">
+    <div class="card select">
+      <span class="tag">模型 1</span>
+      <h3>单体多过程模型</h3>
+      <p>如滑块先匀加速再匀减速。<b>破题心法：</b>分阶段画受力图，<b>衔接处速度是桥梁</b>（前一过程末速度 = 后一过程初速度）。</p>
+    </div>
+    <div class="card multi">
+      <span class="tag">模型 2</span>
+      <h3>多体碰撞模型</h3>
+      <p>如滑块滑上木板。<b>破题心法：</b><b>动量守恒</b>求末速，<b>能量守恒</b>算热量（摩擦力做功 = 相对位移 × 摩擦力）。</p>
+    </div>
+    <div class="card required">
+      <span class="tag">模型 3</span>
+      <h3>粒子场模型</h3>
+      <p>在电场中偏转，在磁场中圆周。<b>破题心法：</b>电场用<b>平抛公式</b>（分解位移与速度），磁场用<b>几何圆规</b>（找圆心、求半径）。</p>
+    </div>
+    <div class="card calc">
+      <span class="tag">模型 4</span>
+      <h3>电磁感应杆模型</h3>
+      <p>导体棒切割磁感线。<b>破题心法：</b>先看哪根棒是<b>电源</b>，再用 <code>F = BIL</code> 求安培力，最后用<b>牛顿第二定律</b>列动力学方程。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 时间策略 ============ -->
+<section id="time">
+  <h2>🗺️ 时间分配与抢分策略</h2>
+  <table>
+    <tr><th>板块</th><th>建议时间</th><th>抢分要点</th></tr>
+    <tr><td>选择题（单选+多选）</td><td>约 50 分钟</td><td>多用<b>排除法</b>和<b>量纲法</b>（单位不对直接排）。多选题拿不准的选项<b>坚决不选</b>，保住 3 分。</td></tr>
+    <tr><td>实验题</td><td>约 15 分钟</td><td>不要怕创新，实验原理一定在课本内。电学实验先画电路图，再根据闭合电路欧姆定律列方程。</td></tr>
+    <tr><td>计算题 1（力学综合）</td><td>约 15 分钟</td><td>必须写完，列好受力分析和动能定理就能拿大部分分。</td></tr>
+    <tr><td>计算题 2（电磁场压轴）</td><td>约 20 分钟</td><td>最后一问没思路就果断放弃，把时间用来检查选择题；但把能列的方程（如 <code>qvB = mv²/r</code>）写上，有公式就有分。</td></tr>
+  </table>
+  <div class="banner">⚡ 物理就是"受力分析 + 运动分析"——选择题保底、实验背模板、计算题列方程是两条生命线。先把本手册每个题型的"破题模板"背到脱口而出，再刷对应真题。</div>
+</section>
+
+<!-- ============ 破题流程图 ============ -->
+<section id="flow">
+  <h2>🛠️ 附：两个手把手破题流程图（你点名要的）</h2>
+
+  <h3>流程图 1 · 电磁感应双杆模型</h3>
+  <div class="flow">
+    <span class="node">① 判电源</span><span class="arrow">→</span>
+    <span class="node">② 哪根杆切割？E = BLv 算感应电动势</span><span class="arrow">→</span>
+    <span class="node">③ 闭合回路总电阻 R，算感应电流 I = E/R</span><span class="arrow">→</span>
+    <span class="node">④ 安培力 F = BIL（阻碍相对运动）</span><span class="arrow">→</span>
+    <span class="node">⑤ 牛顿第二定律列动力学方程</span><span class="arrow">→</span>
+    <span class="node">⑥ 稳定时两杆加速度相等 / 收尾速度</span><span class="arrow">→</span>
+    <span class="node">⑦ 电量 q = ΔΦ/R、能量守恒校验</span>
+  </div>
+  <div class="note">关键：双杆问题中"<b>电源杆</b>"与"<b>用电器杆</b>"要分清；相对速度 <code>v<sub>相</sub></code> 决定电动势 <code>E = BL·v<sub>相</sub></code>；动量守恒（外力为零时）常是突破口。</div>
+
+  <h3>流程图 2 · 带电粒子在复合场中的运动</h3>
+  <div class="flow">
+    <span class="node">① 受力分析</span><span class="arrow">→</span>
+    <span class="node">② 电场力 qE（做功、改变动能）</span><span class="arrow">+</span>
+    <span class="node">③ 重力 mg（看是否忽略）</span><span class="arrow">+</span>
+    <span class="node">④ 洛伦兹力 qvB（⊥v、永不做功）</span><span class="arrow">→</span>
+    <span class="node">⑤ 若三力平衡 ⇒ 匀速直线（速度选择器）</span><span class="arrow">→</span>
+    <span class="node">⑥ 若仅磁场 ⇒ 圆周（找圆心、R=mv/qB）</span><span class="arrow">→</span>
+    <span class="node">⑦ 若有界 ⇒ 定轨迹几何关系求时间/偏移</span>
+  </div>
+  <div class="note">关键：洛伦兹力方向用<b>左手定则</b>且永远⊥速度；复合场中先判"是否平衡"，不平衡再分"电场段（类平抛/匀变速）"与"磁场段（圆周）"分段处理，衔接处速度连续。</div>
+</section>
+
+<footer>
+  本手册依据你提供的"物理题型全家桶"大纲设计 · 题型 / 分值 / 模块均 1:1 对应 · 例题与模板可直接用于命题或转化为题库数据<br>
+  如需把它拆成 <code>data-physics-types.js</code> 接入你的预习网站（与现有 data-physics-*.js 同结构），告诉我即可。
+</footer>
+
+</div>
+</body>
+</html>

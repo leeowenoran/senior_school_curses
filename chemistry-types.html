@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高中化学（新高考·2026）题型设计手册</title>
+<style>
+  :root{
+    --bg:#0f1729; --panel:#16213e; --panel2:#1b2a4a; --ink:#e8eef7; --muted:#9fb0c8;
+    --line:#2a3c5e; --accent:#37c2a8; --accent2:#5b8def; --warn:#f0a23b; --danger:#ef6f6f;
+    --ok:#5fd08a; --chip:#22324f;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",Segoe UI,sans-serif;
+    background:linear-gradient(180deg,#0c1322,#0f1729);color:var(--ink);line-height:1.7;}
+  header{padding:38px 22px 26px;text-align:center;background:radial-gradient(120% 140% at 50% 0%,#16335a 0%,#0f1729 60%);border-bottom:1px solid var(--line)}
+  header h1{margin:0 0 8px;font-size:27px;letter-spacing:1px}
+  header p{margin:4px 0;color:var(--muted);font-size:14px}
+  .wrap{max-width:1080px;margin:0 auto;padding:22px 18px 80px}
+  nav{position:sticky;top:0;z-index:20;background:rgba(15,23,41,.92);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);padding:10px 14px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  nav a{color:var(--muted);text-decoration:none;font-size:13px;padding:5px 11px;border:1px solid var(--line);border-radius:20px}
+  nav a:hover{color:var(--ink);border-color:var(--accent)}
+  section{margin:34px 0;scroll-margin-top:60px}
+  h2{font-size:21px;border-left:5px solid var(--accent);padding-left:12px;margin:0 0 16px}
+  h3{font-size:17px;color:var(--accent);margin:22px 0 10px}
+  h4{font-size:15px;color:var(--accent2);margin:16px 0 8px}
+  p,li{font-size:14.5px;color:#dbe5f2}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13.5px;background:var(--panel);border-radius:10px;overflow:hidden}
+  th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+  th{background:var(--panel2);color:#cfe0f5;font-weight:600}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:14px 0;
+    box-shadow:0 6px 18px rgba(0,0,0,.25)}
+  .card.select{border-left:4px solid var(--accent2)}
+  .card.required{border-left:4px solid var(--warn)}
+  .card.elective{border-left:4px solid var(--accent)}
+  .tag{display:inline-block;font-size:12px;padding:2px 9px;border-radius:12px;background:var(--chip);color:#bcd0ec;margin:0 4px 6px 0}
+  .tag.score{background:#1f3a32;color:var(--ok)}
+  .tag.cr{background:#3a2a1f;color:var(--warn)}
+  .example{background:#0c1626;border:1px dashed var(--accent2);border-radius:10px;padding:13px 15px;margin:10px 0}
+  .example .q{color:#eaf2ff;font-weight:600}
+  .example .a{color:var(--ok)}
+  .example .r{color:var(--muted);font-size:13.5px}
+  code,.formula{font-family:"SFMono-Regular",Consolas,monospace;background:#0b1424;color:#bfe9dd;padding:1px 6px;border-radius:5px;font-size:13px}
+  .formula{padding:2px 7px;display:inline-block;margin:2px 0}
+  .steps{counter-reset:s;list-style:none;padding-left:0}
+  .steps li{position:relative;padding:8px 10px 8px 42px;margin:7px 0;background:var(--panel2);border-radius:9px}
+  .steps li::before{counter-increment:s;content:counter(s);position:absolute;left:10px;top:8px;width:22px;height:22px;
+    background:var(--accent);color:#06231d;font-weight:700;border-radius:50%;text-align:center;line-height:22px;font-size:13px}
+  .banner{background:linear-gradient(90deg,#1d3a33,#16313a);border:1px solid #2c6b5a;border-radius:12px;padding:14px 18px;margin:14px 0;color:#cdeede}
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+  .mini{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:14px}
+  .mini h4{margin-top:0}
+  .note{font-size:13px;color:var(--muted);border-left:3px solid var(--line);padding-left:10px;margin:8px 0}
+  .kpill{display:inline-block;background:#241f33;color:#d7c4f5;border:1px solid #4a3a6b;padding:2px 10px;border-radius:12px;font-size:12.5px;margin:3px}
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 0}
+  footer{text-align:center;color:var(--muted);font-size:12.5px;padding:30px 10px}
+  .sub{color:var(--muted);font-size:13px;margin:2px 0 12px}
+</style>
+</head>
+<body>
+<nav>
+  <a href="#overview">试卷结构</a>
+  <a href="#sel">一·选择题</a>
+  <a href="#req">二·必做非选择</a>
+  <a href="#elec">三·选考题</a>
+  <a href="#idea">核心思想</a>
+  <a href="#time">时间策略</a>
+  <a href="#tpl">手把手模板</a>
+</nav>
+
+<header>
+  <h1>🧪 高中化学（新高考·2026）题型设计手册</h1>
+  <p>满分 100 分 · 选择题 + 非选择题（必做 + 选做）· 非选择占大头，全为填空与简答</p>
+  <p>本手册按你提供的"化学题型全家桶"大纲，为<b>每一种题型</b>给出：分值定位 · 考查点 · 典型例题（含解析）· 破题模板</p>
+</header>
+
+<div class="wrap">
+
+<!-- ============ 概览 ============ -->
+<section id="overview">
+  <h2>📋 试卷结构总览（怎么考）</h2>
+  <table>
+    <tr><th>题型</th><th>题量与分值</th><th>核心特点与时间策略</th></tr>
+    <tr>
+      <td><b>单项选择题</b></td>
+      <td>约 13–14 题 × 3 分<br>（共 39–42 分）</td>
+      <td>考查面极广，覆盖所有模块。<b>前 8 题保底拿分</b>（基础概念）；后 5 题常考<b>图像分析</b>与<b>计算技巧</b>（电子守恒、K<sub>sp</sub>）。</td>
+    </tr>
+    <tr>
+      <td><b>非选择题（必做）</b></td>
+      <td>3 道大题，约 43–46 分</td>
+      <td>常考板块：<b>化学工艺流程</b>、<b>化学反应原理综合</b>、<b>化学实验综合</b>。每道约 14–16 分，是拉开差距的核心。</td>
+    </tr>
+    <tr>
+      <td><b>选考题（二选一）</b></td>
+      <td>1 道大题，15 分</td>
+      <td>从<b>物质结构与性质</b>与<b>有机化学基础</b>中任选其一作答。<b>不建议考场上临时换模块。</b></td>
+    </tr>
+  </table>
+  <div class="note">一句话定位：化学是"理科中的文科"——<b>记忆与规律</b>比重大，题型高度模块化，背熟套路即可稳定抢分。</div>
+</section>
+
+<!-- ============ 一、选择题 ============ -->
+<section id="sel">
+  <h2>一、单项选择题（送分 + 拉分双区间）</h2>
+  <p class="sub">前 8 题重基础概念保底；后 5 题重图像与计算，是区分度所在。以下 6 类子题型几乎年年出现。</p>
+
+  <div class="card select">
+    <span class="tag score">每年必考</span><span class="tag">送分题</span>
+    <h3>① NA（阿伏伽德罗常数）陷阱题</h3>
+    <p><b>考查点：</b>标准状况下气体摩尔体积（22.4 L/mol 仅用于<b>气体</b>）、可逆反应不完全、弱电解质/盐水解、氧化还原转移电子数。</p>
+    <div class="example">
+      <p class="q">设 N<sub>A</sub> 为阿伏伽德罗常数的值。下列说法正确的是（&nbsp;&nbsp;）</p>
+      <p>A. 标准状况下，22.4 L H<sub>2</sub>O 含有 N<sub>A</sub> 个 H<sub>2</sub>O 分子<br>
+         B. 1 mol Na<sub>2</sub>O<sub>2</sub> 与足量 H<sub>2</sub>O 反应，转移电子数为 2N<sub>A</sub><br>
+         C. 1 L 0.1 mol·L<sup>−1</sup> CH<sub>3</sub>COOH 溶液中 H<sup>+</sup> 数目为 0.1N<sub>A</sub><br>
+         D. 常温常压下，16 g O<sub>2</sub> 和 O<sub>3</sub> 混合气体中含氧原子数为 N<sub>A</sub></p>
+      <p class="a">答案：D</p>
+      <p class="r">解析：A 标况下水为液体，不能用 22.4；B 反应 2Na<sub>2</sub>O<sub>2</sub>+2H<sub>2</sub>O=4NaOH+O<sub>2</sub>，2 mol Na<sub>2</sub>O<sub>2</sub> 转移 2 mol e<sup>−</sup>，故 1 mol 仅转移 1 mol e<sup>−</sup>（N<sub>A</sub>）；C 醋酸为弱酸，部分电离，H<sup>+</sup>&lt;0.1N<sub>A</sub>；D 16 g 氧原子 = 1 mol O，正确。</p>
+    </div>
+    <p><b>破题模板：</b>看到 N<sub>A</sub> 题，逐项过四道关——①是不是气体/标况？②可逆反应有没有"完全"？③弱电解质/易水解离子有没有打折？④氧化还原盯"核心元素"数电子。</p>
+  </div>
+
+  <div class="card select">
+    <span class="tag">高频</span>
+    <h3>② 离子共存与离子方程式正误</h3>
+    <p><b>考查点：</b>共存注意"无色/透明/pH=1/加铝出 H<sub>2</sub>"等附加条件；方程式正误看"拆不拆、得不得电子、守不守恒"。</p>
+    <div class="example">
+      <p class="q">下列各组离子在 pH=1 的无色溶液中能大量共存的是（&nbsp;&nbsp;）</p>
+      <p>A. Fe<sup>3+</sup>、Mg<sup>2+</sup>、NO<sub>3</sub><sup>−</sup>、Cl<sup>−</sup><br>
+         B. K<sup>+</sup>、Na<sup>+</sup>、AlO<sub>2</sub><sup>−</sup>、SO<sub>4</sub><sup>2−</sup><br>
+         C. NH<sub>4</sub><sup>+</sup>、Ba<sup>2+</sup>、Cl<sup>−</sup>、NO<sub>3</sub><sup>−</sup><br>
+         D. HCO<sub>3</sub><sup>−</sup>、K<sup>+</sup>、SO<sub>4</sub><sup>2−</sup>、Na<sup>+</sup></p>
+      <p class="a">答案：C</p>
+      <p class="r">解析：pH=1 即强酸性。A 含 Fe<sup>3+</sup> 溶液呈黄色，不合"无色"；B 中 AlO<sub>2</sub><sup>−</sup> 在酸性下 AlO<sub>2</sub><sup>−</sup>+H<sup>+</sup>+H<sub>2</sub>O=Al(OH)<sub>3</sub>↓（或加酸过量生成 Al<sup>3+</sup>），不能大量共存；D 中 HCO<sub>3</sub><sup>−</sup>+H<sup>+</sup>=CO<sub>2</sub>↑+H<sub>2</sub>O；C 各离子酸性下互不反应且无色。</p>
+    </div>
+    <p><b>破题模板：</b>先扣"附加条件"→再判反应类型（生成沉淀/气体/弱电解质、氧化还原、双水解）→有任一反应即不共存。</p>
+  </div>
+
+  <div class="card select">
+    <span class="tag cr">拉分</span><span class="tag">图像</span>
+    <h3>③ 速率—平衡图像题（v-t / 转化率-T-p 图）</h3>
+    <p><b>考查点：</b>勒夏特列原理判断平衡移动方向；由图像读"断点=条件突变、拐点=先达平衡=速率快=温度高或压强/催化"。</p>
+    <div class="example">
+      <p class="q">对放热反应 A(g)+B(g)⇌C(g)，下列 v-t 图像中，哪条曲线对应"增大压强"？（只选方向判断）</p>
+      <p class="r">思路：增大压强正逆速率均<b>突增</b>，且因气体分子数减小（2→1），正反应速率增幅<b>大于</b>逆反应，新平衡 v<sub>正</sub>′&gt;v<sub>逆</sub>′ 后重新相等并右移。若图像显示 v<sub>正</sub>、v<sub>逆</sub> 同时上跳且 v<sub>正</sub>′ 在上方，即为正确。</p>
+    </div>
+    <p><b>破题模板（勒夏特列是"墙头草"）：</b>升温/增压，平衡向<b>削弱</b>该改变的方向移动（只减弱、不抵消）；断点看突变条件，拐点看谁先平衡。</p>
+  </div>
+
+  <div class="card select">
+    <span class="tag cr">最难选择</span>
+    <h3>④ 水溶液中的离子平衡（pH / 盐类水解 / K<sub>sp</sub>）</h3>
+    <p><b>考查点：</b>弱电解质稀释（电离度↑但离子浓度↓）、盐类水解（谁弱谁水解、越弱越水解）、K<sub>sp</sub> 判断沉淀顺序与转化、离子浓度大小比较（三大守恒）。</p>
+    <div class="example">
+      <p class="q">相同浓度下，下列溶液 pH 由大到小排序：① Na<sub>2</sub>CO<sub>3</sub> ② NaHCO<sub>3</sub> ③ NaCl ④ NH<sub>4</sub>Cl（&nbsp;&nbsp;）</p>
+      <p class="a">答案：① &gt; ② &gt; ③ &gt; ④</p>
+      <p class="r">解析：Na<sub>2</sub>CO<sub>3</sub>、NaHCO<sub>3</sub> 因 CO<sub>3</sub><sup>2−</sup> 水解显碱性，且酸性 HCO<sub>3</sub><sup>−</sup>&gt;H<sub>2</sub>CO<sub>3</sub> 对应酸根，故 CO<sub>3</sub><sup>2−</sup> 水解更强（越弱越水解）→ pH ①&gt;②；NaCl 中性；NH<sub>4</sub>Cl 铵根水解显酸性，pH 最小。</p>
+    </div>
+    <p><b>破题模板：</b>①先判酸碱性来源（谁水解/电离）；②比水解程度用"越弱越水解"；③浓度比较套"电荷守恒+物料守恒+质子守恒"三件宝。</p>
+  </div>
+
+  <div class="card select">
+    <span class="tag">必考</span><span class="tag">电极式</span>
+    <h3>⑤ 电化学（原电池 / 电解池 / 离子交换膜）</h3>
+    <p><b>考查点：</b>区分原电池（负失正得）与电解池（阳失阴得）；<b>电极反应式书写</b>（必考，注意电解质环境：酸性不写 OH<sup>−</sup>、碱性不写 H<sup>+</sup>）；交换膜作用。</p>
+    <div class="example">
+      <p class="q">甲烷燃料电池（碱性 KOH 电解质），写出负极反应式。</p>
+      <p class="a">负极：CH<sub>4</sub> + 10OH<sup>−</sup> − 8e<sup>−</sup> = CO<sub>3</sub><sup>2−</sup> + 7H<sub>2</sub>O</p>
+      <p class="r">解析：燃料 CH<sub>4</sub> 在负极被氧化为 CO<sub>3</sub><sup>2−</sup>（碱性环境碳最终以 CO<sub>3</sub><sup>2−</sup> 存在），失 8e<sup>−</sup>；用 OH<sup>−</sup> 与 H<sub>2</sub>O 配平 O、H，两侧电荷均为 −10，配平。</p>
+    </div>
+    <p><b>破题模板：</b>见下方"手把手模板 · 电极反应式书写 5 步法"。</p>
+  </div>
+
+  <div class="card select">
+    <span class="tag">推断</span>
+    <h3>⑥ 元素化合物（无机推断 / 现象正误）</h3>
+    <p><b>考查点：</b>钠铝铁铜"三角转化"、氯硫氮硅性质；常以"实验现象描述正误"或工艺除杂形式出现。</p>
+    <div class="example">
+      <p class="q">下列实验现象描述正确的是（&nbsp;&nbsp;）</p>
+      <p>A. 向 AlCl<sub>3</sub> 溶液滴加氨水：先产生白色沉淀，后沉淀溶解<br>
+         B. 用洁净铁丝蘸取某溶液在酒精灯焰色反应：直接观察到黄色火焰<br>
+         C. 将 Na 投入 CuSO<sub>4</sub> 溶液：析出红色铜单质<br>
+         D. 浓硫酸滴入蔗糖：变黑、体积膨胀、有刺激性气味</p>
+      <p class="a">答案：D</p>
+      <p class="r">解析：A 氨水为弱碱，Al(OH)<sub>3</sub> 不溶于过量氨水，沉淀不溶；B 未用蓝色钴玻片滤去 Na 黄光干扰，不能确定无 K；C Na 先与水剧烈反应，不会直接置换出 Cu；D 浓硫酸脱水性使蔗糖炭化变黑、强氧化性产生 SO<sub>2</sub>（刺激性）。</p>
+    </div>
+    <p><b>破题模板：</b>金属三角牢记 Al<sup>3+</sup>⇌Al(OH)<sub>3</sub>⇌AlO<sub>2</sub><sup>−</sup>；现象描述"说位置、说颜色、说状态"，并区分"溶于过量"与"不溶"。</p>
+  </div>
+</section>
+
+<!-- ============ 二、必做非选择 ============ -->
+<section id="req">
+  <h2>二、非选择题（必做·3 道大题，43–46 分）</h2>
+  <p class="sub">这是"区分度之王"。三道固定板块：工艺流程、原理综合、实验综合。均按"填空 + 简答"形式命题。</p>
+
+  <div class="card required">
+    <span class="tag score">约 14–16 分</span><span class="tag">除杂·转化·分离</span>
+    <h3>板块 1 · 化学工艺流程题</h3>
+    <p><b>套路：</b>酸溶 → 除杂 → 分离提纯 → 目标产物。看不懂的试剂，一定是"除杂 / 调 pH 促水解 / 氧化还原"。</p>
+    <div class="example">
+      <p class="q">以铝土矿（含 Al<sub>2</sub>O<sub>3</sub>、Fe<sub>2</sub>O<sub>3</sub>、SiO<sub>2</sub>）制备 Al<sub>2</sub>O<sub>3</sub> 的简化流程：</p>
+      <p class="formula">矿石 —(NaOH 溶液, 溶)→ 滤液(含 NaAlO<sub>2</sub>、Na<sub>2</sub>SiO<sub>3</sub>) —(过量 CO<sub>2</sub>)→ 沉淀 —(灼烧)→ Al<sub>2</sub>O<sub>3</sub></p>
+      <p>(1) 试剂 X 为 <u>&nbsp;NaOH 溶液&nbsp;</u>；(2) 滤渣 1 的主要成分为 <u>&nbsp;Fe<sub>2</sub>O<sub>3</sub>、H<sub>2</sub>SiO<sub>3</sub>&nbsp;</u>（SiO<sub>2</sub> 与碱生成可溶 Na<sub>2</sub>SiO<sub>3</sub>，但过量 CO<sub>2</sub> 后硅酸析出）；<br>
+      (3) 写出 NaAlO<sub>2</sub> 通入 CO<sub>2</sub> 的离子方程式：<br>
+      <span class="a">AlO<sub>2</sub><sup>−</sup> + CO<sub>2</sub> + 2H<sub>2</sub>O = Al(OH)<sub>3</sub>↓ + HCO<sub>3</sub><sup>−</sup></span><br>
+      (4) 提高 Al<sub>2</sub>O<sub>3</sub> 浸出率的措施：<u>&nbsp;粉碎矿石、升高温度、搅拌、适当增大 NaOH 浓度&nbsp;</u>。</p>
+    </div>
+    <p><b>破题模板（15 分钟法）：</b>①先盯"原料"和"目标产物"两端；②中间每步只问"这个试剂是来除谁的？"；③写方程式先判环境（酸/碱/熔融）；④"措施类"答：粉碎、升温、搅拌、浓度、趁热/冷却过滤。</p>
+  </div>
+
+  <div class="card required">
+    <span class="tag score">约 14–16 分</span><span class="tag">盖斯·平衡·电极</span>
+    <h3>板块 2 · 化学反应原理综合题</h3>
+    <p><b>考查点：</b>盖斯定律算 ΔH、三段式算 K<sub>c</sub>/K<sub>p</sub>、电极反应式、反应速率与平衡移动分析。</p>
+    <div class="example">
+      <p class="q">已知：① C(s)+O<sub>2</sub>(g)=CO<sub>2</sub>(g)&nbsp;&nbsp;ΔH<sub>1</sub>=−393.5 kJ·mol<sup>−1</sup>；② CO(g)+½O<sub>2</sub>(g)=CO<sub>2</sub>(g)&nbsp;&nbsp;ΔH<sub>2</sub>=−283.0 kJ·mol<sup>−1</sup>。求 C(s)+½O<sub>2</sub>(g)=CO(g) 的 ΔH。</p>
+      <p class="a">ΔH = ΔH<sub>1</sub> − ΔH<sub>2</sub> = −393.5 − (−283.0) = −110.5 kJ·mol<sup>−1</sup></p>
+      <p class="r">解析：目标式 = ① − ②（CO<sub>2</sub> 抵消，得 C→CO）。</p>
+      <p class="q" style="margin-top:10px">三段式：N<sub>2</sub>(g)+3H<sub>2</sub>(g)⇌2NH<sub>3</sub>(g)，起始 N<sub>2</sub> 1 mol、H<sub>2</sub> 3 mol 于 2 L 容器，平衡时 n(NH<sub>3</sub>)=0.8 mol，求 K<sub>c</sub>。</p>
+      <p class="r">三段式（mol）：&nbsp; N<sub>2</sub>: 1−0.4=0.6；H<sub>2</sub>: 3−1.2=1.8；NH<sub>3</sub>: 0.8<br>
+         浓度(mol/L)：c(N<sub>2</sub>)=0.3，c(H<sub>2</sub>)=0.9，c(NH<sub>3</sub>)=0.4<br>
+         <span class="a">K<sub>c</sub> = 0.4<sup>2</sup> / (0.3 × 0.9<sup>3</sup>) = 0.16 / 0.2187 ≈ 0.732</span></p>
+    </div>
+    <p><b>破题模板：</b>①ΔH 用"目标式 = Σ(已知式组合)"；②平衡常数先列三段式（起始-转化-平衡），再代 K 表达式；③K<sub>p</sub> 把浓度换成分压 p<sub>i</sub>=总压×物质的量分数；④电极式先分正负/阴阳极，再配平。</p>
+  </div>
+
+  <div class="card required">
+    <span class="tag score">约 14–16 分</span><span class="tag">定量·探究</span>
+    <h3>板块 3 · 化学实验综合题</h3>
+    <p><b>考查点：</b>基础操作（蒸馏/分液/洗涤沉淀）、气体制备、定量测定（滴定/纯度）、性质探究、答题话术。</p>
+    <div class="example">
+      <p class="q">(1) 过滤后为什么要洗涤沉淀？<br>(2) 描述实验现象："向 CuSO<sub>4</sub> 溶液中滴加过量氨水"。</p>
+      <p class="a">(1) 除去沉淀表面附着的可溶性杂质，提高产物纯度。<br>(2) 先产生蓝色沉淀，继续滴加氨水沉淀溶解，得到深蓝色溶液。</p>
+      <p class="r">话术要点：作用类用"防止……/确保……/提高……"；现象类"说位置、说颜色、说状态"。</p>
+    </div>
+    <p><b>破题模板：</b>①操作类答"目的/作用"用模板句；②现象先写"生成什么（颜色+状态）"再写"变化"；③定量计算"关系式法"——列核心元素守恒式，配平后一步到位。</p>
+  </div>
+</section>
+
+<!-- ============ 三、选考 ============ -->
+<section id="elec">
+  <h2>三、选考题（二选一·15 分）</h2>
+  <p class="sub">固定刷自己擅长的模块，考场上不要临时换。</p>
+
+  <div class="card elective">
+    <span class="tag">选修2·物质结构与性质</span>
+    <h3>选考 A · 物质结构与性质</h3>
+    <p><b>考查点：</b>核外电子排布（构造原理/泡利/洪特，Cr、Cu 特例）、杂化与空间构型（VSEPR）、晶体类型与晶胞参数计算。</p>
+    <div class="example">
+      <p class="q">(1) 写出基态 Cr 的价电子排布式；(2) NH<sub>3</sub> 中心原子杂化方式与空间构型；(3) 已知 NaCl 晶胞含 4 个"NaCl 单元"，晶胞边长 a=564 pm，求密度 ρ。</p>
+      <p class="a">(1) 3d<sup>5</sup>4s<sup>1</sup>（半满稳定，特例）；(2) N 为 sp<sup>3</sup> 杂化，三角锥形；<br>
+         (3) ρ = Z·M / (N<sub>A</sub>·a<sup>3</sup>) = 4×58.5×10<sup>−3</sup> / [6.02×10<sup>23</sup> × (564×10<sup>−12</sup>)<sup>3</sup>] ≈ 2.16 g·cm<sup>−3</sup></p>
+    </div>
+    <p><b>破题模板：</b>①电子排布先按"构造原理"，遇 Cr/Cu 改半满/全满；②杂化数 = (中心价电子+配位−电荷)/2；③晶胞 ρ 用万能式 ρ=(Z·M)/(N<sub>A</sub>·a³)，注意单位统一（a 转 m，M 转 kg/mol 得 kg/m³，或转 g/cm³）。</p>
+  </div>
+
+  <div class="card elective">
+    <span class="tag">选修3·有机化学基础</span>
+    <h3>选考 B · 有机化学基础</h3>
+    <p><b>考查点：</b>官能团性质、同分异构体计数（限定条件）、合成路线设计（逆合成分析、官能团保护）。</p>
+    <div class="example">
+      <p class="q">分子式 C<sub>4</sub>H<sub>8</sub>O<sub>2</sub>，且能发生银镜反应的<b>酯类</b>同分异构体有几种？</p>
+      <p class="a">2 种：HCOOCH<sub>2</sub>CH<sub>2</sub>CH<sub>3</sub>、HCOOCH(CH<sub>3</sub>)<sub>2</sub></p>
+      <p class="r">解析：能银镜 ⇒ 含 −OOCH（甲酸酯）；R′ = C<sub>3</sub>H<sub>7</sub>，丙基有正/异 2 种，故 2 种。</p>
+    </div>
+    <p><b>破题模板：</b>①官能团性质"碳碳双键=加成+氧化；羟基=取代/消去/氧化；羧基=酸+酯化；酯基=水解"；②同分异构用"等效氢法/定一移一"，先据限定条件锁官能团；③合成路线"逆合成"：从目标产物倒推，注意官能团保护（如酚羟基先用 −CH<sub>3</sub> 保护再氧化）。</p>
+  </div>
+</section>
+
+<!-- ============ 核心思想 ============ -->
+<section id="idea">
+  <h2>💡 三大核心思想与破题口诀</h2>
+  <div class="grid3">
+    <div class="mini">
+      <h4>① 守恒思想</h4>
+      <p>任何计算先想<b>电子守恒</b>（氧化还原）、<b>电荷守恒</b>（溶液）、<b>物料/质子守恒</b>。多步反应直接盯核心元素列电子等式，秒杀复杂计算。</p>
+      <p><span class="kpill">电子守恒</span><span class="kpill">电荷守恒</span><span class="kpill">物料守恒</span></p>
+    </div>
+    <div class="mini">
+      <h4>② 结构决定性质</h4>
+      <p>工艺题里"看不懂的试剂"一定是<b>除杂 / 调 pH 促水解 / 氧化还原</b>。套路：酸溶 → 除杂 → 分离提纯 → 目标产物。</p>
+      <p><span class="kpill">除杂</span><span class="kpill">调 pH</span><span class="kpill">氧化还原</span></p>
+    </div>
+    <div class="mini">
+      <h4>③ 勒夏特列是墙头草</h4>
+      <p>平衡图像：升温/增压，平衡向<b>削弱</b>改变的方向移动——<b>只能减弱，不能抵消</b>。断点看突变，拐点看谁先平衡。</p>
+      <p><span class="kpill">减弱不抵消</span><span class="kpill">断点</span><span class="kpill">拐点</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 时间策略 ============ -->
+<section id="time">
+  <h2>🗺️ 时间分配与抢分策略</h2>
+  <table>
+    <tr><th>板块</th><th>建议时间</th><th>抢分要点</th></tr>
+    <tr><td>选择题</td><td>40–45 分钟</td><td>难算的 K<sub>sp</sub>/复杂同分异构，<b>先蒙一个并标记</b>，果断跳过，做完大题再回看。</td></tr>
+    <tr><td>工艺流程题</td><td>15 分钟</td><td>先不看具体操作，先盯原料和目标产物，每步只问"这试剂除谁的杂？"</td></tr>
+    <tr><td>原理综合题</td><td>15 分钟</td><td>盖斯定律、平衡常数套公式拿分；电极式先分正负/阴阳极再配平。</td></tr>
+    <tr><td>实验题</td><td>15 分钟</td><td>现象"说位置、说颜色、说状态"；作用用"防止/确保/提高"模板。</td></tr>
+    <tr><td>选考题</td><td>8–10 分钟</td><td>固定刷自己擅长的模块（有机 or 结构），<b>不建议临时换</b>。</td></tr>
+  </table>
+  <div class="banner">🧪 化学是"理科中的文科"：背熟规律与模板，非选择题拿满分不是梦。先把本手册里每个题型的"破题模板"背到脱口而出，再刷对应真题。</div>
+</section>
+
+<!-- ============ 手把手模板 ============ -->
+<section id="tpl">
+  <h2>🛠️ 附：两个手把手模板（你点名要的）</h2>
+
+  <h3>模板 1 · 电极反应式书写 5 步法</h3>
+  <ol class="steps">
+    <li><b>定电极：</b>原电池→负极(氧化/失e<sup>−</sup>)、正极(还原/得e<sup>−</sup>)；电解池→阳极(失e<sup>−</sup>)、阴极(得e<sup>−</sup>)。燃料电池负极通燃料。</li>
+    <li><b>写核心物质：</b>列出该极反应物与产物（如负极 CH<sub>4</sub>→CO<sub>3</sub><sup>2−</sup>），先配平变价元素的原子数。</li>
+    <li><b>配电子：</b>根据化合价变化补 e<sup>−</sup>（失电子写在右边 "− ne<sup>−</sup>"，得电子写在左边 "+ ne<sup>−</sup>"）。</li>
+    <li><b>补环境粒子：</b>酸性补 H<sup>+</sup> 与 H<sub>2</sub>O；碱性补 OH<sup>−</sup> 与 H<sub>2</sub>O；熔融/非水按题给介质。<b>酸性绝不写 OH<sup>−</sup>，碱性绝不写 H<sup>+</sup>。</b></li>
+    <li><b>复核：</b>两边原子数、电荷数均相等即完成。</li>
+  </ol>
+  <div class="note">例：碱性甲烷燃料电池负极 → CH<sub>4</sub> + 10OH<sup>−</sup> − 8e<sup>−</sup> = CO<sub>3</sub><sup>2−</sup> + 7H<sub>2</sub>O（步骤 2–4 连写即得）。</div>
+
+  <h3>模板 2 · K<sub>sp</sub> 计算 3 步法</h3>
+  <ol class="steps">
+    <li><b>写平衡与表达式：</b>如 AgCl(s)⇌Ag<sup>+</sup>+Cl<sup>−</sup>，K<sub>sp</sub>=[Ag<sup>+</sup>][Cl<sup>−</sup>]；Ag<sub>2</sub>CrO<sub>4</sub> 则 K<sub>sp</sub>=[Ag<sup>+</sup>]<sup>2</sup>[CrO<sub>4</sub><sup>2−</sup>]。</li>
+    <li><b>列离子浓度关系：</b>注意<b>同离子效应</b>（已有 Cl<sup>−</sup> 会抑制 AgCl 溶解）；沉淀转化看"溶解度小的向更小的转化"（如 AgCl→AgI，因 K<sub>sp</sub>(AgI)&lt;K<sub>sp</sub>(AgCl)）。</li>
+    <li><b>代入求 [离子] 或判沉淀：</b>比较 Q 与 K<sub>sp</sub>——Q&gt;K<sub>sp</sub> 析出沉淀，Q&lt;K<sub>sp</sub> 不沉淀；求某离子最大浓度直接解 K<sub>sp</sub> 表达式。</li>
+  </ol>
+  <div class="note">例：向 [Cl<sup>−</sup>]=0.01 mol/L 溶液中滴加 AgNO<sub>3</sub>，开始沉淀时 [Ag<sup>+</sup>] = K<sub>sp</sub>(AgCl)/0.01。若要 AgI 先沉而 AgCl 不沉，需 [Ag<sup>+</sup>] 满足 K<sub>sp</sub>(AgI)/[I<sup>−</sup>] &lt; [Ag<sup>+</sup>] &lt; K<sub>sp</sub>(AgCl)/[Cl<sup>−</sup>]。</div>
+</section>
+
+<footer>
+  本手册依据你提供的"化学题型全家桶"大纲设计 · 题型 / 分值 / 模块均 1:1 对应 · 例题与模板可用于直接命题或转化为题库数据<br>
+  如需把它拆成 <code>data-chemistry-types.js</code> 接入你的预习网站（与现有 data-chemistry-*.js 同结构），告诉我即可。
+</footer>
+
+</div>
+</body>
+</html>
