@@ -326,16 +326,33 @@ table.tbl td.mono {
   .traf-cols { grid-template-columns: 1fr; }
 }
 
-/* 自建访客统计 · 图表网格（替换旧的 traf-cols 布局） */
-.traf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-.traf-chart { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 16px; }
-.traf-chart.wide { grid-column: 1 / -1; }
-.traf-chart h3 { font-size: 14px; margin-bottom: 12px; color: var(--text-2); }
-.traf-chart .cv { position: relative; height: 300px; }
-.traf-chart canvas { width: 100% !important; height: 100% !important; }
+/* 自建访客统计 · 简洁版（大数字卡片 + 一张趋势图 + 文字排行榜） */
+.card.t-today-pv::after { background: var(--accent); }
+.card.t-today-uv::after { background: var(--ok); }
+.card.t-pv::after { background: var(--warn); }
+.card.t-uv::after { background: #8b5cf6; }
+
+.traf-sec { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 18px 20px; margin-bottom: 18px; }
+.traf-h { font-size: 15px; color: var(--text); margin-bottom: 4px; font-weight: 600; }
+.traf-cap { font-size: 12.5px; color: var(--text-3); margin: 0 0 12px; }
+.traf-sec .cv { position: relative; height: 260px; }
+.traf-sec canvas { width: 100% !important; height: 100% !important; }
+
+.traf-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; }
+.traf-col { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 18px 20px; }
+.traf-col .traf-cap { margin-bottom: 14px; }
+
+.rank { display: flex; flex-direction: column; gap: 13px; }
+.rank-row { display: grid; grid-template-columns: 1fr 78px; grid-template-areas: "name val" "bar bar"; gap: 5px 10px; align-items: center; }
+.rank-name { grid-area: name; font-size: 13.5px; color: var(--text); display: flex; align-items: center; gap: 8px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rank-no { flex: 0 0 auto; width: 20px; height: 20px; border-radius: 50%; background: var(--line); color: var(--text-2); font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; }
+.rank-val { grid-area: val; font-size: 13px; color: var(--text-2); text-align: right; font-variant-numeric: tabular-nums; }
+.rank-bar { grid-area: bar; height: 7px; background: var(--line); border-radius: 6px; overflow: hidden; }
+.rank-bar span { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), var(--ok)); border-radius: 6px; }
+
 .muted { color: var(--text-3); font-size: 12.5px; }
 .seg.small button { padding: 5px 12px; font-size: 12.5px; }
 @media (max-width: 760px) {
-  .traf-grid { grid-template-columns: 1fr; }
+  .traf-cols { grid-template-columns: 1fr; }
 }
 
