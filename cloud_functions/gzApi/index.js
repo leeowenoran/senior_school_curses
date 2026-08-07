@@ -17,6 +17,8 @@ const app = cloudbase.init({});
 const db = app.database();
 const AUTH = db.collection('users_auth');
 const DATA = db.collection('users_data');
+// 自建轻量访客统计：匿名访客的页面浏览事件（path/referrer/ua/vid/ts/day）
+const VISIT = db.collection('visit_logs');
 
 /**
  * 服务端签名密钥。
@@ -567,6 +569,138 @@ function apiResponse(result, isHttp) {
   };
 }
 
+/* ===================== 自建轻量访客统计 ===================== */
+
+// 解析 User-Agent：返回 { device, browser }
+function parseUA(ua) {
+  ua = (ua || '').toLowerCase();
+  var device = '桌面端';
+  if (/mobile|android|iphone|ipod|blackberry|windows phone|webos|harmony|hongmeng/.test(ua)) device = '手机';
+  else if (/ipad|tablet|kindle|playbook|silk/.test(ua)) device = '平板';
+  var browser = '其他';
+  if (/edg\//.test(ua)) browser = 'Edge';
+  else if (/opr\/|opera/.test(ua)) browser = 'Opera';
+  else if (/chrome\/|crios\/|chromium/.test(ua)) browser = 'Chrome';
+  else if (/firefox\/|fxios/.test(ua)) browser = 'Firefox';
+  else if (/safari\//.test(ua) && !/chrome\//.test(ua)) browser = 'Safari';
+  else if (/micromessenger/.test(ua)) browser = '微信内置';
+  else if (/msie|trident/.test(ua)) browser = 'IE';
+  return { device: device, browser: browser };
+}
+
+function hostOf(url) {
+  try {
+    if (!url) return '';
+    var u = new URL(url);
+    return u.hostname || '';
+  } catch (e) { return ''; }
+}
+
+// 记录一次页面访问（开放接口，无需登录/管理员）
+async function handleLogVisit(payload) {
+  var p = payload || {};
+  var rec = {
+    path: String(p.path || '').slice(0, 400) || '(unknown)',
+    referrer: String(p.referrer || '').slice(0, 500),
+    ua: String(p.ua || '').slice(0, 500),
+    vid: String(p.vid || '').slice(0, 64),
+    ts: (typeof p.ts === 'number' && p.ts > 0) ? p.ts : Date.now(),
+    day: String(p.day || '').slice(0, 12)
+  };
+  try {
+    await VISIT.add(rec);
+    return { ok: true };
+  } catch (e) {
+    var msg = (e && e.message) ? e.message : '';
+    if (/not exist|不存在|no such|missing/i.test(msg)) {
+      try { await db.createCollection('visit_logs'); await VISIT.add(rec); return { ok: true }; }
+      catch (e2) { return { ok: false, msg: '建集合失败: ' + ((e2 && e2.message) || e2) }; }
+    }
+    return { ok: false, msg: '记录失败: ' + msg };
+  }
+}
+
+// 聚合访客统计（仅管理员）
+async function handleVisitStats(payload) {
+  var admin = requireAdmin(payload && payload.token);
+  if (!admin) return { ok: false, msg: '无权限：需要管理员身份' };
+
+  var days = parseInt(payload && payload.days, 10) || 30;
+  days = Math.min(Math.max(days, 1), 365);
+  var end = Date.now();
+  var start = end - days * 86400000;
+
+  var recs = [];
+  var skip = 0; var PAGE = 1000; var guard = 0;
+  while (guard < 80) {
+    var res = await VISIT.orderBy('ts', 'desc').skip(skip).limit(PAGE).get();
+    var data = (res && res.data) || [];
+    var hitOlder = false;
+    for (var i = 0; i < data.length; i++) {
+      var d = data[i];
+      if (typeof d.ts === 'number' && d.ts < start) { hitOlder = true; continue; }
+      recs.push(d);
+    }
+    if (data.length < PAGE || hitOlder) break;
+    skip += PAGE; guard++;
+  }
+
+  var pv = recs.length;
+  var uvSet = {};
+  var daily = {};
+  var pageCnt = {};
+  var refCnt = {};
+  var devCnt = {};
+  var brCnt = {};
+  var SITE_HOST = hostOf('https://shanghai-env1-d3gq2odzh654c9264-1462691854.tcloudbaseapp.com/');
+
+  recs.forEach(function (r) {
+    if (r.vid) uvSet[r.vid] = 1;
+    var day = (r.day && /^\d{4}-\d{2}-\d{2}/.test(r.day)) ? r.day.slice(0, 10) : new Date((r.ts || end) - 0).toISOString().slice(0, 10);
+    if (!daily[day]) daily[day] = { pv: 0, uv: {} };
+    daily[day].pv++;
+    if (r.vid) daily[day].uv[r.vid] = 1;
+    var pg = (r.path || '(unknown)');
+    pageCnt[pg] = (pageCnt[pg] || 0) + 1;
+    var h = hostOf(r.referrer);
+    var ref = h && h !== SITE_HOST ? h : '直接访问';
+    refCnt[ref] = (refCnt[ref] || 0) + 1;
+    var ua = parseUA(r.ua);
+    devCnt[ua.device] = (devCnt[ua.device] || 0) + 1;
+    brCnt[ua.browser] = (brCnt[ua.browser] || 0) + 1;
+  });
+
+  var uv = Object.keys(uvSet).length;
+
+  var trend = [];
+  for (var k = days - 1; k >= 0; k--) {
+    var dt = new Date(end - k * 86400000);
+    var dk = dt.toISOString().slice(0, 10);
+    var row = daily[dk] || { pv: 0, uv: {} };
+    var duv = 0; for (var u in row.uv) duv++;
+    trend.push({ day: dk, pv: row.pv, uv: duv });
+  }
+
+  function top(obj, n) {
+    return Object.keys(obj).map(function (k) { return { name: k, value: obj[k] }; })
+      .sort(function (a, b) { return b.value - a.value; }).slice(0, n);
+  }
+
+  return {
+    ok: true,
+    stats: {
+      rangeDays: days,
+      pv: pv,
+      uv: uv,
+      trend: trend,
+      topPages: top(pageCnt, 15),
+      sources: top(refCnt, 10),
+      devices: top(devCnt, 6),
+      browsers: top(brCnt, 8)
+    }
+  };
+}
+
 exports.main = async (event, context) => {
   // 处理 CORS 预检
   if (event && event.httpMethod === 'OPTIONS') {
@@ -592,6 +726,8 @@ exports.main = async (event, context) => {
       case 'adminOverview': return apiResponse(await handleAdminOverview(payload), isHttp);
       case 'adminUserDetail': return apiResponse(await handleAdminUserDetail(payload), isHttp);
       case 'adminContent': return apiResponse(await handleAdminContent(payload), isHttp);
+      case 'logVisit': return apiResponse(await handleLogVisit(payload), isHttp);
+      case 'visitStats': return apiResponse(await handleVisitStats(payload), isHttp);
       default: return apiResponse({ ok: false, msg: '未知操作: ' + action }, isHttp);
     }
   } catch (e) {

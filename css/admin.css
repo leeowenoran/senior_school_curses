@@ -326,3 +326,16 @@ table.tbl td.mono {
   .traf-cols { grid-template-columns: 1fr; }
 }
 
+/* 自建访客统计 · 图表网格（替换旧的 traf-cols 布局） */
+.traf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.traf-chart { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 16px; }
+.traf-chart.wide { grid-column: 1 / -1; }
+.traf-chart h3 { font-size: 14px; margin-bottom: 12px; color: var(--text-2); }
+.traf-chart .cv { position: relative; height: 300px; }
+.traf-chart canvas { width: 100% !important; height: 100% !important; }
+.muted { color: var(--text-3); font-size: 12.5px; }
+.seg.small button { padding: 5px 12px; font-size: 12.5px; }
+@media (max-width: 760px) {
+  .traf-grid { grid-template-columns: 1fr; }
+}
+

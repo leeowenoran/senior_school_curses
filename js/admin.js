@@ -462,49 +462,124 @@
     });
   }
 
+  /* ---------- 访客流量（自建 · 数据存自有 CloudBase visit_logs）---------- */
+  var trafficDays = 30;
+  var trafficCharts = {};
+  function destroyTrafficCharts() {
+    Object.keys(trafficCharts).forEach(function (k) {
+      try { trafficCharts[k].destroy(); } catch (e) { /* 忽略 */ }
+    });
+    trafficCharts = {};
+  }
+
   function renderTraffic() {
-    var cfg = window.GZ_ANALYTICS || {};
-    var id = cfg.baiduId || '';
-    var embed = cfg.embedUrl || '';
-
-    var statusCard = id
-      ? card('c1', '🔧 百度统计 ID', '已配置', '', '站点 ID：' + esc(id.slice(0, 6)) + '…（详见 js/analytics.js）')
-      : card('c1', '🔧 百度统计 ID', '未配置', '', '编辑 js/analytics.js 填入 BAIDU_ID 即开始统计');
-
-    var metrics = [
-      '页面浏览量 PV / 独立访客 UV',
-      '实时在线访客',
-      '来源网站与搜索引擎（微信/搜索/直链）',
-      '地域分布（省 / 市）',
-      '设备 / 浏览器 / 网络运营商',
-      '受访页面与离开页 Top（定位热门科目）',
-      '页面点击热力图',
-      '新老访客与访问时长'
-    ];
-    var metricHtml = '<ul class="traf-metrics">' +
-      metrics.map(function (m) { return '<li>' + esc(m) + '</li>'; }).join('') + '</ul>';
-
-    var embedHtml = embed
-      ? '<div class="traf-embed"><iframe src="' + esc(embed) + '" width="100%" height="640" ' +
-        'frameborder="0" allowfullscreen loading="lazy"></iframe></div>'
-      : '<div class="empty"><span class="big">🖼️</span>' +
-        '想在本页<b>内联看板</b>？去百度统计「报告分享」生成【嵌入链接】，填到 ' +
-        '<code>js/analytics.js</code> 的 <code>EMBED_URL</code> 即可（注意：要填「分享嵌入链接」，' +
-        '不是登录页地址，否则会被浏览器拦截）。</div>';
-
-    var head = '<span class="hint">数据由第三方百度统计提供 · 与学习行为并排即「统一看板」</span>' +
+    destroyTrafficCharts();
+    var seg = [7, 30, 90].map(function (n) {
+      return '<button data-td="' + n + '" class="' + (n === trafficDays ? 'on' : '') + '">' + n + ' 天</button>';
+    }).join('');
+    var head = '<span class="hint">数据存于你自己的 CloudBase（visit_logs）· 与「学习行为」并排即统一看板</span>' +
       '<div class="spacer"></div>' +
-      '<a class="btn sm" href="https://tongji.baidu.com/" target="_blank" rel="noopener">在百度统计查看完整报表 ↗</a>';
-
+      '<div class="seg small" id="trafSeg">' + seg + '</div>';
     $('body').innerHTML =
-      '<div class="cards">' + statusCard +
-        card('c2', '🌐 数据来源', '百度统计', '', '第三方 · 免费 · 国内稳定') +
-      '</div>' +
-      panel('访客流量看板', head,
-        '<div class="traf-cols">' +
-          '<div class="traf-col"><h3>可统计的指标</h3>' + metricHtml + '</div>' +
-          '<div class="traf-col"><h3>内联报表</h3>' + embedHtml + '</div>' +
-        '</div>');
+      '<div class="cards" id="trafCards"></div>' +
+      panel('访客流量看板', head, '<div id="trafBody"><div class="empty"><div class="spin"></div>加载访客统计…</div></div>');
+    Array.prototype.forEach.call(document.querySelectorAll('#trafSeg button'), function (b) {
+      b.onclick = function () {
+        trafficDays = parseInt(b.getAttribute('data-td'), 10) || 30;
+        Array.prototype.forEach.call(document.querySelectorAll('#trafSeg button'), function (x) { x.classList.remove('on'); });
+        b.classList.add('on');
+        loadTraffic();
+      };
+    });
+    loadTraffic();
+  }
+
+  function loadTraffic() {
+    var token = localStorage.getItem(TOKEN_KEY);
+    if (!token) {
+      destroyTrafficCharts();
+      $('trafBody').innerHTML = '<div class="empty">请先以管理员身份登录后再查看访客统计。</div>';
+      return;
+    }
+    $('trafBody').innerHTML = '<div class="empty"><div class="spin"></div>加载访客统计…</div>';
+    api('visitStats', { token: token, days: trafficDays }).then(function (res) {
+      if (!res || !res.ok) {
+        $('trafBody').innerHTML = '<div class="empty">加载失败：' + esc((res && res.msg) || '未知错误') +
+          '<br><span class="muted">若提示无权限，请重新登录管理员账号。</span></div>';
+        return;
+      }
+      paintTraffic(res.stats || {});
+    }).catch(function (e) {
+      $('trafBody').innerHTML = '<div class="empty">请求异常：' + esc((e && e.message) || e) + '</div>';
+    });
+  }
+
+  function paintTraffic(s) {
+    destroyTrafficCharts();
+    var pv = s.pv || 0;
+    var uv = s.uv || 0;
+    $('trafCards').innerHTML =
+      card('tpv', '👁️ 页面浏览量 PV', String(pv), '', '近 ' + (s.rangeDays || 30) + ' 天') +
+      card('tuv', '👤 独立访客 UV', String(uv), '', '按访客 ID 去重');
+
+    if (!pv) {
+      $('trafBody').innerHTML = '<div class="empty">近 ' + (s.rangeDays || 30) +
+        ' 天暂无访客记录。部署后让用户访问网站，稍等几分钟即可在此看到数据。</div>';
+      return;
+    }
+    if (typeof Chart === 'undefined') {
+      $('trafBody').innerHTML = '<div class="empty">图表库（Chart.js）未加载，请检查网络后刷新页面。</div>';
+      return;
+    }
+
+    $('trafBody').innerHTML =
+      '<div class="traf-grid">' +
+        '<div class="traf-chart wide"><h3>📈 按天趋势（PV / UV）</h3><div class="cv"><canvas id="trafTrend"></canvas></div></div>' +
+        '<div class="traf-chart"><h3>📄 热门页面 Top</h3><div class="cv"><canvas id="trafPages"></canvas></div></div>' +
+        '<div class="traf-chart"><h3>🔗 访问来源</h3><div class="cv"><canvas id="trafSources"></canvas></div></div>' +
+        '<div class="traf-chart"><h3>📱 设备分布</h3><div class="cv"><canvas id="trafDevices"></canvas></div></div>' +
+      '</div>';
+
+    var t = s.trend || [];
+    trafficCharts.trend = new Chart(document.getElementById('trafTrend'), {
+      type: 'line',
+      data: {
+        labels: t.map(function (x) { return x.day; }),
+        datasets: [
+          { label: 'PV', data: t.map(function (x) { return x.pv; }), borderColor: '#3b82f6', backgroundColor: 'rgba(59,130,246,.12)', fill: true, tension: .3 },
+          { label: 'UV', data: t.map(function (x) { return x.uv; }), borderColor: '#10b981', backgroundColor: 'rgba(16,185,129,.10)', fill: true, tension: .3 }
+        ]
+      },
+      options: { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
+        plugins: { legend: { position: 'top' } }, scales: { y: { beginAtZero: true, ticks: { precision: 0 } } } }
+    });
+
+    var topPages = s.topPages || [];
+    if (topPages.length) {
+      trafficCharts.pages = new Chart(document.getElementById('trafPages'), {
+        type: 'bar',
+        data: { labels: topPages.map(function (x) { return x.name; }), datasets: [{ label: '浏览量', data: topPages.map(function (x) { return x.value; }), backgroundColor: '#6366f1' }] },
+        options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { precision: 0 } } } }
+      });
+    } else { document.getElementById('trafPages').parentNode.innerHTML = '<p class="muted">无数据</p>'; }
+
+    var sources = s.sources || [];
+    if (sources.length) {
+      trafficCharts.sources = new Chart(document.getElementById('trafSources'), {
+        type: 'doughnut',
+        data: { labels: sources.map(function (x) { return x.name; }), datasets: [{ data: sources.map(function (x) { return x.value; }), backgroundColor: ['#3b82f6','#10b981','#f59e0b','#ef4444','#8b5cf6','#06b6d4','#ec4899','#84cc16','#f97316','#64748b'] }] },
+        options: { responsive: true, maintainAspectRatio: false }
+      });
+    } else { document.getElementById('trafSources').parentNode.innerHTML = '<p class="muted">无数据</p>'; }
+
+    var devices = s.devices || [];
+    if (devices.length) {
+      trafficCharts.devices = new Chart(document.getElementById('trafDevices'), {
+        type: 'doughnut',
+        data: { labels: devices.map(function (x) { return x.name; }), datasets: [{ data: devices.map(function (x) { return x.value; }), backgroundColor: ['#0ea5e9','#22c55e','#eab308'] }] },
+        options: { responsive: true, maintainAspectRatio: false }
+      });
+    } else { document.getElementById('trafDevices').parentNode.innerHTML = '<p class="muted">无数据</p>'; }
   }
 
   function renderAll() {
