@@ -3590,362 +3590,1403 @@
         { q: '综合题常要求先分析产品、再提出改进。下列对“综合题答题”的认识，正确的是？', opts: ['只需画图不用说明', '应结合人机关系、结构、材料、工艺等多角度分析，并给出有依据的改进', '只写价格', '随便写'], a: 'B', exp: '通用技术综合题强调在真实情境下综合运用知识：从人机、结构、流程、系统、控制等角度分析，并提出可落地的改进方案，言之有据。', diff: 'medium', src: '通用技术（模拟）' },
         { q: '【综合题】某小区垃圾分类亭存在“雨天投放不便、标识不清、异味外溢”问题。请综合运用人机关系、结构、流程等知识，提出三条改进措施并说明理由。', a: '①人机/健康：加盖防雨顶棚与投递口遮檐，雨天可正常投放且避免雨水进桶；投递口高度与开口大小符合人体尺度，方便各类居民使用（体现高效、健康、舒适、安全）。②结构/材料：箱体改用密封性更好的结构并内置除臭滤芯或活性炭，减少异味外溢；外壳用耐腐蚀、易清洁材料。③流程/管理：优化“投放→满溢提醒→清运”流程，增设满溢传感与定时清运标识，提升收运效率。三条措施分别对应人机、结构、流程维度，体现综合应用能力。', exp: '综合题范本：按“问题→对应维度（人机/结构/流程/系统/控制）→具体措施→预期效果”作答；多维度、有依据、可落地是高分关键。', diff: 'hard', src: '通用技术（模拟）' }
       ],
-      'english::rd_b': [
+            'english::rd_b': [
         {
-          q: 'Last summer I volunteered at a local animal shelter. One rainy afternoon a small trembling dog was brought in. He had been abandoned and was afraid of everyone. I spent hours sitting quietly beside his cage and reading aloud until he finally let me touch his head. Weeks later a family came to adopt him. He wagged his tail and looked back at me once, as if to say thank you. That moment taught me that patience and kindness can reach even the most frightened hearts.',
-          diff: 'medium', src: '高考英语阅读示例（B篇·记叙文）',
+          q: "Terri Bolton is a dab hand when it comes to DIY (do-it-yourself). Skilled at putting up shelves and piecing together furniture, she never pays someone else to do a job she can do herself.\n\nShe credits these skills to her late grandfather and builder Derek Lloyd. From the age of six, Terri, now 26, accompanied Derek to work during her school holidays. A day's work was rewarded with £5 in pocket money. She says: \"I'm sure I wasn't much of a help to start with. But when Derek built our family house about eight years ago, I was heavily involved (参与), painting the rooms and putting down the flooring throughout the house. It took weeks and it was back-breaking work, but I know he was proud of my skills.\"\n\nTerri, who now rents a house with friends in Wandsworth, South West London, says DIY also saves her from losing any deposit when a tenancy (租期) comes to an end. She adds: \"I've moved house many times and I always like to personalise my room and put up pictures. So, it's been useful to know how to cover up holes and repaint a room to avoid any charges when I've moved out.\"\n\nWith millions of people likely to take on DIY projects over the coming weeks, new research shows that more than half of people are planning to make the most of the long, warm summer days to get jobs done. The average spend per project will be around £823. Two thirds of people aim to improve their comfort while at home. A fifth wish to increase the value of their homes. Though DIY has traditionally been seen as a male hobby, the research shows it is women now leading the charge.",
+          diff: "medium", src: "2023年高考英语全国甲卷 阅读理解B篇",
           subs: [
-            { q: 'Why was the dog trembling when he first arrived?', opts: ['He was cold', 'He had been abandoned and was scared', 'He was hungry', 'He was sick'], a: 'B', exp: '原文第一段提到 He had been abandoned and was afraid of everyone，说明小狗被遗弃且害怕所有人，所以发抖。', diff: 'easy' },
-            { q: 'What is the main idea of the passage?', opts: ['Dogs make the best pets', 'Kindness and patience can comfort the frightened', 'Volunteering is always fun', 'Animal shelters need more help'], a: 'B', exp: '文章主旨是耐心与善意能温暖最胆怯的生命，对应 B。', diff: 'medium' },
-            { q: 'How did the writer help the dog?', opts: ['By giving him food', 'By sitting quietly and reading to him', 'By taking him home', 'By playing with other dogs'], a: 'B', exp: '第二段 I spent hours sitting quietly beside his cage and reading aloud 说明作者安静地陪着它、念书给它听。', diff: 'medium' },
-            { q: 'The word adopt in the last paragraph is closest in meaning to ____.', opts: ['收养', '训练', '遗弃', '治疗'], a: 'A', exp: 'adopt 意为收养，文中指一家人来领养这只狗。', diff: 'easy' }
+            {
+              q: "Which is closest in meaning to \"a dab hand\" in paragraph 1?",
+              opts: ["A. An artist.", "B. A winner.", "C. A specialist.", "D. A pioneer."],
+              a: "C",
+              exp: "词义猜测题。划线短语后紧接 \"Skilled at putting up shelves and piecing together furniture, she never pays someone else to do a job she can do herself\"，说明她是DIY方面的行家里手，故 a dab hand 意为\"能手、行家\"，与 specialist 最接近。",
+              diff: "easy"
+            },
+            {
+              q: "Why did Terri's grandfather give her £5 a day?",
+              opts: ["A. For a birthday gift.", "B. As a treat for her work.", "C. To support her DIY projects.", "D. To encourage her to take up a hobby."],
+              a: "B",
+              exp: "细节理解题。第二段 \"A day's work was rewarded with £5 in pocket money\" 表明这5英镑是对她一天劳动的奖励、犒劳，故选B。",
+              diff: "easy"
+            },
+            {
+              q: "How did Terri avoid losing the deposit on the house she rented?",
+              opts: ["A. By making it look like before.", "B. By furnishing it herself.", "C. By splitting the rent with a roommate.", "D. By cancelling the rental agreement."],
+              a: "A",
+              exp: "推理判断题。第三段说她懂得 \"how to cover up holes and repaint a room to avoid any charges when I've moved out\"，即把房间恢复成原样以免被扣押金，故选A。",
+              diff: "medium"
+            },
+            {
+              q: "What trend in DIY does the research show?",
+              opts: ["A. It is becoming more costly.", "B. It is getting more time-consuming.", "C. It is turning into a seasonal industry.", "D. It is gaining popularity among females."],
+              a: "D",
+              exp: "细节理解题。末段最后一句 \"Though DIY has traditionally been seen as a male hobby, the research shows it is women now leading the charge\" 表明如今女性成为DIY主力，即DIY在女性中越来越流行，故选D。",
+              diff: "medium"
+            }
           ]
         },
         {
-          q: 'A small bookshop stood at the corner of our street for over fifty years. Its owner, an old man named Mr. Hale, knew every title on his shelves. As a child I would spend rainy afternoons there, reading without buying. Mr. Hale never hurried me. When I turned twelve, he gave me a worn copy of my favorite book and said, Keep it. Books are meant to travel. Years later the shop closed, but I still keep that book. Whenever I open it, the smell of old paper takes me back to those quiet afternoons and the man who taught me that some gifts are given freely.',
-          diff: 'medium', src: '高考英语阅读示例（B篇·记叙文）',
+          q: "When almost everyone has a mobile phone, why are more than half of Australian homes still paying for a landline (座机)?\n\nThese days you'd be hard pressed to find anyone in Australia over the age of 15 who doesn't own a mobile phone. In fact plenty of younger kids have one in their pocket. Practically everyone can make and receive calls anywhere, anytime.\n\nStill, 55 percent of Australians have a landline phone at home and only just over a quarter (29%) rely only on their smartphones, according to a survey (调查). Of those Australians who still have a landline, a third concede that it's not really necessary and they're keeping it as a security blanket — 19 percent say they never use it while a further 13 percent keep it in case of emergencies. I think my home falls into that category.\n\nMore than half of Australian homes are still choosing to stick with their home phone. Age is naturally a factor (因素) — only 58 percent of generation Ys still use landlines now and then, compared to 84 percent of Baby Boomers who've perhaps had the same home number for 50 years.\n\nAge isn't the only factor; I'd say it's also to do with the makeup of your household. Generation Xers with young families, like my wife and I, can still find it convenient to have a home phone rather than providing a mobile phone for every family member. That said, to be honest the only people who ever ring our home phone are our Baby Boomer parents, to the point where we play a game and guess who is calling before we pick up the phone (using Caller ID would take the fun out of it).\n\nHow attached are you to your landline? How long until they go the way of gas street lamps and morning milk deliveries?",
+          diff: "medium", src: "2021年高考英语全国乙卷 阅读理解B篇",
           subs: [
-            { q: 'Why did the writer spend afternoons in the bookshop as a child?', opts: ['To buy books', 'To read without buying', 'To help Mr. Hale', 'To escape his family'], a: 'B', exp: '原文提到 I would spend rainy afternoons there, reading without buying，说明作者小时候常去书店免费阅读。', diff: 'easy' },
-            { q: 'What did Mr. Hale give the writer when he turned twelve?', opts: ['A new book', 'A worn copy of his favorite book', 'Some money', 'A shelf'], a: 'B', exp: '文中 Mr. Hale gave me a worn copy of my favorite book，即一本破旧的他最爱的书。', diff: 'easy' },
-            { q: 'What does the sentence "Books are meant to travel" mean?', opts: ['Books should be sold', 'Books should be read by many people', 'Books are heavy', 'Books belong to shops'], a: 'B', exp: '老人把书送给作者，意思是书应在不同读者间流传、被更多人阅读，而非一直滞留在架上。', diff: 'medium' },
-            { q: 'What is the main idea of the passage?', opts: ['Old bookshops are useless', 'A kind old man taught the value of sharing', 'Children should read more', 'Shops must close'], a: 'B', exp: '文章通过旧书店老人的善意，传达“有些礼物应无偿分享”的主题，B 最贴切。', diff: 'medium' }
+            {
+              q: "What does paragraph 2 mainly tell us about mobile phones?",
+              opts: ["A. Their target users.", "B. Their wide popularity.", "C. Their major functions.", "D. Their complex design."],
+              a: "B",
+              exp: "段落大意题。第二段说在澳大利亚很难找到15岁以上不用手机的人，很多更小的孩子也有手机，几乎人人都能随时随地打接电话，重在说明手机普及面广，故选B。",
+              diff: "easy"
+            },
+            {
+              q: "What does the underlined word \"concede\" in paragraph 3 mean?",
+              opts: ["A. Admit.", "B. Argue.", "C. Remember.", "D. Remark."],
+              a: "A",
+              exp: "词义猜测题。语境为\"在仍保留座机的澳大利亚人中，三分之一的人 concede 座机并非真的必要\"，此处是承认这一事实，故 concede 意为\"承认\"，选A。",
+              diff: "easy"
+            },
+            {
+              q: "What can we say about Baby Boomers?",
+              opts: ["A. They like smartphone games.", "B. They enjoy guessing callers' identity.", "C. They keep using landline phones.", "D. They are attached to their family."],
+              a: "C",
+              exp: "推理判断题。第四段说84%的婴儿潮一代可能用同一个家庭号码长达50年，第五段又说只有婴儿潮一代的父母才会打家里的座机，可推知他们一直在使用座机，故选C。",
+              diff: "medium"
+            },
+            {
+              q: "What can be inferred about the landline from the last paragraph?",
+              opts: ["A. It remains a family necessity.", "B. It will fall out of use some day.", "C. It may increase daily expenses.", "D. It is as important as the gas light."],
+              a: "B",
+              exp: "推理判断题。末段问座机还要多久会\"go the way of gas street lamps and morning milk deliveries\"，而煤气路灯和晨间送奶都已退出历史舞台，暗示座机终有一天也会被弃用，故选B。",
+              diff: "medium"
+            }
           ]
         },
         {
-          q: 'Amy had never run more than a mile, yet she signed up for the city marathon to honor her late father, who had loved running. On race day the heat was fierce. By the eighteenth mile her legs burned and she wanted to quit. Then a stranger on the sidewalk handed her a cup of water and shouted, Your father would be proud. Those words carried her to the finish line. She never met the stranger again, but she keeps a photo of that day. She says the marathon taught her that we rarely finish alone, and someone, seen or unseen, always lends a hand.',
-          diff: 'medium', src: '高考英语阅读示例（B篇·记叙文）',
+          q: "Returning to a book you've read many times can feel like drinks with an old friend. There's a welcome familiarity — but also sometimes a slight suspicion that time has changed you both, and thus the relationship. But books don't change, people do. And that's what makes the act of rereading so rich and transformative.\n\nThe beauty of rereading lies in the idea that our bond with the work is based on our present mental register. It's true, the older I get, the more I feel time has wings. But with reading, it's all about the present. It's about the now and what one contributes to the now, because reading is a give and take between author and reader. Each has to pull their own weight.\n\nThere are three books I reread annually. The first, which I take to reading every spring, is Ernest Hemingway's A Moveable Feast. Published in 1964, it's his classic memoir of 1920s Paris. The language is almost intoxicating (令人陶醉的), an aging writer looking back on an ambitious yet simpler time. Another is Annie Dillard's Holy the Firm, her poetic 1975 ramble (随笔) about everything and nothing. The third book is Julio Cortazar's Save Twilight: Selected Poems, because poetry. And because Cortazar.\n\nWhile I tend to buy a lot of books, these three were given to me as gifts, which might add to the meaning I attach to them. But I imagine that, while money is indeed wonderful and necessary, rereading an author's work is the highest currency a reader can pay them. The best books are the ones that open further as time passes. But remember, it's you that has to grow and read and reread in order to better understand your friends.",
+          diff: "hard", src: "2020年高考英语全国卷I 阅读理解B篇",
           subs: [
-            { q: 'Why did Amy join the marathon?', opts: ['To win a prize', 'To honor her late father', 'To make friends', 'To lose weight'], a: 'B', exp: '第一段 she signed up for the city marathon to honor her late father，表明为纪念已故父亲而参赛。', diff: 'easy' },
-            { q: 'What happened at the eighteenth mile?', opts: ['She won the race', 'She felt like giving up', 'It began to rain', 'She met her father'], a: 'B', exp: 'By the eighteenth mile her legs burned and she wanted to quit，说明她几乎想放弃。', diff: 'medium' },
-            { q: 'How did the stranger help Amy?', opts: ['By running with her', 'By giving water and encouragement', 'By calling her family', 'By lending money'], a: 'B', exp: 'a stranger handed her water and shouted encouraging words，即递水并给予鼓励。', diff: 'medium' },
-            { q: 'What lesson did Amy learn from the marathon?', opts: ['Running is easy', 'We often finish with help from others', 'Strangers are dangerous', 'Prizes matter most'], a: 'B', exp: '结尾 we rarely finish alone, and someone always lends a hand 点明“我们常借助他人之力完成目标”的道理。', diff: 'hard' }
+            {
+              q: "Why does the author like rereading?",
+              opts: ["A. It evaluates the writer-reader relationship.", "B. It's a window to a whole new world.", "C. It's a substitute for drinking with a friend.", "D. It extends the understanding of oneself."],
+              a: "D",
+              exp: "推理判断题。第一段说\"books don't change, people do\"，第二段指出重读的美妙在于与作品的联系取决于当下的心境，末段又说要靠自己成长、阅读和重读才能更好地理解\"朋友\"，说明重读能加深对自我的理解，故选D。",
+              diff: "hard"
+            },
+            {
+              q: "What do we know about the book A Moveable Feast?",
+              opts: ["A. It's a brief account of a trip.", "B. It's about Hemingway's life as a young man.", "C. It's a record of a historic event.", "D. It's about Hemingway's friends in Paris."],
+              a: "B",
+              exp: "细节理解题。第三段说该书是海明威关于20世纪20年代巴黎的经典回忆录，是\"an aging writer looking back on an ambitious yet simpler time\"，即年长作家回顾自己年轻时的生活，故选B。",
+              diff: "medium"
+            },
+            {
+              q: "What does the underlined word \"currency\" in paragraph 4 refer to?",
+              opts: ["A. Debt.", "B. Reward.", "C. Allowance.", "D. Face value."],
+              a: "B",
+              exp: "词义猜测题。作者把金钱与重读作对比，认为重读作家的作品是读者能付给作家的\"最高币值\"，实指对作家最高的回报，故 currency 在此意为\"回报\"，选B。",
+              diff: "hard"
+            },
+            {
+              q: "What can we infer about the author from the text?",
+              opts: ["A. He loves poetry.", "B. He's an editor.", "C. He's very ambitious.", "D. He teaches reading."],
+              a: "A",
+              exp: "推理判断题。第三段提到他每年重读的第三本书是科塔萨尔的诗选《Save Twilight》，理由就是\"because poetry\"，可推知作者热爱诗歌，故选A。",
+              diff: "medium"
+            }
           ]
         },
         {
-          q: 'When I was nine, I broke my neighbor window with a baseball. Terrified, I ran home and said nothing. For weeks I felt a heavy guilt. One evening my mother noticed I was quiet and asked what was wrong. I finally told her. The next day she walked with me to the neighbor house, and I apologized and offered my savings to fix it. To my surprise, the neighbor smiled and said, Honesty is worth more than any window. That day I learned that facing a mistake takes courage, but it frees the heart.',
-          diff: 'medium', src: '高考英语阅读示例（B篇·记叙文）',
+          q: "In 1916, two girls of wealthy families, best friends from Auburn, N.Y. — Dorothy Woodruff and Rosamond Underwood — traveled to a settlement in the Rocky Mountains to teach in a one-room schoolhouse. The girls had gone to Smith College. They wore expensive clothes. So for them to move to Elkhead, Colo. to instruct the children whose shoes were held together with string was a surprise. Their stay in Elkhead is the subject of Nothing Daunted: The Unexpected Education of Two Society Girls in the West by Dorothy Wickenden, who is a magazine editor and Dorothy Woodruff's granddaughter.\n\nWhy did they go then? Well, they wanted to do something useful. Soon, however, they realized what they had undertaken.\n\nThey moved in with a local family, the Harrisons, and, like them, had little privacy, rare baths, and a blanket of snow on their quilt when they woke up in the morning. Some mornings, Rosamond and Dorothy would arrive at the schoolhouse to find the children weeping from the cold. In spring, the snow was replaced by mud over ice.\n\nIn Wickenden's book, she expanded on the history of the West and also on feminism, which of course influenced the girls' decision to go to Elkhead. A hair-raising section concerns the building of the railroads, which entailed (牵涉) drilling through the Rockies, often in blinding snowstorms. The book ends with Rosamond and Dorothy's return to Auburn.\n\nWickenden is a very good storyteller. The sweep of the land and the stoicism (坚忍) of the people move her to some beautiful writing. Here is a picture of Dorothy Woodruff, on her horse, looking down from a hill top: \"When the sun slipped behind the mountains, it shed a rosy glow all around them. Then a full moon rose. The snow was marked only by small animals: foxes, coyotes, mice, and varying hares, which turned white in the winter.\"",
+          diff: "medium", src: "2022年高考英语全国乙卷 阅读理解B篇",
           subs: [
-            { q: 'What did the writer do when he broke the window?', opts: ['He repaired it at once', 'He ran home and kept silent', 'He blamed his friend', 'He told his mother'], a: 'B', exp: '原文 Terrified, I ran home and said nothing，说明他跑回家并保持了沉默。', diff: 'easy' },
-            { q: 'Who helped the writer face his mistake?', opts: ['His teacher', 'His mother', 'The neighbor', 'A stranger'], a: 'B', exp: '母亲察觉他不对劲并询问，第二天陪他去邻居家道歉，是母亲促使他面对错误。', diff: 'easy' },
-            { q: 'How did the neighbor react to the apology?', opts: ['He was angry', 'He smiled and praised honesty', 'He called the police', 'He refused the savings'], a: 'B', exp: '邻居微笑并说 Honesty is worth more than any window，表扬了诚实。', diff: 'medium' },
-            { q: 'What is the main idea of the passage?', opts: ['Breaking windows is fun', 'Facing mistakes with honesty brings relief', 'Saving money is hard', 'Neighbors are unfriendly'], a: 'B', exp: '文章主旨：承认错误需要勇气，但能让人内心释然，B 符合。', diff: 'medium' }
+            {
+              q: "Why did Dorothy and Rosamond go to the Rocky Mountains?",
+              opts: ["A. To teach in a school.", "B. To study American history.", "C. To write a book.", "D. To do sightseeing."],
+              a: "A",
+              exp: "细节理解题。首段明确说两人 \"traveled to a settlement in the Rocky Mountains to teach in a one-room schoolhouse\"，即去落基山脉是为了在只有一间教室的学校教书，故选A。",
+              diff: "easy"
+            },
+            {
+              q: "What can we learn about the girls from paragraph 3?",
+              opts: ["A. They enjoyed much respect.", "B. They had a room with a bathtub.", "C. They lived with the local kids.", "D. They suffered severe hardships."],
+              a: "D",
+              exp: "推理判断题。第三段说她们与当地的Harrison一家同住，几乎没有隐私、很少洗澡、早晨醒来被子上盖着一层雪，春天雪化后遍地泥泞，可见生活条件极为艰苦，故选D。",
+              diff: "medium"
+            },
+            {
+              q: "Which part of Wickenden's writing is hair-raising?",
+              opts: ["A. The extreme climate of Auburn.", "B. The living conditions in Elkhead.", "C. The railroad building in the Rockies.", "D. The natural beauty of the West."],
+              a: "C",
+              exp: "细节理解题。第四段 \"A hair-raising section concerns the building of the railroads, which entailed drilling through the Rockies, often in blinding snowstorms\" 直接指出令人惊心动魄的部分是落基山脉中的铁路修建，故选C。",
+              diff: "easy"
+            },
+            {
+              q: "What is the text?",
+              opts: ["A. A news report.", "B. A book review.", "C. A children's story.", "D. A diary entry."],
+              a: "B",
+              exp: "文章出处题。全文围绕Dorothy Wickenden的著作《Nothing Daunted》介绍内容并作出评价（如 \"Wickenden is a very good storyteller\"），属于书评，故选B。",
+              diff: "medium"
+            }
           ]
-        },
+        }
       ],
-      'english::rd_d': [
+            'english::rd_d': [
         {
-          q: 'Many students believe that multitasking helps them get more done. However, research shows the opposite. When we switch between tasks, our brains need time to refocus, and each switch wastes attention. A study found that students who kept their phones nearby while studying scored much lower than those who put phones away. The problem is not the phone itself, but the constant temptation to check it. True focus means doing one thing at a time. Deep work, not endless switching, is what leads to real learning and creativity.',
-          diff: 'hard', src: '高考英语阅读示例（D篇·议论文）',
+          q: "Grizzly bears, which may grow to about 2.5 m long and weigh over 400 kg, occupy a conflicted corner of the American psyche — we revere (敬畏) them even as they give us frightening dreams. Ask the tourists from around the world that flood into Yellowstone National Park what they most hope to see, and their answer is often the same: a grizzly bear.\n“Grizzly bears are re-occupying large areas of their former range,” says bear biologist Chris Servheen. As grizzly bears expand their range into places where they haven’t been seen in a century or more, they’re increasingly being sighted by humans.\nThe western half of the U.S. was full of grizzlies when Europeans came, with a rough number of 50,000 or more living alongside Native Americans. By the early 1970s, after centuries of cruel and continuous hunting by settlers, 600 to 800 grizzlies remained on a mere 2 percent of their former range in the Northern Rockies. In 1975, grizzlies were listed under the Endangered Species Act.\nToday, there are about 2,000 or more grizzly bears in the U.S. Their recovery has been so successful that the U.S. Fish and Wildlife Service has twice attempted to de-list grizzlies, which would loosen legal protections and allow them to be hunted. Both efforts were overturned due to lawsuits from conservation groups. For now, grizzlies remain listed.\nObviously, if precautions (预防) aren’t taken, grizzlies can become troublesome, sometimes killing farm animals or walking through yards in search of food. If people remove food and attractants from their yards and campsites, grizzlies will typically pass by without trouble. Putting electric fencing around chicken houses and other farm animal quarters is also highly effective at getting grizzlies away. “Our hope is to have a clean, attractant-free place where bears can pass through without learning bad habits,” says James Jonkel, longtime biologist who manages bears in and around Missoula.",
+          diff: "hard", src: "2023年高考全国甲卷 英语 阅读理解D篇",
           subs: [
-            { q: 'What does the research in the passage suggest?', opts: ['Multitasking improves efficiency', 'Switching tasks wastes attention', 'Phones should be banned', 'Students dislike studying'], a: 'B', exp: '第二段 When we switch between tasks, our brains need time to refocus, and each switch wastes attention 说明切换任务会浪费注意力。', diff: 'medium' },
-            { q: 'Why did students with phones nearby score lower?', opts: ['They were smarter', 'The temptation to check phones broke their focus', 'They did not study', 'The test was too hard'], a: 'B', exp: '第三段 The problem is not the phone itself, but the constant temptation to check it 说明是查看手机的诱惑破坏了专注。', diff: 'medium' },
-            { q: 'What does deep work mean according to the passage?', opts: ['Doing many things quickly', 'Focusing on one task at a time', 'Using many apps', 'Studying with friends'], a: 'B', exp: '最后一段 True focus means doing one thing at a time，Deep work 对应一次专注一件事。', diff: 'hard' },
-            { q: 'What is the authors attitude toward multitasking?', opts: ['Supportive', 'Neutral', 'Against', 'Unclear'], a: 'C', exp: '作者引用研究说明多任务切换降低效率，主张一次一件事，态度是反对的。', diff: 'medium' }
+            {
+              q: "How do Americans look at grizzlies?",
+              opts: ["A. They cause mixed feelings in people.", "B. They should be kept in national parks.", "C. They are of high scientific value.", "D. They are a symbol of American culture."],
+              a: "A",
+              exp: "细节理解题。第一段首句说灰熊在美国人心中占据“a conflicted corner”，“we revere them even as they give us frightening dreams”，即又敬畏又害怕，正是A项所说的“mixed feelings”。",
+              diff: "medium"
+            },
+            {
+              q: "What has helped the increase of the grizzly population?",
+              opts: ["A. The European settlers’ behavior.", "B. The expansion of bears’ range.", "C. The protection by law since 1975.", "D. The support of Native Americans."],
+              a: "C",
+              exp: "细节理解题。第三段末句“In 1975, grizzlies were listed under the Endangered Species Act”，第四段说如今已有约2000头以上，恢复十分成功，可见数量增长得益于1975年起的法律保护，故选C。",
+              diff: "medium"
+            },
+            {
+              q: "What has stopped the U.S. Fish and Wildlife Service from de-listing grizzlies?",
+              opts: ["A. The opposition of conservation groups.", "B. The successful comeback of grizzlies.", "C. The voice of the biologists.", "D. The local farmers’ advocates."],
+              a: "A",
+              exp: "细节理解题。第四段“Both efforts were overturned due to lawsuits from conservation groups”，两次除名尝试都因环保组织的诉讼而被推翻，故选A。",
+              diff: "medium"
+            },
+            {
+              q: "What can be inferred from the last paragraph?",
+              opts: ["A. Food should be provided for grizzlies.", "B. People can live in harmony with grizzlies.", "C. A special path should be built for grizzlies.", "D. Technology can be introduced to protect grizzlies."],
+              a: "B",
+              exp: "推理判断题。末段指出只要移走食物和引诱物、加装电围栏，灰熊通常会平安通过而不惹麻烦，末句更希望熊能“pass through without learning bad habits”，由此可推知人与灰熊能够和谐共处，故选B。",
+              diff: "hard"
+            }
           ]
         },
         {
-          q: 'Some researchers argue that heavy social media use lowers happiness. They point to studies showing people who compare themselves to others online often feel inadequate. However, the link is not simple. Social media can also strengthen friendships and provide support during hard times. The real problem may be passive browsing, which leaves people feeling empty. Active use, like messaging a friend, has the opposite effect. Therefore, the advice is not to quit, but to be mindful: use platforms to connect, not to compare.',
-          diff: 'hard', src: '高考英语阅读示例（D篇·议论文）',
+          q: "Human speech contains more than 2,000 different sounds, from the common “m” and “a” to the rare clicks of some southern African languages. But why are certain sounds more common than others? A ground-breaking, five-year study shows that diet-related changes in human bite led to new speech sounds that are now found in half the world’s languages.\nMore than 30 years ago, the scholar Charles Hockett noted that speech sounds called labiodentals, such as “f” and “v”, were more common in the languages of societies that ate softer foods. Now a team of researchers led by Damián Blasi at the University of Zurich, Switzerland, has found how and why this trend arose.\nThey discovered that the upper and lower front teeth of ancient human adults were aligned (对齐), making it hard to produce labiodentals, which are formed by touching the lower lip to the upper teeth. Later, our jaws changed to an overbite structure (结构), making it easier to produce such sounds.\nThe team showed that this change in bite was connected with the development of agriculture in the Neolithic period. Food became easier to chew at this point. The jawbone didn’t have to do as much work and so didn’t grow to be so large.\nAnalyses of a language database also confirmed that there was a global change in the sound of world languages after the Neolithic age, with the use of “f” and “v” increasing remarkably during the last few thousand years. These sounds are still not found in the languages of many hunter-gatherer people today.\nThis research overturns the popular view that all human speech sounds were present when human beings evolved around 300,000 years ago. “The set of speech sounds we use has not necessarily remained stable since the appearance of human beings, but rather the huge variety of speech sounds that we find today is the product of a complex interplay of things like biological change and cultural evolution,” said Steven Moran, a member of the research team.",
+          diff: "hard", src: "2022年高考新高考I卷 英语 阅读理解D篇",
           subs: [
-            { q: 'What do some researchers claim about social media?', opts: ['It improves happiness', 'Heavy use lowers happiness', 'It has no effect', 'It replaces real life'], a: 'B', exp: '第一段 Some researchers argue that heavy social media use lowers happiness，即重度使用降低幸福感。', diff: 'medium' },
-            { q: 'Why is the link between social media and happiness complicated?', opts: ['It only harms people', 'It can both harm and help', 'It is always positive', 'No studies exist'], a: 'B', exp: '文中指出社交媒体既能损害（比较使人自卑）也能帮助（加强友谊、提供支持），故关系复杂。', diff: 'medium' },
-            { q: 'What does the writer say about passive browsing?', opts: ['It is healthy', 'It leaves people feeling empty', 'It builds friendships', 'It is the best use'], a: 'B', exp: '第三段 passive browsing leaves people feeling empty，被动刷屏让人感到空虚。', diff: 'medium' },
-            { q: 'What is the writers suggestion?', opts: ['Quit all platforms', 'Use them to connect, not compare', 'Post every hour', 'Avoid messaging'], a: 'B', exp: '结尾 the advice is to be mindful: use platforms to connect, not to compare，建议用心使用、重联结轻比较。', diff: 'hard' }
+            {
+              q: "Which aspect of the human speech sound does Damián Blasi’s research focus on?",
+              opts: ["A. Its variety.", "B. Its distribution.", "C. Its quantity.", "D. Its development."],
+              a: "D",
+              exp: "细节理解题。文章说该团队发现了唇齿音这一趋势“how and why this trend arose”，并追溯咬合结构随农业发展而改变、语音随之演变的过程，可见研究聚焦语音的“发展演变”，故选D。",
+              diff: "medium"
+            },
+            {
+              q: "Why was it difficult for ancient human adults to produce labiodentals?",
+              opts: ["A. They had fewer upper teeth than lower teeth.", "B. They could not open and close their lips easily.", "C. Their jaws were not conveniently structured.", "D. Their lower front teeth were not large enough."],
+              a: "C",
+              exp: "细节理解题。第三段说古人上下门牙是“aligned (对齐)”的，难以发出需要下唇触上齿的唇齿音；后来颌部变成“overbite structure”才容易发音，说明是颌骨结构不便，故选C。",
+              diff: "medium"
+            },
+            {
+              q: "What is paragraph 5 mainly about?",
+              opts: ["A. Supporting evidence for the research results.", "B. Potential application of the research findings.", "C. A further explanation of the research methods.", "D. A reasonable doubt about the research process."],
+              a: "A",
+              exp: "段落大意题。第五段用语言数据库的分析“also confirmed”新石器时代后“f”“v”使用显著增加，是为前文研究结论提供佐证，故选A。",
+              diff: "hard"
+            },
+            {
+              q: "What does Steven Moran say about the set of human speech sounds?",
+              opts: ["A. It is key to effective communication.", "B. It contributes much to cultural diversity.", "C. It is a complex and dynamic system.", "D. It drives the evolution of human beings."],
+              a: "C",
+              exp: "细节理解题。Moran说语音集“has not necessarily remained stable”，而是“the product of a complex interplay of things like biological change and cultural evolution”，即复杂而动态的系统，故选C。",
+              diff: "hard"
+            }
           ]
         },
         {
-          q: 'Many people fear failure, treating it as the enemy of success. Yet psychologists suggest failure is better understood as feedback. When a project fails, it reveals what does not work, saving time on wrong paths. Famous inventors often failed hundreds of times before a breakthrough. The difference between those who succeed and those who quit is not talent, but the willingness to learn from setbacks. Schools and workplaces should therefore reward effort and reflection, not just outcomes. Reframing failure as a step, not a stop, changes how we grow.',
-          diff: 'hard', src: '高考英语阅读示例（D篇·议论文）',
+          q: "The connection between people and plants has long been the subject of scientific research. Recent studies have found positive effects. A study conducted in Youngstown, Ohio, for example, discovered that greener areas of the city experienced less crime. In another, employees were shown to be 15% more productive when their workplaces were decorated with houseplants.\nThe engineers at the Massachusetts Institute of Technology (MIT) have taken it a step further — changing the actual composition of plants in order to get them to perform diverse, even unusual functions. These include plants that have sensors printed onto their leaves to show when they’re short of water and a plant that can detect harmful chemicals in groundwater. “We’re thinking about how we can engineer plants to replace functions of the things that we use every day,” explained Michael Strano, a professor of chemical engineering at MIT.\nOne of his latest projects has been to make plants glow (发光) in experiments using some common vegetables. Strano’s team found that they could create a faint light for three-and-a-half hours. The light, about one-thousandth of the amount needed to read by, is just a start. The technology, Strano said, could one day be used to light the rooms or even to turn trees into self-powered street lamps.\nIn the future, the team hopes to develop a version of the technology that can be sprayed onto plant leaves in a one-off treatment that would last the plant’s lifetime. The engineers are also trying to develop an on and off “switch” where the glow would fade when exposed to daylight.\nLighting accounts for about 7% of the total electricity consumed in the US. Since lighting is often far removed from the power source (电源) — such as the distance from a power plant to street lamps on a remote highway — a lot of energy is lost during transmission (传输). Glowing plants could reduce this distance and therefore help save energy.",
+          diff: "hard", src: "2020年高考全国I卷 英语 阅读理解D篇",
           subs: [
-            { q: 'How do psychologists view failure according to the passage?', opts: ['As the enemy of success', 'As feedback', 'As a waste of time', 'As pure bad luck'], a: 'B', exp: '第二段 failure is better understood as feedback，心理学家把失败视为反馈。', diff: 'medium' },
-            { q: 'What can a failed project do?', opts: ['Prove you are weak', 'Reveal what does not work', 'Guarantee success', 'End your career'], a: 'B', exp: '失败的项目能揭示哪些方法行不通，从而节省走弯路的时间。', diff: 'easy' },
-            { q: 'What separates those who succeed from those who quit?', opts: ['Talent alone', 'Willingness to learn from setbacks', 'Good luck', 'Wealth'], a: 'B', exp: '第三段 the willingness to learn from setbacks，即从挫折中学习的心愿是分水岭。', diff: 'medium' },
-            { q: 'What does the writer advise schools to do?', opts: ['Reward only top scores', 'Reward effort and reflection', 'Punish failure', 'Ignore outcomes'], a: 'B', exp: '结尾 Schools should reward effort and reflection, not just outcomes，建议奖励努力与反思。', diff: 'hard' }
+            {
+              q: "What is the first paragraph mainly about?",
+              opts: ["A. A new study of different plants.", "B. A big fall in crime rates.", "C. Employees from various workplaces.", "D. Benefits from green plants."],
+              a: "D",
+              exp: "段落大意题。第一段以“Recent studies have found positive effects”领起，随后举出绿化多的城区犯罪更少、办公室摆绿植员工效率高15%两例，都在说明绿色植物带来的益处，故选D。",
+              diff: "medium"
+            },
+            {
+              q: "What is the function of the sensors printed on plant leaves by MIT engineers?",
+              opts: ["A. To detect plants’ lack of water.", "B. To change compositions of plants.", "C. To make the life of plants longer.", "D. To test chemicals in plants."],
+              a: "A",
+              exp: "细节理解题。第二段“plants that have sensors printed onto their leaves to show when they’re short of water”，可知传感器用于显示植物何时缺水，故选A；D项偷换概念，原文检测的是地下水中的有害化学物质。",
+              diff: "medium"
+            },
+            {
+              q: "What can we expect of the glowing plants in the future?",
+              opts: ["A. They will speed up energy production.", "B. They may transmit electricity to the home.", "C. They might help reduce energy consumption.", "D. They could take the place of power plants."],
+              a: "C",
+              exp: "细节理解题。末段说照明远离电源导致输电损耗大，而“Glowing plants could reduce this distance and therefore help save energy”，即有助于减少能源消耗，故选C。",
+              diff: "medium"
+            },
+            {
+              q: "Which of the following can be the best title for the text?",
+              opts: ["A. Can we grow more glowing plants?", "B. How do we live with glowing plants?", "C. Could glowing plants replace lamps?", "D. How are glowing plants made pollution-free?"],
+              a: "C",
+              exp: "主旨大意题。全文围绕MIT让植物发光的研究展开，指出该技术“could one day be used to light the rooms or even to turn trees into self-powered street lamps”并能节能，故“发光植物能否取代灯”最适合作标题，选C。",
+              diff: "hard"
+            }
           ]
         },
         {
-          q: 'The debate over homework has intensified. Supporters say practice at home deepens understanding and builds responsibility. Critics argue that too much homework causes stress and leaves no time for rest or family. A balanced view recognizes both sides: some homework helps, but quantity matters more than many realize. Short, focused tasks reinforce learning without overwhelming students. What schools should avoid is busywork, repetitive drills that tire rather than teach. The goal of homework should be quality of thinking, not hours spent.',
-          diff: 'hard', src: '高考英语阅读示例（D篇·Accumulate）',
+          q: "During an interview for one of my books, my interviewer said something I still think about often. Annoyed by the level of distraction (干扰) in his open office, he said, “That’s why I have a membership at the coworking space across the street — so I can focus.” His comment struck me as strange. After all, coworking spaces also typically use an open office layout (布局). But I recently came across a study that shows why his approach works.\nThe researchers examined various levels of noise on participants as they completed tests of creative thinking. They were randomly divided into four groups and exposed to various noise levels in the background, from total silence to 50 decibels (分贝), 70 decibels, and 85 decibels. The differences between most of the groups were statistically insignificant; however, the participants in the 70 decibels group — those exposed to a level of noise similar to background chatter in a coffee shop — significantly outperformed the other groups. Since the effects were small, this may suggest that our creative thinking does not differ that much in response to total silence and 85 decibels of background noise.\nBut since the results at 70 decibels were significant, the study also suggests that the right level of background noise — not too loud and not total silence — may actually improve one’s creative thinking ability. The right level of background noise may interrupt our normal patterns of thinking just enough to allow our imaginations to wander, without making it impossible to focus. This kind of “distracted focus” appears to be the best state for working on creative tasks.\nSo why do so many of us hate our open offices? The problem may be that, in our offices, we can’t stop ourselves from getting drawn into others’ conversations while we’re trying to focus. Indeed, the researchers found that face-to-face interactions and conversations affect the creative process, and yet a coworking space or a coffee shop provides a certain level of noise while also providing freedom from interruptions.",
+          diff: "hard", src: "2021年高考全国乙卷 英语 阅读理解D篇",
           subs: [
-            { q: 'What do supporters of homework believe?', opts: ['It causes stress', 'It deepens understanding and builds responsibility', 'It wastes time', 'It should be banned'], a: 'B', exp: '第一段 Supporters say practice at home deepens understanding and builds responsibility。', diff: 'easy' },
-            { q: 'What is a main criticism of homework?', opts: ['It is too easy', 'It causes stress and leaves no time for rest', 'It improves family time', 'It is always useful'], a: 'B', exp: '第二段 Critics argue too much homework causes stress and leaves no time for rest or family。', diff: 'medium' },
-            { q: 'According to the writer, what matters most about homework?', opts: ['The textbook', 'The classroom', 'Quantity matters more than many realize', 'The teacher'], a: 'C', exp: '第三段 a balanced view recognizes both sides: quantity matters more than many realize，作者认为作业的量比许多人意识到的更重要。', diff: 'medium' },
-            { q: 'What should schools avoid, according to the writer?', opts: ['All homework', 'Busywork and repetitive drills', 'Short tasks', 'Focused practice'], a: 'B', exp: '结尾 What schools should avoid is busywork, repetitive drills that tire rather than teach，应避免无意义的机械重复作业。', diff: 'hard' }
+            {
+              q: "Why does the interviewer prefer a coworking space?",
+              opts: ["A. It helps him concentrate.", "B. It blocks out background noise.", "C. It has a pleasant atmosphere.", "D. It encourages face-to-face interactions."],
+              a: "A",
+              exp: "细节理解题。第一段采访者说因为开放式办公室干扰太多，“That’s why I have a membership at the coworking space across the street — so I can focus”，可见是为了能专注，故选A。",
+              diff: "medium"
+            },
+            {
+              q: "Which level of background noise may promote creative thinking ability?",
+              opts: ["A. Total silence.", "B. 50 decibels.", "C. 70 decibels.", "D. 85 decibels."],
+              a: "C",
+              exp: "细节理解题。第二段指出“the participants in the 70 decibels group ... significantly outperformed the other groups”，70分贝组在创造性思维测试中明显优于其他组，故选C。",
+              diff: "medium"
+            },
+            {
+              q: "What makes an open office unwelcome to many people?",
+              opts: ["A. Personal privacy unprotected.", "B. Limited working space.", "C. Restrictions on group discussion.", "D. Constant interruptions."],
+              a: "D",
+              exp: "细节理解题。末段说在办公室里“we can’t stop ourselves from getting drawn into others’ conversations while we’re trying to focus”，且面对面交流会影响创造过程，即不断被打断，故选D。",
+              diff: "hard"
+            },
+            {
+              q: "What can we infer about the author from the text?",
+              opts: ["A. He’s a news reporter.", "B. He’s an office manager.", "C. He’s a professional designer.", "D. He’s a published writer."],
+              a: "D",
+              exp: "推理判断题。首句“During an interview for one of my books”表明作者出过书并接受采访，可推知他是已出版作品的作家，故选D。",
+              diff: "hard"
+            }
           ]
-        },
+        }
       ],
-      'english::rd_c': [
+            'english::rd_c': [
         {
-          q: 'Spending time in nature has long been believed to improve our mood. Now scientists are beginning to understand why. A recent study followed 100 city workers who took a 40-minute walk in a park during their lunch break. Tests showed their stress levels dropped and their ability to focus improved afterward. Researchers think the effect comes from both the exercise and the calming environment. Unlike busy streets, natural settings give the brain a rest from constant noise and distraction. The findings suggest that even a short daily walk in a green space can help people feel calmer and think more clearly. As cities grow denser, protecting parks may be as important as building new hospitals.',
-          diff: 'medium', src: '2021年高考全国乙卷 阅读理解C篇（说明文）',
+          q: "The elderly residents (居民) in care homes in London are being given hens to look after to stop them feeling lonely.\n\nThe project was dreamed up by a local charity (慈善组织) to reduce loneliness and improve elderly people's wellbeing. It is also being used to help patients suffering dementia, a serious illness of the mind. Staff in care homes have reported a reduction in the use of medicine where hens are in use.\n\nAmong those taking part in the project is 80-year-old Ruth Xavier. She said: \"I used to keep hens when I was younger and had to prepare their breakfast each morning before I went to school.\n\n\"I like the project a lot. I am down there in my wheelchair in the morning letting the hens out and down there again at night to see they've gone to bed.\n\n\"It's good to have a different focus. People have been bringing their children in to see the hens and residents come and sit outside to watch them. I'm enjoying the creative activities, and it feels great to have done something useful.\"\n\nThere are now 700 elderly people looking after hens in 20 care homes in the North East, and the charity has been given financial support to roll it out countrywide.\n\nWendy Wilson, extra care manager at 60 Penfold Street, one of the first to embark on the project, said: \"Residents really welcome the idea of the project and the creative sessions. We are looking forward to the benefits and fun the project can bring to people here.\"\n\nLynn Lewis, director of Notting Hill Pathways, said: \"We are happy to be taking part in the project. It will really help connect our residents through a shared interest and creative activities.\"",
+          diff: "medium", src: "2022年新高考I卷 阅读理解C篇",
           subs: [
-            { q: 'What did the recent study find about the city workers?', opts: ['They slept better at night', 'Their stress dropped after a walk in the park', 'They preferred indoor exercise', 'Their memory became worse'], a: 'B', exp: '原文提到 Tests showed their stress levels dropped and their ability to focus improved after a walk in the park，说明公园散步后压力下降、专注力提升。', diff: 'easy' },
-            { q: 'Why does nature help the brain according to researchers?', opts: ['It provides more noise', 'It gives the brain a rest from distraction', 'It makes people run faster', 'It replaces sleep'], a: 'B', exp: '研究人员认为自然环境让人从持续的噪音与分心中得到休息（give the brain a rest from constant noise and distraction），因此有助于大脑。', diff: 'medium' },
-            { q: 'What is the main idea of the passage?', opts: ['Exercise is bad for health', 'A short walk in nature helps mind and mood', 'Cities should ban parks', 'Workers hate lunch breaks'], a: 'B', exp: '全文围绕“在自然中散步能减压、提升专注与情绪”展开，B 最贴合主旨。', diff: 'medium' },
-            { q: 'The word distraction in the passage is closest in meaning to ____.', opts: ['专注', '干扰', '休息', '运动'], a: 'B', exp: 'distraction 意为“使人分心的事物”，即“干扰”。文中指大脑从持续干扰中得以休息。', diff: 'easy' }
+            {
+              q: "What is the purpose of the project?",
+              opts: ["A. To ensure harmony in care homes.", "B. To provide part-time jobs for the aged.", "C. To raise money for medical research.", "D. To promote the elderly people's welfare."],
+              a: "D",
+              exp: "细节理解题。第二段指出该项目由当地慈善机构构思，目的是 to reduce loneliness and improve elderly people's wellbeing（减少孤独感、提升老人的幸福感）。D项中 promote 对应 improve，welfare 对应 wellbeing，故选D。",
+              diff: "easy"
+            },
+            {
+              q: "How has the project affected Ruth Xavier?",
+              opts: ["A. She has learned new life skills.", "B. She has gained a sense of achievement.", "C. She has recovered her memory.", "D. She has developed a strong personality."],
+              a: "B",
+              exp: "推理判断题。Ruth Xavier 说 \"I'm enjoying the creative activities, and it feels great to have done something useful\"，做了有用的事让她感觉很好，说明她获得了成就感，故选B。她年轻时就养过鸡，并非学到新技能，排除A。",
+              diff: "medium"
+            },
+            {
+              q: "What do the underlined words \"embark on\" mean in paragraph 7?",
+              opts: ["A. Improve.", "B. Oppose.", "C. Begin.", "D. Evaluate."],
+              a: "C",
+              exp: "词义猜测题。Wendy Wilson 所在的 60 Penfold Street 是 one of the first to embark on the project，且下文说住户很欢迎这个项目，可知该处指最早\"开始/启动\"该项目的机构之一，embark on 意为 begin，故选C。",
+              diff: "medium"
+            },
+            {
+              q: "What can we learn about the project from the last two paragraphs?",
+              opts: ["A. It is well received.", "B. It needs to be more creative.", "C. It is highly profitable.", "D. It takes ages to see the results."],
+              a: "A",
+              exp: "推理判断题。最后两段中 \"Residents really welcome the idea of the project\" 和 \"We are happy to be taking part in the project\" 表明项目受到住户和机构的欢迎，即 well received，故选A。",
+              diff: "easy"
+            }
           ]
         },
         {
-          q: 'Most people know sleep is important, but few understand what the brain does at night. During deep sleep, the brain repeats and strengthens the days experiences, moving them from short-term to long-term memory. Scientists call this process memory consolidation. A study of students found those who slept well after learning a list of words remembered far more the next day than those who stayed awake. Interestingly, the brain also clears out useless information, keeping only what matters. This is why a good nights sleep often leads to a clearer mind in the morning. For students, the lesson is simple: cramming all night may do more harm than good.',
-          diff: 'hard', src: '2022年新高考I卷 阅读理解C篇（说明文）',
+          q: "What comes into your mind when you think of British food? Probably fish and chips, or a Sunday dinner of meat and two vegetables. But is British food really so uninteresting? Even though Britain has a reputation for less-than-impressive cuisine, it is producing more top class chefs who appear frequently on our television screens and whose recipe books frequently top the best seller lists.\n\nIt's thanks to these TV chefs rather than any advertising campaign that Britons are turning away from meat-and-two-veg and ready-made meals and becoming more adventurous in their cooking habits. It is recently reported that the number of those sticking to a traditional diet is slowly declining and around half of Britain's consumers would like to change or improve their cooking in some way. There has been a rise in the number of students applying for food courses at UK universities and colleges. It seems that TV programmes have helped change what people think about cooking.\n\nAccording to a new study from market analysts, 1 in 5 Britons say that watching cookery programmes on TV has encouraged them to try different food. Almost one third say they now use a wider variety of ingredients (配料) than they used to, and just under 1 in 4 say they now buy better quality ingredients than before. One in four adults say that TV chefs have made them much more confident about expanding their cookery knowledge and skills, and young people are also getting more interested in cooking. The UK's obsession (痴迷) with food is reflected through television scheduling. Cookery shows and documentaries about food are broadcast more often than before. With an increasing number of male chefs on TV, it's no longer \"uncool\" for boys to like cooking.",
+          diff: "medium", src: "2023年全国乙卷 阅读理解C篇",
           subs: [
-            { q: 'What does the brain do during deep sleep?', opts: ['It stops working', 'It strengthens and stores memories', 'It forgets everything', 'It only dreams'], a: 'B', exp: '原文 During deep sleep, the brain repeats and strengthens the days experiences, moving them to long-term memory，说明大脑在巩固并存储记忆。', diff: 'medium' },
-            { q: 'What did the student study show?', opts: ['Staying awake helped memory', 'Sleeping well led to better recall', 'Words were useless', 'Cramming is best'], a: 'B', exp: '睡得好的学生第二天记住的单词明显更多，故睡眠有助于记忆提取。', diff: 'medium' },
-            { q: 'The word consolidation in the passage means ____.', opts: ['巩固', '删除', '混乱', '遗忘'], a: 'A', exp: 'memory consolidation 指“记忆巩固”，即把短期记忆转化为长期记忆的过程。', diff: 'easy' },
-            { q: 'What is the authors advice for students?', opts: ['Study all night', 'Sleep well before exams', 'Avoid sleep', 'Memorize only while awake'], a: 'B', exp: '结尾明确指出通宵死记硬背弊大于利，作者的建议是考前睡好。', diff: 'medium' }
+            {
+              q: "What do people usually think of British food?",
+              opts: ["A. It is simple and plain.", "B. It is rich in nutrition.", "C. It lacks authentic tastes.", "D. It deserves a high reputation."],
+              a: "A",
+              exp: "细节理解题。第一段说提到英国食物人们想到的多半是 fish and chips 或 a Sunday dinner of meat and two vegetables，并用 uninteresting、less-than-impressive cuisine 加以概括，可见人们认为英国菜简单平淡，故选A。",
+              diff: "easy"
+            },
+            {
+              q: "Which best describes cookery programmes on British TV?",
+              opts: ["A. Authoritative.", "B. Creative.", "C. Profitable.", "D. Influential."],
+              a: "D",
+              exp: "推理判断题。第二段指出正是这些电视厨师（而非广告）让英国人放弃传统饮食、烹饪更具冒险精神，并说 TV programmes have helped change what people think about cooking，可见电视烹饪节目影响力很大，故选D。",
+              diff: "medium"
+            },
+            {
+              q: "Which is the percentage of the people using more diverse ingredients now?",
+              opts: ["A. 20%.", "B. 24%.", "C. 25%.", "D. 33%."],
+              a: "D",
+              exp: "细节理解题。第三段 \"Almost one third say they now use a wider variety of ingredients\"，三分之一约合33%，故选D。",
+              diff: "medium"
+            },
+            {
+              q: "What might the author continue talking about?",
+              opts: ["A. The art of cooking in other countries.", "B. Male chefs on TV programmes.", "C. Table manners in the UK.", "D. Studies of big eaters."],
+              a: "B",
+              exp: "推理判断题。文章最后一句提到 With an increasing number of male chefs on TV, it's no longer \"uncool\" for boys to like cooking，按行文连贯，下文应继续谈电视上的男厨师，故选B。",
+              diff: "hard"
+            }
           ]
         },
         {
-          q: 'Cities are turning to green roofs, rooftops covered with plants, to fight rising temperatures. Concrete and asphalt absorb heat, making cities several degrees warmer than surrounding areas, a phenomenon called the urban heat island effect. Green roofs cool buildings by shading surfaces and releasing moisture. A study in a large city found that widespread green roofs could lower summer temperatures by about two degrees. Besides cooling, they absorb rainwater, reduce noise, and provide habitats for birds. While installation costs are higher at first, the long-term savings in energy and flood control make them worthwhile.',
-          diff: 'medium', src: '高考英语阅读示例（C篇·说明文）',
+          q: "You've heard that plastic is polluting the oceans — between 4.8 and 12.7 million tonnes enter ocean ecosystems every year. But does one plastic straw or cup really make a difference? Artist Benjamin Von Wong wants you to know that it does. He builds massive sculptures out of plastic garbage, forcing viewers to re-examine their relationship to single-use plastic products.\n\nAt the beginning of the year, the artist built a piece called \"Strawpocalypse,\" a pair of 10-foot-tall plastic waves, frozen mid-crash. Made of 168,000 plastic straws collected from several volunteer beach cleanups, the sculpture made its first appearance at the Estella Place shopping center in Ho Chi Minh City, Vietnam.\n\nJust 9% of global plastic waste is recycled. Plastic straws are by no means the biggest source (来源) of plastic pollution, but they've recently come under fire because most people don't need them to drink with and, because of their small size and weight, they cannot be recycled. Every straw that's part of Von Wong's artwork likely came from a drink that someone used for only a few minutes. Once the drink is gone, the straw will take centuries to disappear.\n\nIn a piece from 2018, Von Wong wanted to illustrate (说明) a specific statistic: Every 60 seconds, a truckload's worth of plastic enters the ocean. For this work, titled \"Truckload of Plastic,\" Von Wong and a group of volunteers collected more than 10,000 pieces of plastic, which were then tied together to look like they'd been dumped (倾倒) from a truck all at once.\n\nVon Wong hopes that his work will also help pressure big companies to reduce their plastic footprint.",
+          diff: "medium", src: "2021年全国乙卷 阅读理解C篇",
           subs: [
-            { q: 'What problem do green roofs help solve?', opts: ['Loss of farmland', 'The urban heat island effect', 'Traffic jams', 'Water shortage'], a: 'B', exp: '第二段提到城市比周边热数度，即“城市热岛效应”，绿色屋顶可缓解此问题。', diff: 'easy' },
-            { q: 'How do green roofs cool buildings?', opts: ['By reflecting sunlight only', 'By shading and releasing moisture', 'By using fans', 'By removing windows'], a: 'B', exp: '第三段 Green roofs cool buildings by shading surfaces and releasing moisture，通过遮阴与释放水分降温。', diff: 'medium' },
-            { q: 'What did the city study find?', opts: ['Green roofs raised temperatures', 'They could lower summer temps by about two degrees', 'They attracted insects only', 'They cost nothing'], a: 'B', exp: '研究发现大范围绿色屋顶可使夏季气温降低约两度。', diff: 'medium' },
-            { q: 'Why are green roofs worthwhile despite higher cost?', opts: ['They look pretty', 'Long-term savings in energy and flood control', 'They are easy to build', 'They need no plants'], a: 'B', exp: '结尾 long-term savings in energy and flood control make them worthwhile，长期节能与防洪收益使其值得。', diff: 'hard' }
+            {
+              q: "What are Von Wong's artworks intended for?",
+              opts: ["A. Beautifying the city he lives in.", "B. Introducing eco-friendly products.", "C. Drawing public attention to plastic waste.", "D. Reducing garbage on the beach."],
+              a: "C",
+              exp: "细节理解题。第一段末句说他用塑料垃圾制作巨型雕塑，forcing viewers to re-examine their relationship to single-use plastic products，即促使公众关注塑料垃圾问题，故选C。",
+              diff: "easy"
+            },
+            {
+              q: "Why does the author discuss plastic straws in paragraph 3?",
+              opts: ["A. To show the difficulty of their recycling.", "B. To explain why they are useful.", "C. To voice his views on modern art.", "D. To find a substitute for them."],
+              a: "A",
+              exp: "推理判断题。第三段指出全球仅9%的塑料垃圾被回收，吸管因体积小、重量轻 they cannot be recycled，且需数百年才能降解，可见是为了说明吸管回收之难，故选A。",
+              diff: "medium"
+            },
+            {
+              q: "What effect would \"Truckload of Plastic\" have on viewers?",
+              opts: ["A. Calming.", "B. Disturbing.", "C. Refreshing.", "D. Challenging."],
+              a: "B",
+              exp: "推理判断题。该作品用一万多件塑料垃圾堆成\"从卡车上一次性倾倒\"的效果，直观呈现每60秒就有一卡车塑料入海的骇人数据，会令观者感到不安、震撼，故选B。",
+              diff: "hard"
+            },
+            {
+              q: "Which of the following can be the best title for the text?",
+              opts: ["A. Artists' Opinions on Plastic Safety", "B. Media Interest in Contemporary Art", "C. Responsibility Demanded of Big Companies", "D. Ocean Plastics Transformed into Sculptures"],
+              a: "D",
+              exp: "主旨大意题。全文围绕 Von Wong 把海滩、海洋中的塑料垃圾（吸管等）做成巨型雕塑以唤起环保意识展开，D项\"海洋塑料变成雕塑\"最能概括全文，故选D。",
+              diff: "medium"
+            }
           ]
         },
         {
-          q: 'Smell is the sense most directly linked to memory. When we breathe in a scent, it travels to the olfactory bulb of the brain, which connects closely to areas that handle emotion and recall. This is why a familiar smell can suddenly bring back a vivid childhood scene. Researchers found that people remember smell-associated events better than those linked only to sights or sounds. Unlike other senses, smell bypasses much of the brains filtering, reaching memory almost instantly. Understanding this link helps doctors design therapies for patients with memory loss, using scent to trigger forgotten moments.',
-          diff: 'hard', src: '高考英语阅读示例（C篇·说明文）',
+          q: "The goal of this book is to make the case for digital minimalism, including a detailed exploration of what it asks and why it works, and then to teach you how to adopt this philosophy if you decide it's right for you.\n\nTo do so, I divided the book into two parts. In part one, I describe the philosophical foundations of digital minimalism, starting with an examination of the forces that are making so many people's digital lives increasingly intolerable, before moving on to a detailed discussion of the digital minimalism philosophy.\n\nPart one concludes by introducing my suggested method for adopting this philosophy: the digital declutter. This process requires you to step away from optional online activities for thirty days. At the end of the thirty days, you will then add back a small number of carefully chosen online activities that you believe will provide massive benefits to the things you value.\n\nIn the final chapter of part one, I'll guide you through carrying out your own digital declutter. In doing so, I'll draw on an experiment I ran in 2018 in which over 1,600 people agreed to perform a digital declutter. You'll hear these participants' stories and learn what strategies worked well for them, and what traps they encountered that you should avoid.\n\nThe second part of this book takes a closer look at some ideas that will help you cultivate (培养) a sustainable digital minimalism lifestyle. In these chapters, I examine issues such as the importance of solitude (独处) and the necessity of cultivating high-quality leisure to replace the time most now spend on mindless device use. Each chapter concludes with a collection of practices, which are designed to help you act on the big ideas of the chapter. You can view these practices as a toolbox meant to aid your efforts to build a minimalist lifestyle that works for your particular circumstances.",
+          diff: "medium", src: "2023年新高考I卷 阅读理解C篇",
           subs: [
-            { q: 'Which sense is most closely tied to memory?', opts: ['Sight', 'Smell', 'Touch', 'Taste'], a: 'B', exp: '首句 Smell is the sense most directly linked to memory，嗅觉与记忆最直接相关。', diff: 'easy' },
-            { q: 'Where does a scent go first in the brain?', opts: ['The heart', 'The olfactory bulb', 'The stomach', 'The skin'], a: 'B', exp: '第二段 scent travels to the olfactory bulb，气味先到达嗅球。', diff: 'medium' },
-            { q: 'Why can a smell recall a childhood scene strongly?', opts: ['It is loud', 'The olfactory bulb connects to emotion and recall areas', 'It is bright', 'It is tasteless'], a: 'B', exp: '嗅球与处理情绪和回忆的脑区紧密相连，故气味能强烈唤起往事。', diff: 'medium' },
-            { q: 'How might doctors use the smell-memory link?', opts: ['To cure blindness', 'To design therapies triggering memory via scent', 'To improve hearing', 'To grow plants'], a: 'B', exp: '结尾 understanding this link helps doctors design therapies using scent to trigger forgotten moments，可借气味触发失忆患者的记忆。', diff: 'hard' }
+            {
+              q: "What is the book aimed at?",
+              opts: ["A. Teaching critical thinking skills.", "B. Advocating a simple digital lifestyle.", "C. Solving philosophical problems.", "D. Promoting the use of a digital device."],
+              a: "B",
+              exp: "细节理解题。第一段开门见山：The goal of this book is to make the case for digital minimalism（为数字极简主义提供支持理由），并教读者如何采纳这一理念，即倡导简约的数字生活方式，故选B。",
+              diff: "easy"
+            },
+            {
+              q: "What does the underlined word \"declutter\" in paragraph 3 mean?",
+              opts: ["A. Clear-up.", "B. Add-on.", "C. Check-in.", "D. Take-over."],
+              a: "A",
+              exp: "词义猜测题。第三段解释该过程 requires you to step away from optional online activities for thirty days，即三十天内远离非必要的线上活动，可见 declutter 意为\"清理\"，与 Clear-up 同义，故选A。",
+              diff: "medium"
+            },
+            {
+              q: "What is presented in the final chapter of part one?",
+              opts: ["A. Theoretical models.", "B. Statistical methods.", "C. Practical examples.", "D. Historical analyses."],
+              a: "C",
+              exp: "细节理解题。第四段说第一部分最后一章会引用2018年1600多人参与的实验，You'll hear these participants' stories and learn what strategies worked well for them，即提供真实的实践案例，故选C。",
+              diff: "medium"
+            },
+            {
+              q: "What does the author suggest readers do with the practices offered in part two?",
+              opts: ["A. Use them as needed.", "B. Recommend them to friends.", "C. Evaluate their effects.", "D. Identify the ideas behind them."],
+              a: "A",
+              exp: "推理判断题。末段说 You can view these practices as a toolbox meant to aid your efforts to build a minimalist lifestyle that works for your particular circumstances，把这些做法视为工具箱、按自身情况取用，故选A。",
+              diff: "hard"
+            }
           ]
-        },
+        }
       ],
-      'english::rd_7': [
+            'english::rd_7': [
         {
-          q: 'Reading is one of the best habits you can build. ①____ Here are some tips to help you read more. First, set a clear goal. ②____ Even ten pages a day adds up. Next, carry a book everywhere. ③____ Then you can read while waiting for the bus. Also, turn off your phone for half an hour each evening. ④____ Finally, join a book club. ⑤____ With these small steps, reading will become a natural part of your life.\n\n选项：\nA. This quiet time helps you focus on the page.\nB. It opens your mind and reduces stress.\nC. A club gives you reasons to keep going.\nD. Decide how many pages you will read daily.\nE. Reading on screen is always better.\nF. Keep a book in your bag at all times.\nG. Watching TV is more useful than reading.',
-          diff: 'medium', src: '2020年高考全国I卷 七选五',
+          q: "Fitness Magazine recently ran an article titled \"Five Reasons to Thank Your Workout Partner.\" One reason was: \"You'll actually show up if you know someone is waiting for you at the gym,\" while another read: \"①\" With a workout partner, you will increase your training effort as there is a subtle (微妙) competition.\n\nSo, how do you find a workout partner?\n\nFirst of all, decide what you want from that person. ② Or do you just want to be physically fit, able to move with strength and flexibility? Think about the exercises you would like to do with your workout partner.\n\nYou might think about posting what you are looking for on social media, but it probably won't result in a useful response. ③ If you plan on working out in a gym, that person must belong to the same gym.\n\nMy partner posted her request on the notice board of a local park. Her notice included what kind of training she wanted to do, how many days a week and how many hours she wanted to spend on each session, and her age. It also listed her favorite sports and activities, and provided her phone number. ④\n\nYou and your partner will probably have different skills. ⑤ Over time, both of you will benefit — your partner will be able to lift more weights and you will become more physically fit. The core (核心) of your relationship is that you will always be there to help each other.\n\n选项：\nA. Your first meeting may be a little awkward.\nB. A workout partner usually needs to live close by.\nC. You'll work harder if you train with someone else.\nD. Do you want to be a better athlete in your favorite sport?\nE. How can you write a good \"seeking training partner\" notice?\nF. Just accept your differences and learn to work with each other.\nG. Any notice for a training partner should include such information.",
+          diff: "medium", src: "2022年新高考I卷 七选五",
           subs: [
-            { q: '空白处 ① 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'B', exp: '首句说阅读是最好的习惯之一，①处应承接“为什么好”，B（开阔思维、减轻压力）最贴切。', diff: 'easy' },
-            { q: '空白处 ② 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'D', exp: '前句讲“设定明确目标”，②应具体说明目标内容，D（决定每天读几页）衔接自然。', diff: 'medium' },
-            { q: '空白处 ③ 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'F', exp: '前句“随身带书”，F（包里常备一本书）与之直接对应。', diff: 'medium' },
-            { q: '空白处 ④ 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'A', exp: '前句“每晚关掉手机半小时”，A（这段安静时光帮你专注阅读）解释其作用。', diff: 'medium' },
-            { q: '空白处 ⑤ 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'C', exp: '前句“加入读书俱乐部”，C（俱乐部给你坚持下去的理由）衔接合理。E、G 为干扰项。', diff: 'medium' }
+            {
+              q: "空白处 ① 应填入哪个选项？",
+              opts: ["A", "B", "C", "D", "E", "F", "G"],
+              a: "C",
+              exp: "空前说《健身杂志》列举了感谢健身伙伴的理由，其中一条是“知道有人在健身房等你，你就真的会去”，空处是并列的“另一条理由”；空后紧接“有了健身伙伴，因为存在微妙的竞争，你会加大训练强度”。C项“和别人一起训练你会更努力”正是对这句的概括，与下文的 increase your training effort 构成同义复现。故选C。",
+              diff: "easy"
+            },
+            {
+              q: "空白处 ② 应填入哪个选项？",
+              opts: ["A", "B", "C", "D", "E", "F", "G"],
+              a: "D",
+              exp: "空前是“首先，要决定你想从对方那里获得什么”，空后以 Or do you just want to be physically fit...? 的选择疑问句承接。既然后句用 Or 提出另一种可能，空处必须是同样形式的一般疑问句，且与“只想身体健康”形成对照。D项“你想在自己喜爱的运动项目上成为更出色的运动员吗”正好构成 Or 前后的两个选项。故选D。",
+              diff: "medium"
+            },
+            {
+              q: "空白处 ③ 应填入哪个选项？",
+              opts: ["A", "B", "C", "D", "E", "F", "G"],
+              a: "B",
+              exp: "空前说在社交媒体上发帖找伙伴多半没有有用回应，空后说“如果你打算在健身房锻炼，那个人必须属于同一家健身房”。空处需要解释“为什么网上找不合适”，即伙伴必须在地理上就近。B项“健身伙伴通常需要住在附近”既解释了上文，也自然引出下文关于同一健身房的举例。故选B。",
+              diff: "medium"
+            },
+            {
+              q: "空白处 ④ 应填入哪个选项？",
+              opts: ["A", "B", "C", "D", "E", "F", "G"],
+              a: "G",
+              exp: "本段以“我的搭档”为例，罗列了她的启事中包含的内容：训练种类、每周天数、每次时长、年龄、喜爱的运动以及电话号码。空处位于段尾，需要对这些细节作总结。G项“任何征集训练伙伴的启事都应包含这类信息”中的 notice 与上文 notice 复现，such information 回指前面列举的各项内容。故选G。",
+              diff: "medium"
+            },
+            {
+              q: "空白处 ⑤ 应填入哪个选项？",
+              opts: ["A", "B", "C", "D", "E", "F", "G"],
+              a: "F",
+              exp: "空前说“你和伙伴的技能水平很可能不同”，空后说“久而久之，双方都会受益——你的伙伴能举起更大重量，你会变得更健康”。空处要把“差异”转化为“共赢”。F项“接受彼此的差异，学会与对方合作”承接 different skills，并为下文 both of you will benefit 提供前提。故选F。",
+              diff: "medium"
+            }
           ]
         },
         {
-          q: 'A healthy lifestyle does not require big changes. ①____ Start with water. ②____ It keeps your body working well. Then move your body daily. ③____ A short walk counts. Besides, eat more vegetables and less sugar. ④____ Last, get enough sleep. ⑤____ Small habits, kept daily, protect your health for years.\n\n选项：\nA. Drink a glass of water when you wake up.\nB. Sleep helps your body repair itself.\nC. Exercise can be simple and short.\nD. Sugar gives you quick but empty energy.\nE. Smoking is good for health.\nF. It begins with a few simple steps.\nG. Skipping meals helps you lose weight.',
-          diff: 'medium', src: '2021年高考全国甲卷 七选五',
+          q: "Important Things to Know When Dining Out\n\nCultural dining etiquette (礼节) might surprise you with some of its important rules. ① Knowing some tips will help ensure that you have an enjoyable meal with friends or family — no matter where you are in the world.\n\nChopstick Rules\n\nThe way you handle chopsticks is important to avoid annoying your companions. When you put them down between bites, always put them down together so they are parallel with the edge of the table in front of you. ②\n\nHands or Utensils (餐具)\n\nIn India and the Middle East, it's considered very rude to eat with your left hand. People in France expect you to eat with a utensil in each hand. ③, instead preferring to use their hands. In Chile, you may never touch any food with your fingers. People in Thailand generally use their forks only to push food onto their spoons.\n\nMaking Requests\n\n④ In Portugal, this would be a serious mistake, because it shows the chef that you don't like their seasoning skills. Similarly, in Italy, never ask for extra cheese to add to your food.\n\nSome of these cultural dining etiquette rules may seem random and strange, but they are important in various countries. ⑤, the more comfortable you'll begin to feel with its foreign cultural practices.\n\n选项：\nA. The more friends you make in your lifetime\nB. The more time you spend in any given country\nC. Mexicans consider it inappropriate to eat with utensils\nD. Don't get caught making an embarrassing mistake at a restaurant\nE. It's a good sign for the chef if you make a mess around your plate\nF. Never stick them upright in your food or cross them as you use them\nG. It may seem like a simple request to ask for salt and pepper at a meal",
+          diff: "medium", src: "2022年全国甲卷 七选五",
           subs: [
-            { q: '空白处 ① 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'F', exp: '前句说健康生活不需要大改变，①应说明“从简单小事开始”，F 最契合。', diff: 'easy' },
-            { q: '空白处 ② 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'A', exp: '前句“从喝水开始”，A（醒来喝一杯水）具体落实。', diff: 'medium' },
-            { q: '空白处 ③ 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'C', exp: '前句“每天动一动”，C（运动可以简单而短暂）衔接，后句“散步也算”进一步印证。', diff: 'medium' },
-            { q: '空白处 ④ 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'D', exp: '前句“多吃蔬菜、少吃糖”，D（糖带来快速却空洞的能量）解释少吃糖的原因。E、G 为干扰项。', diff: 'medium' },
-            { q: '空白处 ⑤ 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'B', exp: '前句“保证充足睡眠”，B（睡眠帮助身体自我修复）说明睡眠的作用。', diff: 'medium' }
+            {
+              q: "空白处 ① 应填入哪个选项？",
+              opts: ["A", "B", "C", "D", "E", "F", "G"],
+              a: "D",
+              exp: "空处在首段中间，起承上启下的作用。上句说各国餐饮礼节的一些重要规矩会让你吃惊，下句说“了解一些小贴士能确保你和亲友愉快地用餐”。D项“别让自己在餐馆里犯下令人尴尬的错误”中的 at a restaurant 与标题 When Dining Out 呼应，embarrassing mistake 承接上文的“规矩会让你吃惊”，同时引出下文的 tips。故选D。",
+              diff: "medium"
+            },
+            {
+              q: "空白处 ② 应填入哪个选项？",
+              opts: ["A", "B", "C", "D", "E", "F", "G"],
+              a: "F",
+              exp: "本段小标题是 Chopstick Rules，上句讲的是放筷子的正确方式（并排放好，与桌沿平行）。空处位于段尾，应继续讲使用筷子的禁忌。F项“绝不要把筷子直插在食物里，也不要交叉摆放”中的 them 回指 chopsticks，与上文同属筷子使用规范。故选F。",
+              diff: "easy"
+            },
+            {
+              q: "空白处 ③ 应填入哪个选项？",
+              opts: ["A", "B", "C", "D", "E", "F", "G"],
+              a: "C",
+              exp: "本段小标题为 Hands or Utensils，逐国对比“用手还是用餐具”。空后的 instead preferring to use their hands（而是更喜欢用手）表明空处主语是某国人且态度是“不赞成用餐具”。C项“墨西哥人认为用餐具吃饭不合适”与 instead preferring to use their hands 语义衔接，且与前面 India、France 的国别列举方式一致。故选C。",
+              diff: "medium"
+            },
+            {
+              q: "空白处 ④ 应填入哪个选项？",
+              opts: ["A", "B", "C", "D", "E", "F", "G"],
+              a: "G",
+              exp: "本段小标题是 Making Requests。空后 In Portugal, this would be a serious mistake 中的 this 必须有指代对象，且下文说这样做等于嫌厨师调味手艺不好。G项“在用餐时要点盐和胡椒似乎是个很简单的请求”正好提供了 this 所指的行为，request 与小标题 Requests 呼应。故选G。",
+              diff: "medium"
+            },
+            {
+              q: "空白处 ⑤ 应填入哪个选项？",
+              opts: ["A", "B", "C", "D", "E", "F", "G"],
+              a: "B",
+              exp: "空后是 the more comfortable you'll begin to feel with its foreign cultural practices，构成“the+比较级，the+比较级”结构，且 its 指代某个国家。B项“你在某个国家待的时间越长”与后半句构成完整的比较结构，its 回指 any given country，逻辑通顺；A项 the more friends you make 与 its 无法照应。故选B。",
+              diff: "medium"
+            }
           ]
         },
         {
-          q: 'Learning a new language opens doors to other cultures. ①____ Start with the most common words. ②____ These appear in everyday talk and give you quick progress. Then listen every day. ③____ Even ten minutes of a podcast trains your ear. Also, do not fear mistakes. ④____ They prove you are learning. Finally, find a language partner. ⑤____ With patience, you will improve.\n\n选项：\nA. A partner gives you real conversation practice.\nB. It also trains your brain to think in new ways.\nC. Mistakes are a natural part of learning.\nD. Learn the high-frequency words first.\nE. Listening to audio daily builds your ear.\nF. Reading grammar books all day is best.\nG. You must live abroad to learn.',
-          diff: 'medium', src: '高考英语七选五示例',
+          q: "According to Jessica Hagy, author of How to Be Interesting, it's not difficult to make yourself interesting at a dinner party. ①, if you're out of your comfort zone or if you're wandering into somebody's house for the first time. So the main thing is just to show up and be adventurous, trying different foods and talking to strangers.\n\nPeople love to talk about themselves. If you can start the conversation with a question other than \"What do you do for a living?\", you'll be able to get a lot more interesting conversation out of whomever it is you're talking to. ②, it can bring in \"I have this old, broken-down vehicle\" or \"I rode the bus with these crazy people who were laughing at silly jokes in the back.\" It just opens up conversation.\n\n③? If you can't take their wine away, you should certainly try to take away their soapbox (讲台). If you're the host, you can ask them to help you in the kitchen with something and just remove them from the situation. ④.\n\nAnd what about that other dinner-party killer: awkward silence? If you're faced with an awkward silence at a dinner party, the only thing that always gets everyone talking again is to give the host a compliment (赞扬). ⑤. Just quickly turn around and say, \"This cake is extremely delicious and you have to tell me all about it.\"\n\nSo being interesting at a dinner party isn't that hard.\n\n选项：\nA. How do you know the host\nB. The first step is to go exploring\nC. If you ask the question \"How did you get here?\"\nD. Be prepared to have awkward conversations with strangers\nE. Or turn the conversation into a topic where they have little to say\nF. What about that person who has had too much to drink or won't stop talking\nG. He or she is the person who is feeling the weight of that awkwardness the most",
+          diff: "medium", src: "2021年全国乙卷 七选五",
           subs: [
-            { q: '空白处 ① 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'B', exp: '前句说学语言打开文化之门，①处 B（也训练大脑以新方式思考）进一步说明好处，衔接自然。', diff: 'easy' },
-            { q: '空白处 ② 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'D', exp: '前句“从最常见的词开始”，D（先学高频词）直接对应。', diff: 'medium' },
-            { q: '空白处 ③ 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'E', exp: '前句“每天听”，E（每天听音频训练耳朵）解释其作用，与后文 podcast 呼应。', diff: 'medium' },
-            { q: '空白处 ④ 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'C', exp: '前句“不要怕犯错”，C（错误是学习的自然一部分）承接。E、F、G 为干扰项。', diff: 'medium' },
-            { q: '空白处 ⑤ 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'A', exp: '前句“找语伴”，A（语伴提供真实对话练习）衔接合理。', diff: 'medium' }
+            {
+              q: "空白处 ① 应填入哪个选项？",
+              opts: ["A", "B", "C", "D", "E", "F", "G"],
+              a: "B",
+              exp: "空处是首段的主题句。上文说在晚宴上让自己变得有趣并不难，空后的条件状语 if you're out of your comfort zone or if you're wandering into somebody's house for the first time 说的是走出舒适区、初次登门；下文 So the main thing is just to show up and be adventurous 进一步总结。B项“第一步是去探索”中的 go exploring 与 be adventurous、trying different foods and talking to strangers 呼应。故选B。",
+              diff: "medium"
+            },
+            {
+              q: "空白处 ② 应填入哪个选项？",
+              opts: ["A", "B", "C", "D", "E", "F", "G"],
+              a: "C",
+              exp: "空后说“它能引出‘我那辆破旧的车’或者‘我和一群在后排为傻笑话大笑的人一起坐公交’”，这些回答显然都是在回答“你是怎么来的”。C项“如果你问‘你是怎么到这儿的？’这个问题”正好是引出这些回答的提问，且呼应本段主题句 People love to talk about themselves。故选C。",
+              diff: "medium"
+            },
+            {
+              q: "空白处 ③ 应填入哪个选项？",
+              opts: ["A", "B", "C", "D", "E", "F", "G"],
+              a: "F",
+              exp: "空处独立成句并以问号结尾，是本段的话题句。空后说“如果你没法把他的酒拿走，那你至少该把他的‘讲台’撤掉”，其中 their wine、won't stop talking 所对应的人物必须先被引出。F项“那种喝多了或者说个不停的人怎么办呢”正好提出这一话题，their 有了指代对象。故选F。",
+              diff: "medium"
+            },
+            {
+              q: "空白处 ④ 应填入哪个选项？",
+              opts: ["A", "B", "C", "D", "E", "F", "G"],
+              a: "E",
+              exp: "空前给出一个应对话痨客人的办法：如果你是主人，可以请他去厨房帮忙，把他从当下场合中支走。空处位于段尾，用 Or 引出另一种并列的办法。E项“或者把话题转到他们插不上话的领域”与上句构成并列的两种策略，句首 Or 是明显的衔接标志。故选E。",
+              diff: "medium"
+            },
+            {
+              q: "空白处 ⑤ 应填入哪个选项？",
+              opts: ["A", "B", "C", "D", "E", "F", "G"],
+              a: "G",
+              exp: "空前说面对尴尬的冷场，唯一能让大家重新开口的办法就是赞美主人；空后是具体示范：“赶紧转身说，这蛋糕太好吃了，你一定得跟我说说。”空处需要解释为什么要赞美主人。G项“他或她正是最能感受到这份尴尬分量的人”中的 He or she 回指 the host，awkwardness 回指 awkward silence，说明了赞美主人的理由。故选G。",
+              diff: "medium"
+            }
           ]
         },
         {
-          q: 'Good sleep is the foundation of health. ①____ Keep a regular schedule. ②____ Going to bed and waking at the same time trains your body clock. Next, avoid screens before bed. ③____ The blue light makes falling asleep harder. Also, watch your caffeine. ④____ It can stay in your body for hours. Finally, make your room cool and dark. ⑤____ Small changes like these protect your rest.\n\n选项：\nA. A dark, cool room improves sleep quality.\nB. It starts with a few simple habits.\nC. The same schedule each day builds a steady rhythm.\nD. Stop using phones an hour before sleep.\nE. Caffeine late in the day keeps you awake.\nF. Exercise right before bed is ideal.\nG. Naps of three hours are necessary.',
-          diff: 'medium', src: '高考英语七选五示例',
+          q: "Personal Forgiveness\n\nTaking responsibility for mistakes is a positive step, but don't beat yourself up about them. To err (犯错) is human. ① You can use the following writing exercise to help you do this.\n\nIn a journal or on a piece of paper, put the heading \"Personal strengths.\" ② Are you caring? Creative? Generous? A good listener? Fun to be around? They don't have to be world-changing, just aspects of your personality that you're proud of.\n\nAt the top of a second page, put the heading \"Acts of kindness.\" On this one, list all the positive things you've done for others. It might be the time when you helped a friend with their homework, when you did the ironing without being asked, or when you baked cookies after the family had had a tiring day. ③\n\nYou could ask a friend or family member to help add to your list. ④ That way, you could exchange thoughts on what makes each of you special and the aspects of your personality that shine through. In fact, don't wait until you've made a mistake to try this — it's a great way to boost self-confidence at any time.\n\nIt's something of a cliché (陈词滥调) that most people learn not from their successes but their mistakes. The thing is, it's true. ⑤ We're all changing and learning all the time and mistakes are a positive way to develop and grow.\n\n选项：\nA. A little self-forgiveness also goes a long way.\nB. Now list all the characteristics you like about yourself.\nC. They might even like to have a go at doing the exercise.\nD. It's just as important to show yourself some forgiveness.\nE. It doesn't mean you have to ignore what's happened or forget it.\nF. Whatever it is, no matter how small it might seem, write it down.\nG. Whatever the mistake, remember it isn't a fixed aspect of your personality.",
+          diff: "medium", src: "2023年新高考I卷 七选五",
           subs: [
-            { q: '空白处 ① 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'B', exp: '前句说好睡眠是健康基础，①应说明“从简单习惯开始”，B 最契合。', diff: 'easy' },
-            { q: '空白处 ② 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'C', exp: '前句“保持规律作息”，C（每天同一时间建立稳定节奏）衔接。', diff: 'medium' },
-            { q: '空白处 ③ 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'D', exp: '前句“睡前远离屏幕”，D（睡前一小时不用手机）具体落实，后文讲蓝光。', diff: 'medium' },
-            { q: '空白处 ④ 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'E', exp: '前句“注意咖啡因”，E（白天晚些时候摄入咖啡因让人清醒）解释原因。F、G 为干扰项。', diff: 'medium' },
-            { q: '空白处 ⑤ 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'A', exp: '前句“房间凉爽黑暗”，A（凉爽黑暗的房间提升睡眠质量）说明作用。', diff: 'medium' }
+            {
+              q: "空白处 ① 应填入哪个选项？",
+              opts: ["A", "B", "C", "D", "E", "F", "G"],
+              a: "D",
+              exp: "空前说为错误承担责任是积极的一步，但不要为此过分自责，因为人非圣贤孰能无过；空后说“你可以用下面这个写作练习来帮你做到这一点（do this）”。空处必须给出 this 所指代的做法。D项“对自己宽容一些同样重要”既承接上文“别过分自责”，又与全文标题 Personal Forgiveness 一致，正是 do this 的所指。故选D。",
+              diff: "medium"
+            },
+            {
+              q: "空白处 ② 应填入哪个选项？",
+              opts: ["A", "B", "C", "D", "E", "F", "G"],
+              a: "B",
+              exp: "空前说在日记本或纸上写下标题“个人优点”，空后连续发问：你有爱心吗？有创造力吗？慷慨吗？是好的倾听者吗？相处起来有趣吗？这些都是在提示读者往下写什么。B项“现在把你喜欢自己的所有特质都列出来”紧承标题给出具体指令，characteristics 与后文 aspects of your personality 复现。故选B。",
+              diff: "easy"
+            },
+            {
+              q: "空白处 ③ 应填入哪个选项？",
+              opts: ["A", "B", "C", "D", "E", "F", "G"],
+              a: "F",
+              exp: "本段要求在第二页写下“善举”，并举了帮朋友做作业、主动熨衣服、家人疲惫时烤饼干等日常小事。空处在段尾，需要强调这些小事同样值得记录。F项“不管是什么事，也不管看上去多么微不足道，都把它写下来”中的 it 回指上文列举的善举，no matter how small 正与所举的琐碎小事对应。故选F。",
+              diff: "medium"
+            },
+            {
+              q: "空白处 ④ 应填入哪个选项？",
+              opts: ["A", "B", "C", "D", "E", "F", "G"],
+              a: "C",
+              exp: "空前说“你可以请朋友或家人帮你往清单上添加内容”，空后说“那样一来（That way），你们就能交流是什么让彼此与众不同”。空处需要在“请人帮忙”和“互相交流”之间搭桥。C项“他们甚至可能也想试着做做这个练习”中的 They 回指 a friend or family member，并使后文的 each of you、exchange thoughts 有了着落。故选C。",
+              diff: "medium"
+            },
+            {
+              q: "空白处 ⑤ 应填入哪个选项？",
+              opts: ["A", "B", "C", "D", "E", "F", "G"],
+              a: "G",
+              exp: "空前说人们大多不是从成功而是从错误中学习，而且这话确实不假；空后说“我们都在不断变化、不断学习，错误是发展与成长的积极途径”。空处要点明应如何看待错误。G项“无论犯了什么错，记住它并不是你性格中固定不变的一面”中的 isn't a fixed aspect 与下文 We're all changing 正好照应，构成全文收尾。故选G。",
+              diff: "medium"
+            }
           ]
-        },
+        }
       ],
-      'english::cl': [
+            'english::cl': [
         {
-          q: '(41)____ I was ten, my grandfather took me to a small lake every summer. He loved the water and spent hours teaching me to fish. (42)____ afternoon, I caught nothing and felt (43)____. Grandpa smiled and said the best part is not the fish, (44)____ the time we share. His words stayed with me. Years later, when he became (45)____ ill, I sat by his bed just as he had (46)____ by the lake with me. I read to him (47)____, the way he once read to me. He could no longer (48)____, but his eyes showed he (49)____. On his last day, he held my hand (50)____. I learned that love is not in grand (51)____, but in small, (52)____ moments. Now I take my own son to that (53)____ lake. We may catch (54)____ fish, but we (55)____ laugh together. (56)____ I see the water, I (57)____ Grandpas lesson: (58)____ is the real (59)____, and that quiet lake still (60)____ me of him.',
-          diff: 'medium', src: '高考英语完形填空真题（记叙文·亲情）',
+          q: "Simply saying thank you doesn't seem enough in certain situations. I was considering this while working as a (41)____ just a few weeks ago. And it came to me then how much easier it would be if we had a range of words that express different (42)____ of gratitude (感谢).\n\nMy thoughts were soon (43)____. We had a woman patient who was (44)____ from a knee replacement operation. One afternoon, while (45)____ to get into bed she collapsed (倒下) from what was (46)____ discovered to be a heart attack. The collapse was disastrous, (47)____ the emergency medical team and good teamwork. But she recovered, though (48)____, and was ready for discharge (出院) after four weeks.\n\nShe was (49)____ for everything that the medical and nursing team had done for her. On her day of discharge, we shared in her (50)____ at her recovery. As she was (51)____ she was eager to say (52)____ to each of us in the nursing team. When she (53)____ one nurse, she tried to press a five-pound note into her hand. My colleague (54)____ to accept it, saying that we were all just (55)____ our job. The patient looked puzzled, and then (56)____: “Oh this isn't for the (57)____ I had. I take that as a (58)____. No, this is for setting my hair yesterday.”\n\nAnd there you have it. To many people, (59)____ lives is part of the job but styling hair is an (60)____ and should be rewarded.",
+          diff: "medium", src: "2021年高考全国乙卷 完形填空",
           subs: [
-            { q: '41. ', opts: ['If', 'When', 'Because', 'Although'], a: 'B', exp: 'When I was ten 意为“当我十岁时”，When 引导时间状语从句，符合叙事开篇。', diff: 'easy' },
-            { q: '42. ', opts: ['One', 'Some', 'Any', 'Every'], a: 'A', exp: 'One afternoon 意为“一天下午”，是记叙文常用时间表达。', diff: 'easy' },
-            { q: '43. ', opts: ['happily', 'upset', 'angrily', 'proudly'], a: 'B', exp: '前文说“什么也没钓到”，因此感到沮丧（upset）。', diff: 'easy' },
-            { q: '44. ', opts: ['and', 'but', 'or', 'so'], a: 'B', exp: 'not...but... 为固定结构，意为“不是……而是……”。', diff: 'easy' },
-            { q: '45. ', opts: ['rich', 'ill', 'strong', 'busy'], a: 'B', exp: '后文说“我坐在他床边”，可知祖父病了（ill）。', diff: 'easy' },
-            { q: '46. ', opts: ['sat', 'stood', 'played', 'worked'], a: 'A', exp: 'just as he had sat by the lake 意为“就像他曾经坐在湖边陪我一样”，sat 与 by his bed 呼应。', diff: 'medium' },
-            { q: '47. ', opts: ['loudly', 'quietly', 'quickly', 'slowly'], a: 'B', exp: 'the way he once read to me 提示方式一致，应为安静地（quietly）读。', diff: 'easy' },
-            { q: '48. ', opts: ['walk', 'eat', 'speak', 'see'], a: 'C', exp: 'could no longer speak 意为“再也不能说话”，与后文“用眼神”呼应。', diff: 'easy' },
-            { q: '49. ', opts: ['forgot', 'understood', 'doubted', 'feared'], a: 'B', exp: '但他的眼神表明他“懂了”（understood）我的心意。', diff: 'medium' },
-            { q: '50. ', opts: ['tightly', 'easily', 'loosely', 'coldly'], a: 'A', exp: '临终前紧紧握住我的手，tightly（紧紧地）体现不舍与爱。', diff: 'easy' },
-            { q: '51. ', opts: ['gestures', 'words', 'gifts', 'meals'], a: 'A', exp: 'grand gestures 意为“隆重的举动”，与后文 small moments 形成对比。', diff: 'medium' },
-            { q: '52. ', opts: ['daily', 'yearly', 'lucky', 'lonely'], a: 'A', exp: 'small, daily moments 指“日常的小瞬间”，daily 与 grand 相对。', diff: 'easy' },
-            { q: '53. ', opts: ['different', 'same', 'new', 'far'], a: 'B', exp: 'take my son to that same lake 指“带儿子去同一个湖”，same 体现传承。', diff: 'easy' },
-            { q: '54. ', opts: ['few', 'many', 'any', 'some'], a: 'A', exp: 'catch few fish 意为“钓到很少的鱼”，与祖父当年呼应，重在陪伴而非收获。', diff: 'medium' },
-            { q: '55. ', opts: ['never', 'always', 'seldom', 'hardly'], a: 'B', exp: '但我们“总是”一起欢笑，always 体现亲情温暖。', diff: 'easy' },
-            { q: '56. ', opts: ['Whenever', 'However', 'Whatever', 'Wherever'], a: 'A', exp: 'Whenever I see the water 意为“每当我看到那片水”，Whenever 引导时间状语从句。', diff: 'medium' },
-            { q: '57. ', opts: ['forget', 'remember', 'ignore', 'hide'], a: 'B', exp: '我“想起”（remember）祖父的教诲。', diff: 'easy' },
-            { q: '58. ', opts: ['kindness', 'money', 'time', 'fish'], a: 'A', exp: '全文主旨：善意（kindness）才是真正的收获。', diff: 'medium' },
-            { q: '59. ', opts: ['catch', 'lesson', 'gift', 'food'], a: 'A', exp: 'kindness is the real catch 呼应开头 fishing 的隐喻，catch 一语双关。', diff: 'hard' },
-            { q: '60. ', opts: ['warns', 'reminds', 'cures', 'clears'], a: 'B', exp: 'remind sb of 意为“使某人想起”，reminds 符合“那片湖仍让我想起他”。', diff: 'medium' }
+            {
+              q: "41. ",
+              opts: ["cleaner", "chemist", "nurse", "doctor"],
+              a: "C",
+              exp: "后文“each of us in the nursing team”和“My colleague”表明作者是护理团队的一员，故选 nurse（护士）。",
+              diff: "easy"
+            },
+            {
+              q: "42. ",
+              opts: ["grades", "meanings", "needs", "expectations"],
+              a: "A",
+              exp: "a range of words 提示需要表达不同“程度/等级”的感谢，grade 即“程度、等级”，其余三项与 gratitude 不搭配。",
+              diff: "medium"
+            },
+            {
+              q: "43. ",
+              opts: ["brushed aside", "put to the test", "brought under discussion", "taken into account"],
+              a: "B",
+              exp: "紧接着作者就遇到一件真实事例，说明他的想法很快受到了“检验”，put...to the test 意为“接受检验”。",
+              diff: "hard"
+            },
+            {
+              q: "44. ",
+              opts: ["departing", "escaping", "retiring", "recovering"],
+              a: "D",
+              exp: "recover from an operation 意为“手术后正在康复”，与下文 But she recovered 呼应。",
+              diff: "easy"
+            },
+            {
+              q: "45. ",
+              opts: ["attempting", "choosing", "pausing", "promising"],
+              a: "A",
+              exp: "attempt to get into bed “试图上床”时突然倒下，符合突发病情的语境。",
+              diff: "medium"
+            },
+            {
+              q: "46. ",
+              opts: ["eventually", "fortunately", "casually", "secretly"],
+              a: "A",
+              exp: "倒下时并不知道原因，是后来“最终”查明为心脏病发作，故用 eventually。",
+              diff: "medium"
+            },
+            {
+              q: "47. ",
+              opts: ["assessing", "requiring", "forming", "proving"],
+              a: "B",
+              exp: "倒下情况十分危急(disastrous)，因而“需要”急救团队和良好的团队协作。",
+              diff: "medium"
+            },
+            {
+              q: "48. ",
+              opts: ["slightly", "accidentally", "slowly", "happily"],
+              a: "C",
+              exp: "though 表让步，且四周后才出院，说明她虽然康复但“缓慢”。",
+              diff: "medium"
+            },
+            {
+              q: "49. ",
+              opts: ["grateful", "thoughtful", "sorrowful", "fearful"],
+              a: "A",
+              exp: "be grateful for “对……心存感激”，她感激医护团队为她做的一切，与全文感谢主题一致。",
+              diff: "easy"
+            },
+            {
+              q: "50. ",
+              opts: ["surprise", "delight", "curiosity", "disappointment"],
+              a: "B",
+              exp: "出院当天大家共同分享她康复的“喜悦”，delight 符合积极语境。",
+              diff: "easy"
+            },
+            {
+              q: "51. ",
+              opts: ["operating", "thinking", "hesitating", "leaving"],
+              a: "D",
+              exp: "由 On her day of discharge 可知她正要“离开”，所以急于逐一道别。",
+              diff: "easy"
+            },
+            {
+              q: "52. ",
+              opts: ["sorry", "hello", "goodbye", "yes"],
+              a: "C",
+              exp: "出院离开时向护理团队每个人 say goodbye（道别），与 51 空 leaving 呼应。",
+              diff: "easy"
+            },
+            {
+              q: "53. ",
+              opts: ["reached", "consulted", "introduced", "persuaded"],
+              a: "A",
+              exp: "reach 在此为“走到……跟前”，她逐个道别，走到某位护士面前时塞钱。",
+              diff: "hard"
+            },
+            {
+              q: "54. ",
+              opts: ["wished", "pretended", "failed", "refused"],
+              a: "D",
+              exp: "由 saying that we were all just doing our job 可知同事“拒绝”接受这五英镑。",
+              diff: "easy"
+            },
+            {
+              q: "55. ",
+              opts: ["enjoying", "doing", "securing", "starting"],
+              a: "B",
+              exp: "do one's job 是固定搭配，意为“做本职工作”，故选 doing。",
+              diff: "easy"
+            },
+            {
+              q: "56. ",
+              opts: ["repeated", "recited", "replied", "reported"],
+              a: "C",
+              exp: "病人先是困惑(looked puzzled)，随后引出引号中的“回答”，故用 replied。",
+              diff: "easy"
+            },
+            {
+              q: "57. ",
+              opts: ["courage", "patience", "duty", "care"],
+              a: "D",
+              exp: "钱不是为了她住院期间得到的“护理照顾”，下句说那是理所当然的。",
+              diff: "medium"
+            },
+            {
+              q: "58. ",
+              opts: ["goal", "given", "push", "greeting"],
+              a: "B",
+              exp: "take sth as a given 意为“把……视为理所当然的事”，与末段“is part of the job”一致。",
+              diff: "hard"
+            },
+            {
+              q: "59. ",
+              opts: ["risking", "changing", "saving", "building"],
+              a: "C",
+              exp: "save lives“救死扶伤”是医护的本职，与上文救治心脏病人呼应。",
+              diff: "easy"
+            },
+            {
+              q: "60. ",
+              opts: ["honour", "ability", "opening", "extra"],
+              a: "D",
+              exp: "给病人做头发是职责之外的“额外之事”，所以应当获得回报。",
+              diff: "medium"
+            }
           ]
         },
         {
-          q: '(41)____ One evening I missed the last bus and had to walk home in the snow. A woman in a car (42)____ me and (43)____ me a ride. I was (44)____ but (45)____. She drove (46)____ and said she had once been (47)____ on this road. Someone helped me, and now it is my (48)____, she said. She (49)____ me safely at my door. I never learned her (50)____, but her kindness (51)____ me. Such small acts (52)____ us that strangers can be (53)____. I now try to (54)____ others whenever I (55)____.',
-          diff: 'easy', src: '高考英语完形填空真题（记叙文·善意）',
+          q: "Since our twins began learning to walk, my wife and I have kept telling them that our sliding glass door is just a window. The (41)____ is obvious. If we (42)____ it is a door, they'll want to go outside (43)____. It will drive us crazy. The kids apparently know the (44)____. But our insisting it's (45)____ a window has kept them from (46)____ millions of requests to open the door.\n\nI hate lying to the kids. One day they'll (47)____ and discover that everything they've always known about windows is a (48)____. I wonder if (49)____ should always tell the truth no matter the (50)____. I have a very strong (51)____ that the lie we're telling is doing (52)____ damage to our children. Windows and doors have (53)____ metaphorical (比喻) meanings. I'm telling them they can't open what they absolutely know is a door. What if later in (54)____ they come to a metaphorical door, like an opportunity (机会) of some sort, and (55)____ opening the door and taking the opportunity, they just (56)____ it and wonder, “What if it isn't a door?” That is, “What if it isn't a (57)____ opportunity?”\n\nMaybe it's an unreasonable fear. But the (58)____ is that I shouldn't lie to my kids. I should just (59)____ repeatedly having to say, “No. We can't go outside now.” Then when they come to other doors in life, be they real or metaphorical, they won't (60)____ to open them and walk through.",
+          diff: "medium", src: "2020年高考全国卷I 完形填空",
           subs: [
-            { q: '41. ', opts: ['One', 'His', 'Her', 'Our'], a: 'A', exp: 'One evening 意为“一天晚上”，是记叙文常见的开篇时间状语。', diff: 'easy' },
-            { q: '42. ', opts: ['hated', 'noticed', 'avoided', 'missed'], a: 'B', exp: '一位女车主“注意到”我，noticed 符合“主动提供帮助”的语境。', diff: 'easy' },
-            { q: '43. ', opts: ['offered', 'sold', 'lent', 'threw'], a: 'A', exp: 'offer sb a ride 意为“主动让某人搭车”，是固定搭配。', diff: 'easy' },
-            { q: '44. ', opts: ['surprised', 'bored', 'angry', 'sleepy'], a: 'A', exp: '陌生人突然搭讪，第一反应应是“惊讶”（surprised）。', diff: 'easy' },
-            { q: '45. ', opts: ['refused', 'accepted', 'ignored', 'delayed'], a: 'B', exp: 'but 表转折，惊讶却“接受”了帮助，accepted 符合情节发展。', diff: 'easy' },
-            { q: '46. ', opts: ['quietly', 'noisily', 'angrily', 'fast'], a: 'A', exp: '她“安静地”开着车，quietly 与后文温和的对话氛围一致。', diff: 'easy' },
-            { q: '47. ', opts: ['stranded', 'praised', 'trained', 'hired'], a: 'A', exp: 'be stranded 意为“被困、抛锚”，她说自己曾在这条路上被困，故回报社会。', diff: 'medium' },
-            { q: '48. ', opts: ['turn', 'job', 'fault', 'dream'], a: 'A', exp: 'it is my turn 意为“轮到我（回报）了”，turn 表示“轮次”。', diff: 'medium' },
-            { q: '49. ', opts: ['dropped', 'met', 'found', 'passed'], a: 'A', exp: 'drop sb at the door 意为“把某人送到门口（让下车）”，drop 用在此处准确。', diff: 'easy' },
-            { q: '50. ', opts: ['name', 'age', 'phone', 'face'], a: 'A', exp: '我始终不知道她的“名字”（name），凸显善意不求回报。', diff: 'easy' },
-            { q: '51. ', opts: ['warmed', 'burned', 'hurt', 'confused'], a: 'A', exp: '她的善意“温暖”了我，warmed 与 cold snow 形成对照。', diff: 'easy' },
-            { q: '52. ', opts: ['remind', 'warn', 'teach', 'force'], a: 'A', exp: '这样的小事“提醒”我们，remind 符合“让人想起某道理”的语义。', diff: 'easy' },
-            { q: '53. ', opts: ['kind', 'cruel', 'strange', 'rich'], a: 'A', exp: '陌生人也可以是“善良的”（kind），点明文章主旨。', diff: 'easy' },
-            { q: '54. ', opts: ['help', 'avoid', 'blame', 'forget'], a: 'A', exp: '我现在也试着去“帮助”别人，help 与全文善意主题呼应。', diff: 'easy' },
-            { q: '55. ', opts: ['can', 'could', 'would', 'must'], a: 'B', exp: 'whenever I could 意为“只要我能（的时候）”，用过去式 could 与全文叙事时态一致。', diff: 'medium' }
+            {
+              q: "41. ",
+              opts: ["relief", "target", "reason", "case"],
+              a: "C",
+              exp: "后文用 If 从句解释为什么把门说成窗户，故此处是“原因很明显”。",
+              diff: "easy"
+            },
+            {
+              q: "42. ",
+              opts: ["admit", "believe", "mean", "realize"],
+              a: "A",
+              exp: "意为“如果我们承认那是一扇门”，孩子就会要求出去，admit“承认”最切合。",
+              diff: "medium"
+            },
+            {
+              q: "43. ",
+              opts: ["gradually", "constantly", "temporarily", "casually"],
+              a: "B",
+              exp: "下句 It will drive us crazy 说明孩子会“不断地”要求出去，故选 constantly。",
+              diff: "medium"
+            },
+            {
+              q: "44. ",
+              opts: ["result", "danger", "method", "truth"],
+              a: "D",
+              exp: "apparently“显然”提示孩子其实知道“真相”，与下文谎言主题形成对比。",
+              diff: "easy"
+            },
+            {
+              q: "45. ",
+              opts: ["merely", "slightly", "hardly", "partly"],
+              a: "A",
+              exp: "与首句 our sliding glass door is just a window 中的 just 同义复现，merely = just。",
+              diff: "easy"
+            },
+            {
+              q: "46. ",
+              opts: ["reviewing", "approving", "receiving", "attempting"],
+              a: "D",
+              exp: "keep sb. from doing “阻止某人做……”，坚称是窗户使孩子没有“尝试”提出无数次开门要求。",
+              diff: "hard"
+            },
+            {
+              q: "47. ",
+              opts: ["win out", "give up", "wake up", "stand out"],
+              a: "C",
+              exp: "与后面的 discover 并列，wake up 意为“醒悟、开始察觉”。",
+              diff: "hard"
+            },
+            {
+              q: "48. ",
+              opts: ["dream", "lie", "fantasy", "fact"],
+              a: "B",
+              exp: "下文 the lie we're telling 直接复现，孩子总有一天会发现这是个谎言。",
+              diff: "easy"
+            },
+            {
+              q: "49. ",
+              opts: ["parents", "twins", "colleagues", "teachers"],
+              a: "A",
+              exp: "全文讨论的是作者夫妇对孩子擒谎，故此处泛指“父母”该不该总说真话。",
+              diff: "easy"
+            },
+            {
+              q: "50. ",
+              opts: ["restrictions", "explanations", "differences", "consequences"],
+              a: "D",
+              exp: "no matter the consequences 意为“不管后果如何”，符合作者的道德纠结。",
+              diff: "medium"
+            },
+            {
+              q: "51. ",
+              opts: ["demand", "fear", "desire", "doubt"],
+              a: "B",
+              exp: "下文 Maybe it's an unreasonable fear 复现，故此处是“强烈的担忧”。",
+              diff: "medium"
+            },
+            {
+              q: "52. ",
+              opts: ["physical", "biological", "spiritual", "behavioral"],
+              a: "C",
+              exp: "谎言伤害的不是身体而是孩子的“精神”层面，故选 spiritual。",
+              diff: "medium"
+            },
+            {
+              q: "53. ",
+              opts: ["traditional", "important", "double", "original"],
+              a: "B",
+              exp: "下文以“机会之门”举例说明门窗的比喻意义非常“重要”，故选 important。",
+              diff: "hard"
+            },
+            {
+              q: "54. ",
+              opts: ["life", "time", "reply", "history"],
+              a: "A",
+              exp: "later in life 意为“在日后的人生中”，与末段 other doors in life 呼应。",
+              diff: "easy"
+            },
+            {
+              q: "55. ",
+              opts: ["by comparison with", "in addition to", "regardless of", "instead of"],
+              a: "D",
+              exp: "“不是去开门把握机会，而是只盯着看”，前后是取舍关系，用 instead of。",
+              diff: "medium"
+            },
+            {
+              q: "56. ",
+              opts: ["get hold of", "stare at", "knock on", "make use of"],
+              a: "B",
+              exp: "与 instead of opening the door 形成反差，他们只是“盯着”门心生疑虑。",
+              diff: "medium"
+            },
+            {
+              q: "57. ",
+              opts: ["real", "typical", "similar", "limited"],
+              a: "A",
+              exp: "呼应前句 What if it isn't a door，即怀疑那是不是一个“真正的”机会。",
+              diff: "medium"
+            },
+            {
+              q: "58. ",
+              opts: ["safety rule", "comfort zone", "bottom line", "top secret"],
+              a: "C",
+              exp: "the bottom line is that... 意为“最根本的一点是”，引出作者的结论。",
+              diff: "hard"
+            },
+            {
+              q: "59. ",
+              opts: ["delay", "regret", "enjoy", "accept"],
+              a: "D",
+              exp: "与不擒谎相对应，作者应该“接受”不得不反复说“不行”的麻烦。",
+              diff: "hard"
+            },
+            {
+              q: "60. ",
+              opts: ["hurry", "decide", "hesitate", "intend"],
+              a: "C",
+              exp: "全文落脚点：孩子日后面对人生之门时就不会“犹豫”去推开它。",
+              diff: "medium"
+            }
           ]
         },
         {
-          q: '(41)____ a cold winter morning, an old man found a wallet on the bus. (42)____ it was thick with cash, he did not hesitate. He (43)____ the driver and said he would return it to the (44)____. The owner, a young woman, had not even (45)____ it was missing. When they met, she (46)____ the old man with tears and (47)____ him a reward, which he (48)____. Such honesty is (49)____ in a busy city, yet it (50)____ us that goodness still (51)____. The old man said he simply did what his (52)____ had taught him: return what is not (53)____. His small act (54)____ a stranger faith in people. We often think heroism means (55)____ things, but sometimes it is just (56)____ the right thing quietly. That morning, one wallet (57)____ a life lesson. May we all (58)____ to be that kind of (59)____, and may the city be a little (60)____ because of it.',
-          diff: 'medium', src: '高考英语完形填空真题（记叙文·诚信）',
+          q: "A Heroic Driver\n\nLarry works with Transport Drivers, Inc. One morning in 2009, Larry was (41)____ along I65 north after delivering to one of his (42)____. Suddenly, he saw a car with its bright lights on. (43)____ he got closer, he found (44)____ vehicle upside down on the road. One more look and he noticed (45)____ shooting out from under the (46)____ vehicle. Larry pulled over, set the brake and (47)____ the fire extinguisher (灭火器). Two good bursts from the extinguisher and the fire was put out.\n\nThe man who had his bright lights on (48)____ and told Larry he had (49)____ an emergency call. They (50)____ heard a woman's voice coming from the wrecked (毁坏的) vehicle. (51)____ the vehicle, they saw that a woman was trying to get out of the broken window. They told her to stay (52)____ until the emergency personnel arrived, (53)____ she thought the car was going to (54)____. Larry told her that he had already put out the fire and she should not move (55)____ she injured her neck.\n\nOnce fire and emergency people arrived, Larry and the other man (56)____ and let them go to work. Then, Larry asked the (57)____ if he was needed or (58)____ to go. They let him and the other man go.\n\nOne thing is (59)____ — Larry went above and beyond the call of duty by getting so close to the burning vehicle! His (60)____ most likely saved the woman's life.",
+          diff: "medium", src: "2016年高考全国卷I（新课标Ⅰ卷）完形填空·A Heroic Driver",
           subs: [
-            { q: '41. ', opts: ['On', 'In', 'At', 'For'], a: 'A', exp: 'On a cold winter morning 用 On 表示在具体某天的早晨，是固定搭配。', diff: 'easy' },
-            { q: '42. ', opts: ['Because', 'Although', 'If', 'Unless'], a: 'B', exp: '钱包鼓鼓囊囊“却”毫不犹豫，Although 引导让步，符合“虽然有钱但不贪”的语义。', diff: 'medium' },
-            { q: '43. ', opts: ['stopped', 'helped', 'called', 'thanked'], a: 'A', exp: '他“叫住”司机说明要归还，stopped the driver 合理。', diff: 'easy' },
-            { q: '44. ', opts: ['station', 'owner', 'police', 'bus'], a: 'B', exp: '把钱包归还给“失主”owner，符合情节。', diff: 'easy' },
-            { q: '45. ', opts: ['noticed', 'forgotten', 'realized', 'accepted'], a: 'C', exp: '年轻女子甚至没“意识到”钱包丢了，realized 贴切。', diff: 'easy' },
-            { q: '46. ', opts: ['thanked', 'paid', 'blamed', 'left'], a: 'A', exp: '见面后她含泪“感谢”老人，thanked 符合。', diff: 'easy' },
-            { q: '47. ', opts: ['lent', 'offered', 'sold', 'showed'], a: 'B', exp: '她“主动给”报酬，offered him a reward 是固定搭配。', diff: 'easy' },
-            { q: '48. ', opts: ['accepted', 'refused', 'took', 'lost'], a: 'B', exp: '但他“拒绝”了报酬，refused 体现不图回报。', diff: 'easy' },
-            { q: '49. ', opts: ['common', 'rare', 'easy', 'cheap'], a: 'B', exp: '在繁忙都市里这种诚实“罕见”rare，与 yet 转折呼应。', diff: 'medium' },
-            { q: '50. ', opts: ['warns', 'reminds', 'cheats', 'follows'], a: 'B', exp: '它“提醒”我们善意尚存，reminds 符合。', diff: 'easy' },
-            { q: '51. ', opts: ['exists', 'falls', 'ends', 'changes'], a: 'A', exp: '善意仍“存在”exists。', diff: 'easy' },
-            { q: '52. ', opts: ['teacher', 'friend', 'parents', 'boss'], a: 'C', exp: '他说只是做了“父母”教他的事，parents 体现家庭教育。', diff: 'easy' },
-            { q: '53. ', opts: ['yours', 'mine', 'his', 'theirs'], a: 'A', exp: '归还“不属于自己的”东西，what is not yours。', diff: 'easy' },
-            { q: '54. ', opts: ['broke', 'restored', 'lost', 'shook'], a: 'B', exp: '他的小举“恢复”了陌生人对他人的信任，restored 准确。', diff: 'medium' },
-            { q: '55. ', opts: ['big', 'small', 'wrong', 'old'], a: 'A', exp: '我们常以为英雄主义意味着“大”事，big 与后文 quietly 小事相对。', diff: 'easy' },
-            { q: '56. ', opts: ['doing', 'saying', 'seeing', 'hearing'], a: 'A', exp: '有时只是安静地“做”对的事，doing the right thing。', diff: 'easy' },
-            { q: '57. ', opts: ['taught', 'forgot', 'missed', 'hid'], a: 'A', exp: '那个早上，一个钱包“教给”了人生一课，taught。', diff: 'easy' },
-            { q: '58. ', opts: ['dare', 'learn', 'refuse', 'fail'], a: 'B', exp: '愿我们都“学会”成为那样的人，learn。', diff: 'easy' },
-            { q: '59. ', opts: ['person', 'child', 'thief', 'driver'], a: 'A', exp: '那种“人”person，呼应前文老人。', diff: 'easy' },
-            { q: '60. ', opts: ['colder', 'warmer', 'bigger', 'quieter'], a: 'B', exp: '因善意城市更“温暖”warmer，点题。', diff: 'easy' }
+            {
+              q: "41. ",
+              opts: ["walking", "touring", "traveling", "rushing"],
+              a: "C",
+              exp: "下文 Larry pulled over（靠边停车）说明他当时是在公路上“行驶”，travel along 符合语境。",
+              diff: "medium"
+            },
+            {
+              q: "42. ",
+              opts: ["passengers", "colleagues", "employers", "customers"],
+              a: "D",
+              exp: "首句说他在运输公司工作，再结合 after delivering，可知是给“客户”送完货。",
+              diff: "medium"
+            },
+            {
+              q: "43. ",
+              opts: ["Since", "Although", "As", "If"],
+              a: "C",
+              exp: "as 引导时间状语从句，表示“当他靠近时”，前后无因果或让步关系。",
+              diff: "easy"
+            },
+            {
+              q: "44. ",
+              opts: ["each", "another", "that", "his"],
+              a: "B",
+              exp: "前句已提到一辆开着远光灯的车，此处发现的是“另一辆”翻倒的车。",
+              diff: "medium"
+            },
+            {
+              q: "45. ",
+              opts: ["flames", "smoke", "water", "steam"],
+              a: "A",
+              exp: "本段末句 the fire was put out 说明当时喷出的是“火苗”。",
+              diff: "easy"
+            },
+            {
+              q: "46. ",
+              opts: ["used", "disabled", "removed", "abandoned"],
+              a: "B",
+              exp: "车辆翻倒受损已无法行驶，disabled 意为“损坏的、失去行驶能力的”。",
+              diff: "hard"
+            },
+            {
+              q: "47. ",
+              opts: ["got hold of", "prepared", "took charge of", "controlled"],
+              a: "A",
+              exp: "停车拉手刹后“拿起”灭火器，get hold of 意为“抓住、拿到”。",
+              diff: "hard"
+            },
+            {
+              q: "48. ",
+              opts: ["came down", "came through", "came in", "came over"],
+              a: "D",
+              exp: "开远光灯的那个人“走了过来”告诉 Larry 情况，come over 符合。",
+              diff: "medium"
+            },
+            {
+              q: "49. ",
+              opts: ["returned", "received", "made", "confirmed"],
+              a: "C",
+              exp: "make an emergency call 是固定搭配，意为“拨打了急救电话”。",
+              diff: "medium"
+            },
+            {
+              q: "50. ",
+              opts: ["then", "again", "finally", "even"],
+              a: "A",
+              exp: "灭火、交谈之后“接着”听到车内传来女子的声音，按时间顺序推进。",
+              diff: "medium"
+            },
+            {
+              q: "51. ",
+              opts: ["Starting", "Parking", "Passing", "Approaching"],
+              a: "D",
+              exp: "“走近”车辆时才看到女子正从破碎的车窗往外爬，故选 Approaching。",
+              diff: "medium"
+            },
+            {
+              q: "52. ",
+              opts: ["quiet", "still", "away", "calm"],
+              a: "B",
+              exp: "stay still 意为“保持不动”，与下文 she should not move 呼应。",
+              diff: "medium"
+            },
+            {
+              q: "53. ",
+              opts: ["for", "so", "and", "but"],
+              a: "D",
+              exp: "让她别动，“但”她担心车会爆炸，前后是转折关系。",
+              diff: "hard"
+            },
+            {
+              q: "54. ",
+              opts: ["explode", "slip away", "fall apart", "crash"],
+              a: "A",
+              exp: "车子刚着过火，女子自然担心它会“爆炸”，故选 explode。",
+              diff: "easy"
+            },
+            {
+              q: "55. ",
+              opts: ["as if", "unless", "in case", "after"],
+              a: "C",
+              exp: "in case 意为“以免、万一”，即不要乱动以免伤到脖子。",
+              diff: "hard"
+            },
+            {
+              q: "56. ",
+              opts: ["stepped forward", "backed off", "moved on", "set out"],
+              a: "B",
+              exp: "消防和急救人员到场后，两人“退到一旁”让专业人员工作。",
+              diff: "medium"
+            },
+            {
+              q: "57. ",
+              opts: ["woman", "police", "man", "driver"],
+              a: "B",
+              exp: "下句 They let him and the other man go 表明他询问的是现场的“警方”。",
+              diff: "medium"
+            },
+            {
+              q: "58. ",
+              opts: ["forbidden", "ready", "asked", "free"],
+              a: "D",
+              exp: "or 连接两种情况：是还需要他，还是可以“自由离开”，be free to go。",
+              diff: "medium"
+            },
+            {
+              q: "59. ",
+              opts: ["for certain", "for consideration", "reported", "checked"],
+              a: "A",
+              exp: "One thing is for certain 意为“有一点是肯定的”，引出作者评价。",
+              diff: "hard"
+            },
+            {
+              q: "60. ",
+              opts: ["patience", "skills", "efforts", "promise"],
+              a: "C",
+              exp: "他灭火、安抚伤者等一系列“努力”很可能救了女子一命。",
+              diff: "medium"
+            }
           ]
         },
         {
-          q: '(41)____ yard where nothing grew. Our teacher, Ms. Lin, (42)____ we turn it into a garden. At first we (43)____, but she encouraged us. We (44)____ the stones, dug the (45)____, and planted seeds. Some plants (46)____ because we watered too little. We (47)____ and tried again. Slowly green (48)____ appeared. By June, the yard was full of (49)____. We learned that growing things (50)____ patience and teamwork. The garden also (51)____ students who rarely talked. Working side by side, they became (52)____. Ms. Lin said the yard (53)____ us more than books sometimes could. Now visitors (54)____ it and smile. A small (55)____ changed our school. It (56)____ that one idea, shared, can (57)____ a community. We are (58)____ of what we built with our (59)____, and we will (60)____ it for those who come after.',
-          diff: 'medium', src: '高考英语完形填空真题（记叙文·合作）',
+          q: "During my second year at the city college, I was told that the education department was offering a “free” course, called Thinking Chess, for three credits. I (41)____ the idea of taking the class because, after all, who doesn't want to (42)____ a few dollars? More than that, I'd always wanted to learn chess. And, even if I weren't (43)____ enough about free credits, news about our (44)____ was appealing enough to me. He was an international grandmaster, which (45)____ I would be learning from one of the game's (46)____. I could hardly wait to (47)____ him.\n\nMaurice Ashley was kind and smart, a former graduate returning to teach, and this (48)____ was no game for him; he meant business. In his introduction, he made it (49)____ that our credits would be hard-earned. In order to (50)____ the class, among other criteria, we had to write a paper on how we plan to (51)____ what we would learn in class to our future professions and, (52)____, to our lives. I managed to get an A in that (53)____ and learned life lessons that have served me well beyond the (54)____.\n\nTen years after my chess class with Ashley, I'm still putting to use what he (55)____ me: “The absolute most important (56)____ that you learn when you play chess is how to make good (57)____. On every single move you have to (58)____ a situation, process what your opponent (对手) is doing and (59)____ the best move from among all your options.” These words still ring true today in my (60)____ as a journalist.",
+          diff: "medium", src: "2018年高考全国卷I 完形填空",
           subs: [
-            { q: '41. ', opts: ['beautiful', 'empty', 'noisy', 'clean'], a: 'B', exp: '后文说“什么都不长”，故院子原先是“空荡的”empty。', diff: 'easy' },
-            { q: '42. ', opts: ['suggested', 'ordered', 'doubted', 'forgot'], a: 'A', exp: '老师“建议”改成花园，suggested 符合鼓励式语气。', diff: 'easy' },
-            { q: '43. ', opts: ['agreed', 'refused', 'doubted', 'laughed'], a: 'C', exp: 'At first we doubted（起初我们怀疑），与 but she encouraged 转折呼应。', diff: 'easy' },
-            { q: '44. ', opts: ['collected', 'removed', 'painted', 'counted'], a: 'B', exp: '我们先“搬走”石头，removed the stones 合理。', diff: 'easy' },
-            { q: '45. ', opts: ['hole', 'soil', 'road', 'wall'], a: 'B', exp: '挖“土”soil 播种，dug the soil 搭配自然。', diff: 'easy' },
-            { q: '46. ', opts: ['died', 'grew', 'shone', 'fell'], a: 'A', exp: '因浇水太少有些植物“枯死”died。', diff: 'easy' },
-            { q: '47. ', opts: ['cried', 'quit', 'learned', 'slept'], a: 'C', exp: '我们“吸取教训”再试，learned 体现成长。', diff: 'easy' },
-            { q: '48. ', opts: ['leaves', 'clouds', 'shadows', 'snow'], a: 'A', exp: '慢慢冒出绿色“叶子”leaves。', diff: 'easy' },
-            { q: '49. ', opts: ['flowers', 'stones', 'weeds', 'dust'], a: 'A', exp: '六月院子开满“花”flowers。', diff: 'easy' },
-            { q: '50. ', opts: ['needs', 'avoids', 'wastes', 'hides'], a: 'A', exp: '种植“需要”耐心与协作，needs。', diff: 'easy' },
-            { q: '51. ', opts: ['separated', 'helped', 'bored', 'hurt'], a: 'B', exp: '花园也“帮助”了很少说话的同学，helped。', diff: 'medium' },
-            { q: '52. ', opts: ['friends', 'enemies', 'strangers', 'rivals'], a: 'A', exp: '并肩劳动使他们成为“朋友”friends。', diff: 'easy' },
-            { q: '53. ', opts: ['taught', 'tested', 'tired', 'paid'], a: 'A', exp: '院子“教会”我们的有时胜过书本，taught。', diff: 'medium' },
-            { q: '54. ', opts: ['avoid', 'visit', 'ignore', 'sell'], a: 'B', exp: '访客来“参观”并微笑，visit。', diff: 'easy' },
-            { q: '55. ', opts: ['idea', 'rule', 'test', 'gift'], a: 'A', exp: '一个小小的“想法”改变了学校，idea 呼应前文建议。', diff: 'easy' },
-            { q: '56. ', opts: ['proves', 'denies', 'hides', 'asks'], a: 'A', exp: '它“证明”一个被分享的想法能改变集体，proves。', diff: 'medium' },
-            { q: '57. ', opts: ['break', 'change', 'leave', 'find'], a: 'B', exp: '能“改变”一个社区，change。', diff: 'medium' },
-            { q: '58. ', opts: ['afraid', 'ashamed', 'proud', 'tired'], a: 'C', exp: '我们为亲手建成的花园“自豪”proud。', diff: 'easy' },
-            { q: '59. ', opts: ['hands', 'books', 'phones', 'feet'], a: 'A', exp: '用我们的“双手”hands 建成，呼应劳动主题。', diff: 'easy' },
-            { q: '60. ', opts: ['keep', 'sell', 'forget', 'close'], a: 'A', exp: '我们会为后来者“守护”它，keep。', diff: 'easy' }
+            {
+              q: "41. ",
+              opts: ["put forward", "jumped at", "tried out", "turned down"],
+              a: "B",
+              exp: "课程免费且作者一直想学象棋，jump at the idea 意为“欣然接受这个想法”。",
+              diff: "hard"
+            },
+            {
+              q: "42. ",
+              opts: ["waste", "earn", "save", "pay"],
+              a: "C",
+              exp: "呼应上文 a “free” course，免费课意味着能“省下”几美元。",
+              diff: "medium"
+            },
+            {
+              q: "43. ",
+              opts: ["excited", "worried", "moved", "tired"],
+              a: "A",
+              exp: "even if 表让步：即使对免费学分不够“兴奋”，导师的消息也足够吸引人。",
+              diff: "medium"
+            },
+            {
+              q: "44. ",
+              opts: ["title", "competitor", "textbook", "instructor"],
+              a: "D",
+              exp: "下句 He was an international grandmaster 中的 He 指代本空，即课程的“授课导师”。",
+              diff: "medium"
+            },
+            {
+              q: "45. ",
+              opts: ["urged", "demanded", "held", "meant"],
+              a: "D",
+              exp: "which 指代前句，“这意味着”我将师从顶尖高手，故用 meant。",
+              diff: "medium"
+            },
+            {
+              q: "46. ",
+              opts: ["fastest", "easiest", "best", "rarest"],
+              a: "C",
+              exp: "与 international grandmaster 呼应，one of the game's best 即“棋坛最优秀的选手之一”。",
+              diff: "easy"
+            },
+            {
+              q: "47. ",
+              opts: ["interview", "meet", "challenge", "beat"],
+              a: "B",
+              exp: "导师如此吸引人，所以作者迫不及待想“见到”他，此时尚未上课。",
+              diff: "medium"
+            },
+            {
+              q: "48. ",
+              opts: ["chance", "qualification", "honor", "job"],
+              a: "D",
+              exp: "空后 was no game for him; he meant business 说明回校教书这份“工作”对他而言是认真的事业。",
+              diff: "hard"
+            },
+            {
+              q: "49. ",
+              opts: ["real", "perfect", "clear", "possible"],
+              a: "C",
+              exp: "make it clear that... 是固定句式，意为“明确表示”，it 为形式宾语。",
+              diff: "easy"
+            },
+            {
+              q: "50. ",
+              opts: ["attend", "pass", "skip", "observe"],
+              a: "B",
+              exp: "由 our credits would be hard-earned 及写论文等要求可知，是为了“通过”这门课。",
+              diff: "medium"
+            },
+            {
+              q: "51. ",
+              opts: ["add", "expose", "apply", "compare"],
+              a: "C",
+              exp: "apply...to... “将……运用于……”，空后 to our future professions 提示搭配。",
+              diff: "medium"
+            },
+            {
+              q: "52. ",
+              opts: ["eventually", "naturally", "directly", "normally"],
+              a: "A",
+              exp: "从未来职业再到生活，是递进关系，eventually 表“最终”。",
+              diff: "hard"
+            },
+            {
+              q: "53. ",
+              opts: ["game", "presentation", "course", "experiment"],
+              a: "C",
+              exp: "呼应上文 the class，作者在这门“课程”中拿到了A。",
+              diff: "easy"
+            },
+            {
+              q: "54. ",
+              opts: ["criterion", "classroom", "department", "situation"],
+              a: "B",
+              exp: "beyond the classroom 意为“超出课堂之外”，强调人生启示的长远作用。",
+              diff: "medium"
+            },
+            {
+              q: "55. ",
+              opts: ["taught", "wrote", "questioned", "promised"],
+              a: "A",
+              exp: "what he taught me “他教给我的东西”，引号中即导师的教诲。",
+              diff: "easy"
+            },
+            {
+              q: "56. ",
+              opts: ["fact", "step", "manner", "skill"],
+              a: "D",
+              exp: "后文“how to make good decisions”是一种能力，故为下棋学到的最重要“技能”。",
+              diff: "medium"
+            },
+            {
+              q: "57. ",
+              opts: ["grades", "decisions", "impressions", "comments"],
+              a: "B",
+              exp: "下文 choose the best move from among all your options 即“做出好的决定”。",
+              diff: "medium"
+            },
+            {
+              q: "58. ",
+              opts: ["analyze", "describe", "rebuild", "control"],
+              a: "A",
+              exp: "空后 a situation 搭配 analyze，每走一步都要“分析”形势。",
+              diff: "medium"
+            },
+            {
+              q: "59. ",
+              opts: ["announce", "signal", "block", "evaluate"],
+              a: "D",
+              exp: "从所有选项中“评估”出最佳一步，evaluate 与 from among all your options 相契。",
+              diff: "hard"
+            },
+            {
+              q: "60. ",
+              opts: ["role", "desire", "concern", "behavior"],
+              a: "A",
+              exp: "as a journalist 提示此处指作者作为记者的“角色/身份”。",
+              diff: "medium"
+            }
           ]
-        },
+        }
       ],
-      'chinese::xxwl': [
+            'chinese::xxwl': [
         {
-          q: '【材料】所谓碎片化阅读，是指借助手机、网络等媒介，利用零散时间进行的浅层次阅读。它快捷、便利，能在短时间内让人获取大量资讯。然而，碎片化的信息往往缺乏系统性与深度，看过便忘，难以形成扎实的知识结构。与之相对，深度阅读要求人沉下心来，对文本进行细读、思考与追问，虽慢却能在头脑中留下长久的印记。事实上，二者并非水火不容：用碎片时间浏览以广见闻，用整块时间深读以筑根基，方为善读之道。',
-          diff: 'medium', src: '高考语文信息类文本阅读（论述类）真题改编',
+          q: "【材料】阅读下面的文字，完成1~5题。\n\n对素食者和肠胃疾病患者来说，藜麦的发现是一个奇迹。藜麦不含麸质，富含镁和铁，比其他种子含有更多的蛋白质，包括人体无法独自生成的必需的氨基酸。美国宇航局宣布，藜麦是地球上营养最均衡的食物之一，是宇航员的理想之选。产于安第斯山的藜麦有一个令西方消费者神往的传说：印加人非常重视藜麦，认为它是神圣的，并且称之为\"万谷之母\"。不过，藜麦的爱好者却通过媒体发现了一个令人不安的事实。从2006年到2013年，玻利维亚和秘鲁的藜麦价格上涨了两倍。2011年，《独立报》称，玻利维亚的藜麦消费量\"5年间下降了34%，当地家庭已经吃不起这种主食了，它已经变成了奢侈品\"。《纽约时报》援引研究报告称，藜麦种植区的儿童营养不良率正在上升。2013年，《卫报》用煽动性标题提升了人们对这个问题的关注度：\"素食者的肚子能装下藜麦令人反胃的事实吗？\"该报称，贫穷的玻利维亚人和秘鲁人正在食用更加便宜的\"进口垃圾食品\"。《独立报》2013年一篇报道的标题是\"藜麦：对你有利——对玻利维亚人有害\"。这些消息传遍了全球，在健康饮食者之中引发了一场良心危机。在社交媒体、素食博客和健康饮食论坛上，人们开始询问食用藜麦是否合适。\n\n这种说法看似可信，被许多人认可，但是经济学家马克·贝勒马尔等人对此则持保留意见。毕竟，藜麦贸易使大量外国资金涌入玻利维亚和秘鲁，其中许多资金进入了南美最贫穷的地区。几位经济学家跟踪了秘鲁家庭支出的调查数据，将种植且食用藜麦的家庭、食用但不种植藜麦的家庭和从不接触藜麦的家庭划分为三个小组。他们发现，从2004年到2013年，三个小组的生活水平都上升了，其中藜麦种植户家庭支出的增长速度是最快的。农民们正在变富，他们将这种新收入转化为支出又给周边民众带来了好处。那么藜麦消费量下降34%又是怎么回事呢？原来，在很长的时间内两个国家的藜麦消费量一直在缓慢而稳定地下降，这意味着消费量的下降和价格的激增不存在明显的联系。更加接近事实的解释是，秘鲁人和玻利维亚人只是想换换口味，吃点别的东西。\n\n为了解藜麦的种植情况，我去了秘鲁科尔卡山谷，这里在印加时代以前就得到了开垦。藜麦是一种美丽的作物，拥有深红色或金黄色的巨大种球。在安第斯山的这片区域，人们在梯田上同时种植藜麦以及当地特有的玉米和马铃薯品种。\"国外需求绝对是一件好事，\"我的秘鲁向导杰西卡说道，\"农民非常高兴，所有想吃藜麦的人仍然买得起这种食物。\"她还解释了另一个好处。之前，秘鲁城里人往往认为他们这片区域吃藜麦的人\"很土\"。现在，由于美国人和欧洲人的重视，食用藜麦被视作一种时尚。\"利马人终于开始尊重我们这些高原人和我们的传统了。\"玻利维亚西南部有一片遥远而不适合居住的区域，那里到处都是盐湖和休眠火山。在那里，我看到了由藜麦资金支持的当地急需的开发和旅游项目。千百年来勉强能够养家糊口的自耕农开始为更加美好的未来而投资。我在2017年4月听到的玻利维亚人对于该作物的唯一抱怨是，日益增长的供给正在拉低价格。玻利维亚的藜麦种植面积增长了两倍多，从2007年的5万公顷增长到2016年的18万公顷。马克·贝勒马尔后来对我说：\"这是一个令人悲伤的结局，因为它的价格不太可能再度回升。\"在风景如画的科尔卡山谷，当太阳落山时，我问杰西卡，欧洲和北美的消费者是否应该为吃掉秘鲁人和玻利维亚人的食物而感到内疚。我可以猜到答案，但我想听到当地人的亲口否认。\"相信我，\"杰西卡笑道，\"我们有许多藜麦。\"\n\n乍一看，这一关于食物热潮、全球贸易和消费者忧虑的事件讲述了谎言被揭穿的过程。不过，这些受到错误解读的真相可能会对当地的人们造成真正的伤害。各行各业有经验的沟通者会通过片面的事实、数字、背景呈现某种世界观，从而影响现实。在这个例子中，新闻工作者和博主出于高尚的理由引导消费者远离藜麦：他们由衷地为一个贫困群体感到担忧，害怕狂暴的全球贸易风潮会危及这一群体的利益。我们很早就知道这一点：每个新手辩论者和犯错误的小学生都知道如何挑选最有利于自己的真相。不过，我们可能不知道这些真相为沟通者提供了多大的灵活性。很多时候，你可以通过许多方式描述一个人、一件事物或者一起事件，这些描述可能具有同等的真实性。我将它们称为\"竞争性真相\"。\n\n（摘编自赫克托·麦克唐纳《后真相时代》，刘清山译）",
+          diff: "medium", src: "2023年新课标Ⅰ卷 现代文阅读Ⅰ（信息类文本阅读，赫克托·麦克唐纳《后真相时代》）",
           subs: [
-            { q: '请简要概括作者关于“碎片化阅读”的主要观点。', a: '作者认为碎片化阅读快捷便利、能快速获取大量资讯，但缺乏系统性与深度，看过易忘，难以形成扎实的知识结构；主张将其与深度阅读结合，各取所长。', exp: '答题要点：①肯定碎片化阅读的优势（快捷、广见闻）；②指出其局限（浅、散、易忘）；③提出二者应互补。概括时需先辨明作者态度是“辩证”而非全盘否定。', diff: 'medium' },
-            { q: '文中画线句“二者并非水火不容”运用了什么修辞手法？有何表达作用？', a: '运用比喻（将两种阅读方式比作互不相容的水与火），生动形象地说明碎片化阅读与深度阅读可以并存互补，化抽象为具体，使论述通俗易懂。', exp: '解析：先判定修辞——比喻；再结合语境说明本体（两种阅读方式）与喻体（水火）的关系；最后点明表达效果：形象化、便于理解、增强说服力。', diff: 'medium' },
-            { q: '作者认为“深度阅读”为何重要？请结合文本作答。', a: '深度阅读要求沉下心细读、思考与追问，虽慢却能在头脑中留下长久印记，帮助人建立系统、扎实的知识结构，这是碎片化阅读难以替代的。', exp: '解析：锁定原文“深度阅读……留下长久的印记”“难以形成扎实的知识结构”等句，提炼“慢而深、成体系、留印记”三点即可。', diff: 'medium' },
-            { q: '结合材料，谈谈中学生应如何平衡碎片化阅读与深度阅读。', a: '示例：利用等车、睡前等碎片时间浏览新闻资讯以拓宽视野；同时每天留出整块时间进行深读，如精读课本、名著并做笔记思考。二者分工：碎片广见闻，深读筑根基。', exp: '解析：开放性试题，须“结合文本”给出可操作建议，避免空谈；评分一般看是否呼应材料中的“互补”观点、是否有具体做法。', diff: 'hard' }
+            {
+              q: "1.下列对原文相关内容的理解和分析，不正确的一项是（3分）\nA.藜麦适合素食者和肠胃疾病患者食用，并且由于其营养均衡，被美国宇航局认为是宇航员食物的理想之选。\nB.\"马克·贝勒马尔等人对此则持保留意见\"中的\"此\"，指的是被国外需求推高的藜麦价格给玻利维亚和秘鲁当地人造成伤害这一说法。\nC.藜麦的大面积种植，不仅让玻利维亚和秘鲁等地农民的生活水平显著提高，而且改变了当地人对藜麦带有歧视的看法。\nD.作者认为，尽管一些媒体引导消费者远离藜麦的做法值得商榷，但是其出发点却不是恶意的，他们为当地的贫困居民感到担忧。",
+              a: "C",
+              exp: "解析：本题考查理解文中重要词句含义、筛选整合信息的能力。A项由第一段\"对素食者和肠胃疾病患者来说，藜麦的发现是一个奇迹\"与\"美国宇航局宣布……是宇航员的理想之选\"两处信息叠加可推出，正确。B项\"此\"承接第二段首句\"这种说法\"，回指第一段媒体报道的\"价格上涨—当地人吃不起—儿童营养不良\"这一伤害说，正确。C项两处失误：一是改变歧视看法的原因是\"由于美国人和欧洲人的重视\"，而非\"藜麦的大面积种植\"，属强加因果、偷换原因；二是原文只写秘鲁城里人（利马人）看不起吃藜麦的高原人，并未涉及玻利维亚，选项扩大了范围。D项综合第四段\"出于高尚的理由\"\"由衷地为一个贫困群体感到担忧\"，正确。故选C。答题要领：选项与原文比对时重点核查\"原因\"\"范围\"\"程度\"三处易设误点。",
+              diff: "medium"
+            },
+            {
+              q: "2.根据原文内容，下列说法不正确的一项是（3分）\nA.从第一段的内容可以看出，当一起事件超出了我们直接观察的范围时，有些人会根据他人提供的信息，并结合自己的判断，生成对该事件的看法。\nB.\"它的价格不太可能再度回升\"，可能是因为市场对藜麦的需求量不再大幅增加，而藜麦的种植面积持续扩大，供给日益增长。\nC.\"每个新手辩论者\"\"都知道如何挑选最有利于自己的真相\"，可见有些\"沟通者\"会选择有助于推进个人意图的真相，而这种选择具有一定的灵活性。\nD.从藜麦事件可以发现，一组片面的事实编织在一起引发了一场良心危机，而这场良心危机对玻利维亚和秘鲁当地的居民造成了真正的伤害。",
+              a: "D",
+              exp: "解析：本题考查依据文本作合理推断的能力。A项是对第一段\"消息传遍全球—健康饮食者产生良心危机\"的抽象概括，推断成立。B项依据第三段\"日益增长的供给正在拉低价格\"及种植面积由5万公顷增至18万公顷，符合供求规律，推断成立。C项依据第四段对\"沟通者\"\"灵活性\"的表述，推断成立。D项错在把\"可能\"坐实为\"已经造成\"：原文第四段只说\"这些受到错误解读的真相可能会对当地的人们造成真正的伤害\"；且第二、三段的数据显示2004—2013年三组家庭生活水平都在上升、种植面积持续扩大，说明良心危机并未实际造成伤害。故选D。答题要领：推断题要盯住\"可能/必然\"\"已然/未然\"的时态与或然性偷换。",
+              diff: "hard"
+            },
+            {
+              q: "3.下列选项，最适合作为论据来支撑第二段观点的一项是（3分）\nA.\"粮食优先\"智库的工作人员塔尼娅·科森在谈到安第斯山藜麦种植者时表示：\"坦率地说，他们厌倦了藜麦，因此开始购买其他食物。\"\nB.加拿大《环球邮报》一则新闻的标题为\"你对藜麦的爱越深，你对玻利维亚人和秘鲁人的伤害就越深\"。\nC.制片人迈克尔·威尔科克斯专门为这个问题制作了一部纪录片，他说：\"我见过一些反对食用藜麦的文字评论，实际上，停止消费才会真正伤害这些农民。\"\nD.英国广播公司播音员埃文·戴维斯指出：\"事实上，说谎常常是没有必要的。你可以在不使用任何谎言的情况下完成许多有效的欺骗。\"",
+              a: "A",
+              exp: "解析：本题考查论点与论据的匹配（实证）能力。第一步先锁定第二段的落脚点即分论点：\"更加接近事实的解释是，秘鲁人和玻利维亚人只是想换换口味，吃点别的东西\"——即当地消费量下降与价格上涨无关，是口味变化所致。第二步逐项比对：A项\"他们厌倦了藜麦，因此开始购买其他食物\"与该分论点高度契合，是最佳论据。B项是煽动性标题，宜作第一段媒体渲染的例证。C项针对\"错误解读的真相会造成真正伤害\"，宜置于第四段。D项谈\"不用谎言也能欺骗\"，宜与第四段\"竞争性真相\"配合。故选A。答题要领：论据题必须先精准提炼\"本段\"观点，切忌用全文中心去套。",
+              diff: "medium"
+            },
+            {
+              q: "4.请简要说明文本中的西方媒体在报道时使用了哪些\"竞争性真相\"。（4分）",
+              a: "①从2006年到2013年，玻利维亚和秘鲁的藜麦价格上涨了两倍；②玻利维亚的藜麦消费量5年间下降了34%；③藜麦种植区的儿童营养不良率正在上升；④玻利维亚人和秘鲁人正在食用更加便宜的进口食品。",
+              exp: "解析：本题考查归纳整合信息并辨析信息真实性的能力。第一步界定概念：由末段可知，\"竞争性真相\"是沟通者为达成自身意图而援引的、本身真实客观、但只呈现片面事实的描述。第二步回到第一段筛取媒体列举的\"事实性\"陈述，共四条（价格上涨两倍、消费量5年降34%、儿童营养不良率上升、改吃更便宜的进口食品）。第三步剔除干扰：媒体由这些事实推出的结论性、评价性语句（如\"当地家庭已经吃不起这种主食，它已变成奢侈品\"\"藜麦：对你有利——对玻利维亚人有害\"\"素食者的肚子能装下藜麦令人反胃的事实吗\"）属于虚假结论而非\"真相\"，不能计入答案。评分角度：每点1分，共4分；写成结论性表述不给分。",
+              diff: "hard"
+            },
+            {
+              q: "5.作者采用哪些方法证明关于藜麦的新闻报道结论有误？请根据文本概括。（6分）",
+              a: "①引用经济学家（马克·贝勒马尔等人）的调查数据及观点；②针对媒体提出的问题（如消费量下降34%），作出合理的解释；③进行实地调研，征询当地居民的意见。",
+              exp: "解析：本题考查整体把握文本、概括论证方法的能力。按段落切分作者的\"反驳链条\"：第二段前半引用几位经济学家跟踪秘鲁家庭支出的分组调查数据（三组生活水平均上升、种植户增长最快），并引马克·贝勒马尔的观点——这是\"引用权威数据与观点\"；第二段后半针对《独立报》\"消费量下降34%\"这一问题作出更接近事实的解释（长期缓慢下降，与价格激增无明显联系，只是想换口味）——这是\"合理解释、釜底抽薪\"；第三段作者亲赴秘鲁科尔卡山谷与玻利维亚西南部实地考察，见到藜麦资金支持的开发与旅游项目，并当面询问向导杰西卡——这是\"实地调研＋访谈当地人\"。评分角度：每点2分，共6分；只答\"举例论证\"\"引用论证\"等术语而无文本落实，酌情扣分。",
+              diff: "hard"
+            }
           ]
         },
         {
-          q: '【材料】中华优秀传统文化并非陈列在博物馆里的老物件，而是活在当下的精神血脉。从“天人合一”的生态智慧，到“己所不欲，勿施于人”的处世准则，再到“苟日新，日日新”的革新精神，这些思想穿越千年仍照亮今人生活。今天，我们用短视频讲诗词，用文创产品释文物，用现代语言重述经典，正是让传统与时代对话。传承不是守旧，而是在理解的基础上创造性转化，使古老智慧为解决当下问题提供资源。',
-          diff: 'medium', src: '高考语文信息类文本阅读（论述类）真题改编',
+          q: "【材料】阅读下面的文字，完成1~3题。\n\n《中国金银器》是第一部中国古代金银器通史，囊括了器皿与首饰，着眼于造型与纹饰，究心于美术与工艺、审美与生活的关系。\n\n本书的研究旨趣，不在金银器的科学技术发展史，而在与社会生活史密切相关的造型、纹饰、风格的演变史，也可以说，它不是穷尽式的历史资料汇编，也不是用考古学的方法对器物分型、分式以划分时代，而是以目验实物为前提，从名物学入手，通过定名，以器物描述的方法，来展示工艺美术史与社会生活史中的金银器。\n\n中国古代金银器研究，是伴随现代考古学而生的一门新兴学问。传世文献展示的金银器史和出土文物呈现出来的金银器史，是不一样的。前者显示了数量颇多的名目和使用甚巨的数目，但提供具体形象的材料很少。考古发现的实物，就名目和数量而言，虽只是载籍的冰山一角，却是以形象示人；对于工艺美术要讨论的核心问题，即造型与纹饰，它提供了最为直观的实例。\n\n金银器兼具富与丽的双重品质。首先它是财富，其次它是一种艺术形态，然而通过销熔的办法又可使之反复改变样态以跟从时代风尚。相对于可入鉴藏的书画、金石、玉器、瓷器之雅，金银器可谓一俗到骨。它以它的俗，传播时代风尚。与其他门类相比，金银器皿和首饰的制作工艺都算不得复杂，这里便格外显示出设计的重要。\n\n从造型设计的角度来看，工艺美术是共性多、个性少、最为贴近生活的艺术。无论哪朝哪代，祈福与怡情都是纹样设计的两大主旨，当然，不同时代表现的形式多有不同，亦即选择与创造的艺术形象不同，这也正是工艺美术史所要展示的一个主要内容。这里\"史\"的概念是指以贴近设计者和制作者装饰用心的感知，展示没有文字或鲜有文字却只是以成品来显示的设计史脉络，而不是贴着历史编年来勾画发展的线索。小说家说：\"语言是我们的思维方式，是我们最基础、最直接的表达方式。语言也是一种建筑材料，许多意想不到的建筑物都是靠了语言一砖一瓦地搭建起来的。\"历史学家则说：\"我始终强调运用最基本的'语文学'的学术方法，对传到我手中需要研究的那个文本作尽可能全面和深入的历史化和语境化处理，进而对它们作出最准确的理解和解读。\"这两段话同样可以移用于作为艺术语汇的造型与纹饰。本书即是建立在对艺术语汇发生与演变的观察和分析之上。在这里呈现的是两类语言：一是物，即用造型和纹饰表达自身的艺术语言；一是文，即人对物的命名，此中包括了对物之本身和物所承载的意义的理解。\n\n金银器工艺的发展演进，关键在于品类的丰富以及与时代风尚紧密相关的造型和纹饰的设计之妙，技术的进步并非主导。纹样设计首先取决于工匠的慧心，付诸熟练掌握传统技术的巧手，乃其第二义。纹样设计所涉及的图式演变，也包括两项主要内容：一是金银器本身设计与制作具有连续性的工艺传统，一是设计者和制作者共处的风俗与共享的文学所形成的文化生态。因此可以说，中国金银器史，很大程度上也是一部古代社会风俗史。\n\n（摘编自扬之水《\"更想工人下手难\"〈中国金银器〉导言》）",
+          diff: "medium", src: "2022年全国甲卷 论述类文本阅读（扬之水《\"更想工人下手难\"〈中国金银器〉导言》）",
           subs: [
-            { q: '作者为什么说中华优秀传统文化是“活在当下的精神血脉”？', a: '因为其中的生态智慧、处世准则与革新精神等思想穿越千年仍对今人生活有指导意义，并能通过现代方式被重新激活、应用于当下，故并非僵死的传统，而是持续流动的精神血脉。', exp: '解析：关键词“活”与“血脉”——指传统具有生命力、持续影响当下。需结合文中“照亮今人生活”“与时代对话”等句作答。', diff: 'medium' },
-            { q: '文中列举“短视频讲诗词”“文创释文物”有何论证作用？', a: '举当下用新媒体、新形式传播传统的实例，具体印证“让传统与时代对话”“创造性转化”的观点，使论述更具现实感与说服力。', exp: '解析：先指出是举例论证，再说明所证观点（传统可借助现代形式传承），最后点明效果（真实、有说服力）。', diff: 'medium' },
-            { q: '作者心目中“传承”的正确态度是什么？', a: '传承不是简单守旧，而是在理解传统的基础上进行创造性转化，使古老智慧能为解决当下问题提供资源。', exp: '解析：锁定原句“传承不是守旧，而是在理解的基础上创造性转化……”，直接转述即可，注意“理解—转化—致用”三层。', diff: 'easy' },
-            { q: '请就“如何让经典走近青少年”提出一条建议，并说明理由。', a: '示例：将经典改编为青少年喜闻乐见的动漫或互动游戏，因为契合其媒介习惯，能降低阅读门槛、激发兴趣，从而让经典真正“活”在年青一代心中。', exp: '解析：开放性题，建议须具体、可落地，理由须扣住“贴近青少年特点”“降低门槛”“激发兴趣”等，体现材料“创造性转化”思想。', diff: 'hard' }
+            {
+              q: "1.下列关于原文内容的理解和分析，正确的一项是（3分）\nA.考古发现的金银器实物在名目和数量上远远比不上典籍记载，而其价值和意义却在典籍记载之上。\nB.考察一个时期社会的审美风尚，应先注意其时金银器皿和首饰流行的工艺设计以及对时代风尚的传播。\nC.无论哪朝哪代，金银器纹样设计都脱不开祈福与怡情两大主旨，其他工艺美术门类的纹样设计也是如此。\nD.给没有文字或鲜有文字的金银器成品命名，其所处时代的社会风俗和文化生态是命名的主要依据。",
+              a: "B",
+              exp: "解析：本题考查筛选并辨析信息的能力。A项\"其价值和意义却在典籍记载之上\"于文无据（无中生有）：第三段只说考古实物\"以形象示人\"\"提供了最为直观的实例\"，与传世文献各有价值，并未作高下比较。C项\"其他工艺美术门类的纹样设计也是如此\"表述绝对且丢失前提：原文是\"从造型设计的角度来看……祈福与怡情都是纹样设计的两大主旨\"，未推及所有门类。D项无中生有：第五段只说\"文，即人对物的命名，此中包括了对物之本身和物所承载的意义的理解\"；末段所说风俗与文化生态影响的是\"纹样设计所涉及的图式演变\"，而非命名依据。B项综合第四段\"金银器可谓一俗到骨。它以它的俗，传播时代风尚\"\"格外显示出设计的重要\"，表述成立。故选B。",
+              diff: "medium"
+            },
+            {
+              q: "2.下列对原文论证的相关分析，不正确的一项是（3分）\nA.文章开宗明义，点明《中国金银器》一书的性质，概述了全书研究的对象和范畴。\nB.文章通过将金银器与书画、金石等对比，突出其品质特性，凸显了设计的重要。\nC.文章引用小说家、历史学家的话，来解释将造型和纹饰视作艺术语汇的研究思路。\nD.文章末段重点论证了连续性的工艺传统对金银器技术、造型和纹样设计的影响。",
+              a: "D",
+              exp: "解析：本题考查分析论点、论据和论证的能力。A项对应首段与第二段，点明该书\"第一部中国古代金银器通史\"的性质及研究旨趣，分析正确。B项对应第四段将金银器之\"俗\"与书画、金石、玉器、瓷器之\"雅\"作对比，进而引出\"格外显示出设计的重要\"，正确。C项对应第五段引小说家论\"语言\"、历史学家论\"语文学\"方法，用以说明把造型与纹饰当作\"艺术语汇\"来观察其发生与演变的研究思路，正确。D项概括不全且偷换要点：末段明确\"纹样设计所涉及的图式演变，也包括两项主要内容\"——工艺传统与文化生态，只讲其一即以偏概全；且原文强调\"技术的进步并非主导\"，选项却说影响\"技术\"。故选D。",
+              diff: "medium"
+            },
+            {
+              q: "3.根据原文内容，下列说法不正确的一项是（3分）\nA.《中国金银器》一书将各种金银器实物还原到其设计和制作的时代中来展开研究。\nB.与其他艺术品相比，金银器因其\"俗\"，且经反复销熔，所以传世实物的数量偏少。\nC.古代金银矿石分布状况和冶炼技术的发展不在《中国金银器》一书研究视野中。\nD.古代文学作品涉及金银器的相关描述，是中国金银器造型和纹饰研究的重要参考。",
+              a: "B",
+              exp: "解析：本题考查分析概括作者观点态度的能力。A项由第二段\"以目验实物为前提，从名物学入手，通过定名，以器物描述的方法，来展示工艺美术史与社会生活史中的金银器\"及末段\"中国金银器史，很大程度上也是一部古代社会风俗史\"可推，正确。C项由第二段\"本书的研究旨趣，不在金银器的科学技术发展史\"可推，正确。D项由末段\"设计者和制作者共处的风俗与共享的文学所形成的文化生态\"可推，正确。B项强加因果：第四段只说金银器\"一俗到骨\"、可通过销熔反复改变样态以跟从时代风尚，并未由此推出\"传世实物数量偏少\"这一结论。故选B。答题要领：凡出现\"因……所以……\"\"由于……\"的选项，须回原文核验因果链是否存在。",
+              diff: "medium"
+            }
           ]
         },
         {
-          q: '【材料】关于人工智能是否取代人类就业的争论从未停止。乐观者认为，历史上每一次技术革命在消灭旧岗位的同时，也创造了大量新岗位，人工智能将把人从重复劳动中解放出来，转向更具创造性的工作。担忧者则指出，此次变革速度空前，许多中等技能岗位可能在短时间内集中消失，而新岗位对学习能力要求更高，部分劳动者难以快速适应。事实上，影响并非整齐划一：与数据、流程相关的岗位风险较高，而需要共情、审美与复杂沟通的职业相对安全。理性之策不是抗拒技术，而是完善终身教育与社会保障，帮助劳动者平稳转岗。',
-          diff: 'medium', src: '高考语文信息类文本阅读（论述类）真题改编',
+          q: "【材料】阅读下面的文字，完成4~6题。\n\n材料一：\n\n利用杂种优势以大幅度提高农作物产量，是现代农业科学技术的突出成就之一，植物雄性不育性的发现和利用，使不少两性花植物，如高粱、向日葵、甜菜等作物的杂种优势能广泛应用于生产。近年来，我国的杂交水稻已取得了重大突破，为大幅度提高水稻产量开创了一条有效的途径。\n\n（摘编自袁隆平《杂交水稻培育的实践和理论》）\n\n材料二：\n\n遗传育种学界对水稻这一严格自花授粉作物具有杂种优势现象普遍持否定或怀疑态度，袁隆平根据自己对水稻的长期观察，经过与玉米等作物杂种优势利用现象的比较后，对水稻无杂种优势的观念提出了质疑。袁隆平于1964年正式开始水稻杂种优势利用的探索，两年后终于发现水稻具有杂种优势。根据高粱、玉米杂种优势利用的成功经验，他将这种杂交思路用于水稻物种上，由此提出了\"三系法\"籼稻杂交路线。所谓三系杂交水稻是指雄性不育系、保持系和恢复系三系配套育种。不育系为生产大量杂交种子提供了可能性，借助保持系来繁殖不育系，用恢复系给不育系授粉来生产育性恢复且有优势的杂交稻。从\"三系法\"的操作程序上讲，成功的关键首先是要找到合适的不育系材料。在认真总结多年来的研究工作的基础上，袁隆平终于认识到，后代不育性状的不理想是亲本的亲缘关系太近造成的。后代产生变异的可能性与亲本的亲缘关系呈正相关，即亲本的亲缘关系越远，后代产生变异的可能性就越大，不育性状就越明显。于是一切都变得清晰了：下一步的工作即是寻找地理远缘或遗传远缘的稻株，而在这些稻株中，野生稻或野生稻中的不育株作为亲本则是最为理想的，它极有可能突破此前不育系选育的难关。\"远缘杂交\"技术路线的确立，是袁隆平\"三系法\"杂交水稻迈向成功的关键性一步。随着雄性不育野生稻（野败）在海南的发现，\"远缘杂交\"的技术路线得到证明，它不仅正确而且完全可以实现。\n\n（摘编自雷毅《科学研究中的创造性思维与方法——以袁隆平\"三系\"法杂交水稻为例》）\n\n材料三：\n\n由于杂交水稻不同熟期组合的出现，全国各地涌现出各种与杂交水稻种植相配套的新型种植模式。湖南、浙江、广东、广西、江苏、湖北等省区以种植杂交水稻为主，发展麦类与一季杂交稻、双季杂交稻、玉米与杂交稻等多种模式。这些新型模式不仅提高了土地复种指数，促进了粮食、食用油和多种经济作物的经营发展，而且培育了地力，提高了土地经济效益与生态效益。推广杂交水稻，还促使中低产稻田的面貌发生根本性变化，同时改变了农民对中低产稻田的种植评估观念。杂交水稻分蘖力强，根系发达，吸收力好，秆粗叶茂，株型好，光能转化效率高，这使中低产稻田能够获得较高的产量，与高产稻田产量的差距大大缩小。\n\n（摘编自李晏军《中国杂交水稻技术发展研究（1964~2010）》）",
+          diff: "medium", src: "2022年全国甲卷 实用类文本阅读（多文本：袁隆平《杂交水稻培育的实践和理论》＋雷毅＋李晏军）",
           subs: [
-            { q: '请概括文中“乐观者”与“担忧者”的主要观点。', a: '乐观者认为技术革命会消灭旧岗也创造新岗，AI 把人从重复劳动解放转向创造性工作；担忧者指出此次变革速度快、中等技能岗可能集中消失，且新岗学习门槛高，部分人难适应。', exp: '解析：分两点概括，须准确对应双方立场；注意“乐观—担忧”的对称结构，避免混淆。', diff: 'medium' },
-            { q: '文中说“影响并非整齐划一”，结合文本具体指什么？', a: '指不同岗位受 AI 冲击程度不同：与数据、流程相关的岗位风险高，而需要共情、审美与复杂沟通的职业相对安全，故不能一概而论。', exp: '解析：锁定“风险较高/相对安全”的对比句，说明差异化的实质。', diff: 'medium' },
-            { q: '作者认为应如何理性应对人工智能带来的就业变化？', a: '作者主张不抗拒技术，而是完善终身教育与社会保障，帮助劳动者平稳转岗，以主动适应而非被动防御。', exp: '解析：答案在结尾“理性之策……”，提炼“终身教育+社保+平稳转岗”三点。', diff: 'hard' },
-            { q: '有人认为“人工智能终将让大多数人失业”，请结合文本谈谈你的看法。', a: '示例：不完全认同。文本指出技术革命历史上多伴随新岗创造，且影响因岗位而异；关键在通过教育与保障帮助转岗，而非简单断言大规模失业。', exp: '解析：开放性题须“结合文本”辩证作答，既指出风险确实存在，也强调应对之策可缓解，避免极端化。', diff: 'hard' }
+            {
+              q: "4.原卷第4题为图示梳理题（\"下列对材料相关内容的梳理，不正确的一项是\"，四个选项均以流程图形式呈现，此处不便复现图形）。其中被判为错误的一项，把\"野败的发现\"梳理为\"突破了亲本亲缘关系过远的难关\"。请指出该梳理错在哪里，并写出正确的梳理链条。（3分）",
+              a: "原卷答案为C项。该项错在把\"野败的发现\"所突破的难关说成\"亲本亲缘关系过远\"。材料二明确指出\"后代不育性状的不理想是亲本的亲缘关系太近造成的\"，故\"野败\"这一雄性不育野生稻的发现，突破的是\"亲本亲缘关系过近\"的难关。正确链条应为：质疑水稻无杂种优势→1964年开始探索、两年后发现水稻具有杂种优势→提出\"三系法\"籼稻杂交路线（不育系、保持系、恢复系配套）→关键是找到合适的不育系材料→认识到不育性状不理想源于亲本亲缘关系太近→确立\"远缘杂交\"技术路线，寻找地理远缘或遗传远缘的稻株（野生稻及其不育株最理想）→海南发现雄性不育野生稻\"野败\"，证明\"远缘杂交\"路线正确可行。",
+              exp: "解析：本题考查依据文本梳理事理逻辑、辨析信息的能力。图示题的实质是把说明性文字转换为因果链或流程链，设误点几乎都在\"链条节点的因果倒置或概念反向\"。作答时须回原文定位关键句\"后代不育性状的不理想是亲本的亲缘关系太近造成的\"\"亲本的亲缘关系越远，后代产生变异的可能性就越大，不育性状就越明显\"，两句互证可知：问题出在\"太近\"，解决办法是\"求远\"，因而\"野败\"突破的是\"过近\"之关，选项将\"近\"改成\"远\"，属反向偷换。评分角度：指出\"太近\"而非\"太远\"给1分，完整复原关键链条给2分。",
+              diff: "hard"
+            },
+            {
+              q: "5.下列对材料相关内容的概括和分析，不正确的一项是（3分）\nA.袁隆平在进行杂种优势利用探索实践时，并没有盲从学界的权威理论，而是将杂交水稻作为自己研究的突破口。\nB.不育系材料的选育是三系配套育种技术能否实现的关键，理清这一研究思路后，袁隆平开始了寻找地理远缘或遗传远缘稻株的工作。\nC.亲本的亲缘关系越近，后代的不育性状就越不理想，这是袁隆平在认真总结多年研究工作的基础上才认识到的。\nD.杂交水稻的推广正好与全国各地涌现出的新型种植模式相配套，这些新型模式不仅提升了土地的复种指数，还培育了地力。",
+              a: "D",
+              exp: "解析：本题考查对多则材料信息进行比较、辨析的能力。A项对应材料二首句\"遗传育种学界……普遍持否定或怀疑态度\"而袁隆平\"提出了质疑\"，正确。B项对应\"成功的关键首先是要找到合适的不育系材料\"及\"下一步的工作即是寻找地理远缘或遗传远缘的稻株\"，先后顺序无误。C项是对\"后代不育性状的不理想是亲本的亲缘关系太近造成的\"\"在认真总结多年来的研究工作的基础上\"的正确转述。D项颠倒了因果与先后：材料三开头是\"由于杂交水稻不同熟期组合的出现，全国各地涌现出各种与杂交水稻种植相配套的新型种植模式\"——新型模式是杂交水稻不同熟期组合出现之后随之产生的结果，而非事先存在、恰好与推广\"相配套\"。故选D。",
+              diff: "medium"
+            },
+            {
+              q: "6.杂交水稻培育的成功有什么意义？请根据材料进行概括。（6分）",
+              a: "①使很多两性花植物的杂种优势能广泛应用于生产；②找到了我国大幅度提高水稻产量的有效途径；③促使全国出现与杂交水稻种植相配套的新型种植模式，提高了土地复种指数，促进了粮食、食用油和多种经济作物的经营发展，培育了地力，提高了土地经济效益与生态效益；④提高了中低产稻田的产量，大大缩小了与高产稻田产量的差距。",
+              exp: "解析：本题考查评价事件的社会价值和影响、筛选整合信息的能力。答题路径是\"按材料分区取点，逐条归并\"：材料一两句各出一点——\"植物雄性不育性的发现和利用，使不少两性花植物……杂种优势能广泛应用于生产\"对应第①点；\"为大幅度提高水稻产量开创了一条有效的途径\"对应第②点。材料三前半\"涌现出各种与杂交水稻种植相配套的新型种植模式\"\"提高了土地复种指数……提高了土地经济效益与生态效益\"对应第③点；后半\"促使中低产稻田的面貌发生根本性变化\"\"这使中低产稻田能够获得较高的产量，与高产稻田产量的差距大大缩小\"对应第④点。材料二侧重科研思路与方法，一般不作为\"意义\"要点。评分角度：每点约1.5分，共6分；要点须落实到\"生产应用—产量途径—种植模式与效益—中低产田\"四个层面，只笼统答\"解决了吃饭问题\"不能得满分。",
+              diff: "medium"
+            }
           ]
         },
         {
-          q: '【材料】短视频以其短、平、快的特点迅速占领青少年的碎片时间。支持者说，它降低了创作与表达的门槛，让普通人也能记录生活、展示才华，并在科普、非遗等领域涌现出许多优质内容。反对者则担忧，算法推荐让人沉浸于即时快感，削弱深度思考与延迟满足能力；长时间刷屏还影响视力与作息。更值得警惕的是“信息茧房”——长期只接触同质内容，会窄化视野。关键不在于禁绝短视频，而在于提升媒介素养：青少年应学会甄别内容、控制时长，让技术服务于成长而非支配自己。',
-          diff: 'medium', src: '高考语文信息类文本阅读（论述类）真题改编',
+          q: "【材料】阅读下面的文字，完成1~5题。\n\n材料一：\n\n十八世纪德国学者莱辛的《拉奥孔》是近代诗画理论文献中第一部重要著作。从前人们相信诗画同质，直到莱辛才提出丰富的例证，用动人的雄辩，说明诗画并不同质。\n\n据传说，希腊人为了夺回海伦，举兵围攻特洛伊城，十年不下。最后他们佯逃，留着一匹腹内埋伏精兵的大木马在城外，特洛伊人看见木马，把它移到城内。典祭官拉奥孔当时极力劝阻，说留下木马是希腊人的诡计。他这番忠告激怒了偏心于希腊人的天神。当拉奥孔典祭时，河里就爬出两条大蛇，把拉奥孔和他的两个儿子一齐绞死了。\n\n这是罗马诗人维吉尔《伊尼特》第二卷里最有名的一段。十六世纪在罗马发现的拉奥孔雕像似以这段史诗为蓝本。莱辛拿这段诗和雕像互较，发现几个重要的异点。因为要解释这些异点，他才提出诗画异质说。\n\n据史诗，拉奥孔在被捆时放声号叫；在雕像中他的面孔只表现一种轻微的叹息，具有希腊艺术所特有的恬静与肃穆。为什么雕像的作者不表现诗人所描写的号啕呢？希腊人在诗中并不怕表现苦痛，而在造型艺术中却永远避免痛感所产生的面孔筋肉挛曲的丑状。在表现痛感之中，他们仍求形象的完美。\n\n其次，据史诗，那两条长蛇绕腰三圈，绕颈两圈，而在雕像中它们仅绕着两腿。因为作者要从全身筋肉上表现出拉奥孔的苦痛，如果依史诗，筋肉方面所表现的苦痛就看不见了。同理，雕像的作者让拉奥孔父子赤裸着身体，虽然在史诗中拉奥孔穿着典祭官的衣服。\n\n莱辛推原这不同的理由，作这样一个结论：\"图画和诗所用的模仿媒介或符号完全不同，图画用存于空间的形色，诗用存于时间的声音。……全体或部分在空间中相并立的事物叫作'物体'，物体和它们的看得见的属性是图画的特殊题材。全体或部分在时间上相承续的事物叫作'动作'，动作是诗的特殊题材。\"\n\n换句话说，画只宜于描写静物，诗只宜于叙述动作。静物各部分在空间中同时并存，这种静物不宜于诗，因为诗的媒介是在时间上相承续的语言。比如说一张桌子，画家只需用寥寥数笔，使人一眼看到就明白它是桌子。如果用语言来描写，你须从某一点说起，说它有多长多宽等等，说了一大篇，读者还不一定马上就明白它是桌子。\n\n诗只宜叙述动作，因为动作在时间上先后相承续，而诗所用的语言声音也是如此。这种动作不宜于画，因为一幅画仅能表现时间上的某一点，而动作却是一条绵延的直线。比如说，\"我弯下腰，拾一块石头打狗，狗见着就跑了\"，用语言来叙述这事，多么容易，但是如果把这简单的故事画出来，画十幅、二十幅，也不一定使观者一目了然。\n\n但是谈到这里，我们不免有疑问：画绝对不能叙述动作，而诗绝对不能描写静物么？莱辛也谈到这个问题，他说：\"图画也可以模仿动作，但是只能间接地用物体模仿动作。……诗也能描绘物体，但是也只能间接地用动作描绘物体。\"\n\n换句话说，图画叙述动作时，必化动为静，以一静面表现动作的全过程；诗描写静物时，亦必化静为动，以时间上的承续暗示空间中的绵延。\n\n（摘编自朱光潜《诗论》）\n\n材料二：\n\n《拉奥孔》所讲绘画或造型艺术和诗歌或文字艺术在功能上的区别，已成老生常谈了。它的主要论点——绘画宜于表现\"物体\"或形态，而诗歌宜于表现\"动作\"或情事，中国古人也浮泛地讲过。晋代陆机分划\"丹青\"和\"雅颂\"的界限，说：\"宣物莫大于言，存形莫善于画。\"这里的\"物\"是\"事\"的同义字。邵雍有两首诗说得详细些：\"史笔善记事，画笔善状物。状物与记事，二者各得一\"；\"画笔善状物，长于运丹青。丹青入巧思，万物无遁形。诗笔善状物，长于运丹诚。丹诚入秀句，万物无遗情\"。\n\n但是，莱辛的议论透彻深细得多，他不仅把\"事\"\"情\"和\"物\"\"形\"分开，还进一步把两者各和时间与空间结合；作为空间艺术的绘画、雕塑只能表现最小限度的时间，所画出、塑出的不可能超过一刹那内的物态和景象，绘画更是这一刹那内景物的一面观。我联想起唐代的传说：\"客有以《按乐图》示王维，维曰：'此《霓裳》第三叠第一拍也。'客未然，引工按曲，乃信。\"宋代沈括《梦溪笔谈》批驳了这个无稽之谈：\"此好奇者为之。凡画奏乐，止能画一声。\"\"止能画一声\"五字也帮助我们了解一首唐诗。徐凝《观钓台画图》：\"一水寂寥青霭合，两崖崔嵬白云残。画人心到啼猿破，欲作三声出树难。\"画家挖空心思，终画不出\"三声\"连续的猿啼，因为他\"止能画一声\"。徐凝很可以写\"欲作悲鸣出树难\"，那不过说图画只能绘形而不能\"绘声\"。他写\"三声\"，寓意精微，就是莱辛所谓绘画只表达空间里的平列，不表达时间上的后继，所以画家画\"一水\"加\"两崖\"的排列易，画\"一\"而\"两\"、\"两\"而\"三\"的连续\"三声\"难。\n\n（摘编自钱锺书《读〈拉奥孔〉》）",
+          diff: "hard", src: "2021年新高考Ⅰ卷 现代文阅读Ⅰ（信息类文本阅读，多文本：朱光潜《诗论》＋钱锺书《读〈拉奥孔〉》）",
           subs: [
-            { q: '支持者对短视频持怎样的态度？请结合文本概括。', a: '支持者认为短视频降低创作表达门槛，让普通人记录生活、展示才华，并在科普、非遗等领域产生优质内容，总体持肯定态度。', exp: '解析：概括支持者三点理由（低门槛、展示才华、优质内容），注意其“肯定”基调。', diff: 'medium' },
-            { q: '文中列举了短视频哪些负面影响？', a: '负面影响包括：算法让人沉浸即时快感、削弱深度思考与延迟满足；长时间刷屏伤视力与作息；算法易致“信息茧房”，窄化视野。', exp: '解析：从“反对者担忧”“更值得警惕”两处提炼，分点列出即可。', diff: 'medium' },
-            { q: '什么是“信息茧房”？它有何危害？', a: '“信息茧房”指长期只接触同质化内容，视野被窄化、认知被局限的状态；危害在于使人难以接触多元观点，削弱独立判断与开阔思维。', exp: '解析：先释义（同质内容→窄化），再点危害（局限认知、弱化判断）。', diff: 'hard' },
-            { q: '作者认为青少年应如何对待短视频？', a: '作者主张提升媒介素养：学会甄别内容优劣、主动控制使用时长，让技术服务于自身成长，而非被其支配。', exp: '解析：锁定结尾“提升媒介素养……”，关键词“甄别、控时、服务成长”。', diff: 'medium' }
+            {
+              q: "1.下列对材料相关内容的理解和分析，不正确的一项是（3分）\nA.莱辛是历史上质疑\"诗画同质\"观念的第一人，他的《拉奥孔》在近代诗画理论中产生了广泛影响。\nB.雕塑《拉奥孔》既呈现了拉奥孔被缠绞的表情，又不让这表情表现为丑态，体现了希腊艺术恬静与肃穆的一面。\nC.雕塑《拉奥孔》与史诗记载的不同主要体现在三处：一是拉奥孔的表情，二是大蛇缠身的部位，三是人物穿衣与否。\nD.莱辛的《拉奥孔》认为，由于诗和画拥有不同的媒介和符号，所以形成了各擅胜场的题材范围。",
+              a: "A",
+              exp: "解析：本题考查理解分析材料内容的能力。A项\"质疑'诗画同质'观念的第一人\"于文无据、以偏概全。原文只说\"《拉奥孔》是近代诗画理论文献中第一部重要著作\"\"直到莱辛才提出丰富的例证……说明诗画并不同质\"，强调的是他第一次提出丰富例证并使人信服，并未说他是历史上质疑此说的第一人；且材料二还指出\"中国古人也浮泛地讲过\"，可反证A项不成立。B项对应第四段\"面孔只表现一种轻微的叹息，具有希腊艺术所特有的恬静与肃穆\"\"避免……面孔筋肉挛曲的丑状\"，正确。C项对应第四、五段三处异点，正确。D项对应莱辛结论\"图画和诗所用的模仿媒介或符号完全不同\"及\"特殊题材\"之说，正确。故选A。",
+              diff: "medium"
+            },
+            {
+              q: "2.根据材料内容，下列说法正确的一项是（3分）\nA.由于诗歌是时间的艺术，在描述一件事情时，即使是高明的绘画也不如诗歌来得生动和明白。\nB.绘画只能是对所画对象某一瞬间的定格，因此后人根据画作是推想不出所画对象动作的过程的。\nC.\"红杏枝头春意闹\"\"春风又绿江南岸\"\"两山排闼送青来\"等诗句，化静为动，以动作来描绘景致。\nD.沈括质疑了唐代传说，从这个例子可判断，后人关于王维\"诗中有画，画中有诗\"的说法其实没有道理。",
+              a: "C",
+              exp: "解析：本题考查筛选并整合信息、依文推断的能力。A项绝对化：原文只说\"用语言来叙述这事，多么容易\"，是就叙述动作的便利而言，并未断言绘画描述事情一定不如诗\"生动和明白\"。B项武断：材料一明确说\"图画叙述动作时，必化动为静，以一静面表现动作的全过程\"，可见观者可由画面推想动作过程。D项以偏概全、强加否定：沈括所驳的是\"《按乐图》可辨第三叠第一拍\"这一无稽之谈，与王维\"诗中有画，画中有诗\"的诗画相通之论不是一回事。C项三例正合材料一\"诗描写静物时，亦必化静为动，以时间上的承续暗示空间中的绵延\"，\"闹\"\"绿\"\"送\"皆以动作写景，正确。故选C。",
+              diff: "medium"
+            },
+            {
+              q: "3.结合材料内容，下列选项中最能支持莱辛\"诗画异质\"观点的一项是（3分）\nA.诗以空灵，才为妙诗，可以入画之诗尚是眼中金屑也。\nB.文者无形之画，画者有形之文，二者异迹而同趣。\nC.诗和画的圆满结合，就是情和景的圆满结合，也就是所谓的\"艺术意境\"。\nD.图画可以画爱神向一个人张弓瞄准，而诗歌则能写一个人怎样被爱神之箭射中。",
+              a: "D",
+              exp: "解析：本题考查论点与论据的匹配能力。先明确\"诗画异质\"的核心：画是空间艺术，宜表现并立于空间的\"物体\"（一刹那的静态）；诗是时间艺术，宜表现在时间中承续的\"动作\"（过程）。A项讲诗贵空灵、不宜入画，谈的是诗的品格高下，不是诗画媒介与题材之别。B项\"异迹而同趣\"恰是\"诗画同质\"论，与观点相反。C项讲诗画结合生成意境，仍是\"同质相通\"一路。D项\"画\"取张弓瞄准这一\"一刹那\"的姿态，\"诗\"写\"怎样被射中\"这一有先后承续的过程，正好分别落在空间之物体与时间之动作上，是最贴切的例证。故选D。",
+              diff: "medium"
+            },
+            {
+              q: "4.请简要分析材料一和材料二的论证思路。（4分）",
+              a: "材料一：先由莱辛《拉奥孔》引出\"诗画并不同质\"这一观点；接着复述拉奥孔的传说，并将维吉尔史诗与雕像比较，举出表情、蛇缠部位、穿衣与否三处异点，说明莱辛提出\"诗画异质\"说的缘由；然后引莱辛的结论，从媒介（空间形色／时间声音）与题材（物体／动作）两方面阐明\"画只宜描写静物，诗只宜叙述动作\"，并以画桌子、打狗两例作通俗印证；最后提出\"画绝对不能叙述动作、诗绝对不能描写静物么\"的疑问，引莱辛之言加以辩证补充——化动为静、化静为动，使论证更为周严。全文以引用论证、举例论证为主，层层推进。\n材料二：先指出《拉奥孔》\"绘画宜表现物体、诗歌宜表现动作\"的主要论点中国古人也浮泛地讲过，引陆机\"宣物莫大于言，存形莫善于画\"和邵雍论诗笔画笔的两首诗为证；再转折指出莱辛更为透彻深细，因为他把\"事\"\"情\"与\"物\"\"形\"分开后，还进一步与时间、空间结合，提出绘画只能表现一刹那内景物的一面观；最后以王维《按乐图》的唐代传说、沈括\"凡画奏乐，止能画一声\"的批驳以及徐凝\"欲作三声出树难\"的诗句为例，论证绘画\"只表达空间里的平列，不表达时间上的后继\"。全文中西互参、由浅入深，以引证和例证层层深化。",
+              exp: "解析：本题考查分析论证思路的能力。答题模式为\"首先……接着（然后）……最后……\"，并点明所用论证方法与文段间的逻辑关系。操作要领：（1）给材料分层——材料一可分为\"引出观点—例证异点—推出结论并阐释—辩证补充\"四层；材料二可分为\"中国古人已浮泛言之—莱辛更透彻（时空结合）—例证绘画只能画一刹那\"三层。（2）概括每层的核心句，注意抓标志词，如材料一\"换句话说\"\"但是谈到这里，我们不免有疑问\"，材料二\"但是，莱辛的议论透彻深细得多\"，这些正是层次转换的路标。（3）末尾点出论证方法（引用论证、举例论证、对比论证）与效果。评分角度：两则材料各2分，思路层次答对且有文本依据即可给分，只贴\"总分总\"标签而无内容概括不得分。",
+              diff: "hard"
+            },
+            {
+              q: "5.嵇康诗有\"目送归鸿，手挥五弦\"一句，顾恺之说画\"手挥五弦易，目送归鸿难\"。请结合材料，谈谈你对此的理解。（6分）",
+              a: "①绘画是空间艺术，它\"只能表现最小限度的时间\"，所画不能超过一刹那内的物态和景象，且\"更是这一刹那内景物的一面观\"。②\"手挥五弦\"是一个可以定格的瞬间姿态，属于在空间中并立的\"物体\"及其看得见的属性，画家用形色即可直接呈现，所以\"易\"。③\"目送归鸿\"却是一段在时间上先后承续的\"动作\"：目光须随鸿雁远去，直至其消失于视野，这一绵延的过程无法压缩进一个静止的画面；绘画\"只表达空间里的平列，不表达时间上的后继\"，故\"难\"。④由此可见，顾恺之之说正印证了莱辛的\"诗画异质\"：画宜于写物体（空间并立），诗宜于叙动作（时间承续），二者媒介不同，各有擅场。",
+              exp: "解析：本题考查运用文中观点解决具体问题的能力，属\"以理释例\"型。答题三步：第一步，提炼理论工具——从材料一取\"图画用存于空间的形色，诗用存于时间的声音\"\"一幅画仅能表现时间上的某一点，而动作却是一条绵延的直线\"，从材料二取\"绘画更是这一刹那内景物的一面观\"\"只表达空间里的平列，不表达时间上的后继\"。第二步，用理论分别观照\"易\"与\"难\"：\"手挥五弦\"是可被一刹那定格的静态物象故易；\"目送归鸿\"含有目光追送、鸿雁渐远直至消失的时间流程，超出了画面所能承载的\"一点\"故难。第三步，回扣结论——此例正是\"诗画异质\"的生动注脚。评分角度：答出绘画受制于\"一刹那／空间平列\"给2分，分别解释\"易\"\"难\"各2分；只复述题干或泛谈\"意境难画\"而不落实时空之别，最多得2分。",
+              diff: "hard"
+            }
           ]
-        },
+        }
       ],
-      'chinese::wxwl': [
+            'chinese::wxwl': [
         {
-          q: '【散文】母亲的炊烟\n老家的院子很小，却总飘着母亲点燃的炊烟。每当日头偏西，母亲便在灶前忙碌，柴火噼啪作响，白烟顺着烟囱溜上天空，像一条温柔的线，把我和远方连在一起。我离家求学的那些年，最怕黄昏——黄昏一来，别家的炊烟升起，我才惊觉自己竟连一碗热饭的归处都没有。后来母亲走了，灶台冷了，可每到傍晚，我仍会下意识望向那方屋顶，仿佛烟还在。原来炊烟从来不是烟，是母亲留在人间的一只手，轻轻牵着我，不声不响。',
-          diff: 'medium', src: '高考语文文学类文本阅读（散文）真题改编',
+          q: "【小说】文本一：\n\n支队政委（节选）\n王愿坚\n\n我做了一个梦，梦见我像是负了伤，正在爬一个崖头，怎么也爬不上去。忽然，老胡来了，他变得跟棵老黄松似的，又高又大，伸出小葵扇那么大的一只手，拉住了我……一睁眼，可不是，我的手正在他手里攥着呢。\n\n见我醒了，他把我的手捏紧了，突然问我：“老黄，我求你个事成不成？”\n\n“怎么不成！”我奇怪地看了他一眼。他的脸被拂晓时的月光一照，更是苍白，简直像是块白石头刻出来的。\n\n“我让你干什么你干什么？”\n\n“一定！”\n\n他扭身戳了戳正在酣睡的林大富。小伙子一骨碌爬起来，愣眉愣眼地问：“政委，要出发？”\n\n“不，有任务！”老胡说着抓起一个挎包，对我说：“咱们到那边竹林里去。”\n\n我疑疑惑惑地背起他，来到了那片竹林边上。这时，启明星贼亮贼亮的，东方已经现出鱼肚白了。老胡四下里看了看，选了一棵大毛竹，靠在上面坐下来，又问了我一句：“真的叫你干啥你干啥？”\n\n“真的，快说吧！”我被他弄得又糊涂又心焦。\n\n“好！”他伸手从挎包里掏出两根绳子，“噗”的一声扔在我面前，然后两手往竹子后面一背，厉声说：“把我绑起来！”\n\n“该不是叫伤口疼得他神经错乱了吧？”我想，本想不干，无奈已经有言在先了，我一面绑，一面问：“这是干啥？你疯啦？”他没搭我的腔，只是一个劲叫着：“绑紧点，绑紧点！”等我们把他两手绑好，他又把那条伤腿伸开，蹬住了另一棵竹子：“把这也绑住！”我们也照办了。\n\n看看我们都弄妥了，他咬咬牙说：“来，使劲挤它！”\n\n直到这时，我才明白他的意思。我叫过小林，轻轻地打开了他伤口上的布带子。伤口，像个发得过了火的开花馒头，又红又肿，没有器械，没有麻药，硬是把脓血从伤口里挤出来，这痛苦……\n\n“快，快下手哇！”他在催我。\n\n“我，我干不来！”我痛苦地说。\n\n“你答应过我嘛，黄兴和同志！”他哀求似的说，“你总不能瞪着眼看我受罪呀，是不是？俗话说‘疮口出了脓，比不长还受用’，帮我挤挤就好了。好了，那不给队上减少了个累赘？又可以多帮你干点工作。”对我说完软的，又对小林来硬的：“林大富同志，‘三大纪律’头一条就是服从命令，我命令你：挤！”\n\n我横了横心：“干！”便让小林抱住他的腿，我两手握着伤口按下去。随着手劲，我觉得手底下他的肌肉猛地哆嗦了一下。我问：“老胡，怎么样？”\n\n“没关系，你，你别管我！”\n\n我继续用力挤着伤口，这会儿我真想看看他是不是吃得消，却又不敢看。为了分散他的注意，减少些痛苦，我故意把话岔开来：“老胡，你看今天敌人还会不会再跟上来？”\n\n“说……说不上……”他低声回答。他把“上”字说成了“桑”，听得出话是从牙缝里挤出来的。\n\n“再追上来怎么办呢？”我又问。\n\n“嗯……”他猛地抖了一下，那两株竹子也跟着索索地抖一阵。\n\n“要是真来了，咱就再干他一下，好不好？”\n\n“嗯……”他又是一阵猛抖。\n\n一连两次问话没有回答，我心慌了，扭头向他望了望，只见他两手紧紧抠住地面，那被痛苦扭歪了的脸上，汗水顺着那浓黑的眉毛和鬓角，一串串地流着。\n\n我费了好大的劲才压下想住手的打算，火辣辣地喊了声小林：“快，快去化杯盐水来！”\n\n蓦地，竹子剧烈地颤动了一下，两片硬硬的小碎骨片跳到了我的手上，然后滑过指缝掉落到脚下的草丛里。我停住了手。这才觉得自己的脊背一阵发冷，原来衣服不知什么时候已经被汗水湿透了。\n\n我俩把他的伤口用盐水洗净，包扎好了，然后解开绳子，扶他在草地上平躺下来。他紧闭着眼，像睡着了似的。我撩把野草擦着手，坐到他的身边。小林正在掰着他的手指，他手里紧握着一把潮湿的泥土。\n\n太阳已经出来了。阳光淡淡地洒在他的脸上。他无力地睁开了眼，深深地吸了口气，说：“老黄，痛——啊！”\n\n汗珠映着阳光，晶亮晶亮的。我觉得自己的眼睛仿佛被这晶亮的反光刺得发痛，一滴咸咸的东西滚下来，流到了嘴角上。\n\n（有删改）\n\n文本二：\n\n长征：前所未闻的故事（节选）\n［美］哈里森·索尔兹伯里\n\n陈毅的伤口始终愈合不了，到了1935年6月，他已不能行走。游击队缺医少药，只有四种成药：八公丹、万金油、人丹和济公水。陈毅把万金油涂在伤口上，再换上新纱布。不久，伤口情况有所好转。①\n\n夏天，陈毅还能一瘸一拐地走路，可是到了9月，伤口变得疼痛难忍，腿也肿了起来，为了去南雄开会，他不得不拄着拐棍，脚步蹒跚地翻山越岭。这时他决定彻底治疗一下他的腿伤。他叫警卫员把他伤口中的脓挤出去。警卫员看到陈毅痛得脸色发白，急忙停下手来。陈毅命令他继续挤，警卫员说他下不了手。陈毅已经痛得浑身发抖，“好吧，”他说，“用绳子把我捆起来，这样我就不会发抖了。”警卫员把陈毅的腿捆在树上又继续挤，直到把脓挤净并挤出了一片碎骨头才停下。然后，用盐水冲洗了伤口，用涂过万金油的干净布包扎好。陈毅痛得像得了舞蹈病似的浑身发抖，但不久就恢复了自制力，笑着说：“这回它不会再反攻了。”的确如此，伤口彻底愈合了，再也没有发作。②\n\n［注］①见陈丕显回忆录《赣南三年游击战争》。②材料来自1984年3月23日对胡华的采访。\n\n（过家鼎等译，有删改）",
+          diff: "medium", src: "2022年全国甲卷 文学类文本阅读·王愿坚《支队政委》（节选）／哈里森·索尔兹伯里《长征：前所未闻的故事》（节选）",
           subs: [
-            { q: '赏析文中画线句：“白烟顺着烟囱溜上天空，像一条温柔的线，把我和远方连在一起。”', a: '运用比喻，将炊烟比作“一条温柔的线”，生动写出炊烟连接游子与故乡、母亲的形象； “溜”字拟人化，赋予炊烟调皮轻柔的动感，营造温暖眷恋的意境，含蓄传达母爱。', exp: '解析：赏析题按“手法+内容+情感”三步：①比喻、拟人手法；②写出炊烟的形态与连接作用；③烘托母爱的温柔与思乡之情。', diff: 'medium' },
-            { q: '文中写“我”离家求学“最怕黄昏”，有何作用？', a: '以别家炊烟反衬自身孤身在外、无热饭可归的落寞，强化对母亲与家乡的思念；同时为后文母亲离世、炊烟不再的悲痛作铺垫，使情感跌宕、主题深沉。', exp: '解析：从内容（烘托孤寂思乡）与结构（铺垫、反衬）两方面作答；注意“怕黄昏””与后文“仍望屋顶”形成情感呼应。', diff: 'medium' },
-            { q: '如何理解文章结尾“炊烟从来不是烟，是母亲留在人间的一只手”？', a: '炊烟是母亲操劳与爱的象征；母亲虽离世，但那份无声的牵挂与守护长留人间，如一只手轻轻牵着“我”。这句话升华主题，将具体物象化为永恒的母爱，感人至深。', exp: '解析：抓住“象征”与“升华”——炊烟=母爱；手=守护与牵念。结尾由实入虚，是散文常见的点题之法。', diff: 'hard' },
-            { q: '本文表达了作者怎样的思想感情？', a: '表达了对母亲深切的怀念与感激，对温馨故乡生活的眷恋，以及母亲离世后物是人非的怅惘，情感真挚含蓄，余味悠长。', exp: '解析：整体把握“思念—眷恋—怅惘”的情感脉络，避免只答一点；注意情感随情节（离家—母逝—回望）而推进。', diff: 'medium' }
+            {
+              q: "第7题　下列对文本相关内容和艺术特色的分析鉴赏，不正确的一项是：\nA．文本一依次写到“月光一照”“启明星贼亮贼亮的”“太阳已经出来了”，既推进了情节发展，也暗示了主人公心理的变化。\nB．文本一中的老黄是小说叙述者，也是“手术”的实施者，小说通过描写他不敢下手、不敢看等情形，烘托了老胡的刚毅。\nC．文本二中陈毅“术”后笑着说“这回它不会再反攻了”，这样的话语既带着战争年代的特定色彩，也表现出陈毅的乐观与幽默。\nD．通过对老胡和陈毅战胜身体痛苦的描写，两个文本不仅写出了战斗生活的艰苦卓绝，更写出了革命信仰的巨大力量。",
+              a: "选A。文本一确实依次写到了“月光一照”“启明星贼亮贼亮的”“太阳已经出来了”，但这些描写并未起到“推进情节发展、暗示主人公心理变化”的作用：“月光一照”是为写老胡的脸“更是苍白”，强调他身体十分虚弱；“启明星贼亮贼亮的”只是表明故事发生的时间；“太阳已经出来了”表示故事已近结束。三处均为交代时间的景物描写，与情节推进和人物心理变化关系不大。B、C、D三项分析均正确。",
+              exp: "解析：本题考查对文本内容与艺术特色的分析鉴赏。此类“景物描写作用”选项极易被套路化误判——考生一见时间性景物就贴上“推动情节”“暗示心理”的标签。作答须回到文本：判断景物是否真的承担叙事功能，要看它有没有引发人物行动、造成情境转折，或与人物情绪形成对应。文本一中三处光线描写只承担交代时间、烘托人物身体状态的功能，属于“标示时间”而非“推动情节”。用环境描写推动情节、暗示心理是常用手法，却不是必然。B项“烘托”判断正确：写老黄“我干不来”“不敢看”“脊背一阵发冷”，是以叙述者的怯懦反衬老胡的刚毅，属侧面衬托。故答案为A。",
+              diff: "medium"
+            },
+            {
+              q: "第8题　老胡这一人物形象有哪些特点？请结合文本一简要分析。（6分）",
+              a: "①意志坚强：为了继续战斗，能够忍受常人难以忍受的痛苦。在没有器械、没有麻药的情况下要求“绑紧点”、要求“使劲挤它”，挤出碎骨片仍不喊停，只说“没关系，你，你别管我”。\n②处事果断：一旦决定“手术”，坚决实施。拂晓时叫醒老黄和林大富，备好绳子，选定毛竹，安排周密，说干就干，绝不拖延。\n③善于做思想工作：为了说服战友，或说理、或命令、或请求，切实有效。对老黄用软的——“你答应过我嘛，黄兴和同志”“你总不能瞪着眼看我受罪呀”；对林大富来硬的——搬出“三大纪律”头一条“服从命令”，直接下命令。",
+              exp: "解析：人物形象题的答题公式是“特点概括＋文本依据”，切忌只贴标签或只复述情节。本文只截取了“挤脓”这一个场景，因此题干限定为“有哪些特点”而非“是怎样的人”，作答应紧扣该场景可见的侧面。三个要点分属两个层次：意志坚强、处事果断是性格层面；善于做思想工作则是他作为“支队政委”这一身份的职业特点——政委的本职正是做人的思想工作，答出这一点才算真正扣住标题。分析时应抓住动作细节（抠住地面、紧握泥土、肌肉哆嗦）、语言细节（把“上”说成“桑”）以及软硬两种劝说方式，避免脱离文本的套话。",
+              diff: "medium"
+            },
+            {
+              q: "第9题　这两个内容相近的文本文体不同，因而艺术表现也有差异。请比较并简要分析。（6分）",
+              a: "①文体性质不同：文本一是小说，可以虚构；文本二是纪实作品，强调真实。\n②表现手法不同：文本一运用场景描写、细节描写、言行描写等多种表现手法，塑造了老胡这一艺术形象；文本二以采访、回忆录等为基础（文后注明材料出自陈丕显回忆录及1984年对胡华的采访），记录了陈毅的真实经历。\n③语言风格不同：文本一以描写为主，语言生动形象；文本二以叙事为主，语言平实简洁。",
+              exp: "解析：这是2022年全国甲卷首创的“小说＋纪实作品”跨文体比较题，呼应统编教材选择性必修中册“了解纪实作品和虚构作品各自的特点和表现手法”的单元目标。答题的逻辑起点是文体属性——虚构与非虚构，这是一切差异的根源。由此顺势推出两条：虚构允许作者调动比喻（伤口像“发得过了火的开花馒头”）、细节（碎骨片跳到手上）、对话等手法着力塑造形象，故如见其人、如闻其声；非虚构则须以采访、回忆录等材料为凭据，重在“记录”，故交代具体的时间（1935年6月、9月）、地点（南雄）、人物（陈毅、警卫员）并加注出处。第三条落到语言风格：描写性语言与叙述性语言之别。三条构成“文体—手法—语言”的完整链条。",
+              diff: "hard"
+            }
           ]
         },
         {
-          q: '【小说片段】雪夜归人\n风雪裹着黑夜，老周深一脚浅一脚往回赶。矿上停工半个月，工钱拖着不发，他兜里只剩几张皱巴巴的零票。拐过山嘴，村口那盏昏黄的灯还亮着——那是妻子每晚为他留的。他忽然想起出门时儿子说“爸，我要新书包”，心头一酸。推开院门，妻子迎出来，没问钱的事，只说“饭在锅里，娃睡了”。老周把冻红的手揣进袖子，没敢说矿上的难处，只答“嗯，明年咱买新书包”。雪，还在下，可屋里，是暖的。',
-          diff: 'medium', src: '高考语文文学类文本阅读（小说）真题改编',
+          q: "【小说】越野滑雪\n［美］海明威\n\n缆车又颠了一下，停了。尼克正在行李车厢里给滑雪板上蜡，把靴尖塞进滑雪板上的铁夹，牢牢扣上夹子。他从车厢边缘跳下，落脚在硬邦邦的冰壳上，来一个弹跳旋转，蹲下身子，把滑雪杖拖在背后，一溜烟滑下山坡。\n\n乔治在下面的雪坡上一落一起，再一落就不见了人影。尼克顺着陡起陡伏的山坡滑下去时，那股冲势加上猛然下滑的劲儿把他弄得浑然忘却一切，只觉得身子里有一股飞翔、下坠的奇妙感。他挺起身，稍稍来个上滑姿势，一下子又往下滑，往下滑，冲下最后一个陡峭的长坡，越滑越快，越滑越快，雪坡似乎在他脚下消失了。身子下蹲得几乎倒坐在滑雪板上，尽量把重心放低，只见飞雪犹如沙暴，他知道速度太快了。但他稳住了。随即一搭被风刮进坑里的软雪把他绊倒，滑雪板一阵磕磕绊绊，他接连翻了几个筋斗，然后停住，两腿交叉，滑雪板朝天翘起，鼻子耳朵里满是雪。\n\n乔治站在坡下稍远的地方，正噼噼啪啪地拍掉风衣上的雪。\n\n“你的姿势真美妙，尼克，”他大声叫道，“那搭烂糟糟的雪真该死，把我也绊了一跤。”\n\n“在峡谷滑雪什么滋味儿？”尼克挣扎着站起来。\n\n“你得靠左滑。因为谷底有堵栅栏，所以飞速冲下去后得来个大旋身。”\n\n“等一会儿我们一起去滑。”\n\n“不，你先去。我想看你滑下峡谷。”\n\n尼克赶过乔治。他的滑雪板开始有点打滑，随后一下子猛冲下去。他坚持靠左滑，末了，在冲向栅栏时，紧紧并拢双膝，像拧紧螺旋似的旋转身子，把滑雪板向右来个急转弯，扬起滚滚白雪，然后慢慢减速，跟铁丝栅栏平行地站住了。\n\n他抬头看看山上。乔治正屈起双膝滑下山来；两支滑雪杖像虫子的细腿那样荡着，杖尖触到地面，掀起阵阵白雪，最后，他一腿下跪，一腿拖随，整个身子来个漂亮的右转弯，蹲着滑行，双腿一前一后，飞快移动，身子探出，防止旋转，两支滑雪杖像两个光点，把弧线衬托得更加突出，一切都笼罩在漫天飞舞的白雪中。\n\n尼克用滑雪板把铁丝栅栏最高一股铁丝压下，乔治纵身越过去。他们沿路屈膝滑行，进入一片松林。路面结着光亮的冰层，被拖运原木的马儿拉的犁弄脏了，染得一搭橙红，一搭烟黄。两人一直沿着路边那片雪地滑行。大路陡然往下倾斜通往小河，然后笔直上坡。他们透过林子，看得见一座饱经风吹雨打、屋檐较低的长形房子。走近了，看出窗框漆成绿色。油漆在剥落。\n\n他们把滑雪板竖靠在客栈的墙上，把靴子蹬蹬干净才走进去。\n\n客栈里黑咕隆咚的。有只大瓷火炉在屋角亮着火光。天花板很低。屋内两边那些酒渍斑斑的暗黑色桌子后面摆着光溜溜的长椅。两个瑞士人坐在炉边，喝着小杯浑浊的新酒。尼克和乔治在炉子另一边靠墙坐下。一个围着蓝围裙的姑娘走过来。\n\n“来瓶西昂酒，”尼克说，“行不行？”\n\n“行啊，”乔治说，“你对酒比我内行。”\n\n姑娘走出去了。\n\n“没一项玩意儿真正比得上滑雪，对吧？”尼克说，“你滑了老长一段路，头一回歇下来时就会有这么个感觉。”\n\n“嘿，”乔治说，“真是妙不可言。”\n\n姑娘拿进酒来又出去了，他们听见她在隔壁房里唱歌。\n\n门开了，一帮子从大路那头来的伐木工人走进来，在屋里把靴子上的雪跺掉，身上直冒水汽。女招待给这帮人送来了三公升新酒，他们分坐两桌，光抽烟，不作声，脱下了帽，有的背靠着墙，有的趴在桌上。屋外，拉运木雪橇的马儿偶尔一仰脖子，铃铛就清脆地丁当作响。\n\n乔治和尼克都高高兴兴的。他们两人很合得来。他们知道回去还有一段路程可滑呢。\n\n“你几时得回学校去？”尼克问。\n\n“今晚，”乔治回答，“我得赶十点四十的车。”\n\n“真希望你能留下，我们明天上百合花峰去滑雪。”\n\n“我得上学啊，”乔治说，“哎呀，尼克，难道你不希望我们能就这么在一起闲逛吗？带上滑雪板，乘上火车，到一个地方滑个痛快，滑好上路，找客栈投宿，再一直越过奥伯兰山脉，直奔瓦莱州，穿过恩加丁谷地。”\n\n“对，就这样穿过黑森林区。哎呀，都是好地方啊。”\n\n“就是你今年夏天钓鱼的地方吧？”\n\n“是啊。”\n\n他们喝干了剩酒。\n\n尼克双肘撑在桌上，乔治往墙上颓然一靠。\n\n“也许我们再也没机会滑雪了，尼克，”乔治说。\n\n“我们得滑，”尼克说，“否则就没意思了。”\n\n“我们要去滑，没错，”乔治说。\n\n“我们得滑，”尼克附和说。\n\n“希望我们能就此说定了，”乔治说。\n\n尼克站起身。他把风衣扣紧。他拿起靠墙放着的两支滑雪杖。\n\n“说定了可一点也靠不住，”他说。\n\n他们开了门，走出去。天气很冷。雪结得硬邦邦的。大路一直爬上山坡通到松林里。\n\n（陈良廷译，有删改）",
+          diff: "hard", src: "2020年全国I卷 文学类文本阅读·［美］海明威《越野滑雪》（陈良廷译）",
           subs: [
-            { q: '小说开头描写“风雪裹着黑夜”有什么作用？', a: '交代故事发生的严寒冬夜环境，渲染清冷艰难的氛围；以恶劣外境反衬屋内妻儿的温暖等候，烘托老周生计艰难却牵挂家人的形象，为下文亲情主题张本。', exp: '解析：环境描写题从“交代时地、渲染气氛、衬托人物、铺垫主题”切入；此处冷与暖的对照是解题关键。', diff: 'medium' },
-            { q: '妻子“没问钱的事，只说饭在锅里，娃睡了”这一细节，表现了人物怎样的性格？', a: '表现妻子体贴、贤惠、善解人意：她察觉丈夫的难处却不多追问，用最朴素的关心安抚归人，于无声处见深情。', exp: '解析：细节描写题须“由细节见性格”——不追问=体贴宽容；关心食宿=贤惠务实。避免脱离文本空泛评价。', diff: 'medium' },
-            { q: '老周“没敢说矿上的难处”，反映了他怎样的心理？', a: '既因工钱无着而焦虑酸楚，又不愿让妻儿担忧，选择独自扛下重担；体现底层劳动者对家庭的责任感与隐忍坚韧。', exp: '解析：结合前文“工钱拖着不发”“心头一酸”可知其苦； “没敢说”是 protective 的沉默，凸显责任与隐忍。', diff: 'hard' },
-            { q: '小说结尾“雪，还在下，可屋里，是暖的”有何妙处？', a: '以景结情，用屋外飞雪与屋内温暖形成对照，含蓄点明“人间真情可抵御世间严寒”的主旨；语言凝练，余韵悠长，留给读者回味空间。', exp: '解析：结尾题看“对照+点题+以景结情”； “暖”一语双关——屋暖、心更暖，收束有力。', diff: 'hard' }
+            {
+              q: "第7题　下列对小说相关内容和艺术特色的分析鉴赏，不正确的一项是：\nA．小说中描写滑雪的段落多从尼克的角度来写，要么侧重他本人滑雪时的感受，要么通过他的眼睛来观看乔治滑雪的姿态，虽多次描写而无雷同之感。\nB．小说的多个细节描写突出了客栈的破败和黯淡，与白雪皑皑的山间峡谷形成鲜明对比，小说氛围由此发生变化，情节也由此发生转折。\nC．小说插入了对喝酒的瑞士人、客栈女招待、伐木工人等人物的描写，这符合主人公在客栈小憩时的观察，也为小说增添了更真切的故事背景。\nD．小说主旨与《老人与海》较为接近，都是通过描写人挑战大自然或者投身不甘平庸的冒险生活，来塑造海明威式的“硬汉”形象。",
+              a: "选D。D项属于对主旨的过度解读。本篇的重心并不在“人与自然的搏斗”和“硬汉”形象的塑造上，而是表现尼克与乔治想通过滑雪摆脱现实生活的牵绊，以及这一愿望注定难以实现的怅惘。滑雪在文中是自由、纯粹之乐的象征，与“上学”“赶十点四十的车”所代表的现实秩序相对立，与《老人与海》的抗争主题并不相同。A、B、C三项分析均正确。",
+              exp: "解析：本题考查内容与艺术特色的分析鉴赏，难点在于抵抗“作家标签化”的思维定势。一见海明威就套“硬汉”“重压下的优雅风度”，正是命题人设置的陷阱。判断主旨须回到本篇：全文没有任何“搏斗”“失败而不被打垮”的意味，倒是反复出现“再也没机会滑雪了”“说定了可一点也靠不住”这类无可奈何的语句，情感基调是留恋与惘然而非豪迈。B项看似绝对，实则成立：客栈的“黑咕隆咚”、剥落的油漆与前文“漫天飞舞的白雪”确成对比，叙事也由室外动态的滑雪转入室内静态的对话，氛围与情节均有转折。故答案为D。",
+              diff: "medium"
+            },
+            {
+              q: "第8题　两人在喝完酒离开客栈前有一段一再相约的对话。请结合上下文分析对话者的心理。（6分）",
+              a: "①两人一再相约，表明他们对再次一起滑雪有强烈的愿望。“我们得滑”“我们要去滑，没错”“我们得滑”“希望我们能就此说定了”，反复申说，正见渴盼之切。\n②分别之际的一再相约，也表达出依依不舍的心情。乔治当晚就要赶车回学校，尼克盼他留下同上百合花峰，相约实为惜别。\n③但他们已经感觉到这一愿望不会实现，心情有些惘然。乔治说“也许我们再也没机会滑雪了”，尼克最后说“说定了可一点也靠不住”，反复的约定终归于对不可期的清醒认知。",
+              exp: "解析：心理分析题要“由言及心”，从人物的语言、动作和上下文情境反推内心。此处的妙处在于“重复”这一形式本身就是心理的外化——一句话若一说即定，便无须再说；正因心里没底，才要反复确认。三个答题点构成情感的递进层次：渴盼（对滑雪之乐的向往）→不舍（离别在即）→惘然（预感落空）。作答时须扣住两处关键句：乔治的“也许我们再也没机会滑雪了”是转折点，尼克的“说定了可一点也靠不住”是收束句，前者道破隐忧，后者拆穿约定。若只答“喜爱滑雪、依依不舍”而漏掉“惘然、无奈”，就失掉了本篇最重要的情感底色。",
+              diff: "medium"
+            },
+            {
+              q: "第9题　海明威的“冰山”理论将文学作品同冰山类比，他说：“冰山在海面移动很庄严宏伟，这是因为它只有八分之一露在水面上。”本小说正是只描写了这露出水面的八分之一。请据此简要说明本小说的情节安排及其效果。（6分）",
+              a: "①小说的情节只是两人的越野滑雪及在小客栈的逗留，此外别无枝蔓，这只是小说“露出水面的八分之一”。\n②通过小说已有的情节安排，可以推测出其背后隐藏着更为丰富的内容，尤其是两人在滑雪之外的生活——乔治要回的学校、尼克的家庭牵绊、两人的过往交谊与此后各自的去向，都被隐去而可由只言片语想见。\n③这种情节安排使小说大量留白，含蓄蕴藉，引人遐思，读者须调动想象参与补足，作品的意蕴因此更加丰厚。",
+              exp: "解析：这是一道以文学理论为支架的情节赏析题，答题必须“扣理论、析文本、说效果”三步走。第一步先落实“八分之一”指什么——即文中实写的部分：滑雪与客栈小憩，情节极简，无起因无结局。第二步指认水下的“八分之七”——文中只用“你几时得回学校去”“我得上学啊”“就是你今年夏天钓鱼的地方吧”等零星语句轻轻带过，人物的身份、处境、前史一概不予交代，却处处透出气息。第三步落到效果：省略与留白造成含蓄的张力，把判断和想象的权利交给读者，这正是“冰山理论”的美学追求。答题时切忌只复述理论而不落文本，也不可只概括情节而不谈效果。",
+              diff: "hard"
+            }
           ]
         },
         {
-          q: '【散文】老巷\n城市的边缘有一条老巷，青石板被几代人的脚步磨得发亮。巷口那棵老槐，据说是祖父年轻时栽的，如今枝繁叶茂，像一把撑开的大伞，替邻里挡着夏日的毒日头。傍晚时分，各家端出竹椅坐在门口，摇着蒲扇拉家常，孩子的笑闹声顺着巷子淌得很远。后来巷子要拆，有人欢喜住新房，有人红了眼圈。我最后一次走进老巷，摸了摸那棵槐树粗糙的皮，忽然懂得：巷子拆得掉，可那些在树下乘过凉、在石板上跑过步的日子，谁也拆不走。它们藏在记忆里，比砖瓦结实。',
-          diff: 'medium', src: '高考语文文学类文本阅读（散文）真题改编',
+          q: "【小说】麦子\n红柯\n\n①他们住在祖国边疆旷野中的土房子里，要一直守护下去。不管是谁，问他们搬不搬走？他们都说要住下去。当然了，老婆婆的回答要平和一些：“搬走怎么办呢？你前脚走，草就后脚跟过来，这儿的草有多凶哇，你刚转个身，它们就爬到窗户上，往屋里钻。”老头脾气躁：“往哪搬？我搬走你住呀。”老头总以为他住的是宫殿。\n\n②房子又矮又小。房子高不起来，房子周围的树就不怎么高。这儿的树都是矮个儿，都是那种憨厚的榆树，树杈很多，叶子很密，就是长不高。风大。树像绿狮子，毛发纷乱，疯狂地扑打风，风疼得满地打滚，蹿到天上，发出长长的哨音，又跌落到洼地里发出猛兽似的嗥叫。风嗥叫起来，地都动呢。老头吓唬老婆婆：“树抽打它们呢，树是老天爷的鞭子，老天爷要抽它们，它们只能哇哇乱叫。”老婆婆战战兢兢：“老天爷为啥抽它们？”老头说：“谁让它们乱跑，老天爷可容不得谁整天乱跑。”\n\n③【以下为试题所指画线部分】老婆婆走到浓密的树林里，老头发现她竟然一身金黄，飘动着团团芳香，就像一头金色的豹子。豹子走在麦田里，麦子哗哗响起来。麦子的金光洒在榆树上，榆树叶子油汪汪的；麦子的金光洒在云朵上，云就像戴了金笼头，云跟牲畜一样弯下脖子在明净辽阔的苍穹上吃草，云吃草的声音很柔和，窸窸窣窣。老婆婆摸麦穗呢。她的手像一只跳鼠，跳到麦芒上，麦芒浓密绵长就像夏天的睫毛，老婆婆触摸到夏天最美丽的地方。【画线部分至此结束】\n\n④麦子在老婆婆掌心里颤动。\n\n⑤老婆婆的手黄巴巴的，长满了像豆子一般的金黄的茧，那些茧豆真大呀，又圆又壮实，比麦粒儿大，比麦粒儿好看，就像一颗小太阳。大漠的太阳都这样子，小小一点，原野就像合起来的手掌，太阳在金色的指缝间回落。有时太阳会挂在树梢上，挣扎半天也挣不脱，把树都拉弯了，茂密的树梢牢牢地抱着太阳不肯松手，就像一个粗野的汉子紧紧抱着他心爱的女人。\n\n⑥老婆婆的额头闪动着快乐的光芒，发出梦呓般的叫声：“长高了，长胖了。”老婆婆搓开一只麦穗，麦粒肥肥胖胖，软乎乎的，就像刚出生的婴儿。老婆婆用手轻轻拍打着：“哭哇哭哇，快哭上一声。”\n\n⑦老婆婆曾生过一个孩子，那孩子夭折了。从那以后，她再也没有生过孩子。\n\n⑧那时，他们年轻力壮，老头自己动手做了几只木碗，换了一口大锅，好像他们要生一大群孩子。她说：“拿什么养活他们呀？”丈夫自豪得不得了：“咱们这里，想要多少娃娃就有多少娃娃。”丈夫大手一指，外边是辽阔的原野。\n\n⑨旷野无边无际，伸向远方，好多年以后，从大城市来的洋学生把这辽阔的土地叫太平洋。\n\n⑩老头不知道什么太平洋，老头只知道他要养许多娃娃，老头就从太平洋开始的地方垦荒。老头端着簸箕①把金黄的麦种大把大把撒出去，那正是落日时分，泥土波涛汹涌就像沸腾的金属。老头的手臂跟鹰一样伸向苍穹，把落日给遮住了，手臂粗壮的黑影投落到地上，随即发出一阵粗重的刷刷声。麦种的大网捕获了土地，肥大的土块跟鱼群一样跳起来，向四周奔窜。太阳落下去，麦子升起来。\n\n⑪老头端着空簸箕，眼睛充满梦幻般的光芒。\n\n⑫那年，他去团部接受重要任务。他已经30岁，他在农场最偏远的地方开荒种地，领导想起了他的婚姻问题。传他去团部的重要任务就是解决这个问题。他骑马跑了三天三夜，赶到团部。他喊报告进去的时候，政委正给一个青年女子谈话，政委的脸色不太好看。那女子却眉是眉眼是眼，长得很好看。他都看呆了。女子不看他，他看人家。政委说：“怪我无能，没把工作做通。”漂亮女子转身走了。他劝政委别生气：“那么漂亮的女子根本不适合我。”政委吃惊地看他，他说：“我那地方需要结实的女人，跟马一样结实的女人。光漂亮不中用。”政委说：“你要身体棒的，还真有一个，长相差些，心灵绝对美。”\n\n⑬他很快就见到那个大块头女人，他们在猪圈见面的，她是炊事班长，兼管猪圈。她接触过好几个男的，都没谈成。她跟猪呆在一起，那些猪个个肥壮无比。大家发出惊叹：谁跟她过日子，谁就能肥壮起来。就是没人动这个念头。他们见面，她就说：“你这么壮，你还来找我。”他说：“谁不想壮。”“你想壮？”“我想壮。”“你找对人啦。”\n\n⑭他们就这么说好了，她跟他走。她骑上团部最好的大白马，跟他走了。\n\n⑮走进荒漠她就显出优势，她在空旷荒凉的景象中亮丽起来，他不停地看她，他故意把她让到前边，她圆浑浑的长脖子跟枯死的胡杨打个照面，胡杨就亮起来。坚实的木纹显得很清晰，她整个庞大的身躯一下子让大荒漠充满了生机。\n\n⑯女人和骏马走在太阳的谷地里，女人就像起伏的群山。他没想到他能娶这么大一个媳妇儿，一个顶三个。\n\n⑰“你说我一个顶三个。”\n\n⑱“三个女人才顶你一个。”\n\n⑲“从来没人这么说过我。”\n\n⑳“我是你男人才这么说你。”\n\n㉑“你是我男人，你就天天这么说我，我喜欢你这么说我。”\n\n㉒跟那个年代所有的边疆故事一样，他们的洞房在地窝子里。他们说：“我们虽然住的是地窝子，但我们种的是太阳。”麦子生长的样子就像太阳升起来……\n\n㉓长满谷地的麦子，大片大片的麦子……太阳落下去，麦子长起来。\n\n㉔老头端着大簸箕，麦种撒光了，簸箕里还有泥土的光芒。“我把泥土的光芒端回来啦。老婆子开门啊。”泥土金闪闪的，老婆婆被吸引住了。\n\n㉕“我们是簸箕命。”\n\n㉖他们伸出手，手指蛋上指纹的纹路，没有一只斗，全是簸箕。斗才聚财，簸箕不聚财。老婆婆说：“咱不要财。”老婆婆搓开一只麦穗，搓出几十颗胖乎乎的麦粒，轻轻拍打着：“哈哈我有这么多孩子。”\n\n（有删改）\n\n［注］①簸箕：用竹篾或柳条编的器具，三面有边沿，一面敞口，用来簸粮食等。",
+          diff: "medium", src: "2021年浙江卷 文学类文本阅读·红柯《麦子》",
           subs: [
-            { q: '赏析文中画线句：“青石板被几代人的脚步磨得发亮。”', a: '以“磨得发亮”这一细节，侧面写出老巷年代久远、人流不绝； “亮”字既是物理光泽，也暗含岁月与人间烟火的积淀，语言平实却意味深长。', exp: '解析：赏析按“词语+手法+意蕴”展开； “磨得发亮”是细节描写，以物写时、以静写动。', diff: 'medium' },
-            { q: '文中写“有人欢喜住新房，有人红了眼圈”有何作用？', a: '以面对拆迁的不同反应形成对照，凸显老巷在人们心中情感分量不一却又真实； “红眼圈”细节为后文“拆不掉的是记忆”蓄势，使情感更厚实。', exp: '解析：从内容（情感对照）与结构（铺垫、蓄势）作答；注意“欢喜—红眼圈”的张力。', diff: 'medium' },
-            { q: '如何理解结尾“巷子拆得掉……谁也拆不走”？', a: '表层说老巷物理可拆，深层指其中的生活记忆、人情温暖无法被拆除；运用对比（砖瓦可拆/记忆结实），升华“物质易逝、精神长存”的主题。', exp: '解析：抓“对比+升华”——由实入虚，点明记忆比砖瓦更持久。', diff: 'hard' },
-            { q: '本文表达了作者怎样的思想感情？', a: '表达了对老巷及旧日邻里温情的眷恋与珍惜，对时代变迁中消逝之物的淡淡怅惘，以及对平凡生活记忆价值的肯定。', exp: '解析：整体把握“眷恋—怅惘—肯定”的情感层次，避免只答一点。', diff: 'medium' }
+            {
+              q: "第10题　第②自然段描写环境有何用意？（4分）",
+              a: "①交代背景，写环境的恶劣，突出守护边疆荒漠土地的艰难。房子又矮又小，树长不高，风大得“地都动呢”，边疆自然条件的严酷由此可见。\n②衬托人物，用环境的恶劣衬托主人公守土的顽强精神。在这样的环境中老两口仍坚持“要一直守护下去”，其坚毅愈显可贵。\n③暗示主题，通过写整天乱跑的风“挨打”，揭示坚守边疆土地的重要性。老头说“谁让它们乱跑，老天爷可容不得谁整天乱跑”，看似吓唬老婆婆，实则道出了扎根不走的信念。",
+              exp: "解析：环境描写作用题的通用答题维度是“交代背景—渲染氛围—衬托人物—推动情节—暗示主题”，本题应从背景、人物、主题三层切入。第②段可分三层：一写房矮树低（静态），二写风大树狂（动态），三写老两口关于风“挨打”的对话。前两层用比喻（树像绿狮子）和拟物（风“满地打滚”“发出猛兽似的嗥叫”）把边疆的荒僻酷烈写得可触可感，属“交代背景”；第三层由景转人，自然过渡到“衬托人物”。最见匠心的是第三层的对话——“乱跑”要“挨打”，与开篇老两口“搬不搬走”“要住下去”的回答遥相呼应，是以民间戏谑的口吻暗点“坚守”之旨，这一层不可漏答。",
+              diff: "medium"
+            },
+            {
+              q: "第11题　赏析文中画线部分比喻、象征手法的艺术效果。（4分）\n（画线部分即第③段：“老婆婆走到浓密的树林里……老婆婆触摸到夏天最美丽的地方。”）",
+              a: "①把麦田里的老婆婆比喻成豹子，写出她战胜恶劣环境的强悍性格和守护领土的强烈意识。“一身金黄”“飘动着团团芳香”“就像一头金色的豹子”，赋予老婆婆以野性生命的力量感。\n②把老婆婆抚摸麦子的手比喻成跳鼠，写出了她对麦子的深深爱意和对丰收的喜悦。“她的手像一只跳鼠，跳到麦芒上”，动作轻盈灵动，见出爱抚之情。\n③用麦子的金光铺洒原野，象征丰盈的生命是守护边疆的希望。金光洒在榆树上、洒在云朵上，云“弯下脖子在明净辽阔的苍穹上吃草”，整个天地都被麦子点亮，构成生机勃勃的意境。",
+              exp: "解析：本题要求赏析“比喻＋象征”，作答须按“指出手法（本体、喻体）＋分析内容（写出了什么）＋点明情感或效果”的思路逐项落实，且必须分别对应比喻与象征两类手法。红柯的语言以奇崛的动物性比喻著称：豹子、跳鼠都是大漠中的活物，用它们作喻体，既贴合西部边地的物候，又把人的生命力写得野性淋漓。象征一层则要跳出局部看整体——金光的反复铺洒并非单纯写景，麦子（金黄、生长、繁衍）在全篇中始终与“孩子”“太阳”“希望”互为映照，故象征扎根边疆的生命的丰盈与顽强。答题时切忌只说“生动形象”这类空话，须落实到“强悍性格与守土意识”“爱意与丰收之喜”“生命的希望”等具体的情感与意蕴上。",
+              diff: "medium"
+            },
+            {
+              q: "第12题　小说用多种风格的人物语言塑造了主人公多方面的品格，试作分析。（6分）",
+              a: "①质朴的语言，塑造主人公长期守土的坚毅品格，如作品第一自然段中的人物语言：“搬走怎么办呢？你前脚走，草就后脚跟过来”“往哪搬？我搬走你住呀”，口语化、生活化，见出扎根边疆、决不挪窝的执拗与坚定。\n②诗化的语言，塑造主人公对未来充满信心的乐观品格，如“我们虽然住的是地窝子，但我们种的是太阳”，把种麦说成“种太阳”，苦难中透出浪漫与豪情。\n③含蓄的语言，塑造主人公大美不言的奉献品格，如“我们是簸箕命”——簸箕不聚财，他们却说“咱不要财”，以自嘲的方式道出一生付出而不索取的胸怀。",
+              exp: "解析：本题的着眼点是“语言风格”与“人物品格”的对应关系，答题须“风格＋例句＋品格”三位一体，缺一不可。命题人已在题干中给出提示——“多种风格”“多方面品格”，暗示答案应分类且不重复。三种风格恰好覆盖全篇三个层面：日常对话是质朴的，属生活层面；“种的是太阳”是诗化的，属精神层面；“簸箕命”是含蓄的，属人格层面。特别要理解“簸箕命”这一民间说法：手指纹路全是簸箕而无斗，俗谓不聚财，老两口非但不以为憾，反说“咱不要财”，末句又以“我有这么多孩子”作结，把麦粒当儿女——不求财而求生命的丰收，奉献之情尽在不言中。",
+              diff: "hard"
+            },
+            {
+              q: "第13题　探究“麦子”在全文中的作用。（6分）",
+              a: "①是全文的主线，结构上串联全文。从老婆婆抚摸麦穗、搓开麦穗，到老头撒播麦种、“太阳落下去，麦子升起来”，直至结尾搓出麦粒说“我有这么多孩子”，麦子贯穿今昔，把散点式的片段连缀成篇。\n②象征守护边疆的这对夫妇旺盛、顽强的生命力。夭折的孩子与“肥肥胖胖”“就像刚出生的婴儿”的麦粒形成对照，麦子成了他们生命的延续。\n③揭示扎根边疆拓荒产粮就是为守土作贡献的主题。种麦即守土，产粮即卫国，题旨由此升华。",
+              exp: "解析：物象（兼标题）作用题的经典答题角度是“情节—人物—主题”三维，本题答案正是这一框架的标准示范。情节维度看“麦子”如何串线：全文时序跳跃，老年与青年两条线交错，正是靠麦子完成缝合。人物维度要抓住小说最动人的一处设置——老两口无后，而麦粒“就像刚出生的婴儿”，老婆婆对着麦粒说“哭哇哭哇”、说“我有这么多孩子”，麦子替代了子嗣，成为其生命力与情感的寄托，答此点须点出这一对照才算深入。主题维度则要把“种麦”与“守土”打通：他们守的是“祖国边疆”，种下的每一粒麦都是国土的印记，故物象最终指向家国。三点由表及里，层层递进。",
+              diff: "hard"
+            }
           ]
         },
         {
-          q: '【小说片段】一盏灯\n山沟里的小学只剩十来个学生，张老师一人教所有课。冬天来得早，教室的炉子总烧不旺，孩子们的手指冻得握不住笔。张老师把自己家的旧棉被拆了，缝成十几个小护手筒分给每人。夜里他常守着那盏昏黄的煤油灯批改作业，灯芯爆着细小的火花。有个孩子问：“老师，您为什么不走？”他笑了笑：“灯在这儿，人就在这儿。”多年后那些孩子散落各地，可每当夜里看见一点灯火，总会想起山沟里那盏不灭的灯——和它照亮过的、小小的却滚烫的心。',
-          diff: 'medium', src: '高考语文文学类文本阅读（小说）真题改编',
+          q: "【小说】江上【注】\n冯至\n\n子胥望着昭关以外的山水，世界好像换了一件新的衣裳，他自己却真实地获得了真实的生命。时节正是晚秋，眼前还是一片绿色，夏天仿佛还没有结束。向南望去，是一片人烟稀少的平原。\n\n他在这荒凉的原野里走了三四天，后来原野渐渐变成田畴，村落也随着出现了，子胥穿过几个村落，最后到了江边。\n\n太阳已经西斜，岸上三三两两集聚了十来个人：有的操着吴音，有的说着楚语。有人在抱怨，二十年来，这一带总是打过来打过去，弄得田也不好耕，买卖也不好做。一个上了年纪的人说：“前几年吴王余昧死了，本应该传位给季札，但是季札死也不肯接受，退到延陵耕田去了。一个这样贤明的人偏偏不肯就王位，要保持他的高洁。”\n\n“他只自己保持高洁，而一般人都还在水火里过日子，——我恨这样的人，我们都是吃了他高洁的苦。”一个年轻人愤恨地说。\n\n那老年人却谅解季札：“士各有志。他用行为感动我们，不是比做国王有意义得多吗？——就以他在徐君墓旁挂剑的那件事而论，对于友情是怎样好的一幅画图！”\n\n季札在死友墓旁挂剑的事，子胥从前也若有所闻，他再低下头看一看自己佩着的剑，不觉起了一个愿望：“我这时若有一个朋友，我也愿意把我的剑，当作一个友情的赠品，——而我永久只是一个人。”子胥这样想时，也就和那些人的谈话隔远了，江水里的云影在变幻，他又回到他自己身上。这时江水的上游忽然浮下一只渔船，船上回环不断地唱着歌：\n\n日月昭昭乎浸已驰，与子期乎芦之漪。\n\n面前的景色，自己的身世，日月昭昭乎浸已驰，是怎样感动子胥的心！他听着歌声，身不由己地向芦苇丛中走去。\n\n西沉的太阳把芦花染成金色，半圆的月也显露在天空，映入江心，是江里边永久捉不到的一块宝石。渔夫的歌声又起了：\n\n日已夕兮予心忧悲，月已驰兮何不渡为？\n\n歌声越唱越近，渔舟在芦苇旁停住了。子胥身不由己地上了船。\n\n多少天的风尘仆仆，一走上船，呼吸着水上清新的空气，立即感到水的温柔。子胥无言，渔夫无语，耳边只有和谐的橹声，以及水上的泡沫随起随灭的声音。船到江中央，水流变得急骤了，世界回到原始一般地宁静。子胥对着这滔滔不断的流水，他想这是从郢城那里流来的。他立在船头，身影映在水里，好像又回到郢城，因为那里的楼台也曾照映在这同一的水里。他望着江水发呆，不知这里边含有多少故乡流离失所的人的眼泪。父亲的、哥哥的尸体无人埋葬，也许早已被人抛入江心；他们得不到祭享的魂灵，想必正在这月夜的江上出没。郢城里的王公们都还在享受眼前的升平，谁知道这时正有一个人在遥远的江上，想把那污秽的城市洗刷一次呢。子胥的心随着月光膨胀起来……\n\n他再看那渔夫有时抬起头望望远方，有时低下头看看江水，心境是多么平坦。子胥在他眼里是怎样一个人呢？一个不知从何处来，又不知向哪里去的远方的行人罢了。但是子胥，却觉得这渔夫是他流亡以来所遇到的唯一的恩人，这引渡的恩惠有多么博大，尤其是那两首歌，是如何正恰中子胥的运命，怕只有最亲密的朋友才唱得出这样深切感人的歌词，而这歌词却又吐自一个异乡的、素不相识的人的口里。\n\n船缓缓地前进着。两人在两个完全不同的世界，一个整日整夜浸在血的仇恨里，一个疏散于清淡的云水之乡。他看那渔夫摇橹的姿态，他享受到一些从来不曾体验过的柔情。往日的心总是箭一般地急，这时却唯恐把这段江水渡完，希望能多么久便多么久，与渔夫共同领会这美好的时刻。\n\n船靠岸了，子胥口里有些嗫嚅，但他最后不得不开口：“朋友。我把什么留给你作纪念呢？”渔夫倒有些惊奇了。\n\n这时子胥已经解下他的剑，捧在渔夫的面前。\n\n渔夫吓得倒退了两步，他说：“我，江上的人，要这有什么用呢？”\n\n“这是我家传的宝物，我佩带它将及十年了。”\n\n“你要拿这当作报酬吗？”渔夫的生活是有限的，他常常看见有些行人，不知为什么离乡背井要走得那么远。既然远行，山水就成为他们的阻碍；他看惯了走到江边过不来的行人，是多么苦恼！他于是立下志愿，只要一有闲暇，就把那样的人顺便渡过来。因为他引渡的时候多半在晚间，所以就即景生情，唱出那样的歌曲。“这值得什么报酬呢？”\n\n子胥半吞半吐地说：“你渡我过了江，同时也渡过了我的仇恨。将来说不定会有那么一天，你再渡我回去。”渔夫听了这句话，一点也不懂，他只拨转船头，向下游驶去。\n\n子胥独自立在江边，望着那只船越走越远了，最后他才自言自语地说：“你这无名的朋友，我现在空空地让你在我的面前消逝了，将来我却还要寻找你，不管是找到你的船，或是你的坟墓。”\n\n他再一看他手中的剑，觉得这剑已经不是他自己的了：他好像是在替一个永久难忘的朋友保留着这支剑。\n\n（有删改）\n\n［注］历史小说《伍子胥》写于1942—1943年，取材于春秋时期伍子胥的复仇故事，叙述他由楚至吴的辗转逃亡。小说共九节，《江上》为第六节，伍子胥过了昭关，继续跋涉，前往吴国。",
+          diff: "hard", src: "2022年新高考I卷 文学类文本阅读·冯至《江上》（选自历史小说《伍子胥》第六节）",
           subs: [
-            { q: '小说开头写“炉子总烧不旺，孩子手指冻得握不住笔”有何作用？', a: '交代山区教学条件的艰苦，以环境的寒冷反衬老师关爱的温暖；为后文缝护手筒、守灯批改等情节铺垫，凸显张老师坚守的可贵。', exp: '解析：环境描写从“交代苦境、反衬人物、铺垫情节”切入；冷与暖的对照是解题钥匙。', diff: 'medium' },
-            { q: '张老师“拆旧棉被缝护手筒”这一细节表现了他怎样的品质？', a: '表现他关爱学生、甘于奉献：不惜拆自家被褥也要让孩子暖和，于细微处见深情，质朴无华却动人。', exp: '解析：细节题“由物见人”——拆被缝筒=舍己为学生；避免空泛，须扣文本。', diff: 'medium' },
-            { q: '如何理解张老师的话“灯在这儿，人就在这儿”？', a: '表层指他守着学校的灯便留在此地教书；深层以“灯”象征师者坚守与希望，表明他愿做照亮山里孩子的那盏灯，不离不弃。', exp: '解析：抓“灯”的象征义（坚守、希望、引路）；由实入虚，是人物精神的凝练。', diff: 'hard' },
-            { q: '小说结尾写孩子们“想起山沟里那盏不灭的灯”有何妙处？', a: '以“不灭的灯”呼应标题与张老师的话，象征师恩与精神火种长存；以孩子们长大后仍被照亮收束，升华“微小坚守影响深远”的主题，余韵悠长。', exp: '解析：结尾题看“呼应+象征+升华”； “不灭”一语双关——灯不灭，师魂不灭。', diff: 'hard' }
+            {
+              q: "第6题　下列对文本相关内容和艺术特色的分析鉴赏，不正确的一项是：\nA．子胥过了昭关，所见风景与前大不相同，那大片绿色和原野，也是子胥再次“获得了真实的生命”的心情写照。\nB．“唯恐把这段江水渡完”，表现了逃亡中的子胥的心态，只有在江上的这段短暂时光，他才能够平和地欣赏风景。\nC．子胥同渔夫道别，说话时“有些嗫嚅”“半吞半吐”，表现的是子胥渴望同渔夫交流，又碍于隐情而无法敞开心扉。\nD．“你渡我过了江，同时也渡过了我的仇恨”，子胥在江上领会到渔夫的“世界”，他对自己的使命有了更深的理解。",
+              a: "选B。“唯恐把这段江水渡完”所表现的是子胥“享受到一些从来不曾体验过的柔情”，希望这份宁静与温情延续得久一些，并非“只有在江上的这段短暂时光，他才能够平和地欣赏风景”。事实上小说开篇写他出昭关时便已“望着昭关以外的山水，世界好像换了一件新的衣裳”，可见在上船之前他也能平和地观景，B项的限定过于绝对且曲解了原意。A、C、D三项分析均正确。",
+              exp: "解析：本题为综合性分析鉴赏题，B项之误在于两点：一是把“柔情的享受”误读为“欣赏风景”，偷换了心理内容；二是用“只有……才……”作排他性限定，与开篇的景物描写自相矛盾。做此类题须警惕选项中的绝对化表述（“只有”“才”“都”），并将其放回全文比对。A项抓住了情景交融——“绿色”“夏天仿佛还没有结束”是逃出生天后的心境外化；D项则把握了小说主旨的核心转折：渔夫渡的不只是“人”，更是子胥的“心”，剑由“仇恨的载体”转为“友情的纪念”，正见其对使命的重新理解。故答案为B。",
+              diff: "medium"
+            },
+            {
+              q: "第7题　关于文中江边人们谈论季札的部分，下列说法不正确的一项是：\nA．那位老人欣赏季札不就王位的高洁，也称赞他以美好的行为感动了世人。\nB．那位年轻人认为季札不顾百姓死活，只顾独善其身，逃避了济世的责任。\nC．季札挂剑一事进一步说明了他的品行，也为后文的子胥赠剑做了铺垫。\nD．季札的退耕田园，与下文渔夫的泛舟江上，共同表达出本文的隐逸主题。",
+              a: "选D。本文的主题并非“隐逸”。季札退耕、渔夫泛舟在文中的功能各不相同：季札挂剑一事引发子胥对友情的渴望，为后文赠剑作铺垫；渔夫的“清淡的云水之乡”则与子胥“整日整夜浸在血的仇恨里”的世界构成对照，唤起他不曾体验过的柔情，使他重新审视仇恨与人生。二者共同指向的是对平凡人生中“友情”“恩惠”“温情”的肯定，而非归隐避世。A、B、C三项说法均正确。",
+              exp: "解析：这是一道针对局部情节的理解题，D项属于典型的“标签化思维”错误——见“退耕田园”“泛舟江上”就贴“隐逸”标签，脱离了文本实际。判断主题须以文本的情感落点为准：小说结尾子胥并未归隐，他“还要寻找你，不管是找到你的船，或是你的坟墓”，复仇之路仍要继续，只是心中多了一份柔情与牵念。结合注释可知，小说写于1942—1943年抗战相持阶段，其现实寓意在于：民族苦难中不应被仇恨吞噬，要守住人性的温情，这与“隐逸”背道而驰。A项对应老年人的“士各有志”与“他用行为感动我们”；B项对应年轻人的“我恨这样的人，我们都是吃了他高洁的苦”；C项指出“挂剑”的铺垫作用，均能在文中落实。故答案为D。",
+              diff: "medium"
+            },
+            {
+              q: "第8题　舟行江上，子胥的思绪随着他在江上的所见所感而逐步生发展开。请结合文中相关部分简要分析。（6分）",
+              a: "①子胥登上渔船，清新的空气、和谐的橹声等都使他感到安宁。“呼吸着水上清新的空气，立即感到水的温柔”，“子胥无言，渔夫无语”，多日风尘仆仆的紧张就此松弛下来。\n②船到江中央，月涌江流，子胥的思绪随着江水奔涌，复仇的情绪渐趋激昂。他由这滔滔江水想到郢城，想到父兄暴尸无人埋葬的魂灵，想到王公们仍在享受升平，“想把那污秽的城市洗刷一次”，“子胥的心随着月光膨胀起来”。\n③渔船缓缓前行，子胥观察摇橹的渔夫，体会渔夫的世界，感念渔夫的恩惠，享受到不曾体验过的柔情。他看渔夫“心境是多么平坦”，觉得这是“流亡以来所遇到的唯一的恩人”，于是“唯恐把这段江水渡完”。",
+              exp: "解析：本题考查对人物心理流程的梳理，关键在于审清题干中“舟行江上”这一范围限定——只答子胥上船之后至靠岸之前的思绪，若从出昭关答起便超出范围。答题应以船的位置为线索划分层次，形成“上船—江中央—缓缓前行”三个阶段，并注意文中“望”“看”等领起性动词的提示作用：由“感到”（安宁）到“望着江水发呆”（激愤）再到“他再看那渔夫”（柔情），景随船移，情随景转。三个阶段的情绪构成“宁静—激昂—柔情”的起伏曲线，正是冯至以诗化笔法写心理波澜的典型手法。作答须“所见”与“所感”配对呈现，避免只罗列心情而无文本依据。",
+              diff: "hard"
+            },
+            {
+              q: "第9题　渔夫拒剑是一段广为流传的历史故事，渔夫是一位义士，明知伍子胥身份而冒死救他渡江，拒剑之后，更为了消除伍子胥的疑虑而自尽。本文将渔夫改写为一个普通渔人，这一改写带来了怎样的文学效果？谈谈你的理解。（6分）",
+              a: "①把渔夫改为无意施恩的普通人，更显出平凡人“恩惠”的博大。他并不知道子胥的身份，渡人只是“一有闲暇”的顺便之举，恰因不图回报而愈见其善的自然与厚重。\n②借渔夫来书写一个散淡处世的境界，与伍子胥的“复仇”世界构成对比。“一个整日整夜浸在血的仇恨里，一个疏散于清淡的云水之乡”，两个世界互相映照。\n③放弃描述惊险的外部冲突，转向探究人物的内心冲突。不再写冒死相救与拒剑自尽的紧张情节，而以大量笔墨细描子胥的心理波动与精神成长。\n④使故事的传奇色彩有所减弱，而现实寓意则有所增强。小说写于抗战时期，渔夫与子胥代表两种人生态度与道路选择，改写后更贴近普通人的生活现实，引人思考。",
+              exp: "解析：这是一道颇具开放性的“改写效果”探究题，作答的方法是先做原故事与改写本的对比，再从小说诸要素——人物形象、情节结构、主题意蕴、阅读效果——分别衡量其“文学效果”。对比可列为：义士（知其身份／冒死相救／拒剑自刎／传奇色彩）对普通渔人（不知其人／见人渡人／不解其意／日常本色）。由此四点顺次生成：人物层面，平凡见博大；结构层面，双世界对照；叙事层面，外部冲突内转为心理冲突；主题层面，传奇性减弱而现实寓意增强。第四点须结合注释中的创作年代（1942—1943年）来谈，方能触及冯至借历史写现实的深意——民族苦难之中，比复仇更持久的力量是人性的温情与善意。答题时忌只作故事复述，须每一点都落到“文学效果”上。",
+              diff: "hard"
+            }
           ]
-        },
+        }
       ]
   };
 
