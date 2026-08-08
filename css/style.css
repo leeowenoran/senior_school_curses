@@ -4700,6 +4700,232 @@ body.theme-dark .cc-q-opt:hover { border-color: var(--sc, #6b7280); }
 body.theme-dark .cc-q-fill input, body.theme-dark .cc-q-solve textarea { border-color: rgba(255, 255, 255, .1); background: var(--bg-2); }
 body.theme-dark .cc-q-fill input:focus, body.theme-dark .cc-q-solve textarea:focus { border-color: var(--sc, #6b7280); }
 
+/* ============================================================
+ * 常考题型 · 洛谷式题目卡片（2026-08-08 增补）
+ * ID 徽标（A0001…）+ 难度药丸 + 题目描述/题解分节 + 青绿品牌色
+ * ============================================================ */
+.lg-q {
+  position: relative;
+  margin: 14px 0; padding: 14px 16px 16px 18px;
+  background: var(--card); border: 1px solid var(--line);
+  border-left: 4px solid #00b4a0;
+  border-radius: 10px; box-shadow: 0 1px 3px rgba(15, 23, 42, .06);
+  transition: box-shadow .15s ease;
+}
+.lg-q:hover { box-shadow: 0 3px 12px rgba(15, 23, 42, .10); }
+.lg-q.lg-d-A { border-left-color: #e74c3c; }
+.lg-q.lg-d-B { border-left-color: #f39c12; }
+.lg-q.lg-d-C { border-left-color: #3498db; }
+.lg-q.lg-d-D { border-left-color: #2ecc71; }
+.lg-q-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+.lg-id {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 13px; font-weight: 700; letter-spacing: .5px;
+  background: #1f2937; color: #fff; padding: 3px 9px; border-radius: 6px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .06);
+}
+.lg-diff {
+  font-size: 12px; font-weight: 700; color: #fff; padding: 2px 10px; border-radius: 999px;
+  background: #6b7280; white-space: nowrap;
+}
+.lg-q.lg-d-A .lg-diff { background: #e74c3c; }
+.lg-q.lg-d-B .lg-diff { background: #f39c12; }
+.lg-q.lg-d-C .lg-diff { background: #3498db; }
+.lg-q.lg-d-D .lg-diff { background: #2ecc71; }
+.lg-src { font-size: 12px; color: var(--text-3); }
+.lg-q-main { /* 题目描述 + 选项 + 作答区 容器 */ }
+.lg-seclabel {
+  font-size: 12px; font-weight: 800; color: #00b4a0;
+  margin: 8px 0 4px; letter-spacing: .3px;
+}
+body.theme-dark .lg-seclabel { color: #2dd4bf; }
+/* 选项洛谷化：圆形字母徽标 + 青绿选中态 */
+.cc-q-opt { border-radius: 8px; }
+.cc-q-opt:hover { border-color: #00b4a0; background: var(--bg-2); }
+.cc-q-opt.selected { border-color: #00b4a0; background: rgba(0, 180, 160, .10); font-weight: 500; }
+.cc-q-opt-letter { background: #00b4a0; }
+/* 提交按钮洛谷青绿 */
+.cc-q-submit { background: #00b4a0; }
+.cc-q-submit:hover { background: #009e8c; opacity: 1; }
+body.theme-dark .lg-q { background: var(--bg-2); }
+body.theme-dark .lg-id { background: #0f172a; }
+body.theme-dark .cc-q-opt:hover { background: rgba(255, 255, 255, .04); }
+body.theme-dark .cc-q-opt.selected { background: rgba(0, 180, 160, .18); }
+
+/* ===== 题库列表（洛谷式可点击行）+ 分页 + 单题详情 ===== */
+.lg-list-head { font-size: 12.5px; color: var(--text-3); margin: 4px 2px 10px; }
+.lg-list { display: flex; flex-direction: column; gap: 8px; }
+.lg-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 14px; border-radius: 10px;
+  background: var(--bg-1); border: 1px solid var(--bd-1);
+  border-left: 4px solid #6b7280;
+  cursor: pointer; transition: box-shadow .15s, transform .05s, border-color .15s;
+}
+.lg-row:hover { box-shadow: 0 3px 14px rgba(15, 23, 42, .10); border-color: #00b4a0; }
+.lg-row:active { transform: translateY(1px); }
+.lg-row.lg-d-A { border-left-color: #e74c3c; }
+.lg-row.lg-d-B { border-left-color: #f39c12; }
+.lg-row.lg-d-C { border-left-color: #3498db; }
+.lg-row.lg-d-D { border-left-color: #2ecc71; }
+.lg-row-id {
+  flex: 0 0 auto; min-width: 58px; text-align: center;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  font-weight: 800; font-size: 13px; color: #fff; background: #334155;
+  padding: 3px 7px; border-radius: 6px; letter-spacing: .5px;
+}
+.lg-row-diff {
+  flex: 0 0 auto; font-size: 12px; font-weight: 700; color: #fff;
+  padding: 2px 8px; border-radius: 999px; background: #94a3b8;
+}
+.lg-row.lg-d-A .lg-row-diff { background: #e74c3c; }
+.lg-row.lg-d-B .lg-row-diff { background: #f39c12; }
+.lg-row.lg-d-C .lg-row-diff { background: #3498db; }
+.lg-row.lg-d-D .lg-row-diff { background: #2ecc71; }
+.lg-row-title {
+  flex: 1 1 auto; min-width: 0;
+  font-size: 14px; color: var(--text-1);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.lg-row-fav {
+  flex: 0 0 auto; border: none; background: transparent; cursor: pointer;
+  font-size: 16px; color: #cbd5e1; padding: 2px 4px; line-height: 1;
+}
+.lg-row-fav.is-fav { color: #f59e0b; }
+.lg-row-arrow { flex: 0 0 auto; color: var(--text-3); font-size: 20px; font-weight: 700; padding-left: 2px; }
+.lg-row:hover .lg-row-arrow { color: #00b4a0; }
+
+/* 复合题（大题）：材料/文章 + 多小题 */
+.cc-q-type.type-composite { background: #7c3aed; }
+.lg-composite { border-left-width: 4px; }
+.lg-passage {
+  background: #f8fafc; border: 1px solid var(--bd-1); border-radius: 10px;
+  padding: 12px 14px; margin: 6px 0 16px;
+}
+.lg-passage .cc-q-body { font-size: 14.5px; line-height: 1.85; color: var(--text-1); white-space: pre-wrap; }
+.lg-subs { display: flex; flex-direction: column; gap: 14px; }
+.lg-sub {
+  border: 1px solid var(--bd-1); border-radius: 12px;
+  padding: 12px 14px; background: var(--bg-1);
+}
+.lg-sub-head { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.lg-sub-no {
+  font-weight: 800; color: #00b4a0; font-size: 15px;
+  background: rgba(0, 180, 160, .12); border-radius: 8px; padding: 1px 9px;
+}
+.lg-sub .lg-seclabel { margin-top: 2px; }
+.lg-tag-big { background: #7c3aed; color: #fff; border-color: #7c3aed; }
+.lg-trow-big .lg-c-title-text { font-weight: 600; }
+.lg-subj-big { background: #7c3aed; color: #fff; border-color: #7c3aed; }
+body.theme-dark .lg-passage { background: #0f172a; }
+body.theme-dark .lg-sub { background: var(--bg-2); }
+
+/* 洛谷式表格列表：状态 / 题号 / 题目名称 / 标签 / 难度 / 通过率 */
+.lg-table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 12px; border: 1px solid var(--bd-1); background: var(--bg-1); }
+.lg-table { min-width: 760px; }
+.lg-trow {
+  display: grid;
+  grid-template-columns: 46px 86px minmax(220px, 1fr) 200px 78px 116px;
+  align-items: center; gap: 12px; padding: 11px 16px;
+  border-bottom: 1px solid var(--bd-2, #f0f0f0);
+  border-left: 3px solid transparent;
+  cursor: pointer; transition: background .12s;
+}
+.lg-trow:last-child { border-bottom: none; }
+.lg-trow.lg-d-A { border-left-color: #e74c3c; }
+.lg-trow.lg-d-B { border-left-color: #f39c12; }
+.lg-trow.lg-d-C { border-left-color: #3498db; }
+.lg-trow.lg-d-D { border-left-color: #2ecc71; }
+.lg-trow:not(.lg-thead):hover { background: rgba(0, 180, 160, .06); }
+.lg-thead {
+  position: sticky; top: 0; z-index: 1; cursor: default;
+  background: #f7f8fa; color: var(--text-3); font-size: 12.5px; font-weight: 700;
+  border-bottom: 2px solid var(--bd-1); border-left-color: transparent !important;
+}
+.lg-c-status { text-align: center; font-size: 15px; line-height: 1; }
+.lg-done { color: #2ecc71; font-weight: 800; }
+.lg-todo { color: #b6bcc6; }
+.lg-c-id {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  font-weight: 800; font-size: 13px; color: var(--text-1); letter-spacing: .5px;
+}
+.lg-c-title { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.lg-c-title-text {
+  font-size: 14px; color: var(--text-1);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.lg-c-title:hover .lg-c-title-text { color: #00b4a0; }
+.lg-star {
+  flex: 0 0 auto; border: none; background: transparent; cursor: pointer;
+  font-size: 14px; color: #cbd5e1; padding: 0 2px; line-height: 1;
+}
+.lg-star.is-fav { color: #f59e0b; }
+.lg-c-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.lg-tag {
+  font-size: 11.5px; color: var(--text-2, #64748b);
+  background: rgba(100, 116, 139, .10); border: 1px solid rgba(100, 116, 139, .16);
+  padding: 2px 7px; border-radius: 999px; white-space: nowrap;
+}
+.lg-c-diff {
+  font-size: 12px; font-weight: 700; color: #fff; text-align: center;
+  padding: 3px 0; border-radius: 999px; background: #94a3b8;
+}
+.lg-trow.lg-d-A .lg-c-diff { background: #e74c3c; }
+.lg-trow.lg-d-B .lg-c-diff { background: #f39c12; }
+.lg-trow.lg-d-C .lg-c-diff { background: #3498db; }
+.lg-trow.lg-d-D .lg-c-diff { background: #2ecc71; }
+.lg-c-rate { display: flex; align-items: center; gap: 8px; }
+.lg-rate-bar {
+  flex: 1 1 auto; height: 6px; border-radius: 999px;
+  background: rgba(100, 116, 139, .16); overflow: hidden; min-width: 36px;
+}
+.lg-rate-bar i { display: block; height: 100%; border-radius: 999px; }
+.lg-c-rate b { font-size: 13px; min-width: 38px; text-align: right; font-variant-numeric: tabular-nums; }
+
+/* 分页 */
+.lg-pager-wrap {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 6px;
+  margin: 18px 2px 4px; padding-top: 14px; border-top: 1px dashed var(--bd-1);
+}
+.lg-page {
+  min-width: 34px; height: 34px; padding: 0 10px;
+  border: 1px solid var(--bd-1); background: var(--bg-1); color: var(--text-1);
+  border-radius: 8px; cursor: pointer; font-size: 13.5px; transition: all .15s;
+}
+.lg-page:hover:not(.disabled):not(.active) { border-color: #00b4a0; color: #00b4a0; }
+.lg-page.active { background: #00b4a0; border-color: #00b4a0; color: #fff; font-weight: 700; }
+.lg-page.disabled { opacity: .45; cursor: not-allowed; }
+.lg-page-ellipsis { color: var(--text-3); padding: 0 2px; }
+.lg-page-info { margin-left: auto; font-size: 12.5px; color: var(--text-3); }
+
+/* 单题详情 */
+.lg-detail-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 4px 0 14px; flex-wrap: wrap; }
+.lg-back {
+  border: 1px solid var(--bd-1); background: var(--bg-1); color: var(--text-1);
+  border-radius: 8px; padding: 7px 14px; cursor: pointer; font-size: 13.5px;
+}
+.lg-back:hover { border-color: #00b4a0; color: #00b4a0; }
+.lg-detail-nav { display: flex; gap: 8px; }
+.lg-nav-btn {
+  border: 1px solid var(--bd-1); background: var(--bg-1); color: var(--text-1);
+  border-radius: 8px; padding: 7px 14px; cursor: pointer; font-size: 13.5px;
+}
+.lg-nav-btn:hover:not(:disabled) { border-color: #00b4a0; color: #00b4a0; }
+.lg-nav-btn:disabled { opacity: .4; cursor: not-allowed; }
+.lg-detail-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.lg-subj-tag { font-size: 13px; color: var(--text-3); }
+.lg-detail-card { max-width: 820px; }
+.lg-detail-card .lg-q { margin: 0; }
+
+body.theme-dark .lg-row { background: var(--bg-2); }
+body.theme-dark .lg-row-id { background: #0f172a; }
+body.theme-dark .lg-table-scroll { background: var(--bg-2); border-color: var(--bd-1); }
+body.theme-dark .lg-thead { background: #111827; color: #94a3b8; border-bottom-color: var(--bd-1); }
+body.theme-dark .lg-trow:not(.lg-thead):hover { background: rgba(0, 180, 160, .12); }
+body.theme-dark .lg-tag { background: rgba(148, 163, 184, .14); border-color: rgba(148, 163, 184, .22); color: #cbd5e1; }
+body.theme-dark .lg-star { color: #64748b; }
+body.theme-dark .lg-rate-bar { background: rgba(148, 163, 184, .20); }
+
 @media (max-width: 640px) {
   .cc-q-opt { padding: 8px 10px; font-size: 13.5px; }
   .cc-q-fill { flex-direction: column; align-items: stretch; }

@@ -175,7 +175,7 @@
     else if (r.route === 'subject' && r.param) { renderSubject(r.param); restoreScrollKeep(prevScroll); }
     else if (r.route === 'subjects') { renderSubjects(); restoreScrollKeep(prevScroll); }
     else if (r.route === 'about') { renderAbout(); restoreScrollKeep(prevScroll); }
-    else if (r.route === 'bank') { renderBank(r.param); restoreScrollKeep(prevScroll); }
+    else if (r.route === 'bank') { renderBank(r.param, r.param2); restoreScrollKeep(prevScroll); }
     else if (r.route === 'wrongbook') { renderWrongbook(); restoreScrollKeep(prevScroll); }
     else if (r.route === 'progress') { renderProgress(); restoreScrollKeep(prevScroll); }
     else if (r.route === 'comments') { renderComments(r); restoreScrollKeep(prevScroll); }
@@ -2547,7 +2547,7 @@
     lsSet('gz_favs', favs);
     // 刷新当前视图
     var r = parseHash();
-    if (r.route === 'bank') renderBank(r.param || 'home');
+    if (r.route === 'bank') renderBank(r.param || 'home', r.param2);
     else if (r.route === 'lesson') {
       // 重新渲染当前课时，仅刷新收藏按钮
       var btn = document.querySelector('.quiz[data-q="' + qi + '"] .quiz-fav');
@@ -3589,6 +3589,30 @@
       'gt::gt_comprehensive': [
         { q: '综合题常要求先分析产品、再提出改进。下列对“综合题答题”的认识，正确的是？', opts: ['只需画图不用说明', '应结合人机关系、结构、材料、工艺等多角度分析，并给出有依据的改进', '只写价格', '随便写'], a: 'B', exp: '通用技术综合题强调在真实情境下综合运用知识：从人机、结构、流程、系统、控制等角度分析，并提出可落地的改进方案，言之有据。', diff: 'medium', src: '通用技术（模拟）' },
         { q: '【综合题】某小区垃圾分类亭存在“雨天投放不便、标识不清、异味外溢”问题。请综合运用人机关系、结构、流程等知识，提出三条改进措施并说明理由。', a: '①人机/健康：加盖防雨顶棚与投递口遮檐，雨天可正常投放且避免雨水进桶；投递口高度与开口大小符合人体尺度，方便各类居民使用（体现高效、健康、舒适、安全）。②结构/材料：箱体改用密封性更好的结构并内置除臭滤芯或活性炭，减少异味外溢；外壳用耐腐蚀、易清洁材料。③流程/管理：优化“投放→满溢提醒→清运”流程，增设满溢传感与定时清运标识，提升收运效率。三条措施分别对应人机、结构、流程维度，体现综合应用能力。', exp: '综合题范本：按“问题→对应维度（人机/结构/流程/系统/控制）→具体措施→预期效果”作答；多维度、有依据、可落地是高分关键。', diff: 'hard', src: '通用技术（模拟）' }
+      ],
+      'english::rd_b': [
+        {
+          q: 'Last summer I volunteered at a local animal shelter. One rainy afternoon a small trembling dog was brought in. He had been abandoned and was afraid of everyone. I spent hours sitting quietly beside his cage and reading aloud until he finally let me touch his head. Weeks later a family came to adopt him. He wagged his tail and looked back at me once, as if to say thank you. That moment taught me that patience and kindness can reach even the most frightened hearts.',
+          diff: 'medium', src: '高考英语阅读示例（B篇·记叙文）',
+          subs: [
+            { q: 'Why was the dog trembling when he first arrived?', opts: ['He was cold', 'He had been abandoned and was scared', 'He was hungry', 'He was sick'], a: 'B', exp: '原文第一段提到 He had been abandoned and was afraid of everyone，说明小狗被遗弃且害怕所有人，所以发抖。', diff: 'easy' },
+            { q: 'What is the main idea of the passage?', opts: ['Dogs make the best pets', 'Kindness and patience can comfort the frightened', 'Volunteering is always fun', 'Animal shelters need more help'], a: 'B', exp: '文章主旨是耐心与善意能温暖最胆怯的生命，对应 B。', diff: 'medium' },
+            { q: 'How did the writer help the dog?', opts: ['By giving him food', 'By sitting quietly and reading to him', 'By taking him home', 'By playing with other dogs'], a: 'B', exp: '第二段 I spent hours sitting quietly beside his cage and reading aloud 说明作者安静地陪着它、念书给它听。', diff: 'medium' },
+            { q: 'The word adopt in the last paragraph is closest in meaning to ____.', opts: ['收养', '训练', '遗弃', '治疗'], a: 'A', exp: 'adopt 意为收养，文中指一家人来领养这只狗。', diff: 'easy' }
+          ]
+        }
+      ],
+      'english::rd_d': [
+        {
+          q: 'Many students believe that multitasking helps them get more done. However, research shows the opposite. When we switch between tasks, our brains need time to refocus, and each switch wastes attention. A study found that students who kept their phones nearby while studying scored much lower than those who put phones away. The problem is not the phone itself, but the constant temptation to check it. True focus means doing one thing at a time. Deep work, not endless switching, is what leads to real learning and creativity.',
+          diff: 'hard', src: '高考英语阅读示例（D篇·议论文）',
+          subs: [
+            { q: 'What does the research in the passage suggest?', opts: ['Multitasking improves efficiency', 'Switching tasks wastes attention', 'Phones should be banned', 'Students dislike studying'], a: 'B', exp: '第二段 When we switch between tasks, our brains need time to refocus, and each switch wastes attention 说明切换任务会浪费注意力。', diff: 'medium' },
+            { q: 'Why did students with phones nearby score lower?', opts: ['They were smarter', 'The temptation to check phones broke their focus', 'They did not study', 'The test was too hard'], a: 'B', exp: '第三段 The problem is not the phone itself, but the constant temptation to check it 说明是查看手机的诱惑破坏了专注。', diff: 'medium' },
+            { q: 'What does deep work mean according to the passage?', opts: ['Doing many things quickly', 'Focusing on one task at a time', 'Using many apps', 'Studying with friends'], a: 'B', exp: '最后一段 True focus means doing one thing at a time，Deep work 对应一次专注一件事。', diff: 'hard' },
+            { q: 'What is the authors attitude toward multitasking?', opts: ['Supportive', 'Neutral', 'Against', 'Unclear'], a: 'C', exp: '作者引用研究说明多任务切换降低效率，主张一次一件事，态度是反对的。', diff: 'medium' }
+          ]
+        }
       ]
   };
 
@@ -3977,13 +4001,14 @@
   // ===== 常考题型：筛选栏 + 科目多选弹窗 =====
   var COMMON_DIFFS = [
     { id: 'all', name: '全部' },
-    { id: 'easy', name: '简单' },
-    { id: 'medium', name: '中等' },
-    { id: 'hard', name: '偏难' },
-    { id: 'expert', name: '困难' }
+    { id: 'easy', name: '简单 D' },
+    { id: 'medium', name: '中等 C' },
+    { id: 'hard', name: '偏难 B' },
+    { id: 'expert', name: '困难 A' }
   ];
   if (!window.__commonFilter) window.__commonFilter = { difficulty: 'all', types: [], search: '' };
   if (window.__commonModal === undefined) window.__commonModal = null;
+  if (!window.__commonPage || window.__commonPage < 1) window.__commonPage = 1;
 
   function commonTypeLabel(k) {
     var p = String(k).split('::');
@@ -3993,104 +4018,277 @@
     return s.name + '·' + (c ? c.name : p[1]) + (c && c.struct ? '（' + c.struct + '）' : '');
   }
 
+  // ===== 洛谷式编号：困难=A 偏难=B 中等=C 简单=D，序号按难度独立计数 =====
+  var BANK_DIFF = {
+    expert: { letter: 'A', word: '困难' },
+    hard:   { letter: 'B', word: '偏难' },
+    medium: { letter: 'C', word: '中等' },
+    easy:   { letter: 'D', word: '简单' }
+  };
+  var __bankIdsDone = false;
+  function __assignBankIds() {
+    if (__bankIdsDone) return;
+    var counters = { A: 0, B: 0, C: 0, D: 0 };
+    var TYPES = GZ_COMMON_TYPES, QS = window.GZ_COMMON_QUESTIONS || {};
+    var idx = {}, list = [];
+    Object.keys(TYPES).forEach(function (sid) {
+      var s = TYPES[sid];
+      (s.cats || []).forEach(function (c) {
+        (QS[sid + '::' + c.id] || []).forEach(function (q, i) {
+          var d = BANK_DIFF[q.diff] || BANK_DIFF.medium;
+          counters[d.letter]++;
+          q._bid = d.letter + ('000' + counters[d.letter]).slice(-4);
+          q._dword = d.word;
+          q._dletter = d.letter;
+          var qType, typeLabel;
+          if (q.subs && q.subs.length) { qType = 'composite'; typeLabel = '大题'; }
+          else { qType = q.opts ? 'choice' : ((q.a || '').length <= 20 ? 'fill' : 'solve'); typeLabel = qType === 'choice' ? '选择' : (qType === 'fill' ? '填空' : '解答'); }
+          var key = sid + '::' + c.id + '#' + i;
+          if (q.subs && q.subs.length) {
+            q.subs.forEach(function (sub, sj) { sub._subbid = q._bid + '-' + (sj + 1); });
+          }
+          var entry = { q: q, key: key, sid: sid, catId: c.id, subjectName: s.name, catName: c.name, type: qType, typeLabel: typeLabel, src: q.src || '' };
+          idx[q._bid] = entry;
+          list.push(entry);
+        });
+      });
+    });
+    window.__bankIdx = idx;
+    window.__bankList = list;
+    // 迁移：旧版单题作答以 entry.key 存储，统一迁移到 bid 键（复合题小题也用 subbid）
+    window.__bankList.forEach(function (e) {
+      if (e.q.subs && e.q.subs.length) return;
+      var legacy = getQAnswer(e.key);
+      if (legacy && !getQAnswer(e.q._bid)) saveQAnswer(e.q._bid, legacy.myAnswer, legacy.correct);
+    });
+    // 默认「题目视图列表」= 全库（简单优先），供详情页上下题与深链使用
+    window.__bankViewList = list.map(function (e) { return e.q._bid; });
+    __bankIdsDone = true;
+  }
+
+  // 单题卡片（洛谷风），列表详情与单题详情共用
+  // 单个题目（含复合题小题）的可交互块：选项/填空/解答 + 提交 + 答案解析
+  // ansKey：作答恢复/存储键；submitKey：提交时回传（用于错题本，取父题 entry.key）；
+  // selKey：选项组/选择事件唯一键；bid：统计与存储兜底键（单题=q._bid，小题=sub._subbid）
+  function buildQBody(q, ansKey, submitKey, selKey, bid) {
+    var qType = q.opts ? 'choice' : ((q.a || '').length <= 20 ? 'fill' : 'solve');
+    var ansId = 'q-ans-' + String(bid).replace(/[^a-zA-Z0-9]/g, '_');
+    var saved = getQAnswer(ansKey);
+    var myAns = saved ? saved.myAnswer : '';
+    var correct = saved ? saved.correct : null;
+    var optsHtml = '', inputHtml = '';
+    if (qType === 'choice') {
+      optsHtml = '<div class="cc-q-opts">' + q.opts.map(function (o, j) {
+        var letter = 'ABCDE'[j];
+        var isSel = (myAns === letter);
+        return '<label class="cc-q-opt' + (isSel ? ' selected' : '') + '" data-key="' + selKey + '" data-letter="' + letter + '" onclick="window.__qSelectOpt(this, \'' + selKey + '\', \'' + letter + '\')">' +
+          '<input type="radio" name="cc-opt-' + selKey + '" value="' + letter + '"' + (isSel ? ' checked' : '') + '>' +
+          '<span class="cc-q-opt-letter">' + letter + '</span>' +
+          '<span class="cc-q-opt-text">' + esc(o) + '</span>' +
+        '</label>';
+      }).join('') + '</div>';
+      inputHtml = '<div class="cc-q-actions"><button class="cc-q-submit" onclick="window.__qSubmit(\'' + esc(submitKey) + '\', \'choice\', \'' + esc(q.a) + '\', this)">提交答案</button></div>';
+    } else if (qType === 'fill') {
+      inputHtml = '<div class="cc-q-fill"><input type="text" placeholder="请输入答案..." value="' + esc(myAns) + '"><button class="cc-q-submit" onclick="window.__qSubmit(\'' + esc(submitKey) + '\', \'fill\', \'' + esc(q.a) + '\', this)">提交答案</button></div>';
+    } else {
+      inputHtml = '<div class="cc-q-solve"><textarea placeholder="请写下你的解题过程..." rows="4">' + esc(myAns) + '</textarea><button class="cc-q-submit" onclick="window.__qSubmit(\'' + esc(submitKey) + '\', \'solve\', \'' + esc(q.a) + '\', this)">提交答案</button></div>';
+    }
+    var resultHtml = '';
+    if (correct === true) resultHtml = '<div class="cc-q-result correct">✓ 回答正确</div>';
+    else if (correct === false) resultHtml = '<div class="cc-q-result wrong">✗ 回答错误</div>';
+    else if (saved) resultHtml = '<div class="cc-q-result submitted">已记录你的作答（解答题不自动判分）</div>';
+    var hiddenAttr = (correct === false) ? '' : ' hidden';
+    return '<div class="cc-q-item" data-bid="' + esc(bid) + '">' +
+      (qType === 'choice' ? optsHtml : '') +
+      inputHtml +
+      resultHtml +
+      '<button class="cc-q-toggle" onclick="window.__toggleQAns(\'' + ansId + '\')">显示答案</button>' +
+      '<div class="cc-q-ans" id="' + ansId + '"' + hiddenAttr + '>' +
+        '<div class="lg-seclabel">题解 · 提示</div>' +
+        '<div class="cc-q-a"><b>答案：</b>' + esc(q.a) + '</div>' +
+        (q.exp ? '<div class="cc-q-exp"><b>解析：</b>' + escRich(q.exp) + '</div>' : '') +
+      '</div>' +
+    '</div>';
+  }
+
+  // 复合题（大题）中的一个小题
+  function renderSubQuestion(s, parentKey, sj) {
+    var subBid = s._subbid || (parentKey + '-' + (sj + 1));
+    var subKey = parentKey + '.' + sj;
+    var sType = s.opts ? 'choice' : ((s.a || '').length <= 20 ? 'fill' : 'solve');
+    var sLabel = sType === 'choice' ? '选择' : (sType === 'fill' ? '填空' : '解答');
+    return '<div class="lg-sub">' +
+      '<div class="lg-sub-head"><span class="lg-sub-no">' + (sj + 1) + '</span><span class="cc-q-type type-' + sType + '">' + sLabel + '</span>' +
+      (s.src ? '<span class="lg-src">📚 ' + esc(s.src) + '</span>' : '') + '</div>' +
+      '<div class="lg-seclabel">小题</div>' +
+      '<div class="cc-q-body">' + escRich(s.q) + '</div>' +
+      buildQBody(s, subBid, parentKey, subKey, subBid) +
+    '</div>';
+  }
+
+  function buildBankQuestionCard(q, key) {
+    var faved = isQFav(key);
+    var qFavBtn = '<button class="cc-q-fav' + (faved ? ' is-fav' : '') + '" title="' + (faved ? '取消收藏本题' : '收藏本题') + '" onclick="window.__toggleQFav(\'' + esc(key) + '\', this)">' + (faved ? '★' : '☆') + '</button>';
+    var head = '<div class="lg-q-head">' +
+      '<span class="lg-id" title="题目编号（字母=难度，后四位=题序）">' + esc(q._bid) + '</span>' +
+      '<span class="lg-diff">' + esc(q._dword) + '</span>' +
+      '<span class="cc-q-type type-' + (q.subs && q.subs.length ? 'composite' : (q.opts ? 'choice' : ((q.a || '').length <= 20 ? 'fill' : 'solve'))) + '">' + (q.subs && q.subs.length ? '大题' : (q.opts ? '选择' : ((q.a || '').length <= 20 ? '填空' : '解答'))) + '</span>' +
+      (q.src ? '<span class="lg-src">📚 ' + esc(q.src) + '</span>' : '') +
+      qFavBtn +
+    '</div>';
+    if (q.subs && q.subs.length) {
+      var passage = '<div class="lg-passage"><div class="lg-seclabel">材料 / 文章</div><div class="cc-q-body">' + escRich(q.q) + '</div></div>';
+      var subsHtml = q.subs.map(function (s, sj) { return renderSubQuestion(s, key, sj); }).join('');
+      return '<div class="lg-q lg-d-' + q._dletter + ' lg-composite" data-key="' + key + '" data-bid="' + esc(q._bid) + '">' +
+        head + passage + '<div class="lg-subs">' + subsHtml + '</div>' +
+      '</div>';
+    }
+    return '<div class="lg-q lg-d-' + q._dletter + '" data-key="' + key + '" data-bid="' + esc(q._bid) + '">' +
+      head +
+      '<div class="lg-q-main">' +
+        '<div class="lg-seclabel">题目描述</div>' +
+        '<div class="cc-q-body">' + escRich(q.q) + '</div>' +
+        buildQBody(q, q._bid, key, key, q._bid) +
+      '</div>' +
+    '</div>';
+  }
+
+  function subSolved(s) {
+    var st = getQAnswer(s._subbid);
+    if (!st) return false;
+    var t = s.opts ? 'choice' : ((s.a || '').length <= 20 ? 'fill' : 'solve');
+    return st.correct === true || t === 'solve';
+  }
+  function entrySolved(e) {
+    if (e.q.subs && e.q.subs.length) return e.q.subs.every(subSolved);
+    var st = getQAnswer(e.q._bid);
+    return !!st && (st.correct === true || e.type === 'solve');
+  }
+  function entryRate(e) {
+    if (e.q.subs && e.q.subs.length) {
+      var att = 0, cor = 0;
+      e.q.subs.forEach(function (s) { var st = getQStat(s._subbid); att += (st.attempts || 0); cor += (st.correct || 0); });
+      return att ? Math.round(cor / att * 100) : null;
+    }
+    return qStatRate(e.q._bid);
+  }
+
   function renderCommonContent() {
+    __assignBankIds();
     var f = window.__commonFilter;
-    var items = f.types.map(function(k) { return { k: k, label: commonTypeLabel(k) }; });
+    if (!window.__commonPage || window.__commonPage < 1) window.__commonPage = 1;
+    var DIFF_RANK = { easy: 0, medium: 1, hard: 2, expert: 3 };
+
+    // 1) 收集匹配的题（按题型筛选或全库）
+    var entries;
+    if (f.types && f.types.length) {
+      entries = [];
+      f.types.forEach(function (k) {
+        ((window.GZ_COMMON_QUESTIONS || {})[k] || []).forEach(function (q) {
+          if (window.__bankIdx[q._bid]) entries.push(window.__bankIdx[q._bid]);
+        });
+      });
+    } else {
+      entries = window.__bankList.slice();
+    }
+
+    // 2) 难度筛选
+    if (f.difficulty && f.difficulty !== 'all') {
+      entries = entries.filter(function (e) { return (e.q.diff || 'medium') === f.difficulty; });
+    }
+    // 3) 搜索（题号 / 题干 / 选项）
     if (f.search && f.search.trim()) {
-      var q = f.search.trim().toLowerCase();
-      items = items.filter(function(it) { return it.label.toLowerCase().indexOf(q) >= 0 || __typeHasMatchSearch(it.k, q); });
+      var sq = f.search.trim().toLowerCase();
+      entries = entries.filter(function (e) {
+        return e.q._bid.toLowerCase().indexOf(sq) >= 0
+          || (e.q.q || '').toLowerCase().indexOf(sq) >= 0
+          || (e.q.opts || []).some(function (o) { return (o || '').toLowerCase().indexOf(sq) >= 0; });
+      });
     }
-    if (!items.length) {
-      if (!f.types.length) return '<div class="cc-empty">🧭 请先在上方选择科目与常考题型，开始筛选题目。<br>难度、科目与搜索都会作用于题目列表。</div>';
-      return '<div class="cc-empty">🔍 没有匹配「' + esc(f.search) + '」的题型或题目。</div>';
+
+    // 4) 排序：默认简单优先（D<C<B<A），同难度按题号
+    entries.sort(function (a, b) {
+      var ra = DIFF_RANK[a.q.diff || 'medium'], rb = DIFF_RANK[b.q.diff || 'medium'];
+      if (ra !== rb) return ra - rb;
+      return a.q._bid < b.q._bid ? -1 : (a.q._bid > b.q._bid ? 1 : 0);
+    });
+    window.__bankViewList = entries.map(function (e) { return e.q._bid; });
+    window.__bankViewKeys = {};
+    entries.forEach(function (e) { window.__bankViewKeys[e.q._bid] = e.key; });
+
+    if (!entries.length) {
+      return '<div class="cc-empty">🔍 没有符合条件的题目，试试调整筛选或搜索。</div>';
     }
-    var diffMap = { easy: '简单', medium: '中等', hard: '偏难', expert: '困难' };
-    var groups = items.map(function(it) {
-      var p = String(it.k).split('::');
-      var s = GZ_COMMON_TYPES[p[0]];
-      var c = (s.cats || []).filter(function(x) { return x.id === p[1]; })[0];
-      var color = (s && s.color) || '#6b7280';
-      var icon = (c && c.icon) || '📝';
-      var tfaved = isTypeFaved(it.k);
-      var favBtn = '<button class="cc-tc-fav' + (tfaved ? ' is-fav' : '') + '" title="' + (tfaved ? '取消收藏题型' : '收藏此题型') + '" onclick="event.stopPropagation();window.__toggleTypeFav(\'' + esc(it.k) + '\')">' + (tfaved ? '★' : '☆') + '</button>';
-      var qs = (window.GZ_COMMON_QUESTIONS || {})[it.k] || [];
-      var qsHtml = qs.length ? qs.map(function(q, i) {
-        var key = it.k + '#' + i;
-        var qType = q.opts ? 'choice' : ((q.a || '').length <= 20 ? 'fill' : 'solve');
-        var typeLabel = qType === 'choice' ? '选择' : (qType === 'fill' ? '填空' : '解答');
-        var diffLabel = diffMap[q.diff] || '中等';
-        var ansId = 'q-ans-' + key.replace(/[^a-zA-Z0-9]/g, '_');
-        var faved = isQFav(key);
-        var qFavBtn = '<button class="cc-q-fav' + (faved ? ' is-fav' : '') + '" title="="' + (faved ? '取消收藏本题' : '收藏本题') + '" onclick="window.__toggleQFav(\'' + esc(key) + '\', this)">' + (faved ? '★' : '☆') + '</button>';
 
-        // 题干 + 选项
-        var optsHtml = '';
-        var inputHtml = '';
-        var saved = getQAnswer(key);
-        var myAns = saved ? saved.myAnswer : '';
-        var correct = saved ? saved.correct : null;
+    // 5) 分页
+    var PAGE = 15;
+    var totalPages = Math.max(1, Math.ceil(entries.length / PAGE));
+    if (window.__commonPage > totalPages) window.__commonPage = totalPages;
+    var start = (window.__commonPage - 1) * PAGE;
+    var pageEntries = entries.slice(start, start + PAGE);
 
-        if (qType === 'choice') {
-          optsHtml = '<div class="cc-q-opts">' + q.opts.map(function(o, j) {
-            var letter = 'ABCDE'[j];
-            var isSel = (myAns === letter);
-            return '<label class="cc-q-opt' + (isSel ? ' selected' : '') + '" data-key="' + key + '" data-letter="' + letter + '" onclick="window.__qSelectOpt(this, \'' + key + '\', \'' + letter + '\')">' +
-              '<input type="radio" name="cc-opt-' + key + '" value="' + letter + '"' + (isSel ? ' checked' : '') + '>' +
-              '<span class="cc-q-opt-letter">' + letter + '</span>' +
-              '<span class="cc-q-opt-text">' + esc(o) + '</span>' +
-            '</label>';
-          }).join('') + '</div>';
-          inputHtml = '<div class="cc-q-actions"><button class="cc-q-submit" onclick="window.__qSubmit(\'' + esc(key) + '\', \'choice\', \'' + esc(q.a) + '\', this)">提交答案</button></div>';
-        } else if (qType === 'fill') {
-          inputHtml = '<div class="cc-q-fill"><input type="text" placeholder="请输入答案..." value="' + esc(myAns) + '"><button class="cc-q-submit" onclick="window.__qSubmit(\'' + esc(key) + '\', \'fill\', \'' + esc(q.a) + '\', this)">提交答案</button></div>';
-        } else {
-          inputHtml = '<div class="cc-q-solve"><textarea placeholder="请写下你的解题过程..." rows="4">' + esc(myAns) + '</textarea><button class="cc-q-submit" onclick="window.__qSubmit(\'' + esc(key) + '\', \'solve\', \'' + esc(q.a) + '\', this)">提交答案</button></div>';
-        }
-
-        var resultHtml = '';
-        if (correct === true) {
-          resultHtml = '<div class="cc-q-result correct">✓ 回答正确</div>';
-        } else if (correct === false) {
-          resultHtml = '<div class="cc-q-result wrong">✗ 回答错误</div>';
-        } else if (saved) {
-          resultHtml = '<div class="cc-q-result submitted">已记录你的作答（解答题不自动判分）</div>';
-        }
-
-        var hiddenAttr = (correct === false) ? '' : ' hidden';
-
-        return '<div class="cc-q-item" data-key="' + key + '">' +
-          '<div class="cc-q-head">' +
-            '<span class="cc-q-no">题 ' + (i + 1) + '</span>' +
-            '<span class="cc-q-type type-' + qType + '">' + typeLabel + '</span>' +
-            '<span class="cc-q-diff diff-' + esc(q.diff || 'medium') + '">' + diffLabel + '</span>' +
-            '<span class="cc-q-src">' + esc(q.src || '') + '</span>' +
-            qFavBtn +
-            '<button class="cc-q-toggle" onclick="window.__toggleQAns(\'' + ansId + '\')">显示答案</button>' +
-          '</div>' +
-          '<div class="cc-q-body">' + esc(q.q) + '</div>' +
-          optsHtml +
-          inputHtml +
-          resultHtml +
-          '<div class="cc-q-ans" id="' + ansId + '"' + hiddenAttr + '>' +
-            '<div class="cc-q-a"><b>答案：</b>' + esc(q.a) + '</div>' +
-            (q.exp ? '<div class="cc-q-exp"><b>解析：</b>' + esc(q.exp) + '</div>' : '') +
-          '</div>' +
-        '</div>';
-      }).join('') : '<div class="cc-q-empty">该题型暂未配题，可先点击 ★ 收藏题型。</div>';
-      var expandId = 'cc-questions-' + it.k.replace(/[^a-zA-Z0-9]/g, '_');
-      var qCountHtml = qs.length ? ' · ' + qs.length + ' 题' : '';
-      return '<div class="cc-type-group" style="--sc:' + color + '">' +
-        '<div class="cc-type-card" onclick="window.__toggleTypeExpand(\'' + expandId + '\', this)">' +
-          favBtn +
-          '<div class="cc-tc-icon">' + icon + '</div>' +
-          '<div class="cc-tc-body"><div class="cc-tc-subj">' + esc(s ? s.name : '') + (c && c.struct ? ' <span class="cc-tc-struct">' + esc(c.struct) + '</span>' : '') + '</div><div class="cc-tc-name">' + esc(c ? c.name : '') + qCountHtml + '</div></div>' +
-          '<div class="cc-tc-arrow">▼</div>' +
-        '</div>' +
-        '<div class="cc-type-questions" id="' + expandId + '">' + qsHtml + '</div>' +
+    var rows = pageEntries.map(function (e) {
+      var q = e.q;
+      var isBig = !!(q.subs && q.subs.length);
+      var title = (isBig ? '📄 ' : '') + esc(q.q || '');
+      if (title.length > 52) title = title.slice(0, 52) + '…';
+      var solved = entrySolved(e);
+      var rate = entryRate(e);
+      var rateTxt = (rate === null) ? '—' : (rate + '%');
+      var rateColor = rate === null ? '#bbb' : (rate >= 60 ? '#2ecc71' : (rate >= 30 ? '#e0a000' : '#e25c5c'));
+      var faved = isQFav(e.key);
+      var favBtn = '<button class="lg-star' + (faved ? ' is-fav' : '') + '" title="' + (faved ? '取消收藏' : '收藏') + '" onclick="event.stopPropagation();window.__toggleQFav(\'' + esc(e.key) + '\', this)">' + (faved ? '★' : '☆') + '</button>';
+      var tagHtml = '<span class="lg-tag">' + esc(e.subjectName) + '</span><span class="lg-tag">' + esc(e.catName) + '</span>' +
+        (isBig ? '<span class="lg-tag lg-tag-big">大题 · ' + q.subs.length + ' 小题</span>' : '');
+      return '<div class="lg-trow lg-d-' + q._dletter + (isBig ? ' lg-trow-big' : '') + '" onclick="navigate(\'bank\',\'q\',\'' + q._bid + '\')">' +
+        '<span class="lg-c-status">' + (solved ? '<span class="lg-done">✓</span>' : '<span class="lg-todo">➖</span>') + '</span>' +
+        '<span class="lg-c-id">' + q._bid + '</span>' +
+        '<span class="lg-c-title">' + favBtn + '<span class="lg-c-title-text">' + title + '</span></span>' +
+        '<span class="lg-c-tags">' + tagHtml + '</span>' +
+        '<span class="lg-c-diff">' + esc(q._dword) + '</span>' +
+        '<span class="lg-c-rate"><span class="lg-rate-bar"><i style="width:' + (rate === null ? 0 : rate) + '%;background:' + rateColor + '"></i></span><b style="color:' + rateColor + '">' + rateTxt + '</b></span>' +
       '</div>';
     }).join('');
-    return '<div class="cc-type-grid">' + groups + '</div>';
+
+    var head = '<div class="lg-trow lg-thead">' +
+      '<span class="lg-c-status">状态</span>' +
+      '<span class="lg-c-id">题号</span>' +
+      '<span class="lg-c-title">题目名称</span>' +
+      '<span class="lg-c-tags">标签</span>' +
+      '<span class="lg-c-diff">难度</span>' +
+      '<span class="lg-c-rate">通过率</span>' +
+    '</div>';
+
+    return '<div class="lg-list-head">点击题目进入作答 · 共 ' + entries.length + ' 题（简单优先排序）· ✓ 已做对 / ➖ 未做</span></div>' +
+      '<div class="lg-table-scroll"><div class="lg-table">' + head + rows + '</div></div>' +
+      '<div class="lg-pager-wrap">' + buildBankPager(entries.length, PAGE, totalPages) + '</div>';
   }
+
+  function buildBankPager(total, PAGE, totalPages) {
+    var p = window.__commonPage;
+    var html = '';
+    html += '<button class="lg-page' + (p <= 1 ? ' disabled' : '') + '" onclick="window.__commonGoto(' + (p - 1) + ')">上一页</button>';
+    var nums = [];
+    nums.push(1);
+    for (var i = Math.max(2, p - 2); i <= Math.min(totalPages - 1, p + 2); i++) nums.push(i);
+    if (totalPages > 1) nums.push(totalPages);
+    nums = nums.filter(function (v, idx, arr) { return arr.indexOf(v) === idx; }).sort(function (a, b) { return a - b; });
+    var prev = 0;
+    nums.forEach(function (n) {
+      if (n - prev > 1) html += '<span class="lg-page-ellipsis">…</span>';
+      html += '<button class="lg-page' + (n === p ? ' active' : '') + '" onclick="window.__commonGoto(' + n + ')">' + n + '</button>';
+      prev = n;
+    });
+    html += '<button class="lg-page' + (p >= totalPages ? ' disabled' : '') + '" onclick="window.__commonGoto(' + (p + 1) + ')">下一页</button>';
+    html += '<span class="lg-page-info">第 ' + p + ' / ' + totalPages + ' 页 · 共 ' + total + ' 题</span>';
+    return html;
+  }
+  window.__commonGoto = function (n) {
+    window.__commonPage = n;
+    var el = document.getElementById('ccContent');
+    if (el) el.innerHTML = renderCommonContent();
+    else renderBankCommon();
+  };
 
   function __typeHasMatchSearch(k, q) {
     var qs = (window.GZ_COMMON_QUESTIONS || {})[k] || [];
@@ -4104,6 +4302,27 @@
   function getQAnswer(key) {
     var all = lsGet('gz_qanswers', {});
     return all[key] || null;
+  }
+
+  // 单题统计：通过率 / 作答状态（本地持久化，随账号共享）
+  function getQStat(bid) {
+    var all = lsGet('gz_qstats', {});
+    return all[bid] || { attempts: 0, correct: 0 };
+  }
+  function recordQStat(bid, isCorrect) {
+    if (!bid) return;
+    var all = lsGet('gz_qstats', {});
+    var s = all[bid] || { attempts: 0, correct: 0 };
+    s.attempts = (s.attempts || 0) + 1;
+    if (isCorrect) s.correct = (s.correct || 0) + 1;
+    all[bid] = s;
+    lsSet('gz_qstats', all);
+  }
+  // 通过率（%）：无作答记录返回 null（显示「—」）
+  function qStatRate(bid) {
+    var s = getQStat(bid);
+    if (!s.attempts) return null;
+    return Math.round((s.correct / s.attempts) * 100);
   }
 
   function saveQAnswer(key, myAnswer, correct) {
@@ -4131,7 +4350,7 @@
   };
 
   window.__qSelectOpt = function(label, key, letter) {
-    var item = label.closest ? label.closest('.cc-q-item') : null;
+    var item = label.closest ? (label.closest('.cc-q-item') || label.closest('.lg-q')) : null;
     if (!item) return;
     item.querySelectorAll('.cc-q-opt').forEach(function(el) { el.classList.remove('selected'); });
     label.classList.add('selected');
@@ -4140,7 +4359,7 @@
   };
 
   window.__qSubmit = function(key, type, correctAnswer, btn) {
-    var item = btn.closest ? btn.closest('.cc-q-item') : null;
+    var item = btn.closest ? (btn.closest('.cc-q-item') || btn.closest('.lg-q')) : null;
     if (!item) return;
     var myAnswer = '';
     if (type === 'choice') {
@@ -4167,7 +4386,11 @@
       correct = null; // 解答题不自动判分
     }
 
-    saveQAnswer(key, myAnswer, correct);
+    var _bid = (item.getAttribute && item.getAttribute('data-bid')) || key;
+    saveQAnswer(_bid, myAnswer, correct);
+
+    // 记录单题统计（通过率 / 作答状态）；解答题不自动判分，不计入通过率
+    if (type === 'choice' || type === 'fill') recordQStat(_bid, correct === true);
 
     // 更新结果反馈
     var existing = item.querySelector('.cc-q-result');
@@ -4317,14 +4540,6 @@
       '<div class="crumb"><a onclick="navigate(\'home\')">首页</a> / <a onclick="navigate(\'bank\', \'home\')">题库</a> / 高中常考题型</div>' +
       '<div class="panel bank-new-design">' +
         tabsHtml +
-        '<div class="bank-hero" style="background: linear-gradient(120deg, #f0f4ff 0%, #f7eaff 100%);">' +
-          '<div class="bank-hero-text">' +
-            '<div class="bank-hero-greet">📚 高考备考</div>' +
-            '<h2 class="bank-hero-title">高中常考题型</h2>' +
-            '<p class="bank-hero-desc">按科目、题型与难度筛选常考题，可在线作答、即时反馈。<br>目前已上线 ' + keys.length + ' 个学科 · ' + totalCats + ' 个常考题型。</p>' +
-          '</div>' +
-          '<div class="bank-hero-deco">📚</div>' +
-        '</div>' +
         '<div class="cc-filterbar">' +
           '<div class="cc-filter-row">' +
             '<span class="cc-filter-label">筛选条件</span>' +
@@ -4368,16 +4583,19 @@
   window.__confirmSubjectModal = function () {
     window.__commonFilter.types = window.__commonModal ? window.__commonModal.types.slice() : [];
     window.__commonModal = null;
+    window.__commonPage = 1;
     renderBankCommon();
   };
   window.__removeType = function (k) {
     var f = window.__commonFilter;
     f.types = f.types.filter(function (x) { return x !== k; });
+    window.__commonPage = 1;
     renderBankCommon();
   };
-  window.__commonSetDiff = function (d) { window.__commonFilter.difficulty = d; renderBankCommon(); };
+  window.__commonSetDiff = function (d) { window.__commonFilter.difficulty = d; window.__commonPage = 1; renderBankCommon(); };
   window.__commonSearch = function (v) {
     window.__commonFilter.search = v;
+    window.__commonPage = 1;
     var el = document.getElementById('ccContent');
     if (el) el.innerHTML = renderCommonContent();
   };
@@ -4404,11 +4622,49 @@
     '</div>';
   }
 
-  function renderBank(mode) {
+  function renderBank(mode, bid) {
     if (mode === 'fav') renderBankFav();
     else if (mode === 'common') renderBankCommon();
     else if (mode === 'wrong') renderBankWrong();
+    else if (mode === 'q') renderBankQuestion(bid);
     else renderBankHome();
+  }
+
+  // 单题详情（洛谷式：点击列表行进入）
+  function renderBankQuestion(bid) {
+    __assignBankIds();
+    var entry = window.__bankIdx[bid];
+    var tabsHtml = renderBankTabs('common');
+    if (!entry) {
+      view.innerHTML = '' +
+        '<div class="panel bank-new-design">' + tabsHtml +
+          '<div class="cc-empty">😕 未找到题目 <b>' + esc(bid || '') + '</b>。<br>可能已下线或编号有误。</div>' +
+          '<div style="margin-top:16px"><button class="btn-primary" onclick="navigate(\'bank\',\'common\')">← 返回常考题型</button></div>' +
+        '</div>';
+      return;
+    }
+    var q = entry.q;
+    var vl = window.__bankViewList || [];
+    var pos = vl.indexOf(bid);
+    var prevBid = (pos > 0) ? vl[pos - 1] : null;
+    var nextBid = (pos >= 0 && pos < vl.length - 1) ? vl[pos + 1] : null;
+    var prevBtn = prevBid
+      ? '<button class="lg-nav-btn" onclick="navigate(\'bank\',\'q\',\'' + prevBid + '\')">‹ 上一题</button>'
+      : '<button class="lg-nav-btn" disabled>‹ 上一题</button>';
+    var nextBtn = nextBid
+      ? '<button class="lg-nav-btn" onclick="navigate(\'bank\',\'q\',\'' + nextBid + '\')">下一题 ›</button>'
+      : '<button class="lg-nav-btn" disabled>下一题 ›</button>';
+    view.innerHTML = '' +
+      '<div class="crumb"><a onclick="navigate(\'home\')">首页</a> / <a onclick="navigate(\'bank\')">题库</a> / <a onclick="navigate(\'bank\',\'common\')">常考题型</a> / ' + esc(bid) + '</div>' +
+      '<div class="panel bank-new-design">' +
+        tabsHtml +
+        '<div class="lg-detail-head">' +
+          '<button class="lg-back" onclick="navigate(\'bank\',\'common\')">← 返回列表</button>' +
+          '<div class="lg-detail-nav">' + prevBtn + nextBtn + '</div>' +
+        '</div>' +
+        '<div class="lg-detail-meta"><span class="lg-row-id">' + q._bid + '</span><span class="lg-row-diff">' + esc(q._dword) + '</span><span class="cc-q-type type-' + entry.type + '">' + entry.typeLabel + '</span><span class="lg-subj-tag">' + esc(entry.subjectName) + ' · ' + esc(entry.catName) + '</span>' + (q.subs && q.subs.length ? '<span class="lg-subj-tag lg-subj-big">大题 · ' + q.subs.length + ' 小题</span>' : '') + '</div>' +
+        '<div class="lg-detail-card">' + buildBankQuestionCard(q, entry.key) + '</div>' +
+      '</div>';
   }
 
   // 错题本 - 整合到题库中
