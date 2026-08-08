@@ -3600,7 +3600,37 @@
             { q: 'How did the writer help the dog?', opts: ['By giving him food', 'By sitting quietly and reading to him', 'By taking him home', 'By playing with other dogs'], a: 'B', exp: '第二段 I spent hours sitting quietly beside his cage and reading aloud 说明作者安静地陪着它、念书给它听。', diff: 'medium' },
             { q: 'The word adopt in the last paragraph is closest in meaning to ____.', opts: ['收养', '训练', '遗弃', '治疗'], a: 'A', exp: 'adopt 意为收养，文中指一家人来领养这只狗。', diff: 'easy' }
           ]
-        }
+        },
+        {
+          q: 'A small bookshop stood at the corner of our street for over fifty years. Its owner, an old man named Mr. Hale, knew every title on his shelves. As a child I would spend rainy afternoons there, reading without buying. Mr. Hale never hurried me. When I turned twelve, he gave me a worn copy of my favorite book and said, Keep it. Books are meant to travel. Years later the shop closed, but I still keep that book. Whenever I open it, the smell of old paper takes me back to those quiet afternoons and the man who taught me that some gifts are given freely.',
+          diff: 'medium', src: '高考英语阅读示例（B篇·记叙文）',
+          subs: [
+            { q: 'Why did the writer spend afternoons in the bookshop as a child?', opts: ['To buy books', 'To read without buying', 'To help Mr. Hale', 'To escape his family'], a: 'B', exp: '原文提到 I would spend rainy afternoons there, reading without buying，说明作者小时候常去书店免费阅读。', diff: 'easy' },
+            { q: 'What did Mr. Hale give the writer when he turned twelve?', opts: ['A new book', 'A worn copy of his favorite book', 'Some money', 'A shelf'], a: 'B', exp: '文中 Mr. Hale gave me a worn copy of my favorite book，即一本破旧的他最爱的书。', diff: 'easy' },
+            { q: 'What does the sentence "Books are meant to travel" mean?', opts: ['Books should be sold', 'Books should be read by many people', 'Books are heavy', 'Books belong to shops'], a: 'B', exp: '老人把书送给作者，意思是书应在不同读者间流传、被更多人阅读，而非一直滞留在架上。', diff: 'medium' },
+            { q: 'What is the main idea of the passage?', opts: ['Old bookshops are useless', 'A kind old man taught the value of sharing', 'Children should read more', 'Shops must close'], a: 'B', exp: '文章通过旧书店老人的善意，传达“有些礼物应无偿分享”的主题，B 最贴切。', diff: 'medium' }
+          ]
+        },
+        {
+          q: 'Amy had never run more than a mile, yet she signed up for the city marathon to honor her late father, who had loved running. On race day the heat was fierce. By the eighteenth mile her legs burned and she wanted to quit. Then a stranger on the sidewalk handed her a cup of water and shouted, Your father would be proud. Those words carried her to the finish line. She never met the stranger again, but she keeps a photo of that day. She says the marathon taught her that we rarely finish alone, and someone, seen or unseen, always lends a hand.',
+          diff: 'medium', src: '高考英语阅读示例（B篇·记叙文）',
+          subs: [
+            { q: 'Why did Amy join the marathon?', opts: ['To win a prize', 'To honor her late father', 'To make friends', 'To lose weight'], a: 'B', exp: '第一段 she signed up for the city marathon to honor her late father，表明为纪念已故父亲而参赛。', diff: 'easy' },
+            { q: 'What happened at the eighteenth mile?', opts: ['She won the race', 'She felt like giving up', 'It began to rain', 'She met her father'], a: 'B', exp: 'By the eighteenth mile her legs burned and she wanted to quit，说明她几乎想放弃。', diff: 'medium' },
+            { q: 'How did the stranger help Amy?', opts: ['By running with her', 'By giving water and encouragement', 'By calling her family', 'By lending money'], a: 'B', exp: 'a stranger handed her water and shouted encouraging words，即递水并给予鼓励。', diff: 'medium' },
+            { q: 'What lesson did Amy learn from the marathon?', opts: ['Running is easy', 'We often finish with help from others', 'Strangers are dangerous', 'Prizes matter most'], a: 'B', exp: '结尾 we rarely finish alone, and someone always lends a hand 点明“我们常借助他人之力完成目标”的道理。', diff: 'hard' }
+          ]
+        },
+        {
+          q: 'When I was nine, I broke my neighbor window with a baseball. Terrified, I ran home and said nothing. For weeks I felt a heavy guilt. One evening my mother noticed I was quiet and asked what was wrong. I finally told her. The next day she walked with me to the neighbor house, and I apologized and offered my savings to fix it. To my surprise, the neighbor smiled and said, Honesty is worth more than any window. That day I learned that facing a mistake takes courage, but it frees the heart.',
+          diff: 'medium', src: '高考英语阅读示例（B篇·记叙文）',
+          subs: [
+            { q: 'What did the writer do when he broke the window?', opts: ['He repaired it at once', 'He ran home and kept silent', 'He blamed his friend', 'He told his mother'], a: 'B', exp: '原文 Terrified, I ran home and said nothing，说明他跑回家并保持了沉默。', diff: 'easy' },
+            { q: 'Who helped the writer face his mistake?', opts: ['His teacher', 'His mother', 'The neighbor', 'A stranger'], a: 'B', exp: '母亲察觉他不对劲并询问，第二天陪他去邻居家道歉，是母亲促使他面对错误。', diff: 'easy' },
+            { q: 'How did the neighbor react to the apology?', opts: ['He was angry', 'He smiled and praised honesty', 'He called the police', 'He refused the savings'], a: 'B', exp: '邻居微笑并说 Honesty is worth more than any window，表扬了诚实。', diff: 'medium' },
+            { q: 'What is the main idea of the passage?', opts: ['Breaking windows is fun', 'Facing mistakes with honesty brings relief', 'Saving money is hard', 'Neighbors are unfriendly'], a: 'B', exp: '文章主旨：承认错误需要勇气，但能让人内心释然，B 符合。', diff: 'medium' }
+          ]
+        },
       ],
       'english::rd_d': [
         {
@@ -3612,7 +3642,37 @@
             { q: 'What does deep work mean according to the passage?', opts: ['Doing many things quickly', 'Focusing on one task at a time', 'Using many apps', 'Studying with friends'], a: 'B', exp: '最后一段 True focus means doing one thing at a time，Deep work 对应一次专注一件事。', diff: 'hard' },
             { q: 'What is the authors attitude toward multitasking?', opts: ['Supportive', 'Neutral', 'Against', 'Unclear'], a: 'C', exp: '作者引用研究说明多任务切换降低效率，主张一次一件事，态度是反对的。', diff: 'medium' }
           ]
-        }
+        },
+        {
+          q: 'Some researchers argue that heavy social media use lowers happiness. They point to studies showing people who compare themselves to others online often feel inadequate. However, the link is not simple. Social media can also strengthen friendships and provide support during hard times. The real problem may be passive browsing, which leaves people feeling empty. Active use, like messaging a friend, has the opposite effect. Therefore, the advice is not to quit, but to be mindful: use platforms to connect, not to compare.',
+          diff: 'hard', src: '高考英语阅读示例（D篇·议论文）',
+          subs: [
+            { q: 'What do some researchers claim about social media?', opts: ['It improves happiness', 'Heavy use lowers happiness', 'It has no effect', 'It replaces real life'], a: 'B', exp: '第一段 Some researchers argue that heavy social media use lowers happiness，即重度使用降低幸福感。', diff: 'medium' },
+            { q: 'Why is the link between social media and happiness complicated?', opts: ['It only harms people', 'It can both harm and help', 'It is always positive', 'No studies exist'], a: 'B', exp: '文中指出社交媒体既能损害（比较使人自卑）也能帮助（加强友谊、提供支持），故关系复杂。', diff: 'medium' },
+            { q: 'What does the writer say about passive browsing?', opts: ['It is healthy', 'It leaves people feeling empty', 'It builds friendships', 'It is the best use'], a: 'B', exp: '第三段 passive browsing leaves people feeling empty，被动刷屏让人感到空虚。', diff: 'medium' },
+            { q: 'What is the writers suggestion?', opts: ['Quit all platforms', 'Use them to connect, not compare', 'Post every hour', 'Avoid messaging'], a: 'B', exp: '结尾 the advice is to be mindful: use platforms to connect, not to compare，建议用心使用、重联结轻比较。', diff: 'hard' }
+          ]
+        },
+        {
+          q: 'Many people fear failure, treating it as the enemy of success. Yet psychologists suggest failure is better understood as feedback. When a project fails, it reveals what does not work, saving time on wrong paths. Famous inventors often failed hundreds of times before a breakthrough. The difference between those who succeed and those who quit is not talent, but the willingness to learn from setbacks. Schools and workplaces should therefore reward effort and reflection, not just outcomes. Reframing failure as a step, not a stop, changes how we grow.',
+          diff: 'hard', src: '高考英语阅读示例（D篇·议论文）',
+          subs: [
+            { q: 'How do psychologists view failure according to the passage?', opts: ['As the enemy of success', 'As feedback', 'As a waste of time', 'As pure bad luck'], a: 'B', exp: '第二段 failure is better understood as feedback，心理学家把失败视为反馈。', diff: 'medium' },
+            { q: 'What can a failed project do?', opts: ['Prove you are weak', 'Reveal what does not work', 'Guarantee success', 'End your career'], a: 'B', exp: '失败的项目能揭示哪些方法行不通，从而节省走弯路的时间。', diff: 'easy' },
+            { q: 'What separates those who succeed from those who quit?', opts: ['Talent alone', 'Willingness to learn from setbacks', 'Good luck', 'Wealth'], a: 'B', exp: '第三段 the willingness to learn from setbacks，即从挫折中学习的心愿是分水岭。', diff: 'medium' },
+            { q: 'What does the writer advise schools to do?', opts: ['Reward only top scores', 'Reward effort and reflection', 'Punish failure', 'Ignore outcomes'], a: 'B', exp: '结尾 Schools should reward effort and reflection, not just outcomes，建议奖励努力与反思。', diff: 'hard' }
+          ]
+        },
+        {
+          q: 'The debate over homework has intensified. Supporters say practice at home deepens understanding and builds responsibility. Critics argue that too much homework causes stress and leaves no time for rest or family. A balanced view recognizes both sides: some homework helps, but quantity matters more than many realize. Short, focused tasks reinforce learning without overwhelming students. What schools should avoid is busywork, repetitive drills that tire rather than teach. The goal of homework should be quality of thinking, not hours spent.',
+          diff: 'hard', src: '高考英语阅读示例（D篇·Accumulate）',
+          subs: [
+            { q: 'What do supporters of homework believe?', opts: ['It causes stress', 'It deepens understanding and builds responsibility', 'It wastes time', 'It should be banned'], a: 'B', exp: '第一段 Supporters say practice at home deepens understanding and builds responsibility。', diff: 'easy' },
+            { q: 'What is a main criticism of homework?', opts: ['It is too easy', 'It causes stress and leaves no time for rest', 'It improves family time', 'It is always useful'], a: 'B', exp: '第二段 Critics argue too much homework causes stress and leaves no time for rest or family。', diff: 'medium' },
+            { q: 'According to the writer, what matters most about homework?', opts: ['The textbook', 'The classroom', 'Quantity matters more than many realize', 'The teacher'], a: 'C', exp: '第三段 a balanced view recognizes both sides: quantity matters more than many realize，作者认为作业的量比许多人意识到的更重要。', diff: 'medium' },
+            { q: 'What should schools avoid, according to the writer?', opts: ['All homework', 'Busywork and repetitive drills', 'Short tasks', 'Focused practice'], a: 'B', exp: '结尾 What schools should avoid is busywork, repetitive drills that tire rather than teach，应避免无意义的机械重复作业。', diff: 'hard' }
+          ]
+        },
       ],
       'english::rd_c': [
         {
@@ -3634,7 +3694,27 @@
             { q: 'The word consolidation in the passage means ____.', opts: ['巩固', '删除', '混乱', '遗忘'], a: 'A', exp: 'memory consolidation 指“记忆巩固”，即把短期记忆转化为长期记忆的过程。', diff: 'easy' },
             { q: 'What is the authors advice for students?', opts: ['Study all night', 'Sleep well before exams', 'Avoid sleep', 'Memorize only while awake'], a: 'B', exp: '结尾明确指出通宵死记硬背弊大于利，作者的建议是考前睡好。', diff: 'medium' }
           ]
-        }
+        },
+        {
+          q: 'Cities are turning to green roofs, rooftops covered with plants, to fight rising temperatures. Concrete and asphalt absorb heat, making cities several degrees warmer than surrounding areas, a phenomenon called the urban heat island effect. Green roofs cool buildings by shading surfaces and releasing moisture. A study in a large city found that widespread green roofs could lower summer temperatures by about two degrees. Besides cooling, they absorb rainwater, reduce noise, and provide habitats for birds. While installation costs are higher at first, the long-term savings in energy and flood control make them worthwhile.',
+          diff: 'medium', src: '高考英语阅读示例（C篇·说明文）',
+          subs: [
+            { q: 'What problem do green roofs help solve?', opts: ['Loss of farmland', 'The urban heat island effect', 'Traffic jams', 'Water shortage'], a: 'B', exp: '第二段提到城市比周边热数度，即“城市热岛效应”，绿色屋顶可缓解此问题。', diff: 'easy' },
+            { q: 'How do green roofs cool buildings?', opts: ['By reflecting sunlight only', 'By shading and releasing moisture', 'By using fans', 'By removing windows'], a: 'B', exp: '第三段 Green roofs cool buildings by shading surfaces and releasing moisture，通过遮阴与释放水分降温。', diff: 'medium' },
+            { q: 'What did the city study find?', opts: ['Green roofs raised temperatures', 'They could lower summer temps by about two degrees', 'They attracted insects only', 'They cost nothing'], a: 'B', exp: '研究发现大范围绿色屋顶可使夏季气温降低约两度。', diff: 'medium' },
+            { q: 'Why are green roofs worthwhile despite higher cost?', opts: ['They look pretty', 'Long-term savings in energy and flood control', 'They are easy to build', 'They need no plants'], a: 'B', exp: '结尾 long-term savings in energy and flood control make them worthwhile，长期节能与防洪收益使其值得。', diff: 'hard' }
+          ]
+        },
+        {
+          q: 'Smell is the sense most directly linked to memory. When we breathe in a scent, it travels to the olfactory bulb of the brain, which connects closely to areas that handle emotion and recall. This is why a familiar smell can suddenly bring back a vivid childhood scene. Researchers found that people remember smell-associated events better than those linked only to sights or sounds. Unlike other senses, smell bypasses much of the brains filtering, reaching memory almost instantly. Understanding this link helps doctors design therapies for patients with memory loss, using scent to trigger forgotten moments.',
+          diff: 'hard', src: '高考英语阅读示例（C篇·说明文）',
+          subs: [
+            { q: 'Which sense is most closely tied to memory?', opts: ['Sight', 'Smell', 'Touch', 'Taste'], a: 'B', exp: '首句 Smell is the sense most directly linked to memory，嗅觉与记忆最直接相关。', diff: 'easy' },
+            { q: 'Where does a scent go first in the brain?', opts: ['The heart', 'The olfactory bulb', 'The stomach', 'The skin'], a: 'B', exp: '第二段 scent travels to the olfactory bulb，气味先到达嗅球。', diff: 'medium' },
+            { q: 'Why can a smell recall a childhood scene strongly?', opts: ['It is loud', 'The olfactory bulb connects to emotion and recall areas', 'It is bright', 'It is tasteless'], a: 'B', exp: '嗅球与处理情绪和回忆的脑区紧密相连，故气味能强烈唤起往事。', diff: 'medium' },
+            { q: 'How might doctors use the smell-memory link?', opts: ['To cure blindness', 'To design therapies triggering memory via scent', 'To improve hearing', 'To grow plants'], a: 'B', exp: '结尾 understanding this link helps doctors design therapies using scent to trigger forgotten moments，可借气味触发失忆患者的记忆。', diff: 'hard' }
+          ]
+        },
       ],
       'english::rd_7': [
         {
@@ -3658,7 +3738,29 @@
             { q: '空白处 ④ 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'D', exp: '前句“多吃蔬菜、少吃糖”，D（糖带来快速却空洞的能量）解释少吃糖的原因。E、G 为干扰项。', diff: 'medium' },
             { q: '空白处 ⑤ 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'B', exp: '前句“保证充足睡眠”，B（睡眠帮助身体自我修复）说明睡眠的作用。', diff: 'medium' }
           ]
-        }
+        },
+        {
+          q: 'Learning a new language opens doors to other cultures. ①____ Start with the most common words. ②____ These appear in everyday talk and give you quick progress. Then listen every day. ③____ Even ten minutes of a podcast trains your ear. Also, do not fear mistakes. ④____ They prove you are learning. Finally, find a language partner. ⑤____ With patience, you will improve.\n\n选项：\nA. A partner gives you real conversation practice.\nB. It also trains your brain to think in new ways.\nC. Mistakes are a natural part of learning.\nD. Learn the high-frequency words first.\nE. Listening to audio daily builds your ear.\nF. Reading grammar books all day is best.\nG. You must live abroad to learn.',
+          diff: 'medium', src: '高考英语七选五示例',
+          subs: [
+            { q: '空白处 ① 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'B', exp: '前句说学语言打开文化之门，①处 B（也训练大脑以新方式思考）进一步说明好处，衔接自然。', diff: 'easy' },
+            { q: '空白处 ② 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'D', exp: '前句“从最常见的词开始”，D（先学高频词）直接对应。', diff: 'medium' },
+            { q: '空白处 ③ 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'E', exp: '前句“每天听”，E（每天听音频训练耳朵）解释其作用，与后文 podcast 呼应。', diff: 'medium' },
+            { q: '空白处 ④ 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'C', exp: '前句“不要怕犯错”，C（错误是学习的自然一部分）承接。E、F、G 为干扰项。', diff: 'medium' },
+            { q: '空白处 ⑤ 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'A', exp: '前句“找语伴”，A（语伴提供真实对话练习）衔接合理。', diff: 'medium' }
+          ]
+        },
+        {
+          q: 'Good sleep is the foundation of health. ①____ Keep a regular schedule. ②____ Going to bed and waking at the same time trains your body clock. Next, avoid screens before bed. ③____ The blue light makes falling asleep harder. Also, watch your caffeine. ④____ It can stay in your body for hours. Finally, make your room cool and dark. ⑤____ Small changes like these protect your rest.\n\n选项：\nA. A dark, cool room improves sleep quality.\nB. It starts with a few simple habits.\nC. The same schedule each day builds a steady rhythm.\nD. Stop using phones an hour before sleep.\nE. Caffeine late in the day keeps you awake.\nF. Exercise right before bed is ideal.\nG. Naps of three hours are necessary.',
+          diff: 'medium', src: '高考英语七选五示例',
+          subs: [
+            { q: '空白处 ① 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'B', exp: '前句说好睡眠是健康基础，①应说明“从简单习惯开始”，B 最契合。', diff: 'easy' },
+            { q: '空白处 ② 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'C', exp: '前句“保持规律作息”，C（每天同一时间建立稳定节奏）衔接。', diff: 'medium' },
+            { q: '空白处 ③ 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'D', exp: '前句“睡前远离屏幕”，D（睡前一小时不用手机）具体落实，后文讲蓝光。', diff: 'medium' },
+            { q: '空白处 ④ 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'E', exp: '前句“注意咖啡因”，E（白天晚些时候摄入咖啡因让人清醒）解释原因。F、G 为干扰项。', diff: 'medium' },
+            { q: '空白处 ⑤ 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'A', exp: '前句“房间凉爽黑暗”，A（凉爽黑暗的房间提升睡眠质量）说明作用。', diff: 'medium' }
+          ]
+        },
       ],
       'english::cl': [
         {
@@ -3707,7 +3809,59 @@
             { q: '54. ', opts: ['help', 'avoid', 'blame', 'forget'], a: 'A', exp: '我现在也试着去“帮助”别人，help 与全文善意主题呼应。', diff: 'easy' },
             { q: '55. ', opts: ['can', 'could', 'would', 'must'], a: 'B', exp: 'whenever I could 意为“只要我能（的时候）”，用过去式 could 与全文叙事时态一致。', diff: 'medium' }
           ]
-        }
+        },
+        {
+          q: '(41)____ a cold winter morning, an old man found a wallet on the bus. (42)____ it was thick with cash, he did not hesitate. He (43)____ the driver and said he would return it to the (44)____. The owner, a young woman, had not even (45)____ it was missing. When they met, she (46)____ the old man with tears and (47)____ him a reward, which he (48)____. Such honesty is (49)____ in a busy city, yet it (50)____ us that goodness still (51)____. The old man said he simply did what his (52)____ had taught him: return what is not (53)____. His small act (54)____ a stranger faith in people. We often think heroism means (55)____ things, but sometimes it is just (56)____ the right thing quietly. That morning, one wallet (57)____ a life lesson. May we all (58)____ to be that kind of (59)____, and may the city be a little (60)____ because of it.',
+          diff: 'medium', src: '高考英语完形填空真题（记叙文·诚信）',
+          subs: [
+            { q: '41. ', opts: ['On', 'In', 'At', 'For'], a: 'A', exp: 'On a cold winter morning 用 On 表示在具体某天的早晨，是固定搭配。', diff: 'easy' },
+            { q: '42. ', opts: ['Because', 'Although', 'If', 'Unless'], a: 'B', exp: '钱包鼓鼓囊囊“却”毫不犹豫，Although 引导让步，符合“虽然有钱但不贪”的语义。', diff: 'medium' },
+            { q: '43. ', opts: ['stopped', 'helped', 'called', 'thanked'], a: 'A', exp: '他“叫住”司机说明要归还，stopped the driver 合理。', diff: 'easy' },
+            { q: '44. ', opts: ['station', 'owner', 'police', 'bus'], a: 'B', exp: '把钱包归还给“失主”owner，符合情节。', diff: 'easy' },
+            { q: '45. ', opts: ['noticed', 'forgotten', 'realized', 'accepted'], a: 'C', exp: '年轻女子甚至没“意识到”钱包丢了，realized 贴切。', diff: 'easy' },
+            { q: '46. ', opts: ['thanked', 'paid', 'blamed', 'left'], a: 'A', exp: '见面后她含泪“感谢”老人，thanked 符合。', diff: 'easy' },
+            { q: '47. ', opts: ['lent', 'offered', 'sold', 'showed'], a: 'B', exp: '她“主动给”报酬，offered him a reward 是固定搭配。', diff: 'easy' },
+            { q: '48. ', opts: ['accepted', 'refused', 'took', 'lost'], a: 'B', exp: '但他“拒绝”了报酬，refused 体现不图回报。', diff: 'easy' },
+            { q: '49. ', opts: ['common', 'rare', 'easy', 'cheap'], a: 'B', exp: '在繁忙都市里这种诚实“罕见”rare，与 yet 转折呼应。', diff: 'medium' },
+            { q: '50. ', opts: ['warns', 'reminds', 'cheats', 'follows'], a: 'B', exp: '它“提醒”我们善意尚存，reminds 符合。', diff: 'easy' },
+            { q: '51. ', opts: ['exists', 'falls', 'ends', 'changes'], a: 'A', exp: '善意仍“存在”exists。', diff: 'easy' },
+            { q: '52. ', opts: ['teacher', 'friend', 'parents', 'boss'], a: 'C', exp: '他说只是做了“父母”教他的事，parents 体现家庭教育。', diff: 'easy' },
+            { q: '53. ', opts: ['yours', 'mine', 'his', 'theirs'], a: 'A', exp: '归还“不属于自己的”东西，what is not yours。', diff: 'easy' },
+            { q: '54. ', opts: ['broke', 'restored', 'lost', 'shook'], a: 'B', exp: '他的小举“恢复”了陌生人对他人的信任，restored 准确。', diff: 'medium' },
+            { q: '55. ', opts: ['big', 'small', 'wrong', 'old'], a: 'A', exp: '我们常以为英雄主义意味着“大”事，big 与后文 quietly 小事相对。', diff: 'easy' },
+            { q: '56. ', opts: ['doing', 'saying', 'seeing', 'hearing'], a: 'A', exp: '有时只是安静地“做”对的事，doing the right thing。', diff: 'easy' },
+            { q: '57. ', opts: ['taught', 'forgot', 'missed', 'hid'], a: 'A', exp: '那个早上，一个钱包“教给”了人生一课，taught。', diff: 'easy' },
+            { q: '58. ', opts: ['dare', 'learn', 'refuse', 'fail'], a: 'B', exp: '愿我们都“学会”成为那样的人，learn。', diff: 'easy' },
+            { q: '59. ', opts: ['person', 'child', 'thief', 'driver'], a: 'A', exp: '那种“人”person，呼应前文老人。', diff: 'easy' },
+            { q: '60. ', opts: ['colder', 'warmer', 'bigger', 'quieter'], a: 'B', exp: '因善意城市更“温暖”warmer，点题。', diff: 'easy' }
+          ]
+        },
+        {
+          q: '(41)____ yard where nothing grew. Our teacher, Ms. Lin, (42)____ we turn it into a garden. At first we (43)____, but she encouraged us. We (44)____ the stones, dug the (45)____, and planted seeds. Some plants (46)____ because we watered too little. We (47)____ and tried again. Slowly green (48)____ appeared. By June, the yard was full of (49)____. We learned that growing things (50)____ patience and teamwork. The garden also (51)____ students who rarely talked. Working side by side, they became (52)____. Ms. Lin said the yard (53)____ us more than books sometimes could. Now visitors (54)____ it and smile. A small (55)____ changed our school. It (56)____ that one idea, shared, can (57)____ a community. We are (58)____ of what we built with our (59)____, and we will (60)____ it for those who come after.',
+          diff: 'medium', src: '高考英语完形填空真题（记叙文·合作）',
+          subs: [
+            { q: '41. ', opts: ['beautiful', 'empty', 'noisy', 'clean'], a: 'B', exp: '后文说“什么都不长”，故院子原先是“空荡的”empty。', diff: 'easy' },
+            { q: '42. ', opts: ['suggested', 'ordered', 'doubted', 'forgot'], a: 'A', exp: '老师“建议”改成花园，suggested 符合鼓励式语气。', diff: 'easy' },
+            { q: '43. ', opts: ['agreed', 'refused', 'doubted', 'laughed'], a: 'C', exp: 'At first we doubted（起初我们怀疑），与 but she encouraged 转折呼应。', diff: 'easy' },
+            { q: '44. ', opts: ['collected', 'removed', 'painted', 'counted'], a: 'B', exp: '我们先“搬走”石头，removed the stones 合理。', diff: 'easy' },
+            { q: '45. ', opts: ['hole', 'soil', 'road', 'wall'], a: 'B', exp: '挖“土”soil 播种，dug the soil 搭配自然。', diff: 'easy' },
+            { q: '46. ', opts: ['died', 'grew', 'shone', 'fell'], a: 'A', exp: '因浇水太少有些植物“枯死”died。', diff: 'easy' },
+            { q: '47. ', opts: ['cried', 'quit', 'learned', 'slept'], a: 'C', exp: '我们“吸取教训”再试，learned 体现成长。', diff: 'easy' },
+            { q: '48. ', opts: ['leaves', 'clouds', 'shadows', 'snow'], a: 'A', exp: '慢慢冒出绿色“叶子”leaves。', diff: 'easy' },
+            { q: '49. ', opts: ['flowers', 'stones', 'weeds', 'dust'], a: 'A', exp: '六月院子开满“花”flowers。', diff: 'easy' },
+            { q: '50. ', opts: ['needs', 'avoids', 'wastes', 'hides'], a: 'A', exp: '种植“需要”耐心与协作，needs。', diff: 'easy' },
+            { q: '51. ', opts: ['separated', 'helped', 'bored', 'hurt'], a: 'B', exp: '花园也“帮助”了很少说话的同学，helped。', diff: 'medium' },
+            { q: '52. ', opts: ['friends', 'enemies', 'strangers', 'rivals'], a: 'A', exp: '并肩劳动使他们成为“朋友”friends。', diff: 'easy' },
+            { q: '53. ', opts: ['taught', 'tested', 'tired', 'paid'], a: 'A', exp: '院子“教会”我们的有时胜过书本，taught。', diff: 'medium' },
+            { q: '54. ', opts: ['avoid', 'visit', 'ignore', 'sell'], a: 'B', exp: '访客来“参观”并微笑，visit。', diff: 'easy' },
+            { q: '55. ', opts: ['idea', 'rule', 'test', 'gift'], a: 'A', exp: '一个小小的“想法”改变了学校，idea 呼应前文建议。', diff: 'easy' },
+            { q: '56. ', opts: ['proves', 'denies', 'hides', 'asks'], a: 'A', exp: '它“证明”一个被分享的想法能改变集体，proves。', diff: 'medium' },
+            { q: '57. ', opts: ['break', 'change', 'leave', 'find'], a: 'B', exp: '能“改变”一个社区，change。', diff: 'medium' },
+            { q: '58. ', opts: ['afraid', 'ashamed', 'proud', 'tired'], a: 'C', exp: '我们为亲手建成的花园“自豪”proud。', diff: 'easy' },
+            { q: '59. ', opts: ['hands', 'books', 'phones', 'feet'], a: 'A', exp: '用我们的“双手”hands 建成，呼应劳动主题。', diff: 'easy' },
+            { q: '60. ', opts: ['keep', 'sell', 'forget', 'close'], a: 'A', exp: '我们会为后来者“守护”它，keep。', diff: 'easy' }
+          ]
+        },
       ],
       'chinese::xxwl': [
         {
@@ -3729,7 +3883,27 @@
             { q: '作者心目中“传承”的正确态度是什么？', a: '传承不是简单守旧，而是在理解传统的基础上进行创造性转化，使古老智慧能为解决当下问题提供资源。', exp: '解析：锁定原句“传承不是守旧，而是在理解的基础上创造性转化……”，直接转述即可，注意“理解—转化—致用”三层。', diff: 'easy' },
             { q: '请就“如何让经典走近青少年”提出一条建议，并说明理由。', a: '示例：将经典改编为青少年喜闻乐见的动漫或互动游戏，因为契合其媒介习惯，能降低阅读门槛、激发兴趣，从而让经典真正“活”在年青一代心中。', exp: '解析：开放性题，建议须具体、可落地，理由须扣住“贴近青少年特点”“降低门槛”“激发兴趣”等，体现材料“创造性转化”思想。', diff: 'hard' }
           ]
-        }
+        },
+        {
+          q: '【材料】关于人工智能是否取代人类就业的争论从未停止。乐观者认为，历史上每一次技术革命在消灭旧岗位的同时，也创造了大量新岗位，人工智能将把人从重复劳动中解放出来，转向更具创造性的工作。担忧者则指出，此次变革速度空前，许多中等技能岗位可能在短时间内集中消失，而新岗位对学习能力要求更高，部分劳动者难以快速适应。事实上，影响并非整齐划一：与数据、流程相关的岗位风险较高，而需要共情、审美与复杂沟通的职业相对安全。理性之策不是抗拒技术，而是完善终身教育与社会保障，帮助劳动者平稳转岗。',
+          diff: 'medium', src: '高考语文信息类文本阅读（论述类）真题改编',
+          subs: [
+            { q: '请概括文中“乐观者”与“担忧者”的主要观点。', a: '乐观者认为技术革命会消灭旧岗也创造新岗，AI 把人从重复劳动解放转向创造性工作；担忧者指出此次变革速度快、中等技能岗可能集中消失，且新岗学习门槛高，部分人难适应。', exp: '解析：分两点概括，须准确对应双方立场；注意“乐观—担忧”的对称结构，避免混淆。', diff: 'medium' },
+            { q: '文中说“影响并非整齐划一”，结合文本具体指什么？', a: '指不同岗位受 AI 冲击程度不同：与数据、流程相关的岗位风险高，而需要共情、审美与复杂沟通的职业相对安全，故不能一概而论。', exp: '解析：锁定“风险较高/相对安全”的对比句，说明差异化的实质。', diff: 'medium' },
+            { q: '作者认为应如何理性应对人工智能带来的就业变化？', a: '作者主张不抗拒技术，而是完善终身教育与社会保障，帮助劳动者平稳转岗，以主动适应而非被动防御。', exp: '解析：答案在结尾“理性之策……”，提炼“终身教育+社保+平稳转岗”三点。', diff: 'hard' },
+            { q: '有人认为“人工智能终将让大多数人失业”，请结合文本谈谈你的看法。', a: '示例：不完全认同。文本指出技术革命历史上多伴随新岗创造，且影响因岗位而异；关键在通过教育与保障帮助转岗，而非简单断言大规模失业。', exp: '解析：开放性题须“结合文本”辩证作答，既指出风险确实存在，也强调应对之策可缓解，避免极端化。', diff: 'hard' }
+          ]
+        },
+        {
+          q: '【材料】短视频以其短、平、快的特点迅速占领青少年的碎片时间。支持者说，它降低了创作与表达的门槛，让普通人也能记录生活、展示才华，并在科普、非遗等领域涌现出许多优质内容。反对者则担忧，算法推荐让人沉浸于即时快感，削弱深度思考与延迟满足能力；长时间刷屏还影响视力与作息。更值得警惕的是“信息茧房”——长期只接触同质内容，会窄化视野。关键不在于禁绝短视频，而在于提升媒介素养：青少年应学会甄别内容、控制时长，让技术服务于成长而非支配自己。',
+          diff: 'medium', src: '高考语文信息类文本阅读（论述类）真题改编',
+          subs: [
+            { q: '支持者对短视频持怎样的态度？请结合文本概括。', a: '支持者认为短视频降低创作表达门槛，让普通人记录生活、展示才华，并在科普、非遗等领域产生优质内容，总体持肯定态度。', exp: '解析：概括支持者三点理由（低门槛、展示才华、优质内容），注意其“肯定”基调。', diff: 'medium' },
+            { q: '文中列举了短视频哪些负面影响？', a: '负面影响包括：算法让人沉浸即时快感、削弱深度思考与延迟满足；长时间刷屏伤视力与作息；算法易致“信息茧房”，窄化视野。', exp: '解析：从“反对者担忧”“更值得警惕”两处提炼，分点列出即可。', diff: 'medium' },
+            { q: '什么是“信息茧房”？它有何危害？', a: '“信息茧房”指长期只接触同质化内容，视野被窄化、认知被局限的状态；危害在于使人难以接触多元观点，削弱独立判断与开阔思维。', exp: '解析：先释义（同质内容→窄化），再点危害（局限认知、弱化判断）。', diff: 'hard' },
+            { q: '作者认为青少年应如何对待短视频？', a: '作者主张提升媒介素养：学会甄别内容优劣、主动控制使用时长，让技术服务于自身成长，而非被其支配。', exp: '解析：锁定结尾“提升媒介素养……”，关键词“甄别、控时、服务成长”。', diff: 'medium' }
+          ]
+        },
       ],
       'chinese::wxwl': [
         {
@@ -3751,7 +3925,27 @@
             { q: '老周“没敢说矿上的难处”，反映了他怎样的心理？', a: '既因工钱无着而焦虑酸楚，又不愿让妻儿担忧，选择独自扛下重担；体现底层劳动者对家庭的责任感与隐忍坚韧。', exp: '解析：结合前文“工钱拖着不发”“心头一酸”可知其苦； “没敢说”是 protective 的沉默，凸显责任与隐忍。', diff: 'hard' },
             { q: '小说结尾“雪，还在下，可屋里，是暖的”有何妙处？', a: '以景结情，用屋外飞雪与屋内温暖形成对照，含蓄点明“人间真情可抵御世间严寒”的主旨；语言凝练，余韵悠长，留给读者回味空间。', exp: '解析：结尾题看“对照+点题+以景结情”； “暖”一语双关——屋暖、心更暖，收束有力。', diff: 'hard' }
           ]
-        }
+        },
+        {
+          q: '【散文】老巷\n城市的边缘有一条老巷，青石板被几代人的脚步磨得发亮。巷口那棵老槐，据说是祖父年轻时栽的，如今枝繁叶茂，像一把撑开的大伞，替邻里挡着夏日的毒日头。傍晚时分，各家端出竹椅坐在门口，摇着蒲扇拉家常，孩子的笑闹声顺着巷子淌得很远。后来巷子要拆，有人欢喜住新房，有人红了眼圈。我最后一次走进老巷，摸了摸那棵槐树粗糙的皮，忽然懂得：巷子拆得掉，可那些在树下乘过凉、在石板上跑过步的日子，谁也拆不走。它们藏在记忆里，比砖瓦结实。',
+          diff: 'medium', src: '高考语文文学类文本阅读（散文）真题改编',
+          subs: [
+            { q: '赏析文中画线句：“青石板被几代人的脚步磨得发亮。”', a: '以“磨得发亮”这一细节，侧面写出老巷年代久远、人流不绝； “亮”字既是物理光泽，也暗含岁月与人间烟火的积淀，语言平实却意味深长。', exp: '解析：赏析按“词语+手法+意蕴”展开； “磨得发亮”是细节描写，以物写时、以静写动。', diff: 'medium' },
+            { q: '文中写“有人欢喜住新房，有人红了眼圈”有何作用？', a: '以面对拆迁的不同反应形成对照，凸显老巷在人们心中情感分量不一却又真实； “红眼圈”细节为后文“拆不掉的是记忆”蓄势，使情感更厚实。', exp: '解析：从内容（情感对照）与结构（铺垫、蓄势）作答；注意“欢喜—红眼圈”的张力。', diff: 'medium' },
+            { q: '如何理解结尾“巷子拆得掉……谁也拆不走”？', a: '表层说老巷物理可拆，深层指其中的生活记忆、人情温暖无法被拆除；运用对比（砖瓦可拆/记忆结实），升华“物质易逝、精神长存”的主题。', exp: '解析：抓“对比+升华”——由实入虚，点明记忆比砖瓦更持久。', diff: 'hard' },
+            { q: '本文表达了作者怎样的思想感情？', a: '表达了对老巷及旧日邻里温情的眷恋与珍惜，对时代变迁中消逝之物的淡淡怅惘，以及对平凡生活记忆价值的肯定。', exp: '解析：整体把握“眷恋—怅惘—肯定”的情感层次，避免只答一点。', diff: 'medium' }
+          ]
+        },
+        {
+          q: '【小说片段】一盏灯\n山沟里的小学只剩十来个学生，张老师一人教所有课。冬天来得早，教室的炉子总烧不旺，孩子们的手指冻得握不住笔。张老师把自己家的旧棉被拆了，缝成十几个小护手筒分给每人。夜里他常守着那盏昏黄的煤油灯批改作业，灯芯爆着细小的火花。有个孩子问：“老师，您为什么不走？”他笑了笑：“灯在这儿，人就在这儿。”多年后那些孩子散落各地，可每当夜里看见一点灯火，总会想起山沟里那盏不灭的灯——和它照亮过的、小小的却滚烫的心。',
+          diff: 'medium', src: '高考语文文学类文本阅读（小说）真题改编',
+          subs: [
+            { q: '小说开头写“炉子总烧不旺，孩子手指冻得握不住笔”有何作用？', a: '交代山区教学条件的艰苦，以环境的寒冷反衬老师关爱的温暖；为后文缝护手筒、守灯批改等情节铺垫，凸显张老师坚守的可贵。', exp: '解析：环境描写从“交代苦境、反衬人物、铺垫情节”切入；冷与暖的对照是解题钥匙。', diff: 'medium' },
+            { q: '张老师“拆旧棉被缝护手筒”这一细节表现了他怎样的品质？', a: '表现他关爱学生、甘于奉献：不惜拆自家被褥也要让孩子暖和，于细微处见深情，质朴无华却动人。', exp: '解析：细节题“由物见人”——拆被缝筒=舍己为学生；避免空泛，须扣文本。', diff: 'medium' },
+            { q: '如何理解张老师的话“灯在这儿，人就在这儿”？', a: '表层指他守着学校的灯便留在此地教书；深层以“灯”象征师者坚守与希望，表明他愿做照亮山里孩子的那盏灯，不离不弃。', exp: '解析：抓“灯”的象征义（坚守、希望、引路）；由实入虚，是人物精神的凝练。', diff: 'hard' },
+            { q: '小说结尾写孩子们“想起山沟里那盏不灭的灯”有何妙处？', a: '以“不灭的灯”呼应标题与张老师的话，象征师恩与精神火种长存；以孩子们长大后仍被照亮收束，升华“微小坚守影响深远”的主题，余韵悠长。', exp: '解析：结尾题看“呼应+象征+升华”； “不灭”一语双关——灯不灭，师魂不灭。', diff: 'hard' }
+          ]
+        },
       ]
   };
 
