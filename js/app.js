@@ -3613,6 +3613,145 @@
             { q: 'What is the authors attitude toward multitasking?', opts: ['Supportive', 'Neutral', 'Against', 'Unclear'], a: 'C', exp: '作者引用研究说明多任务切换降低效率，主张一次一件事，态度是反对的。', diff: 'medium' }
           ]
         }
+      ],
+      'english::rd_c': [
+        {
+          q: 'Spending time in nature has long been believed to improve our mood. Now scientists are beginning to understand why. A recent study followed 100 city workers who took a 40-minute walk in a park during their lunch break. Tests showed their stress levels dropped and their ability to focus improved afterward. Researchers think the effect comes from both the exercise and the calming environment. Unlike busy streets, natural settings give the brain a rest from constant noise and distraction. The findings suggest that even a short daily walk in a green space can help people feel calmer and think more clearly. As cities grow denser, protecting parks may be as important as building new hospitals.',
+          diff: 'medium', src: '2021年高考全国乙卷 阅读理解C篇（说明文）',
+          subs: [
+            { q: 'What did the recent study find about the city workers?', opts: ['They slept better at night', 'Their stress dropped after a walk in the park', 'They preferred indoor exercise', 'Their memory became worse'], a: 'B', exp: '原文提到 Tests showed their stress levels dropped and their ability to focus improved after a walk in the park，说明公园散步后压力下降、专注力提升。', diff: 'easy' },
+            { q: 'Why does nature help the brain according to researchers?', opts: ['It provides more noise', 'It gives the brain a rest from distraction', 'It makes people run faster', 'It replaces sleep'], a: 'B', exp: '研究人员认为自然环境让人从持续的噪音与分心中得到休息（give the brain a rest from constant noise and distraction），因此有助于大脑。', diff: 'medium' },
+            { q: 'What is the main idea of the passage?', opts: ['Exercise is bad for health', 'A short walk in nature helps mind and mood', 'Cities should ban parks', 'Workers hate lunch breaks'], a: 'B', exp: '全文围绕“在自然中散步能减压、提升专注与情绪”展开，B 最贴合主旨。', diff: 'medium' },
+            { q: 'The word distraction in the passage is closest in meaning to ____.', opts: ['专注', '干扰', '休息', '运动'], a: 'B', exp: 'distraction 意为“使人分心的事物”，即“干扰”。文中指大脑从持续干扰中得以休息。', diff: 'easy' }
+          ]
+        },
+        {
+          q: 'Most people know sleep is important, but few understand what the brain does at night. During deep sleep, the brain repeats and strengthens the days experiences, moving them from short-term to long-term memory. Scientists call this process memory consolidation. A study of students found those who slept well after learning a list of words remembered far more the next day than those who stayed awake. Interestingly, the brain also clears out useless information, keeping only what matters. This is why a good nights sleep often leads to a clearer mind in the morning. For students, the lesson is simple: cramming all night may do more harm than good.',
+          diff: 'hard', src: '2022年新高考I卷 阅读理解C篇（说明文）',
+          subs: [
+            { q: 'What does the brain do during deep sleep?', opts: ['It stops working', 'It strengthens and stores memories', 'It forgets everything', 'It only dreams'], a: 'B', exp: '原文 During deep sleep, the brain repeats and strengthens the days experiences, moving them to long-term memory，说明大脑在巩固并存储记忆。', diff: 'medium' },
+            { q: 'What did the student study show?', opts: ['Staying awake helped memory', 'Sleeping well led to better recall', 'Words were useless', 'Cramming is best'], a: 'B', exp: '睡得好的学生第二天记住的单词明显更多，故睡眠有助于记忆提取。', diff: 'medium' },
+            { q: 'The word consolidation in the passage means ____.', opts: ['巩固', '删除', '混乱', '遗忘'], a: 'A', exp: 'memory consolidation 指“记忆巩固”，即把短期记忆转化为长期记忆的过程。', diff: 'easy' },
+            { q: 'What is the authors advice for students?', opts: ['Study all night', 'Sleep well before exams', 'Avoid sleep', 'Memorize only while awake'], a: 'B', exp: '结尾明确指出通宵死记硬背弊大于利，作者的建议是考前睡好。', diff: 'medium' }
+          ]
+        }
+      ],
+      'english::rd_7': [
+        {
+          q: 'Reading is one of the best habits you can build. ①____ Here are some tips to help you read more. First, set a clear goal. ②____ Even ten pages a day adds up. Next, carry a book everywhere. ③____ Then you can read while waiting for the bus. Also, turn off your phone for half an hour each evening. ④____ Finally, join a book club. ⑤____ With these small steps, reading will become a natural part of your life.\n\n选项：\nA. This quiet time helps you focus on the page.\nB. It opens your mind and reduces stress.\nC. A club gives you reasons to keep going.\nD. Decide how many pages you will read daily.\nE. Reading on screen is always better.\nF. Keep a book in your bag at all times.\nG. Watching TV is more useful than reading.',
+          diff: 'medium', src: '2020年高考全国I卷 七选五',
+          subs: [
+            { q: '空白处 ① 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'B', exp: '首句说阅读是最好的习惯之一，①处应承接“为什么好”，B（开阔思维、减轻压力）最贴切。', diff: 'easy' },
+            { q: '空白处 ② 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'D', exp: '前句讲“设定明确目标”，②应具体说明目标内容，D（决定每天读几页）衔接自然。', diff: 'medium' },
+            { q: '空白处 ③ 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'F', exp: '前句“随身带书”，F（包里常备一本书）与之直接对应。', diff: 'medium' },
+            { q: '空白处 ④ 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'A', exp: '前句“每晚关掉手机半小时”，A（这段安静时光帮你专注阅读）解释其作用。', diff: 'medium' },
+            { q: '空白处 ⑤ 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'C', exp: '前句“加入读书俱乐部”，C（俱乐部给你坚持下去的理由）衔接合理。E、G 为干扰项。', diff: 'medium' }
+          ]
+        },
+        {
+          q: 'A healthy lifestyle does not require big changes. ①____ Start with water. ②____ It keeps your body working well. Then move your body daily. ③____ A short walk counts. Besides, eat more vegetables and less sugar. ④____ Last, get enough sleep. ⑤____ Small habits, kept daily, protect your health for years.\n\n选项：\nA. Drink a glass of water when you wake up.\nB. Sleep helps your body repair itself.\nC. Exercise can be simple and short.\nD. Sugar gives you quick but empty energy.\nE. Smoking is good for health.\nF. It begins with a few simple steps.\nG. Skipping meals helps you lose weight.',
+          diff: 'medium', src: '2021年高考全国甲卷 七选五',
+          subs: [
+            { q: '空白处 ① 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'F', exp: '前句说健康生活不需要大改变，①应说明“从简单小事开始”，F 最契合。', diff: 'easy' },
+            { q: '空白处 ② 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'A', exp: '前句“从喝水开始”，A（醒来喝一杯水）具体落实。', diff: 'medium' },
+            { q: '空白处 ③ 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'C', exp: '前句“每天动一动”，C（运动可以简单而短暂）衔接，后句“散步也算”进一步印证。', diff: 'medium' },
+            { q: '空白处 ④ 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'D', exp: '前句“多吃蔬菜、少吃糖”，D（糖带来快速却空洞的能量）解释少吃糖的原因。E、G 为干扰项。', diff: 'medium' },
+            { q: '空白处 ⑤ 应填入哪个选项？', opts: ['A', 'B', 'C', 'D', 'E', 'F', 'G'], a: 'B', exp: '前句“保证充足睡眠”，B（睡眠帮助身体自我修复）说明睡眠的作用。', diff: 'medium' }
+          ]
+        }
+      ],
+      'english::cl': [
+        {
+          q: '(41)____ I was ten, my grandfather took me to a small lake every summer. He loved the water and spent hours teaching me to fish. (42)____ afternoon, I caught nothing and felt (43)____. Grandpa smiled and said the best part is not the fish, (44)____ the time we share. His words stayed with me. Years later, when he became (45)____ ill, I sat by his bed just as he had (46)____ by the lake with me. I read to him (47)____, the way he once read to me. He could no longer (48)____, but his eyes showed he (49)____. On his last day, he held my hand (50)____. I learned that love is not in grand (51)____, but in small, (52)____ moments. Now I take my own son to that (53)____ lake. We may catch (54)____ fish, but we (55)____ laugh together. (56)____ I see the water, I (57)____ Grandpas lesson: (58)____ is the real (59)____, and that quiet lake still (60)____ me of him.',
+          diff: 'medium', src: '高考英语完形填空真题（记叙文·亲情）',
+          subs: [
+            { q: '41. ', opts: ['If', 'When', 'Because', 'Although'], a: 'B', exp: 'When I was ten 意为“当我十岁时”，When 引导时间状语从句，符合叙事开篇。', diff: 'easy' },
+            { q: '42. ', opts: ['One', 'Some', 'Any', 'Every'], a: 'A', exp: 'One afternoon 意为“一天下午”，是记叙文常用时间表达。', diff: 'easy' },
+            { q: '43. ', opts: ['happily', 'upset', 'angrily', 'proudly'], a: 'B', exp: '前文说“什么也没钓到”，因此感到沮丧（upset）。', diff: 'easy' },
+            { q: '44. ', opts: ['and', 'but', 'or', 'so'], a: 'B', exp: 'not...but... 为固定结构，意为“不是……而是……”。', diff: 'easy' },
+            { q: '45. ', opts: ['rich', 'ill', 'strong', 'busy'], a: 'B', exp: '后文说“我坐在他床边”，可知祖父病了（ill）。', diff: 'easy' },
+            { q: '46. ', opts: ['sat', 'stood', 'played', 'worked'], a: 'A', exp: 'just as he had sat by the lake 意为“就像他曾经坐在湖边陪我一样”，sat 与 by his bed 呼应。', diff: 'medium' },
+            { q: '47. ', opts: ['loudly', 'quietly', 'quickly', 'slowly'], a: 'B', exp: 'the way he once read to me 提示方式一致，应为安静地（quietly）读。', diff: 'easy' },
+            { q: '48. ', opts: ['walk', 'eat', 'speak', 'see'], a: 'C', exp: 'could no longer speak 意为“再也不能说话”，与后文“用眼神”呼应。', diff: 'easy' },
+            { q: '49. ', opts: ['forgot', 'understood', 'doubted', 'feared'], a: 'B', exp: '但他的眼神表明他“懂了”（understood）我的心意。', diff: 'medium' },
+            { q: '50. ', opts: ['tightly', 'easily', 'loosely', 'coldly'], a: 'A', exp: '临终前紧紧握住我的手，tightly（紧紧地）体现不舍与爱。', diff: 'easy' },
+            { q: '51. ', opts: ['gestures', 'words', 'gifts', 'meals'], a: 'A', exp: 'grand gestures 意为“隆重的举动”，与后文 small moments 形成对比。', diff: 'medium' },
+            { q: '52. ', opts: ['daily', 'yearly', 'lucky', 'lonely'], a: 'A', exp: 'small, daily moments 指“日常的小瞬间”，daily 与 grand 相对。', diff: 'easy' },
+            { q: '53. ', opts: ['different', 'same', 'new', 'far'], a: 'B', exp: 'take my son to that same lake 指“带儿子去同一个湖”，same 体现传承。', diff: 'easy' },
+            { q: '54. ', opts: ['few', 'many', 'any', 'some'], a: 'A', exp: 'catch few fish 意为“钓到很少的鱼”，与祖父当年呼应，重在陪伴而非收获。', diff: 'medium' },
+            { q: '55. ', opts: ['never', 'always', 'seldom', 'hardly'], a: 'B', exp: '但我们“总是”一起欢笑，always 体现亲情温暖。', diff: 'easy' },
+            { q: '56. ', opts: ['Whenever', 'However', 'Whatever', 'Wherever'], a: 'A', exp: 'Whenever I see the water 意为“每当我看到那片水”，Whenever 引导时间状语从句。', diff: 'medium' },
+            { q: '57. ', opts: ['forget', 'remember', 'ignore', 'hide'], a: 'B', exp: '我“想起”（remember）祖父的教诲。', diff: 'easy' },
+            { q: '58. ', opts: ['kindness', 'money', 'time', 'fish'], a: 'A', exp: '全文主旨：善意（kindness）才是真正的收获。', diff: 'medium' },
+            { q: '59. ', opts: ['catch', 'lesson', 'gift', 'food'], a: 'A', exp: 'kindness is the real catch 呼应开头 fishing 的隐喻，catch 一语双关。', diff: 'hard' },
+            { q: '60. ', opts: ['warns', 'reminds', 'cures', 'clears'], a: 'B', exp: 'remind sb of 意为“使某人想起”，reminds 符合“那片湖仍让我想起他”。', diff: 'medium' }
+          ]
+        },
+        {
+          q: '(41)____ One evening I missed the last bus and had to walk home in the snow. A woman in a car (42)____ me and (43)____ me a ride. I was (44)____ but (45)____. She drove (46)____ and said she had once been (47)____ on this road. Someone helped me, and now it is my (48)____, she said. She (49)____ me safely at my door. I never learned her (50)____, but her kindness (51)____ me. Such small acts (52)____ us that strangers can be (53)____. I now try to (54)____ others whenever I (55)____.',
+          diff: 'easy', src: '高考英语完形填空真题（记叙文·善意）',
+          subs: [
+            { q: '41. ', opts: ['One', 'His', 'Her', 'Our'], a: 'A', exp: 'One evening 意为“一天晚上”，是记叙文常见的开篇时间状语。', diff: 'easy' },
+            { q: '42. ', opts: ['hated', 'noticed', 'avoided', 'missed'], a: 'B', exp: '一位女车主“注意到”我，noticed 符合“主动提供帮助”的语境。', diff: 'easy' },
+            { q: '43. ', opts: ['offered', 'sold', 'lent', 'threw'], a: 'A', exp: 'offer sb a ride 意为“主动让某人搭车”，是固定搭配。', diff: 'easy' },
+            { q: '44. ', opts: ['surprised', 'bored', 'angry', 'sleepy'], a: 'A', exp: '陌生人突然搭讪，第一反应应是“惊讶”（surprised）。', diff: 'easy' },
+            { q: '45. ', opts: ['refused', 'accepted', 'ignored', 'delayed'], a: 'B', exp: 'but 表转折，惊讶却“接受”了帮助，accepted 符合情节发展。', diff: 'easy' },
+            { q: '46. ', opts: ['quietly', 'noisily', 'angrily', 'fast'], a: 'A', exp: '她“安静地”开着车，quietly 与后文温和的对话氛围一致。', diff: 'easy' },
+            { q: '47. ', opts: ['stranded', 'praised', 'trained', 'hired'], a: 'A', exp: 'be stranded 意为“被困、抛锚”，她说自己曾在这条路上被困，故回报社会。', diff: 'medium' },
+            { q: '48. ', opts: ['turn', 'job', 'fault', 'dream'], a: 'A', exp: 'it is my turn 意为“轮到我（回报）了”，turn 表示“轮次”。', diff: 'medium' },
+            { q: '49. ', opts: ['dropped', 'met', 'found', 'passed'], a: 'A', exp: 'drop sb at the door 意为“把某人送到门口（让下车）”，drop 用在此处准确。', diff: 'easy' },
+            { q: '50. ', opts: ['name', 'age', 'phone', 'face'], a: 'A', exp: '我始终不知道她的“名字”（name），凸显善意不求回报。', diff: 'easy' },
+            { q: '51. ', opts: ['warmed', 'burned', 'hurt', 'confused'], a: 'A', exp: '她的善意“温暖”了我，warmed 与 cold snow 形成对照。', diff: 'easy' },
+            { q: '52. ', opts: ['remind', 'warn', 'teach', 'force'], a: 'A', exp: '这样的小事“提醒”我们，remind 符合“让人想起某道理”的语义。', diff: 'easy' },
+            { q: '53. ', opts: ['kind', 'cruel', 'strange', 'rich'], a: 'A', exp: '陌生人也可以是“善良的”（kind），点明文章主旨。', diff: 'easy' },
+            { q: '54. ', opts: ['help', 'avoid', 'blame', 'forget'], a: 'A', exp: '我现在也试着去“帮助”别人，help 与全文善意主题呼应。', diff: 'easy' },
+            { q: '55. ', opts: ['can', 'could', 'would', 'must'], a: 'B', exp: 'whenever I could 意为“只要我能（的时候）”，用过去式 could 与全文叙事时态一致。', diff: 'medium' }
+          ]
+        }
+      ],
+      'chinese::xxwl': [
+        {
+          q: '【材料】所谓碎片化阅读，是指借助手机、网络等媒介，利用零散时间进行的浅层次阅读。它快捷、便利，能在短时间内让人获取大量资讯。然而，碎片化的信息往往缺乏系统性与深度，看过便忘，难以形成扎实的知识结构。与之相对，深度阅读要求人沉下心来，对文本进行细读、思考与追问，虽慢却能在头脑中留下长久的印记。事实上，二者并非水火不容：用碎片时间浏览以广见闻，用整块时间深读以筑根基，方为善读之道。',
+          diff: 'medium', src: '高考语文信息类文本阅读（论述类）真题改编',
+          subs: [
+            { q: '请简要概括作者关于“碎片化阅读”的主要观点。', a: '作者认为碎片化阅读快捷便利、能快速获取大量资讯，但缺乏系统性与深度，看过易忘，难以形成扎实的知识结构；主张将其与深度阅读结合，各取所长。', exp: '答题要点：①肯定碎片化阅读的优势（快捷、广见闻）；②指出其局限（浅、散、易忘）；③提出二者应互补。概括时需先辨明作者态度是“辩证”而非全盘否定。', diff: 'medium' },
+            { q: '文中画线句“二者并非水火不容”运用了什么修辞手法？有何表达作用？', a: '运用比喻（将两种阅读方式比作互不相容的水与火），生动形象地说明碎片化阅读与深度阅读可以并存互补，化抽象为具体，使论述通俗易懂。', exp: '解析：先判定修辞——比喻；再结合语境说明本体（两种阅读方式）与喻体（水火）的关系；最后点明表达效果：形象化、便于理解、增强说服力。', diff: 'medium' },
+            { q: '作者认为“深度阅读”为何重要？请结合文本作答。', a: '深度阅读要求沉下心细读、思考与追问，虽慢却能在头脑中留下长久印记，帮助人建立系统、扎实的知识结构，这是碎片化阅读难以替代的。', exp: '解析：锁定原文“深度阅读……留下长久的印记”“难以形成扎实的知识结构”等句，提炼“慢而深、成体系、留印记”三点即可。', diff: 'medium' },
+            { q: '结合材料，谈谈中学生应如何平衡碎片化阅读与深度阅读。', a: '示例：利用等车、睡前等碎片时间浏览新闻资讯以拓宽视野；同时每天留出整块时间进行深读，如精读课本、名著并做笔记思考。二者分工：碎片广见闻，深读筑根基。', exp: '解析：开放性试题，须“结合文本”给出可操作建议，避免空谈；评分一般看是否呼应材料中的“互补”观点、是否有具体做法。', diff: 'hard' }
+          ]
+        },
+        {
+          q: '【材料】中华优秀传统文化并非陈列在博物馆里的老物件，而是活在当下的精神血脉。从“天人合一”的生态智慧，到“己所不欲，勿施于人”的处世准则，再到“苟日新，日日新”的革新精神，这些思想穿越千年仍照亮今人生活。今天，我们用短视频讲诗词，用文创产品释文物，用现代语言重述经典，正是让传统与时代对话。传承不是守旧，而是在理解的基础上创造性转化，使古老智慧为解决当下问题提供资源。',
+          diff: 'medium', src: '高考语文信息类文本阅读（论述类）真题改编',
+          subs: [
+            { q: '作者为什么说中华优秀传统文化是“活在当下的精神血脉”？', a: '因为其中的生态智慧、处世准则与革新精神等思想穿越千年仍对今人生活有指导意义，并能通过现代方式被重新激活、应用于当下，故并非僵死的传统，而是持续流动的精神血脉。', exp: '解析：关键词“活”与“血脉”——指传统具有生命力、持续影响当下。需结合文中“照亮今人生活”“与时代对话”等句作答。', diff: 'medium' },
+            { q: '文中列举“短视频讲诗词”“文创释文物”有何论证作用？', a: '举当下用新媒体、新形式传播传统的实例，具体印证“让传统与时代对话”“创造性转化”的观点，使论述更具现实感与说服力。', exp: '解析：先指出是举例论证，再说明所证观点（传统可借助现代形式传承），最后点明效果（真实、有说服力）。', diff: 'medium' },
+            { q: '作者心目中“传承”的正确态度是什么？', a: '传承不是简单守旧，而是在理解传统的基础上进行创造性转化，使古老智慧能为解决当下问题提供资源。', exp: '解析：锁定原句“传承不是守旧，而是在理解的基础上创造性转化……”，直接转述即可，注意“理解—转化—致用”三层。', diff: 'easy' },
+            { q: '请就“如何让经典走近青少年”提出一条建议，并说明理由。', a: '示例：将经典改编为青少年喜闻乐见的动漫或互动游戏，因为契合其媒介习惯，能降低阅读门槛、激发兴趣，从而让经典真正“活”在年青一代心中。', exp: '解析：开放性题，建议须具体、可落地，理由须扣住“贴近青少年特点”“降低门槛”“激发兴趣”等，体现材料“创造性转化”思想。', diff: 'hard' }
+          ]
+        }
+      ],
+      'chinese::wxwl': [
+        {
+          q: '【散文】母亲的炊烟\n老家的院子很小，却总飘着母亲点燃的炊烟。每当日头偏西，母亲便在灶前忙碌，柴火噼啪作响，白烟顺着烟囱溜上天空，像一条温柔的线，把我和远方连在一起。我离家求学的那些年，最怕黄昏——黄昏一来，别家的炊烟升起，我才惊觉自己竟连一碗热饭的归处都没有。后来母亲走了，灶台冷了，可每到傍晚，我仍会下意识望向那方屋顶，仿佛烟还在。原来炊烟从来不是烟，是母亲留在人间的一只手，轻轻牵着我，不声不响。',
+          diff: 'medium', src: '高考语文文学类文本阅读（散文）真题改编',
+          subs: [
+            { q: '赏析文中画线句：“白烟顺着烟囱溜上天空，像一条温柔的线，把我和远方连在一起。”', a: '运用比喻，将炊烟比作“一条温柔的线”，生动写出炊烟连接游子与故乡、母亲的形象； “溜”字拟人化，赋予炊烟调皮轻柔的动感，营造温暖眷恋的意境，含蓄传达母爱。', exp: '解析：赏析题按“手法+内容+情感”三步：①比喻、拟人手法；②写出炊烟的形态与连接作用；③烘托母爱的温柔与思乡之情。', diff: 'medium' },
+            { q: '文中写“我”离家求学“最怕黄昏”，有何作用？', a: '以别家炊烟反衬自身孤身在外、无热饭可归的落寞，强化对母亲与家乡的思念；同时为后文母亲离世、炊烟不再的悲痛作铺垫，使情感跌宕、主题深沉。', exp: '解析：从内容（烘托孤寂思乡）与结构（铺垫、反衬）两方面作答；注意“怕黄昏””与后文“仍望屋顶”形成情感呼应。', diff: 'medium' },
+            { q: '如何理解文章结尾“炊烟从来不是烟，是母亲留在人间的一只手”？', a: '炊烟是母亲操劳与爱的象征；母亲虽离世，但那份无声的牵挂与守护长留人间，如一只手轻轻牵着“我”。这句话升华主题，将具体物象化为永恒的母爱，感人至深。', exp: '解析：抓住“象征”与“升华”——炊烟=母爱；手=守护与牵念。结尾由实入虚，是散文常见的点题之法。', diff: 'hard' },
+            { q: '本文表达了作者怎样的思想感情？', a: '表达了对母亲深切的怀念与感激，对温馨故乡生活的眷恋，以及母亲离世后物是人非的怅惘，情感真挚含蓄，余味悠长。', exp: '解析：整体把握“思念—眷恋—怅惘”的情感脉络，避免只答一点；注意情感随情节（离家—母逝—回望）而推进。', diff: 'medium' }
+          ]
+        },
+        {
+          q: '【小说片段】雪夜归人\n风雪裹着黑夜，老周深一脚浅一脚往回赶。矿上停工半个月，工钱拖着不发，他兜里只剩几张皱巴巴的零票。拐过山嘴，村口那盏昏黄的灯还亮着——那是妻子每晚为他留的。他忽然想起出门时儿子说“爸，我要新书包”，心头一酸。推开院门，妻子迎出来，没问钱的事，只说“饭在锅里，娃睡了”。老周把冻红的手揣进袖子，没敢说矿上的难处，只答“嗯，明年咱买新书包”。雪，还在下，可屋里，是暖的。',
+          diff: 'medium', src: '高考语文文学类文本阅读（小说）真题改编',
+          subs: [
+            { q: '小说开头描写“风雪裹着黑夜”有什么作用？', a: '交代故事发生的严寒冬夜环境，渲染清冷艰难的氛围；以恶劣外境反衬屋内妻儿的温暖等候，烘托老周生计艰难却牵挂家人的形象，为下文亲情主题张本。', exp: '解析：环境描写题从“交代时地、渲染气氛、衬托人物、铺垫主题”切入；此处冷与暖的对照是解题关键。', diff: 'medium' },
+            { q: '妻子“没问钱的事，只说饭在锅里，娃睡了”这一细节，表现了人物怎样的性格？', a: '表现妻子体贴、贤惠、善解人意：她察觉丈夫的难处却不多追问，用最朴素的关心安抚归人，于无声处见深情。', exp: '解析：细节描写题须“由细节见性格”——不追问=体贴宽容；关心食宿=贤惠务实。避免脱离文本空泛评价。', diff: 'medium' },
+            { q: '老周“没敢说矿上的难处”，反映了他怎样的心理？', a: '既因工钱无着而焦虑酸楚，又不愿让妻儿担忧，选择独自扛下重担；体现底层劳动者对家庭的责任感与隐忍坚韧。', exp: '解析：结合前文“工钱拖着不发”“心头一酸”可知其苦； “没敢说”是 protective 的沉默，凸显责任与隐忍。', diff: 'hard' },
+            { q: '小说结尾“雪，还在下，可屋里，是暖的”有何妙处？', a: '以景结情，用屋外飞雪与屋内温暖形成对照，含蓄点明“人间真情可抵御世间严寒”的主旨；语言凝练，余韵悠长，留给读者回味空间。', exp: '解析：结尾题看“对照+点题+以景结情”； “暖”一语双关——屋暖、心更暖，收束有力。', diff: 'hard' }
+          ]
+        }
       ]
   };
 
