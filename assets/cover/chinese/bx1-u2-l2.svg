@@ -2,30 +2,45 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 560" width="1280" height="560" preserveAspectRatio="xMidYMid slice">
 
 <defs>
-  <!-- 极淡纸纹：仅轻微提亮质感，不压暗 -->
+  <!-- 强水彩边缘：颜料扩散、积色、不规则边界 -->
+  <filter id="edge_bx1-u2-l2" x="-30%" y="-30%" width="160%" height="160%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="4" seed="1514563735" result="noise"/>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="22" xChannelSelector="R" yChannelSelector="G" result="disp"/>
+    <feGaussianBlur in="disp" stdDeviation="2.1" result="blur"/>
+    <feTurbulence type="fractalNoise" baseFrequency="0.55" numOctaves="3" seed="1514563740" result="grain"/>
+    <feColorMatrix type="matrix" values="0 0 0 0 0.40  0 0 0 0 0.35  0 0 0 0 0.28  0 0 0 0.22 0" in="grain" result="g"/>
+    <feComposite operator="in" in="g" in2="blur" result="gMask"/>
+    <feBlend in="gMask" in2="blur" mode="multiply" result="textured"/>
+    <feComposite in="SourceGraphic" in2="textured" operator="over"/>
+  </filter>
+  <!-- 湿画法：大面积晕染 -->
+  <filter id="wash_bx1-u2-l2" x="-20%" y="-20%" width="140%" height="140%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="4" seed="1514563736" result="noise"/>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="14" xChannelSelector="R" yChannelSelector="G" result="disp"/>
+    <feGaussianBlur in="disp" stdDeviation="4" result="blur"/>
+    <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+  </filter>
+  <!-- 远景雾气 -->
+  <filter id="mist_bx1-u2-l2" x="0" y="0" width="100%" height="100%">
+    <feGaussianBlur stdDeviation="8"/>
+  </filter>
+  <!-- 纸纹 -->
   <filter id="paper_bx1-u2-l2" x="0" y="0" width="100%" height="100%">
-    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" result="noise"/>
-    <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.06 0" in="noise" result="grain"/>
+    <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" result="noise"/>
+    <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.10 0" in="noise" result="grain"/>
     <feComposite operator="over" in="grain" in2="SourceGraphic"/>
   </filter>
-  <!-- 水彩晕染边（克制） -->
-  <filter id="bloom_bx1-u2-l2" x="-15%" y="-15%" width="130%" height="130%">
-    <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" result="noise"/>
-    <feDisplacementMap in="SourceGraphic" in2="noise" scale="9" xChannelSelector="R" yChannelSelector="G"/>
-    <feGaussianBlur stdDeviation="1.1"/>
+  <!-- 颜料颗粒 -->
+  <filter id="grain_bx1-u2-l2" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="3" seed="1514563737" result="noise"/>
+    <feColorMatrix type="matrix" values="0 0 0 0 0.42  0 0 0 0 0.37  0 0 0 0 0.30  0 0 0 0.25 0" in="noise" result="g"/>
+    <feComposite operator="in" in="g" in2="SourceGraphic" result="masked"/>
+    <feBlend in="masked" in2="SourceGraphic" mode="multiply"/>
   </filter>
-  <filter id="wash_bx1-u2-l2" x="-10%" y="-10%" width="120%" height="120%">
-    <feGaussianBlur stdDeviation="3"/>
-  </filter>
-  <filter id="mist_bx1-u2-l2" x="0" y="0" width="100%" height="100%">
-    <feGaussianBlur stdDeviation="5"/>
-  </filter>
-  <filter id="water_bx1-u2-l2" x="-12%" y="-12%" width="124%" height="124%">
-    <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" result="n"/>
-    <feDisplacementMap in="SourceGraphic" in2="n" scale="6" xChannelSelector="R" yChannelSelector="G"/>
-    <feGaussianBlur stdDeviation="0.8"/>
+  <!-- 光晕 -->
+  <filter id="glow_bx1-u2-l2" x="-35%" y="-35%" width="170%" height="170%">
+    <feGaussianBlur stdDeviation="16"/>
   </filter>
 </defs>
-<rect x="0" y="0" width="1280" height="560" fill="#FFFBF2" opacity="1" filter="url(#paper_bx1-u2-l2)"/><path d="M 0,560 L 320,280 L 960,280 L 1280,560 Z" fill="#EDE3DA" opacity="0.8" filter="url(#wash_bx1-u2-l2)"/><path d="M 230.39999999999998,280 L 1049.6,280 L 1088,459.2 L 192,459.2 Z" fill="#B98E6E" opacity="0.9" filter="url(#water_bx1-u2-l2)"/><rect x="256" y="224" width="768" height="67.2" fill="#B98E6E" opacity="0.7" filter="url(#water_bx1-u2-l2)"/><ellipse cx="640" cy="112" rx="170" ry="110" fill="#FFCF86" opacity="0.3" filter="url(#wash_bx1-u2-l2)"/><path d="M 486.4,224 l -20,-62 a 16,16 0 1 1 32,0 l -12,62 z" fill="#F4F6F7" opacity="0.9" filter="url(#bloom_bx1-u2-l2)"/><ellipse cx="486.4" cy="152" rx="20" ry="18" fill="#EAD9C8" opacity="0.95" filter="url(#bloom_bx1-u2-l2)"/><path d="M 844.8000000000001,257.6 l -16,-58 a 14,14 0 1 1 28,0 l -12,58 z" fill="#A7B6BE" opacity="0.9" filter="url(#bloom_bx1-u2-l2)"/><ellipse cx="844.8000000000001" cy="189.60000000000002" rx="18" ry="16" fill="#EAD9C8" opacity="0.95" filter="url(#bloom_bx1-u2-l2)"/><ellipse cx="640" cy="67.2" rx="42" ry="52" fill="#EF8A8A" opacity="0.85" filter="url(#water_bx1-u2-l2)"/><path d="M 636,15.200000000000003 L 644,15.200000000000003 L 640,1.2000000000000028 Z" fill="#EF8A8A" opacity="0.9"/><rect x="281.6" y="190.4" width="26" height="18" fill="#FFD8A0" opacity="0.85" filter="url(#water_bx1-u2-l2)"/><rect x="326.6" y="190.4" width="26" height="18" fill="#FFB3A0" opacity="0.85" filter="url(#water_bx1-u2-l2)"/><rect x="371.6" y="190.4" width="26" height="18" fill="#D9B3E6" opacity="0.85" filter="url(#water_bx1-u2-l2)"/><rect x="416.6" y="190.4" width="26" height="18" fill="#A6D3F2" opacity="0.85" filter="url(#water_bx1-u2-l2)"/><rect x="461.6" y="190.4" width="26" height="18" fill="#AEE0B0" opacity="0.85" filter="url(#water_bx1-u2-l2)"/><rect x="506.6" y="190.4" width="26" height="18" fill="#FFF0A6" opacity="0.85" filter="url(#water_bx1-u2-l2)"/>
-<linearGradient id="scrim_bx1-u2-l2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0"/><stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0.12"/><stop offset="1" stop-color="#FFFDF8" stop-opacity="0.7"/></linearGradient><rect x="0" y="280" width="1280" height="280" fill="url(#scrim_bx1-u2-l2)"/><text x="640" y="454" text-anchor="middle" font-family="'SimSun','Songti SC','Noto Serif SC',serif" font-size="48" font-weight="bold" fill="#33302a" opacity="0.95" stroke="#FFFFFF" stroke-width="0.6" stroke-opacity="0.5">心有一团火，温暖众人心</text><text x="640" y="520" text-anchor="middle" font-family="'KaiTi','STKaiti','Kaiti SC',serif" font-size="22" fill="#6d4c3a" opacity="0.92">林为民</text>
+<rect x="0" y="0" width="1280" height="560" fill="url(#bg_bx1-u2-l2)" opacity="1" filter="url(#paper_bx1-u2-l2)"/><linearGradient id="bg_bx1-u2-l2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF8F0"/><stop offset="1" stop-color="#FFECD6"/></linearGradient><path d="M 0,560 L 281.6,308 L 998.4000000000001,308 L 1280,560 Z" fill="#EDDDCA" opacity="0.85" filter="url(#wash_bx1-u2-l2)"/><path d="M 230.39999999999998,308 L 1049.6,308 L 1088,481.59999999999997 L 192,481.59999999999997 Z" fill="#C69C74" opacity="0.92" filter="url(#edge_bx1-u2-l2)"/><rect x="230.39999999999998" y="268.8" width="819.2" height="44.800000000000004" fill="#B0855E" opacity="0.88" filter="url(#wash_bx1-u2-l2)"/><ellipse cx="640" cy="100.8" rx="180" ry="120" fill="#FFD699" opacity="0.28" filter="url(#glow_bx1-u2-l2)"/><ellipse cx="640" cy="100.8" rx="48" ry="60" fill="#E57373" opacity="0.75" filter="url(#wash_bx1-u2-l2)"/><path d="M 635,44.8 L 645,44.8 L 640,28.799999999999997 Z" fill="#E57373" opacity="0.9"/><path d="M 512,459.2 q -14.4,-55 -7.2,-79.2 q 12.6,-10.799999999999999 23.400000000000002,-5.3999999999999995 q 7.2,24.2 -1.8,57.2 z" fill="#F4F6F7" opacity="0.93" filter="url(#edge_bx1-u2-l2)"/><ellipse cx="519.2" cy="367.9" rx="5.3999999999999995" ry="5.040000000000001" fill="#FCE4D6" opacity="0.93" filter="url(#edge_bx1-u2-l2)"/><ellipse cx="519.2" cy="358" rx="7.56" ry="2.5200000000000005" fill="#5D4037" opacity="0.8835" filter="url(#edge_bx1-u2-l2)"/><path d="M 870.4000000000001,470.4 q -12.6,-54 -6.3,-81 q 12.6,-9 23.400000000000002,0 q 6.3,27 -4.5,81 z" fill="#90A4AE" opacity="0.9" filter="url(#edge_bx1-u2-l2)"/><ellipse cx="877.6000000000001" cy="380.76" rx="5.3999999999999995" ry="5.040000000000001" fill="#FCE4D6" opacity="0.9" filter="url(#edge_bx1-u2-l2)"/><ellipse cx="877.6000000000001" cy="371.03999999999996" rx="7.56" ry="2.5200000000000005" fill="#455A64" opacity="0.855" filter="url(#edge_bx1-u2-l2)"/><rect x="307.2" y="190.4" width="32" height="22" fill="#FFD8A0" opacity="0.82" filter="url(#wash_bx1-u2-l2)"/><rect x="355.2" y="190.4" width="32" height="22" fill="#D9B3E6" opacity="0.82" filter="url(#wash_bx1-u2-l2)"/><rect x="403.2" y="190.4" width="32" height="22" fill="#FFF0A6" opacity="0.82" filter="url(#wash_bx1-u2-l2)"/><rect x="451.2" y="190.4" width="32" height="22" fill="#FFB3A0" opacity="0.82" filter="url(#wash_bx1-u2-l2)"/><rect x="499.2" y="190.4" width="32" height="22" fill="#AEE0B0" opacity="0.82" filter="url(#wash_bx1-u2-l2)"/><rect x="547.2" y="190.4" width="32" height="22" fill="#D9B3E6" opacity="0.82" filter="url(#wash_bx1-u2-l2)"/><rect x="595.2" y="190.4" width="32" height="22" fill="#A6D3F2" opacity="0.82" filter="url(#wash_bx1-u2-l2)"/>
 </svg>
