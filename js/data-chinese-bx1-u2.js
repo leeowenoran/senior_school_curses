@@ -12,7 +12,7 @@
     /* ==================== 第1课 喜看稻菽千重浪 ==================== */
     {
       id: 'bx1-u2-l1',
-      cover: 'assets/cover/chinese/bx1-u2-l1.svg',
+      cover: 'assets/cover/chinese/bx1-u2-l1.svg?v=20260809h',
       name: '喜看稻菽千重浪——记首届国家最高科技奖获得者袁隆平',
       author: '沈英甲',
       chapter: '第二单元 劳动光荣（实用性阅读与交流）',
@@ -54,7 +54,7 @@
     /* ==================== 第2课 心有一团火 ==================== */
     {
       id: 'bx1-u2-l2',
-      cover: 'assets/cover/chinese/bx1-u2-l2.svg',
+      cover: 'assets/cover/chinese/bx1-u2-l2.svg?v=20260809h',
       name: '心有一团火，温暖众人心',
       author: '林为民',
       chapter: '第二单元 劳动光荣（实用性阅读与交流）',
@@ -95,7 +95,7 @@
     /* ==================== 第3课 探界者钟扬 ==================== */
     {
       id: 'bx1-u2-l3',
-      cover: 'assets/cover/chinese/bx1-u2-l3.svg',
+      cover: 'assets/cover/chinese/bx1-u2-l3.svg?v=20260809h',
       name: '探界者钟扬',
       author: '叶雨婷',
       chapter: '第二单元 劳动光荣（实用性阅读与交流）',
@@ -136,7 +136,7 @@
     /* ==================== 第4课 芣苢 ==================== */
     {
       id: 'bx1-u2-l4',
-      cover: 'assets/cover/chinese/bx1-u2-l4.svg',
+      cover: 'assets/cover/chinese/bx1-u2-l4.svg?v=20260809h',
       name: '芣苢',
       author: '《诗经·周南》',
       chapter: '第二单元 劳动光荣（实用性阅读与交流）',
@@ -178,7 +178,7 @@
     /* ==================== 第5课 插秧歌 ==================== */
     {
       id: 'bx1-u2-l5',
-      cover: 'assets/cover/chinese/bx1-u2-l5.svg',
+      cover: 'assets/cover/chinese/bx1-u2-l5.svg?v=20260809h',
       name: '插秧歌',
       author: '杨万里',
       chapter: '第二单元 劳动光荣（实用性阅读与交流）',
