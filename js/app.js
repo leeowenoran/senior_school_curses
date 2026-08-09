@@ -7390,6 +7390,7 @@
       var tag = showBoard ? '<span class="ds-tag" style="--bc:' + cfg.color + '">' + cfg.icon + ' ' + esc(t.board) + '</span>' : '';
       var canDel = discussCanDelete(t.authorId, t.guestId);
       var qchip = t.qid ? '<span class="ds-qtag" onclick="event.stopPropagation();navigate(\'bank\',\'q\',\'' + esc(t.qid) + '\')">📌 ' + esc(t.qid) + '</span>' : '';
+      var attInd = (t.attachments && t.attachments.length) ? '<span class="ds-att-ind">📎 ' + t.attachments.length + '</span>' : '';
       return '<li class="ds-topic' + (canDel ? ' has-del' : '') + '" onclick="navigate(\'comments\',\'' + esc(t.board) + '\',\'' + esc(t.id) + '\')">' +
         '<div class="ds-topic-main">' +
           '<div class="ds-topic-title">' + esc(t.title) + '</div>' +
@@ -7397,6 +7398,7 @@
             '<span class="ds-dot">·</span>' +
             authorChip(t.authorId, t.authorName, 'ds-topic-author') +
             (t.qid ? '<span class="ds-dot">·</span>' + qchip : '') +
+            attInd +
             '<span class="ds-dot">·</span>' +
             '<span class="ds-topic-time">' + esc(relativeTime(t.ts)) + '</span>' +
           '</div>' +
@@ -7405,6 +7407,54 @@
         (canDel ? '<button class="ds-del" onclick="event.stopPropagation();deleteTopic(\'' + esc(t.board) + '\',\'' + esc(t.id) + '\')">删除</button>' : '') +
       '</li>';
     }).join('') + '</ul>';
+  }
+
+  /* 附件相关辅助：文件读取、图片压缩、大小格式化、渲染 */
+  function fmtSize(bytes) {
+    if (bytes === null || bytes === undefined || isNaN(bytes)) return '';
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1024 / 1024).toFixed(1) + ' MB';
+  }
+  function readFileAsDataUrl(file) {
+    return new Promise(function (resolve, reject) {
+      var fr = new FileReader();
+      fr.onload = function () { resolve(fr.result); };
+      fr.onerror = function () { reject(fr.error || new Error('read fail')); };
+      fr.readAsDataURL(file);
+    });
+  }
+  function downscaleImage(dataUrl, maxDim, quality) {
+    return new Promise(function (resolve) {
+      var img = new Image();
+      img.onload = function () {
+        var w = img.width, h = img.height;
+        if (!w || !h || (w <= maxDim && h <= maxDim)) { resolve(dataUrl); return; }
+        var scale = Math.min(maxDim / w, maxDim / h);
+        var cw = Math.max(1, Math.round(w * scale)), ch = Math.max(1, Math.round(h * scale));
+        try {
+          var canvas = document.createElement('canvas');
+          canvas.width = cw; canvas.height = ch;
+          var ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, cw, ch);
+          resolve(canvas.toDataURL('image/jpeg', quality));
+        } catch (e) { resolve(dataUrl); }
+      };
+      img.onerror = function () { resolve(dataUrl); };
+      img.src = dataUrl;
+    });
+  }
+  function attachmentsHtml(atts) {
+    if (!atts || !atts.length) return '';
+    var items = atts.map(function (a) {
+      var isImg = (a.type || '').indexOf('image/') === 0;
+      if (isImg) {
+        return '<a class="ds-att ds-att-img" href="' + a.data + '" target="_blank" rel="noopener"><img loading="lazy" src="' + a.data + '" alt="' + esc(a.name) + '"></a>';
+      }
+      return '<a class="ds-att ds-att-file" href="' + a.data + '" download="' + esc(a.name) + '" target="_blank" rel="noopener">' +
+        '<span class="ds-att-ico">📄</span><span class="ds-att-name">' + esc(a.name) + '</span><span class="ds-att-size">' + fmtSize(a.size) + '</span></a>';
+    }).join('');
+    return '<div class="ds-attachments">' + items + '</div>';
   }
 
   /* 发布表单（默认折叠，点「发新帖」展开） */
@@ -7424,10 +7474,15 @@
         '</div>';
     return '<div class="ds-compose" id="dsCompose" style="display:none">' +
       '<div class="cm-form-card">' + idHtml +
-          '<input class="cm-title-input" id="cmTitle" maxlength="50" placeholder="帖子标题（选填，留空则自动取正文前 20 字）">' +
-          '<textarea class="cm-textarea" id="cmText" maxlength="1000" placeholder="说点什么… 分享见解、提问、或反馈都可以 :)" rows="4"></textarea>' +
+          '<input class="cm-title-input" id="cmTitle" maxlength="120" placeholder="帖子标题（选填，留空则自动取正文前 30 字）">' +
+          '<textarea class="cm-textarea" id="cmText" maxlength="3000" placeholder="说点什么… 分享见解、提问、或反馈都可以 :)" rows="4"></textarea>' +
+          '<div class="cm-file-row">' +
+            '<label class="cm-file-btn">📎 添加附件<input type="file" id="cmFiles" multiple accept="image/*,.pdf,.doc,.docx,.txt,.zip,.ppt,.pptx"></label>' +
+            '<span class="cm-file-hint">支持图片/文档，单文件 ≤ 8MB</span>' +
+          '</div>' +
+          '<div class="cm-previews" id="cmPreviews"></div>' +
           '<div class="cm-form-foot">' +
-            '<div class="cm-counter"><span id="cmCount">0</span> / 1000</div>' +
+            '<div class="cm-counter"><span id="cmCount">0</span> / 3000</div>' +
             '<button class="cm-submit" id="cmSubmit" disabled>发布帖子</button>' +
         '</div>' +
       '</div></div>';
@@ -7514,6 +7569,7 @@
                 (canDel ? '<button class="ds-del ds-del-sm" onclick="deleteReply(\'' + esc(board) + '\',\'' + esc(t.id) + '\',\'' + esc(rp.id) + '\')">删除</button>' : '') +
               '</div>' +
               '<div class="ds-reply-text">' + esc(rp.content) + '</div>' +
+              attachmentsHtml(rp.attachments) +
             '</div>' +
           '</li>';
         }).join('') + '</ul>'
@@ -7542,12 +7598,17 @@
           (canDelT ? '<button class="ds-del" onclick="deleteTopic(\'' + esc(board) + '\',\'' + esc(t.id) + '\')">删除</button>' : '') +
         '</div>' +
       '</div>' +
-      '<div class="ds-post"><div class="ds-post-body">' + esc(t.content) + '</div></div>' +
+      '<div class="ds-post"><div class="ds-post-body">' + esc(t.content) + '</div>' + attachmentsHtml(t.attachments) + '</div>' +
       '<div class="ds-list-head"><span>回复</span><span>' + (t.replies ? t.replies.length : 0) + ' 条</span></div>' +
       repliesHtml +
       '<div class="cm-form-card ds-reply-form">' + idHtml +
-        '<textarea class="cm-textarea" id="cmText" maxlength="1000" placeholder="写下你的回复…" rows="3"></textarea>' +
-        '<div class="cm-form-foot"><div class="cm-counter"><span id="cmCount">0</span> / 1000</div>' +
+        '<textarea class="cm-textarea" id="cmText" maxlength="3000" placeholder="写下你的回复…" rows="3"></textarea>' +
+        '<div class="cm-file-row">' +
+          '<label class="cm-file-btn">📎 添加附件<input type="file" id="cmFiles" multiple accept="image/*,.pdf,.doc,.docx,.txt,.zip,.ppt,.pptx"></label>' +
+          '<span class="cm-file-hint">支持图片/文档，单文件 ≤ 8MB</span>' +
+        '</div>' +
+        '<div class="cm-previews" id="cmPreviews"></div>' +
+        '<div class="cm-form-foot"><div class="cm-counter"><span id="cmCount">0</span> / 3000</div>' +
           '<button class="cm-submit" id="cmSubmit" disabled>回复</button></div>' +
       '</div>';
     view.innerHTML =
@@ -7565,7 +7626,34 @@
     var count = document.getElementById('cmCount');
     var btn = document.getElementById('cmSubmit');
     var titleEl = document.getElementById('cmTitle');
+    var fileEl = document.getElementById('cmFiles');
+    var prevEl = document.getElementById('cmPreviews');
+    var pending = [];
+    var MAX_FILE = 8 * 1024 * 1024;
+    var MAX_TOTAL = 6 * 1024 * 1024;
     if (!text) return;
+    function pendingBytes() {
+      var n = 0; pending.forEach(function (p) { n += p.data.length * 0.75; }); return n;
+    }
+    function renderPreviews() {
+      if (!prevEl) return;
+      if (!pending.length) { prevEl.innerHTML = ''; return; }
+      prevEl.innerHTML = pending.map(function (a, i) {
+        var isImg = (a.type || '').indexOf('image/') === 0;
+        var thumb = isImg ? '<img src="' + a.data + '" alt="">' : '<span class="ds-prev-ico">📄</span>';
+        return '<div class="ds-prev' + (isImg ? ' is-img' : '') + '">' + thumb +
+          '<span class="ds-prev-name">' + esc(a.name) + '</span>' +
+          '<span class="ds-prev-size">' + fmtSize(a.size) + '</span>' +
+          '<button type="button" class="ds-prev-x" data-i="' + i + '" title="移除">×</button></div>';
+      }).join('');
+      Array.prototype.forEach.call(prevEl.querySelectorAll('.ds-prev-x'), function (b) {
+        b.addEventListener('click', function () {
+          var i = parseInt(b.getAttribute('data-i'), 10);
+          pending.splice(i, 1);
+          renderPreviews();
+        });
+      });
+    }
     function refresh() {
       var ok = text.value.trim().length > 0;
       if (btn) { btn.disabled = !ok; btn.classList.toggle('ready', ok); }
@@ -7573,6 +7661,32 @@
     }
     text.addEventListener('input', refresh);
     if (titleEl) titleEl.addEventListener('input', refresh);
+    if (fileEl) {
+      fileEl.addEventListener('change', function () {
+        var files = Array.prototype.slice.call(fileEl.files || []);
+        files.forEach(function (f) {
+          if (f.size > MAX_FILE) { toast('「' + f.name + '」超过 8MB，已跳过'); return; }
+          readFileAsDataUrl(f).then(function (data) {
+            var p = { name: f.name, type: f.type, size: f.size, data: data };
+            if ((f.type || '').indexOf('image/') === 0) {
+              return downscaleImage(data, 1280, 0.82).then(function (d2) {
+                p.data = d2; p.size = Math.round(d2.length * 0.75);
+                return p;
+              });
+            }
+            return p;
+          }).then(function (p) {
+            if (pendingBytes() + p.data.length * 0.75 > MAX_TOTAL) {
+              toast('附件总大小已达上限（约 6MB），「' + p.name + '」未添加');
+              return;
+            }
+            pending.push(p);
+            renderPreviews();
+          }).catch(function () { toast('读取文件失败'); });
+        });
+        fileEl.value = '';
+      });
+    }
     if (btn) btn.addEventListener('click', function () {
       var content = text.value.trim();
       if (!content) return;
@@ -7581,14 +7695,14 @@
       var id = discussIdentity();
       var d = getDiscuss();
       if (mode === 'topic') {
-        var title = titleEl && titleEl.value.trim() ? titleEl.value.trim() : (content.slice(0, 20) || '（无标题）');
+        var title = titleEl && titleEl.value.trim() ? titleEl.value.trim() : (content.slice(0, 30) || '（无标题）');
         d.topics.push({
           id: 't_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
           board: board, ts: Date.now(),
           authorId: id.authorId, authorName: id.authorName, avatar: id.avatar,
           guestId: id.isAnon ? currentGuestId() : null,
           qid: window.__pendingQid || null,
-          title: title, content: content, replies: []
+          title: title, content: content, attachments: pending.slice(), replies: []
         });
         saveDiscuss(d);
         window.__pendingQid = null;
@@ -7600,7 +7714,8 @@
           t.replies.push({
             id: 'r_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
             ts: Date.now(), authorId: id.authorId, authorName: id.authorName, content: content,
-            guestId: id.isAnon ? currentGuestId() : null
+            guestId: id.isAnon ? currentGuestId() : null,
+            attachments: pending.slice()
           });
           saveDiscuss(d);
           if (t.authorId && t.authorId !== id.authorId && getUserById(t.authorId)) {
