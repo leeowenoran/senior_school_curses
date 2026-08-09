@@ -6392,8 +6392,97 @@
     else renderBankHome();
   }
 
-  // 单题详情（洛谷式：点击列表行进入）
-  function renderBankQuestion(bid) {
+    // ===== 仿洛谷「题目信息」侧边栏 =====
+    function entryTitle(e) {
+      if (e.q.subs && e.q.subs.length) {
+        var s = String(e.q.src || e.catName || '').replace(/\n/g, ' ').trim();
+        if (s.length > 20) s = s.slice(0, 20) + '…';
+        return s + ' · ' + e.q.subs.length + ' 小题';
+      }
+      var t = String(e.q.q || '').replace(/\n/g, ' ').trim();
+      return t.length > 26 ? t.slice(0, 26) + '…' : t;
+    }
+    function bankEntryStats(entry) {
+      var att = 0, cor = 0;
+      if (entry.q.subs && entry.q.subs.length) {
+        entry.q.subs.forEach(function (s) { var st = getQStat(s._subbid); att += (st.attempts || 0); cor += (st.correct || 0); });
+      } else {
+        var st = getQStat(entry.q._bid); att = st.attempts || 0; cor = st.correct || 0;
+      }
+      return { attempts: att, correct: cor, rate: att ? Math.round(cor / att * 100) : null };
+    }
+    function bankRecommend(entry, n) {
+      var same = window.__bankList.filter(function (e) { return e.catId === entry.catId && e.sid === entry.sid && e.q._bid !== entry.q._bid; });
+      if (same.length < n) {
+        var more = window.__bankList.filter(function (e) { return e.sid === entry.sid && e.catId !== entry.catId && e.q._bid !== entry.q._bid; });
+        same = same.concat(more);
+      }
+      return same.slice(0, n);
+    }
+    function buildBankInfoPanel(entry) {
+      var q = entry.q;
+      var stats = bankEntryStats(entry);
+      var rate = stats.rate;
+      var rateTxt = (rate === null) ? '—' : (rate + '%');
+      var rateColor = rate === null ? 'var(--text-3)' : (rate >= 60 ? '#2ecc71' : (rate >= 30 ? '#e0a000' : '#e25c5c'));
+      var rateW = (rate === null) ? 0 : rate;
+      var tags = [entry.subjectName, entry.catName, q._dword, '高考真题'];
+      var tagsHtml = tags.map(function (t) { return '<span class="lg-info-tag">' + esc(t) + '</span>'; }).join('');
+      var recs = bankRecommend(entry, 5);
+      var recHtml = recs.length
+        ? recs.map(function (e) {
+            return '<div class="lg-info-rec-item" onclick="navigate(\'bank\',\'q\',\'' + e.q._bid + '\')">' +
+              '<span class="lg-info-rec-id">' + esc(e.q._bid) + '</span>' +
+              '<span class="lg-info-rec-title">' + esc(entryTitle(e)) + '</span>' +
+              '<span class="lg-info-rec-go">›</span>' +
+            '</div>';
+          }).join('')
+        : '<div class="lg-info-empty">暂无更多同类型题目</div>';
+      var diffStars = { easy: 1, medium: 2, hard: 3, expert: 4 }[q.diff] || 2;
+      var diffStarsHtml = '';
+      for (var si = 0; si < 4; si++) diffStarsHtml += '<span class="lg-info-star' + (si < diffStars ? ' on' : '') + '">★</span>';
+      return '' +
+        '<aside class="lg-info">' +
+          '<div class="lg-info-title">题目信息</div>' +
+          '<div class="lg-info-sec">' +
+            '<div class="lg-info-label">题目编号</div>' +
+            '<div class="lg-info-bid">' + esc(q._bid) + '</div>' +
+          '</div>' +
+          '<div class="lg-info-sec">' +
+            '<div class="lg-info-label">来源 / 提供者</div>' +
+            '<div class="lg-info-val">' + esc(q.src || (entry.subjectName + ' · ' + entry.catName)) + '</div>' +
+          '</div>' +
+          '<div class="lg-info-sec">' +
+            '<div class="lg-info-label">难度</div>' +
+            '<div class="lg-info-val"><span class="lg-info-diff lg-d-' + q._dletter + '">' + esc(q._dword) + '</span> <span class="lg-info-stars">' + diffStarsHtml + '</span></div>' +
+          '</div>' +
+          '<div class="lg-info-sec">' +
+            '<div class="lg-info-label">历史分数（通过率）</div>' +
+            '<div class="lg-info-rate"><span class="lg-info-rate-num" style="color:' + rateColor + '">' + rateTxt + '</span>' +
+              '<span class="lg-info-rate-bar"><span class="lg-info-rate-fill" style="width:' + rateW + '%;background:' + rateColor + '"></span></span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="lg-info-sec">' +
+            '<div class="lg-info-label">提交记录</div>' +
+            '<div class="lg-info-val">共 <b>' + stats.attempts + '</b> 次作答 · 通过 <b>' + stats.correct + '</b> 次</div>' +
+          '</div>' +
+          '<div class="lg-info-sec">' +
+            '<div class="lg-info-label">标签</div>' +
+            '<div class="lg-info-tags">' + tagsHtml + '</div>' +
+          '</div>' +
+          '<div class="lg-info-sec">' +
+            '<div class="lg-info-label">相关讨论</div>' +
+            '<a class="lg-info-discuss" href="index.html#/comments" target="_blank" rel="noopener">💬 前往讨论区 ›</a>' +
+          '</div>' +
+          '<div class="lg-info-sec">' +
+            '<div class="lg-info-label">推荐题目</div>' +
+            '<div class="lg-info-rec">' + recHtml + '</div>' +
+          '</div>' +
+        '</aside>';
+    }
+
+    // 单题详情（洛谷式：点击列表行进入）
+    function renderBankQuestion(bid) {
     __assignBankIds();
     var entry = window.__bankIdx[bid];
     var tabsHtml = renderBankTabs('common');
@@ -6425,7 +6514,10 @@
           '<div class="lg-detail-nav">' + prevBtn + nextBtn + '</div>' +
         '</div>' +
         '<div class="lg-detail-meta"><span class="lg-row-id">' + q._bid + '</span><span class="lg-row-diff">' + esc(q._dword) + '</span><span class="cc-q-type type-' + entry.type + '">' + entry.typeLabel + '</span><span class="lg-subj-tag">' + esc(entry.subjectName) + ' · ' + esc(entry.catName) + '</span>' + (q.subs && q.subs.length ? '<span class="lg-subj-tag lg-subj-big">大题 · ' + q.subs.length + ' 小题</span>' : '') + '</div>' +
-        '<div class="lg-detail-card">' + buildBankQuestionCard(q, entry.key) + '</div>' +
+        '<div class="lg-detail-body">' +
+          '<div class="lg-detail-main">' + buildBankQuestionCard(q, entry.key) + '</div>' +
+          '<div class="lg-detail-side">' + buildBankInfoPanel(entry) + '</div>' +
+        '</div>' +
       '</div>';
   }
 

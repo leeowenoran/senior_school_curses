@@ -4925,6 +4925,47 @@ body.theme-dark .lg-sub { background: var(--bg-2); }
 .lg-subj-tag { font-size: 13px; color: var(--text-3); }
 .lg-detail-card { max-width: 820px; }
 .lg-detail-card .lg-q { margin: 0; }
+/* ===== 洛谷式「题目信息」侧边栏 ===== */
+.lg-detail-body { display: flex; gap: 22px; align-items: flex-start; margin-top: 4px; }
+.lg-detail-main { flex: 1 1 auto; min-width: 0; max-width: 820px; }
+.lg-detail-side { flex: 0 0 296px; max-width: 296px; position: sticky; top: 84px; }
+.lg-info {
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg);
+  padding: 16px 16px 18px; box-shadow: var(--shadow);
+}
+.lg-info-title { font-size: 15px; font-weight: 800; color: var(--text-1); margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+.lg-info-sec { margin-bottom: 14px; }
+.lg-info-sec:last-child { margin-bottom: 0; }
+.lg-info-label { font-size: 12px; color: var(--text-3); margin-bottom: 5px; letter-spacing: .3px; }
+.lg-info-bid { font-family: "SF Mono", "Roboto Mono", Menlo, Consolas, monospace; font-size: 20px; font-weight: 700; color: var(--primary); letter-spacing: 1px; }
+.lg-info-val { font-size: 13.5px; color: var(--text-1); line-height: 1.55; }
+.lg-info-val b { color: var(--primary); }
+.lg-info-diff { display: inline-block; padding: 2px 11px; border-radius: 20px; font-size: 12px; font-weight: 700; color: #fff; }
+.lg-info-diff.lg-d-A { background: #c0392b; }
+.lg-info-diff.lg-d-B { background: #b45309; }
+.lg-info-diff.lg-d-C { background: #1d4ed8; }
+.lg-info-diff.lg-d-D { background: #15803d; }
+.lg-info-stars { color: var(--line); font-size: 13px; letter-spacing: 1px; margin-left: 4px; }
+.lg-info-star.on { color: #f5b301; }
+.lg-info-rate { display: flex; align-items: center; gap: 10px; }
+.lg-info-rate-num { font-size: 17px; font-weight: 800; min-width: 46px; }
+.lg-info-rate-bar { flex: 1; height: 8px; background: var(--line-2); border-radius: 6px; overflow: hidden; }
+.lg-info-rate-fill { display: block; height: 100%; border-radius: 6px; transition: width .3s; }
+.lg-info-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.lg-info-tag { font-size: 12px; padding: 3px 9px; border-radius: 6px; background: var(--bg-2); color: var(--text-2); border: 1px solid var(--line); }
+.lg-info-discuss { display: inline-block; font-size: 13.5px; color: var(--primary); text-decoration: none; font-weight: 600; }
+.lg-info-discuss:hover { text-decoration: underline; }
+.lg-info-rec { display: flex; flex-direction: column; gap: 6px; }
+.lg-info-rec-item { display: flex; align-items: center; gap: 8px; padding: 7px 9px; border-radius: 7px; cursor: pointer; background: var(--bg-2); border: 1px solid var(--line); transition: all .15s; }
+.lg-info-rec-item:hover { border-color: var(--primary); background: color-mix(in srgb, var(--primary) 8%, var(--bg-2)); }
+.lg-info-rec-id { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 11.5px; font-weight: 700; color: var(--primary); flex: 0 0 auto; }
+.lg-info-rec-title { flex: 1; min-width: 0; font-size: 12.5px; color: var(--text-1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lg-info-rec-go { color: var(--text-3); font-size: 15px; flex: 0 0 auto; }
+.lg-info-empty { font-size: 12.5px; color: var(--text-3); }
+@media (max-width: 920px) {
+  .lg-detail-body { flex-direction: column; }
+  .lg-detail-side { flex-basis: auto; max-width: none; width: 100%; position: static; }
+}
 
 body.theme-dark .lg-row { background: var(--bg-2); }
 body.theme-dark .lg-row-id { background: #0f172a; }
