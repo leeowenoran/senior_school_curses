@@ -6,6 +6,7 @@
   /* —— 子板块 1：信息类文本阅读 —— */
   v.points.push({
     id: 'zt1-info',
+    cover: 'assets/cover/chinese/zt1-info.svg',
     name: '信息类文本阅读',
     chapter: '一、现代文阅读',
     difficulty: '中等',
@@ -41,6 +42,7 @@
   /* —— 子板块 2：文学类文本阅读 —— */
   v.points.push({
     id: 'zt1-lit',
+    cover: 'assets/cover/chinese/zt1-lit.svg',
     name: '文学类文本阅读',
     chapter: '一、现代文阅读',
     difficulty: '较难',

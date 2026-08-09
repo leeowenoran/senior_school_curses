@@ -13,6 +13,7 @@
     /* ==================== 第1课 静女 ==================== */
     {
       id: 'bx1-u8-l1',
+      cover: 'assets/cover/chinese/bx1-u8-l1.svg',
       name: '静女',
       author: '《诗经·邶风》',
       chapter: '古诗词诵读',
@@ -53,6 +54,7 @@
     /* ==================== 第2课 涉江采芙蓉 ==================== */
     {
       id: 'bx1-u8-l2',
+      cover: 'assets/cover/chinese/bx1-u8-l2.svg',
       name: '涉江采芙蓉',
       author: '《古诗十九首》',
       chapter: '古诗词诵读',
@@ -93,6 +95,7 @@
     /* ==================== 第3课 虞美人 ==================== */
     {
       id: 'bx1-u8-l3',
+      cover: 'assets/cover/chinese/bx1-u8-l3.svg',
       name: '虞美人·春花秋月何时了',
       author: '李煜',
       chapter: '古诗词诵读',
@@ -133,6 +136,7 @@
     /* ==================== 第4课 鹊桥仙 ==================== */
     {
       id: 'bx1-u8-l4',
+      cover: 'assets/cover/chinese/bx1-u8-l4.svg',
       name: '鹊桥仙·纤云弄巧',
       author: '秦观',
       chapter: '古诗词诵读',

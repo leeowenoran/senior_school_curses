@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 875" preserveAspectRatio="xMidYMid slice">
+<defs>
+<linearGradient id="bgzt3-u4-l4" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="rgb(235,240,243)"/><stop offset="1" stop-color="rgb(246,249,250)"/>
+</linearGradient>
+<filter id="fzt3-u4-l4-wc" x="-50%" y="-50%" width="200%" height="200%">
+<feTurbulence type="fractalNoise" baseFrequency="0.0134" numOctaves="4" seed="4916" result="noise"/>
+<feDisplacementMap in="SourceGraphic" in2="noise" scale="40" xChannelSelector="R" yChannelSelector="G"/>
+<feGaussianBlur stdDeviation="24"/>
+</filter>
+<filter id="fzt3-u4-l4-blur" x="-30%" y="-30%" width="160%" height="160%">
+<feGaussianBlur stdDeviation="43"/>
+</filter>
+<filter id="paper-zt3-u4-l4" x="0" y="0" width="100%" height="100%">
+<feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" result="noise"/>
+<feColorMatrix type="saturate" values="0" in="noise" result="gray"/>
+<feComponentTransfer in="gray" result="alpha"><feFuncA type="linear" slope="0.12"/></feComponentTransfer>
+</filter>
+<radialGradient id="vigzt3-u4-l4" cx="50%" cy="45%" r="70%">
+<stop offset="0" stop-color="rgba(255,255,255,0.45)"/>
+<stop offset="1" stop-color="rgba(255,255,255,0)"/>
+</radialGradient>
+</defs>
+<rect width="1280" height="875" fill="url(#bgzt3-u4-l4)"/>
+<g filter="url(#fzt3-u4-l4-blur)" opacity="0.85"><ellipse cx="1002" cy="79" rx="404" ry="320" fill="#7ba7b8" opacity="0.50" filter="url(#fzt3-u4-l4-wc)"/><ellipse cx="491" cy="281" rx="187" ry="271" fill="#a8c4d4" opacity="0.50" filter="url(#fzt3-u4-l4-wc)"/><ellipse cx="1200" cy="414" rx="204" ry="202" fill="#d6e2e8" opacity="0.22" filter="url(#fzt3-u4-l4-wc)"/><ellipse cx="1166" cy="814" rx="420" ry="257" fill="#4a6272" opacity="0.40" filter="url(#fzt3-u4-l4-wc)"/><ellipse cx="137" cy="722" rx="419" ry="320" fill="#b8c9d4" opacity="0.43" filter="url(#fzt3-u4-l4-wc)"/></g>
+<circle cx="1025" cy="321" r="144" fill="rgba(123,167,184,0.22)" filter="url(#fzt3-u4-l4-wc)"/><circle cx="223" cy="619" r="160" fill="rgba(168,196,212,0.22)" filter="url(#fzt3-u4-l4-wc)"/><circle cx="1080" cy="334" r="96" fill="rgba(214,226,232,0.22)" filter="url(#fzt3-u4-l4-wc)"/><circle cx="290" cy="527" r="159" fill="rgba(74,98,114,0.22)" filter="url(#fzt3-u4-l4-wc)"/><circle cx="1080" cy="384" r="85" fill="rgba(123,167,184,0.22)" filter="url(#fzt3-u4-l4-wc)"/>
+<rect width="1280" height="875" fill="url(#vigzt3-u4-l4)"/>
+<rect width="1280" height="875" fill="rgba(253,251,245,0.18)" filter="url(#paper-zt3-u4-l4)"/>
+</svg>

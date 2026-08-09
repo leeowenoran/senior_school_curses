@@ -6,6 +6,7 @@
     /* ============ 第一单元 第1课 ============ */
     {
       id: 'xb2-u1-l1',
+      cover: 'assets/cover/chinese/xb2-u1-l1.svg',
       name: '《社会历史的决定性基础》',
       author: '恩格斯',
       chapter: '第一单元 理论的价值（科学与文化论著研习）',
@@ -57,6 +58,7 @@
     /* ============ 第一单元 第2课 ============ */
     {
       id: 'xb2-u1-l2',
+      cover: 'assets/cover/chinese/xb2-u1-l2.svg',
       name: '《改造我们的学习》',
       author: '毛泽东',
       chapter: '第一单元 理论的价值（科学与文化论著研习）',
@@ -108,6 +110,7 @@
     /* ============ 第一单元 第3课 ============ */
     {
       id: 'xb2-u1-l3',
+      cover: 'assets/cover/chinese/xb2-u1-l3.svg',
       name: '《人的正确思想是从哪里来的？》',
       author: '毛泽东',
       chapter: '第一单元 理论的价值（科学与文化论著研习）',
@@ -157,6 +160,7 @@
     /* ============ 第一单元 第4课 ============ */
     {
       id: 'xb2-u1-l4',
+      cover: 'assets/cover/chinese/xb2-u1-l4.svg',
       name: '《实践是检验真理的唯一标准》',
       author: '《光明日报》特约评论员',
       chapter: '第一单元 理论的价值（科学与文化论著研习）',
@@ -208,6 +212,7 @@
     /* ============ 第一单元 第5课 ============ */
     {
       id: 'xb2-u1-l5',
+      cover: 'assets/cover/chinese/xb2-u1-l5.svg',
       name: '《修辞立其诚》',
       author: '张岱年',
       chapter: '第一单元 理论的价值（科学与文化论著研习）',
@@ -258,6 +263,7 @@
     /* ============ 第一单元 第6课 ============ */
     {
       id: 'xb2-u1-l6',
+      cover: 'assets/cover/chinese/xb2-u1-l6.svg',
       name: '《怜悯是人的天性》',
       author: '卢梭',
       chapter: '第一单元 理论的价值（科学与文化论著研习）',
@@ -309,6 +315,7 @@
     /* ============ 第一单元 第7课 ============ */
     {
       id: 'xb2-u1-l7',
+      cover: 'assets/cover/chinese/xb2-u1-l7.svg',
       name: '《人应当坚持正义》',
       author: '柏拉图',
       chapter: '第一单元 理论的价值（科学与文化论著研习）',

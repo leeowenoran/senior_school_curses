@@ -1074,6 +1074,7 @@
       var col = (s && s.color) || '#4a7de0';
       pushRecent(sid, vid, idx, p.name);
       var crumb = '<a onclick="navigate(\'home\')">首页</a> / <a onclick="navigate(\'subject\',\'' + esc(sid) + '\')">' + esc(s.name) + '</a> / <a href="' + volUrl(sid, vid) + '">' + esc(v.name) + '</a> / ' + esc(p.name);
+      var coverHtml = (p.cover) ? '<div class="lesson-cover"><img src="' + esc(p.cover) + '" alt="' + esc(p.name) + ' 封面配图" loading="lazy"></div>' : '';
 
       // 语文课时：在开头补上对应课时的「原文」（来自集中映射 GZ_CHINESE_ORIGINALS）
       var origObj = (sid === 'chinese' && window.GZ_CHINESE_ORIGINALS && GZ_CHINESE_ORIGINALS[p.id]) ? GZ_CHINESE_ORIGINALS[p.id] : null;
@@ -1103,6 +1104,7 @@
 
       view.innerHTML = '<div class="crumb">' + crumb + '</div>' +
         '<article class="lesson" style="--sc:' + esc(col) + '">' +
+          coverHtml +
           '<header class="lesson-head">' +
             '<div class="lesson-kicker">' + esc(v.name) + ' · ' + esc(p.chapter || '') + '</div>' +
             '<h1 class="lesson-title">' + esc(p.name) + '</h1>' +

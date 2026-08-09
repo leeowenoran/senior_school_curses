@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 875" preserveAspectRatio="xMidYMid slice">
+<defs>
+<linearGradient id="bgzt3-xianjie" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="rgb(235,240,243)"/><stop offset="1" stop-color="rgb(246,249,250)"/>
+</linearGradient>
+<filter id="fzt3-xianjie-wc" x="-50%" y="-50%" width="200%" height="200%">
+<feTurbulence type="fractalNoise" baseFrequency="0.0145" numOctaves="4" seed="1005" result="noise"/>
+<feDisplacementMap in="SourceGraphic" in2="noise" scale="46" xChannelSelector="R" yChannelSelector="G"/>
+<feGaussianBlur stdDeviation="34"/>
+</filter>
+<filter id="fzt3-xianjie-blur" x="-30%" y="-30%" width="160%" height="160%">
+<feGaussianBlur stdDeviation="37"/>
+</filter>
+<filter id="paper-zt3-xianjie" x="0" y="0" width="100%" height="100%">
+<feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" result="noise"/>
+<feColorMatrix type="saturate" values="0" in="noise" result="gray"/>
+<feComponentTransfer in="gray" result="alpha"><feFuncA type="linear" slope="0.12"/></feComponentTransfer>
+</filter>
+<radialGradient id="vigzt3-xianjie" cx="50%" cy="45%" r="70%">
+<stop offset="0" stop-color="rgba(255,255,255,0.45)"/>
+<stop offset="1" stop-color="rgba(255,255,255,0)"/>
+</radialGradient>
+</defs>
+<rect width="1280" height="875" fill="url(#bgzt3-xianjie)"/>
+<g filter="url(#fzt3-xianjie-blur)" opacity="0.85"><ellipse cx="486" cy="375" rx="318" ry="318" fill="#7ba7b8" opacity="0.50" filter="url(#fzt3-xianjie-wc)"/><ellipse cx="598" cy="401" rx="334" ry="205" fill="#a8c4d4" opacity="0.49" filter="url(#fzt3-xianjie-wc)"/><ellipse cx="1198" cy="701" rx="370" ry="256" fill="#d6e2e8" opacity="0.42" filter="url(#fzt3-xianjie-wc)"/><ellipse cx="980" cy="810" rx="420" ry="166" fill="#4a6272" opacity="0.42" filter="url(#fzt3-xianjie-wc)"/><ellipse cx="1015" cy="221" rx="414" ry="320" fill="#b8c9d4" opacity="0.48" filter="url(#fzt3-xianjie-wc)"/></g>
+<circle cx="814" cy="458" r="103" fill="rgba(123,167,184,0.22)" filter="url(#fzt3-xianjie-wc)"/><circle cx="567" cy="453" r="159" fill="rgba(168,196,212,0.22)" filter="url(#fzt3-xianjie-wc)"/><circle cx="1080" cy="381" r="111" fill="rgba(214,226,232,0.22)" filter="url(#fzt3-xianjie-wc)"/><circle cx="790" cy="364" r="156" fill="rgba(74,98,114,0.22)" filter="url(#fzt3-xianjie-wc)"/><circle cx="1079" cy="574" r="143" fill="rgba(123,167,184,0.22)" filter="url(#fzt3-xianjie-wc)"/>
+<rect width="1280" height="875" fill="url(#vigzt3-xianjie)"/>
+<rect width="1280" height="875" fill="rgba(253,251,245,0.18)" filter="url(#paper-zt3-xianjie)"/>
+</svg>

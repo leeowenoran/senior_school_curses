@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 875" preserveAspectRatio="xMidYMid slice">
+<defs>
+<linearGradient id="bgzt1-u4-l1" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="rgb(240,235,226)"/><stop offset="1" stop-color="rgb(236,243,246)"/>
+</linearGradient>
+<filter id="fzt1-u4-l1-wc" x="-50%" y="-50%" width="200%" height="200%">
+<feTurbulence type="fractalNoise" baseFrequency="0.0186" numOctaves="4" seed="1997" result="noise"/>
+<feDisplacementMap in="SourceGraphic" in2="noise" scale="41" xChannelSelector="R" yChannelSelector="G"/>
+<feGaussianBlur stdDeviation="31"/>
+</filter>
+<filter id="fzt1-u4-l1-blur" x="-30%" y="-30%" width="160%" height="160%">
+<feGaussianBlur stdDeviation="31"/>
+</filter>
+<filter id="paper-zt1-u4-l1" x="0" y="0" width="100%" height="100%">
+<feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" result="noise"/>
+<feColorMatrix type="saturate" values="0" in="noise" result="gray"/>
+<feComponentTransfer in="gray" result="alpha"><feFuncA type="linear" slope="0.12"/></feComponentTransfer>
+</filter>
+<radialGradient id="vigzt1-u4-l1" cx="50%" cy="45%" r="70%">
+<stop offset="0" stop-color="rgba(255,255,255,0.45)"/>
+<stop offset="1" stop-color="rgba(255,255,255,0)"/>
+</radialGradient>
+</defs>
+<rect width="1280" height="875" fill="url(#bgzt1-u4-l1)"/>
+<g filter="url(#fzt1-u4-l1-blur)" opacity="0.85"><ellipse cx="166" cy="156" rx="364" ry="319" fill="#8ab88e" opacity="0.50" filter="url(#fzt1-u4-l1-wc)"/><ellipse cx="974" cy="291" rx="293" ry="148" fill="#d4c86e" opacity="0.49" filter="url(#fzt1-u4-l1-wc)"/><ellipse cx="1199" cy="206" rx="218" ry="128" fill="#a7c9d6" opacity="0.38" filter="url(#fzt1-u4-l1-wc)"/><ellipse cx="1080" cy="813" rx="420" ry="300" fill="#4a6b4d" opacity="0.26" filter="url(#fzt1-u4-l1-wc)"/><ellipse cx="365" cy="491" rx="417" ry="320" fill="#c9b896" opacity="0.39" filter="url(#fzt1-u4-l1-wc)"/></g>
+<path d="M0 540 Q244.95726495726495 480 400 520 T800 500 T1280 540 L1280 875 L0 875 Z" fill="rgba(138,184,142,0.22)" filter="url(#fzt1-u4-l1-blur)"/><path d="M0 620 Q311.46520146520146 560 600 600 T1280 580 L1280 875 L0 875 Z" fill="rgba(212,200,110,0.2)" filter="url(#fzt1-u4-l1-blur)"/><path d="M0 875 L0 396 L213 400 L427 342 L640 425 L853 405 L1067 397 L1280 376 L1280 875 Z" fill="rgba(201,184,150,0.18)" filter="url(#fzt1-u4-l1-blur)"/><g transform="translate(281.78266178266176,582.8278388278388)" opacity="0.55"><rect x="0" y="20" width="70" height="50" fill="rgba(74,107,77,0.5)"/><path d="M-10 20 L35 -15 L80 20 Z" fill="rgba(74,107,77,0.65)"/><rect x="90" y="35" width="55" height="35" fill="rgba(74,107,77,0.4)"/><path d="M85 35 L117 10 L150 35 Z" fill="rgba(74,107,77,0.55)"/></g><g opacity="0.35"><ellipse cx="1020" cy="511.94139194139194" rx="40" ry="18" fill="rgba(240,240,235,0.45)" filter="url(#fzt1-u4-l1-blur)"/><ellipse cx="811.8681318681319" cy="500.3858363858364" rx="50" ry="23" fill="rgba(240,240,235,0.45)" filter="url(#fzt1-u4-l1-blur)"/><ellipse cx="762.2710622710623" cy="518.935286935287" rx="60" ry="28" fill="rgba(240,240,235,0.45)" filter="url(#fzt1-u4-l1-blur)"/><ellipse cx="1019.7802197802198" cy="487.7362637362637" rx="70" ry="33" fill="rgba(240,240,235,0.45)" filter="url(#fzt1-u4-l1-blur)"/></g><line x1="1087" y1="691" x2="1087" y2="638" stroke="rgba(60,55,45,0.35)" stroke-width="3.5999999999999996" stroke-linecap="round"/><line x1="1087" y1="638" x2="1066" y2="610" stroke="rgba(60,55,45,0.35)" stroke-width="2.4" stroke-linecap="round"/><line x1="1066" y1="610" x2="1045" y2="604" stroke="rgba(60,55,45,0.35)" stroke-width="1.2" stroke-linecap="round"/><line x1="1066" y1="610" x2="1066" y2="590" stroke="rgba(60,55,45,0.35)" stroke-width="1.2" stroke-linecap="round"/><line x1="1087" y1="638" x2="1106" y2="613" stroke="rgba(60,55,45,0.35)" stroke-width="2.4" stroke-linecap="round"/><line x1="1106" y1="613" x2="1106" y2="592" stroke="rgba(60,55,45,0.35)" stroke-width="1.2" stroke-linecap="round"/><line x1="1106" y1="613" x2="1124" y2="607" stroke="rgba(60,55,45,0.35)" stroke-width="1.2" stroke-linecap="round"/>
+<rect width="1280" height="875" fill="url(#vigzt1-u4-l1)"/>
+<rect width="1280" height="875" fill="rgba(253,251,245,0.18)" filter="url(#paper-zt1-u4-l1)"/>
+</svg>

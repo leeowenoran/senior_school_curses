@@ -5,7 +5,8 @@
 
     /* ===================== 第四单元 求真求实（科学与文化论著研习） ===================== */
 
-    { id: 'xb3-u4-l1', name: '《自然选择的证明》', author: '达尔文', chapter: '第四单元 求真求实（科学与文化论著研习）', difficulty: '中等',
+    { id: 'xb3-u4-l1',    cover: 'assets/cover/chinese/xb3-u4-l1.svg',
+    name: '《自然选择的证明》', author: '达尔文', chapter: '第四单元 求真求实（科学与文化论著研习）', difficulty: '中等',
       content: [
         { type: 'heading', text: '一、作者与论著背景' },
         { type: 'paragraph', text: '《自然选择的证明》节选自达尔文的巨著《物种起源》（1859）。达尔文随“贝格尔号”舰环球考察五年，搜集了大量生物分布、形态与化石证据，提出生物进化与自然选择学说，从根本上动摇了“神创论”与“物种不变论”。' },
@@ -40,7 +41,8 @@
       ]
     },
 
-    { id: 'xb3-u4-l2', name: '《宇宙的边疆》', author: '卡尔·萨根', chapter: '第四单元 求真求实（科学与文化论著研习）', difficulty: '中等',
+    { id: 'xb3-u4-l2',    cover: 'assets/cover/chinese/xb3-u4-l2.svg',
+    name: '《宇宙的边疆》', author: '卡尔·萨根', chapter: '第四单元 求真求实（科学与文化论著研习）', difficulty: '中等',
       content: [
         { type: 'heading', text: '一、文体与作者' },
         { type: 'paragraph', text: '《宇宙的边疆》是电视系列片《宇宙》的解说词，作者卡尔·萨根（1934—1996）是美国天文学家、科普作家。作品以宏大而诗意的笔触，引导观众由远及近地认识宇宙的尺度与人类的位置。' },
@@ -75,7 +77,8 @@
       ]
     },
 
-    { id: 'xb3-u4-l3', name: '《天文学上的旷世之争》', author: '关增建', chapter: '第四单元 求真求实（科学与文化论著研习）', difficulty: '中等',
+    { id: 'xb3-u4-l3',    cover: 'assets/cover/chinese/xb3-u4-l3.svg',
+    name: '《天文学上的旷世之争》', author: '关增建', chapter: '第四单元 求真求实（科学与文化论著研习）', difficulty: '中等',
       content: [
         { type: 'heading', text: '一、作者与论著性质' },
         { type: 'paragraph', text: '《天文学上的旷世之争》是一篇科学史论文，作者关增建致力于中国计量科学与天文历史研究。文章梳理了中国古代关于宇宙结构的学说之争，并置于世界天文学发展的背景下加以评判。' },

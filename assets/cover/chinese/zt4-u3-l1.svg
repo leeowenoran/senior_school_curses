@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 875" preserveAspectRatio="xMidYMid slice">
+<defs>
+<linearGradient id="bgzt4-u3-l1" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="rgb(235,240,243)"/><stop offset="1" stop-color="rgb(246,249,250)"/>
+</linearGradient>
+<filter id="fzt4-u3-l1-wc" x="-50%" y="-50%" width="200%" height="200%">
+<feTurbulence type="fractalNoise" baseFrequency="0.0095" numOctaves="4" seed="7731" result="noise"/>
+<feDisplacementMap in="SourceGraphic" in2="noise" scale="56" xChannelSelector="R" yChannelSelector="G"/>
+<feGaussianBlur stdDeviation="31"/>
+</filter>
+<filter id="fzt4-u3-l1-blur" x="-30%" y="-30%" width="160%" height="160%">
+<feGaussianBlur stdDeviation="29"/>
+</filter>
+<filter id="paper-zt4-u3-l1" x="0" y="0" width="100%" height="100%">
+<feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" result="noise"/>
+<feColorMatrix type="saturate" values="0" in="noise" result="gray"/>
+<feComponentTransfer in="gray" result="alpha"><feFuncA type="linear" slope="0.12"/></feComponentTransfer>
+</filter>
+<radialGradient id="vigzt4-u3-l1" cx="50%" cy="45%" r="70%">
+<stop offset="0" stop-color="rgba(255,255,255,0.45)"/>
+<stop offset="1" stop-color="rgba(255,255,255,0)"/>
+</radialGradient>
+</defs>
+<rect width="1280" height="875" fill="url(#bgzt4-u3-l1)"/>
+<g filter="url(#fzt4-u3-l1-blur)" opacity="0.85"><ellipse cx="290" cy="348" rx="163" ry="120" fill="#7ba7b8" opacity="0.22" filter="url(#fzt4-u3-l1-wc)"/><ellipse cx="123" cy="627" rx="296" ry="130" fill="#a8c4d4" opacity="0.22" filter="url(#fzt4-u3-l1-wc)"/><ellipse cx="80" cy="178" rx="161" ry="139" fill="#d6e2e8" opacity="0.27" filter="url(#fzt4-u3-l1-wc)"/><ellipse cx="87" cy="60" rx="160" ry="124" fill="#4a6272" opacity="0.33" filter="url(#fzt4-u3-l1-wc)"/></g>
+<circle cx="474" cy="155" r="87" fill="rgba(123,167,184,0.22)" filter="url(#fzt4-u3-l1-wc)"/><circle cx="535" cy="156" r="70" fill="rgba(168,196,212,0.22)" filter="url(#fzt4-u3-l1-wc)"/><circle cx="200" cy="169" r="138" fill="rgba(214,226,232,0.22)" filter="url(#fzt4-u3-l1-wc)"/><circle cx="661" cy="174" r="70" fill="rgba(74,98,114,0.22)" filter="url(#fzt4-u3-l1-wc)"/><circle cx="200" cy="228" r="70" fill="rgba(123,167,184,0.22)" filter="url(#fzt4-u3-l1-wc)"/>
+<rect width="1280" height="875" fill="url(#vigzt4-u3-l1)"/>
+<rect width="1280" height="875" fill="rgba(253,251,245,0.18)" filter="url(#paper-zt4-u3-l1)"/>
+</svg>

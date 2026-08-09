@@ -5,7 +5,8 @@
 
     /* ===================== 第五单元 古诗词诵读 ===================== */
 
-    { id: 'xb3-u5-l1', name: '《拟行路难（其四）》', author: '鲍照', chapter: '古诗词诵读', difficulty: '中等',
+    { id: 'xb3-u5-l1',    cover: 'assets/cover/chinese/xb3-u5-l1.svg',
+    name: '《拟行路难（其四）》', author: '鲍照', chapter: '古诗词诵读', difficulty: '中等',
       content: [
         { type: 'heading', text: '一、作者与创作背景' },
         { type: 'paragraph', text: '鲍照（约414—466），字明远，南朝宋文学家，出身寒微，曾任临海王刘子顼前军参军。其诗继承建安风骨，抒发寒士怀才不遇的愤懑。《拟行路难》为拟乐府组诗，共十八首，本篇为其四，集中抒写门阀制度下有志难伸的愁苦。' },
@@ -38,7 +39,8 @@
       ]
     },
 
-    { id: 'xb3-u5-l2', name: '《客至》', author: '杜甫', chapter: '古诗词诵读', difficulty: '简单',
+    { id: 'xb3-u5-l2',    cover: 'assets/cover/chinese/xb3-u5-l2.svg',
+    name: '《客至》', author: '杜甫', chapter: '古诗词诵读', difficulty: '简单',
       content: [
         { type: 'heading', text: '一、作者与写作背景' },
         { type: 'paragraph', text: '《客至》作于唐肃宗上元二年（761）成都草堂初成时。经安史之乱流离，杜甫在友朋资助下于浣花溪畔筑成草堂，生活暂得安定，此诗即记崔明府来访的欣喜，展现诗人质朴真诚的待客之情。' },
@@ -71,7 +73,8 @@
       ]
     },
 
-    { id: 'xb3-u5-l3', name: '《登快阁》', author: '黄庭坚', chapter: '古诗词诵读', difficulty: '中等',
+    { id: 'xb3-u5-l3',    cover: 'assets/cover/chinese/xb3-u5-l3.svg',
+    name: '《登快阁》', author: '黄庭坚', chapter: '古诗词诵读', difficulty: '中等',
       content: [
         { type: 'heading', text: '一、作者与背景' },
         { type: 'paragraph', text: '黄庭坚（1045—1105），字鲁直，号山谷道人，北宋诗人、书法家，“苏门四学士”之首，江西诗派开山祖。《登快阁》作于元丰五年（1082）知吉州泰和县令时，写公事之余登阁所见与胸中块垒。' },
@@ -104,7 +107,8 @@
       ]
     },
 
-    { id: 'xb3-u5-l4', name: '《临安春雨初霁》', author: '陆游', chapter: '古诗词诵读', difficulty: '中等',
+    { id: 'xb3-u5-l4',    cover: 'assets/cover/chinese/xb3-u5-l4.svg',
+    name: '《临安春雨初霁》', author: '陆游', chapter: '古诗词诵读', difficulty: '中等',
       content: [
         { type: 'heading', text: '一、作者与背景' },
         { type: 'paragraph', text: '陆游（1125—1210），字务观，号放翁，南宋伟大爱国诗人。《临安春雨初霁》作于淳熙十三年（1186）奉召入京、客居临安时。表面写江南春景与闲适，实则隐含壮志未酬的惆怅。' },

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 875" preserveAspectRatio="xMidYMid slice">
+<defs>
+<linearGradient id="bgbx2-u9-l4" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="rgb(227,222,218)"/><stop offset="1" stop-color="rgb(250,246,239)"/>
+</linearGradient>
+<filter id="fbx2-u9-l4-wc" x="-50%" y="-50%" width="200%" height="200%">
+<feTurbulence type="fractalNoise" baseFrequency="0.0146" numOctaves="4" seed="4513" result="noise"/>
+<feDisplacementMap in="SourceGraphic" in2="noise" scale="50" xChannelSelector="R" yChannelSelector="G"/>
+<feGaussianBlur stdDeviation="30"/>
+</filter>
+<filter id="fbx2-u9-l4-blur" x="-30%" y="-30%" width="160%" height="160%">
+<feGaussianBlur stdDeviation="44"/>
+</filter>
+<filter id="paper-bx2-u9-l4" x="0" y="0" width="100%" height="100%">
+<feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" result="noise"/>
+<feColorMatrix type="saturate" values="0" in="noise" result="gray"/>
+<feComponentTransfer in="gray" result="alpha"><feFuncA type="linear" slope="0.12"/></feComponentTransfer>
+</filter>
+<radialGradient id="vigbx2-u9-l4" cx="50%" cy="45%" r="70%">
+<stop offset="0" stop-color="rgba(255,255,255,0.45)"/>
+<stop offset="1" stop-color="rgba(255,255,255,0)"/>
+</radialGradient>
+</defs>
+<rect width="1280" height="875" fill="url(#bgbx2-u9-l4)"/>
+<g filter="url(#fbx2-u9-l4-blur)" opacity="0.85"><ellipse cx="521" cy="329" rx="342" ry="318" fill="#c45c48" opacity="0.50" filter="url(#fbx2-u9-l4-wc)"/><ellipse cx="602" cy="496" rx="270" ry="279" fill="#d9a26a" opacity="0.49" filter="url(#fbx2-u9-l4-wc)"/><ellipse cx="1199" cy="712" rx="240" ry="259" fill="#e8d6b8" opacity="0.27" filter="url(#fbx2-u9-l4-wc)"/><ellipse cx="1031" cy="811" rx="420" ry="167" fill="#6d3c3c" opacity="0.44" filter="url(#fbx2-u9-l4-wc)"/><ellipse cx="878" cy="360" rx="415" ry="320" fill="#9c8a7a" opacity="0.48" filter="url(#fbx2-u9-l4-wc)"/></g>
+<radialGradient id="fbx2-u9-l4-glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="rgba(217,162,106,0.55)"/><stop offset="1" stop-color="rgba(217,162,106,0)"/></radialGradient><circle cx="663" cy="421" r="239.98534798534797" fill="url(#fbx2-u9-l4-glow)" filter="url(#fbx2-u9-l4-blur)"/><path d="M640.6830280830281 330.16849816849816 L685.8615384615384 330.16849816849816 L691.8615384615384 511.53113553113553 L634.6830280830281 511.53113553113553 Z" fill="rgba(196,92,72,0.82)" filter="url(#fbx2-u9-l4-wc)"/><path d="M663.2722832722833 324.16849816849816 q-25.962881562881563 -41.88864468864469 0 -69.81440781440782 q25.962881562881563 27.925763125763126 0 69.81440781440782" fill="rgba(255,220,150,0.85)" filter="url(#fbx2-u9-l4-blur)"/><path d="M638.6830280830281 411.781684981685 q8 18 16 0 q6 22 12 0" stroke="rgba(255,245,235,0.5)" stroke-width="3" fill="none"/>
+<rect width="1280" height="875" fill="url(#vigbx2-u9-l4)"/>
+<rect width="1280" height="875" fill="rgba(253,251,245,0.18)" filter="url(#paper-bx2-u9-l4)"/>
+</svg>

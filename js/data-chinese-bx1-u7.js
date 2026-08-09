@@ -13,6 +13,7 @@
     /* ==================== 第1课 故都的秋 ==================== */
     {
       id: 'bx1-u7-l1',
+      cover: 'assets/cover/chinese/bx1-u7-l1.svg',
       name: '故都的秋',
       author: '郁达夫',
       chapter: '第七单元 自然情怀（散文）',
@@ -56,6 +57,7 @@
     /* ==================== 第2课 荷塘月色 ==================== */
     {
       id: 'bx1-u7-l2',
+      cover: 'assets/cover/chinese/bx1-u7-l2.svg',
       name: '荷塘月色',
       author: '朱自清',
       chapter: '第七单元 自然情怀（散文）',
@@ -98,6 +100,7 @@
     /* ==================== 第3课 我与地坛（节选） ==================== */
     {
       id: 'bx1-u7-l3',
+      cover: 'assets/cover/chinese/bx1-u7-l3.svg',
       name: '我与地坛（节选）',
       author: '史铁生',
       chapter: '第七单元 自然情怀（散文）',
@@ -141,6 +144,7 @@
     /* ==================== 第4课 赤壁赋 ==================== */
     {
       id: 'bx1-u7-l4',
+      cover: 'assets/cover/chinese/bx1-u7-l4.svg',
       name: '赤壁赋',
       author: '苏轼',
       chapter: '第七单元 自然情怀（散文）',
@@ -184,6 +188,7 @@
     /* ==================== 第5课 登泰山记 ==================== */
     {
       id: 'bx1-u7-l5',
+      cover: 'assets/cover/chinese/bx1-u7-l5.svg',
       name: '登泰山记',
       author: '姚鼐',
       chapter: '第七单元 自然情怀（散文）',

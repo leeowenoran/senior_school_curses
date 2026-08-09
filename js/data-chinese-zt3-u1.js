@@ -6,6 +6,7 @@
   /* —— 子板块 1：字音字形 —— */
   v.points.push({
     id: 'zt3-zi',
+    cover: 'assets/cover/chinese/zt3-zi.svg',
     name: '字音字形',
     chapter: '三、语言文字运用',
     difficulty: '中等',
@@ -30,6 +31,7 @@
   /* —— 子板块 2：词语/成语辨析 —— */
   v.points.push({
     id: 'zt3-ci',
+    cover: 'assets/cover/chinese/zt3-ci.svg',
     name: '词语/成语辨析',
     chapter: '三、语言文字运用',
     difficulty: '中等',
@@ -54,6 +56,7 @@
   /* —— 子板块 3：病句辨析与修改 —— */
   v.points.push({
     id: 'zt3-bingju',
+    cover: 'assets/cover/chinese/zt3-bingju.svg',
     name: '病句辨析与修改',
     chapter: '三、语言文字运用',
     difficulty: '较难',
@@ -83,6 +86,7 @@
   /* —— 子板块 4：语句衔接与排序 —— */
   v.points.push({
     id: 'zt3-xianjie',
+    cover: 'assets/cover/chinese/zt3-xianjie.svg',
     name: '语句衔接与排序',
     chapter: '三、语言文字运用',
     difficulty: '中等',
@@ -107,6 +111,7 @@
   /* —— 子板块 5：修辞手法 —— */
   v.points.push({
     id: 'zt3-xiuci',
+    cover: 'assets/cover/chinese/zt3-xiuci.svg',
     name: '修辞手法',
     chapter: '三、语言文字运用',
     difficulty: '中等',
@@ -136,6 +141,7 @@
   /* —— 子板块 6：语言表达 —— */
   v.points.push({
     id: 'zt3-yuyan',
+    cover: 'assets/cover/chinese/zt3-yuyan.svg',
     name: '语言表达',
     chapter: '三、语言文字运用',
     difficulty: '中等',

@@ -14,6 +14,7 @@
     /* ==================== 第1课 登岳阳楼（杜甫） ==================== */
     {
       id: 'bx2-u9-l1',
+      cover: 'assets/cover/chinese/bx2-u9-l1.svg',
       name: '《登岳阳楼》',
       author: '杜甫',
       chapter: '古诗词诵读',
@@ -55,6 +56,7 @@
     /* ==================== 第2课 桂枝香·金陵怀古（王安石） ==================== */
     {
       id: 'bx2-u9-l2',
+      cover: 'assets/cover/chinese/bx2-u9-l2.svg',
       name: '《桂枝香·金陵怀古》',
       author: '王安石',
       chapter: '古诗词诵读',
@@ -96,6 +98,7 @@
     /* ==================== 第3课 鹊桥仙（秦观） ==================== */
     {
       id: 'bx2-u9-l3',
+      cover: 'assets/cover/chinese/bx2-u9-l3.svg',
       name: '《鹊桥仙》',
       author: '秦观',
       chapter: '古诗词诵读',
@@ -137,6 +140,7 @@
     /* ==================== 第4课 念奴娇·过洞庭（张孝祥） ==================== */
     {
       id: 'bx2-u9-l4',
+      cover: 'assets/cover/chinese/bx2-u9-l4.svg',
       name: '《念奴娇·过洞庭》',
       author: '张孝祥',
       chapter: '古诗词诵读',
@@ -178,6 +182,7 @@
     /* ==================== 第5课 附录：重点积累板块 ==================== */
     {
       id: 'bx2-u9-l5',
+      cover: 'assets/cover/chinese/bx2-u9-l5.svg',
       name: '重点积累板块',
       author: '附录',
       chapter: '附录：重点积累板块',

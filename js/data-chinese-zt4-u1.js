@@ -6,6 +6,7 @@
   /* —— 子板块 1：材料作文 —— */
   v.points.push({
     id: 'zt4-cailiao',
+    cover: 'assets/cover/chinese/zt4-cailiao.svg',
     name: '材料作文',
     chapter: '四、写作',
     difficulty: '较难',
@@ -36,6 +37,7 @@
   /* —— 子板块 2：命题/半命题作文 —— */
   v.points.push({
     id: 'zt4-mingti',
+    cover: 'assets/cover/chinese/zt4-mingti.svg',
     name: '命题/半命题作文',
     chapter: '四、写作',
     difficulty: '中等',
@@ -60,6 +62,7 @@
   /* —— 子板块 3：话题作文 —— */
   v.points.push({
     id: 'zt4-huati',
+    cover: 'assets/cover/chinese/zt4-huati.svg',
     name: '话题作文',
     chapter: '四、写作',
     difficulty: '中等',
@@ -84,6 +87,7 @@
   /* —— 子板块 4：任务驱动型作文 —— */
   v.points.push({
     id: 'zt4-renwu',
+    cover: 'assets/cover/chinese/zt4-renwu.svg',
     name: '任务驱动型作文',
     chapter: '四、写作',
     difficulty: '较难',

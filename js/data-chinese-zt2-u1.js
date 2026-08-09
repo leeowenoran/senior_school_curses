@@ -6,6 +6,7 @@
   /* —— 子板块 1：文言文阅读 —— */
   v.points.push({
     id: 'zt2-classical',
+    cover: 'assets/cover/chinese/zt2-classical.svg',
     name: '文言文阅读',
     chapter: '二、古诗文阅读',
     difficulty: '较难',
@@ -42,6 +43,7 @@
   /* —— 子板块 2：古代诗歌阅读 —— */
   v.points.push({
     id: 'zt2-poem',
+    cover: 'assets/cover/chinese/zt2-poem.svg',
     name: '古代诗歌阅读',
     chapter: '二、古诗文阅读',
     difficulty: '较难',
@@ -78,6 +80,7 @@
   /* —— 子板块 3：名篇名句默写 —— */
   v.points.push({
     id: 'zt2-recite',
+    cover: 'assets/cover/chinese/zt2-recite.svg',
     name: '名篇名句默写',
     chapter: '二、古诗文阅读',
     difficulty: '中等',

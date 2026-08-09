@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 875" preserveAspectRatio="xMidYMid slice">
+<defs>
+<linearGradient id="bgzt2-poem" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="rgb(228,234,239)"/><stop offset="1" stop-color="rgb(250,246,250)"/>
+</linearGradient>
+<filter id="fzt2-poem-wc" x="-50%" y="-50%" width="200%" height="200%">
+<feTurbulence type="fractalNoise" baseFrequency="0.0176" numOctaves="4" seed="8581" result="noise"/>
+<feDisplacementMap in="SourceGraphic" in2="noise" scale="31" xChannelSelector="R" yChannelSelector="G"/>
+<feGaussianBlur stdDeviation="24"/>
+</filter>
+<filter id="fzt2-poem-blur" x="-30%" y="-30%" width="160%" height="160%">
+<feGaussianBlur stdDeviation="29"/>
+</filter>
+<filter id="paper-zt2-poem" x="0" y="0" width="100%" height="100%">
+<feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" result="noise"/>
+<feColorMatrix type="saturate" values="0" in="noise" result="gray"/>
+<feComponentTransfer in="gray" result="alpha"><feFuncA type="linear" slope="0.12"/></feComponentTransfer>
+</filter>
+<radialGradient id="vigzt2-poem" cx="50%" cy="45%" r="70%">
+<stop offset="0" stop-color="rgba(255,255,255,0.45)"/>
+<stop offset="1" stop-color="rgba(255,255,255,0)"/>
+</radialGradient>
+</defs>
+<rect width="1280" height="875" fill="url(#bgzt2-poem)"/>
+<g filter="url(#fzt2-poem-blur)" opacity="0.85"><ellipse cx="86" cy="461" rx="229" ry="122" fill="#c4a6c8" opacity="0.22" filter="url(#fzt2-poem-wc)"/><ellipse cx="885" cy="77" rx="193" ry="133" fill="#8b9bb4" opacity="0.23" filter="url(#fzt2-poem-wc)"/><ellipse cx="81" cy="721" rx="183" ry="221" fill="#e6d7e8" opacity="0.29" filter="url(#fzt2-poem-wc)"/><ellipse cx="229" cy="63" rx="160" ry="192" fill="#5d4a6b" opacity="0.22" filter="url(#fzt2-poem-wc)"/></g>
+<rect x="0" y="0" width="1280" height="875" fill="rgba(93,74,107,0.12)"/><circle cx="1032" cy="131" r="53.564835164835166" fill="rgba(255,250,220,0.6)" filter="url(#fzt2-poem-blur)"/><path d="M369.3333333333333 -19.501831501831504 Q452.46886446886447 70.51770451770452 351.1306471306471 160.53724053724054" stroke="rgba(139,155,180,0.45)" stroke-width="3.3765567765567766" fill="none" filter="url(#fzt2-poem-blur)"/><path d="M893.953601953602 -18.652014652014653 Q937.9389499389499 81.38949938949938 876.6105006105006 181.4310134310134" stroke="rgba(139,155,180,0.45)" stroke-width="3.002930402930403" fill="none" filter="url(#fzt2-poem-blur)"/><path d="M137.05006105006106 -18.007326007326007 Q229.59218559218561 72.07081807081806 124.23931623931625 162.14896214896214" stroke="rgba(139,155,180,0.45)" stroke-width="4.508424908424908" fill="none" filter="url(#fzt2-poem-blur)"/><path d="M1075.8144078144078 -14.608058608058608 Q1131.7557997557997 115.61660561660561 1066.4810744810745 245.84126984126985" stroke="rgba(139,155,180,0.45)" stroke-width="3.0124542124542124" fill="none" filter="url(#fzt2-poem-blur)"/><path d="M368.2002442002442 -12 Q408.2002442002442 78.33211233211233 376.95726495726495 168.66422466422466" stroke="rgba(139,155,180,0.45)" stroke-width="3.0336996336996336" fill="none" filter="url(#fzt2-poem-blur)"/><path d="M0 620 Q320 540 640 600 T1280 560 L1280 875 L0 875 Z" fill="rgba(230,215,232,0.22)" filter="url(#fzt2-poem-blur)"/><ellipse cx="1032" cy="685.3137973137973" rx="81.32844932844932" ry="14.00976800976801" fill="rgba(255,250,220,0.25)" filter="url(#fzt2-poem-blur)"/>
+<rect width="1280" height="875" fill="url(#vigzt2-poem)"/>
+<rect width="1280" height="875" fill="rgba(253,251,245,0.18)" filter="url(#paper-zt2-poem)"/>
+</svg>

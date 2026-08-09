@@ -6,6 +6,7 @@
     /* ============ 第二单元 第1课 ============ */
     {
       id: 'xb2-u2-l1',
+      cover: 'assets/cover/chinese/xb2-u2-l1.svg',
       name: '《记念刘和珍君》',
       author: '鲁迅',
       chapter: '第二单元 苦难与新生（中国革命传统作品研习）',
@@ -59,6 +60,7 @@
     /* ============ 第二单元 第2课 ============ */
     {
       id: 'xb2-u2-l2',
+      cover: 'assets/cover/chinese/xb2-u2-l2.svg',
       name: '《为了忘却的记念》',
       author: '鲁迅',
       chapter: '第二单元 苦难与新生（中国革命传统作品研习）',
@@ -114,6 +116,7 @@
     /* ============ 第二单元 第3课 ============ */
     {
       id: 'xb2-u2-l3',
+      cover: 'assets/cover/chinese/xb2-u2-l3.svg',
       name: '《包身工》',
       author: '夏衍',
       chapter: '第二单元 苦难与新生（中国革命传统作品研习）',
@@ -168,6 +171,7 @@
     /* ============ 第二单元 第4课 ============ */
     {
       id: 'xb2-u2-l4',
+      cover: 'assets/cover/chinese/xb2-u2-l4.svg',
       name: '《荷花淀》',
       author: '孙犁',
       chapter: '第二单元 苦难与新生（中国革命传统作品研习）',
@@ -221,6 +225,7 @@
     /* ============ 第二单元 第5课 ============ */
     {
       id: 'xb2-u2-l5',
+      cover: 'assets/cover/chinese/xb2-u2-l5.svg',
       name: '《小二黑结婚（节选）》',
       author: '赵树理',
       chapter: '第二单元 苦难与新生（中国革命传统作品研习）',
@@ -275,6 +280,7 @@
     /* ============ 第二单元 第6课 ============ */
     {
       id: 'xb2-u2-l6',
+      cover: 'assets/cover/chinese/xb2-u2-l6.svg',
       name: '《党费》',
       author: '王愿坚',
       chapter: '第二单元 苦难与新生（中国革命传统作品研习）',

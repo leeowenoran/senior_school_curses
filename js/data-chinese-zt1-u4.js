@@ -5,7 +5,8 @@
 
     /* ===================== 现代文阅读Ⅱ · 散文阅读 ===================== */
 
-    { id: 'zt1-u4-l1', name: '《散文阅读：结构思路、内容形象、语言技巧与深层意蕴》', author: '高考复习', chapter: '现代文阅读Ⅱ · 散文阅读', difficulty: '中等',
+    { id: 'zt1-u4-l1',    cover: 'assets/cover/chinese/zt1-u4-l1.svg',
+    name: '《散文阅读：结构思路、内容形象、语言技巧与深层意蕴》', author: '高考复习', chapter: '现代文阅读Ⅱ · 散文阅读', difficulty: '中等',
       content: [
         { type: 'heading', text: '一、抓住散文线索，理清作者思路' },
         { type: 'paragraph', text: '散文讲究“形散神聚”，材料看似自由散落，却始终被一条红线串联。这条红线就是线索。抓住线索，才能理清作者的行文思路，进而把握全文主旨。' },
@@ -46,7 +47,8 @@
 
     /* ===================== 现代文阅读 · 能力层级与备考 ===================== */
 
-    { id: 'zt1-u4-l2', name: '《现代文阅读能力层级总览与分值备考》', author: '高考复习', chapter: '现代文阅读 · 能力层级与备考', difficulty: '中等',
+    { id: 'zt1-u4-l2',    cover: 'assets/cover/chinese/zt1-u4-l2.svg',
+    name: '《现代文阅读能力层级总览与分值备考》', author: '高考复习', chapter: '现代文阅读 · 能力层级与备考', difficulty: '中等',
       content: [
         { type: 'heading', text: '一、高考语文的六种能力层级' },
         { type: 'paragraph', text: '高考语文以能力立意命题，将考核目标由低到高分为六级。层级越高，对思维深度和综合运用能力的要求也越高。' },

@@ -5,7 +5,8 @@
 
     /* ===================== 第一单元 诗的国度 ===================== */
 
-    { id: 'xb3-u1-l1', name: '《氓》', author: '《诗经·卫风》', chapter: '第一单元 诗的国度（中华传统文化经典研习）', difficulty: '中等',
+    { id: 'xb3-u1-l1',    cover: 'assets/cover/chinese/xb3-u1-l1.svg',
+    name: '《氓》', author: '《诗经·卫风》', chapter: '第一单元 诗的国度（中华传统文化经典研习）', difficulty: '中等',
       content: [
         { type: 'heading', text: '一、作品与时代背景' },
         { type: 'paragraph', text: '《氓》选自《诗经·卫风》，是《诗经》中著名的弃妇诗。诗以一位女子自述的口吻，叙述了她从恋爱、结婚到被抛弃、最终决绝的完整经历，塑造了中国文学史上最早的弃妇形象之一。' },
@@ -38,7 +39,8 @@
       ]
     },
 
-    { id: 'xb3-u1-l2', name: '《离骚》（节选）', author: '屈原', chapter: '第一单元 诗的国度（中华传统文化经典研习）', difficulty: '较难',
+    { id: 'xb3-u1-l2',    cover: 'assets/cover/chinese/xb3-u1-l2.svg',
+    name: '《离骚》（节选）', author: '屈原', chapter: '第一单元 诗的国度（中华传统文化经典研习）', difficulty: '较难',
       content: [
         { type: 'heading', text: '一、作者与文体' },
         { type: 'paragraph', text: '屈原（约前340—前278），名平，字原，战国末期楚国人，我国第一位伟大的浪漫主义爱国诗人。《离骚》是楚辞的代表作，开创“骚体”，对后世文学影响深远。' },
@@ -71,7 +73,8 @@
       ]
     },
 
-    { id: 'xb3-u1-l3', name: '《孔雀东南飞并序》', author: '汉乐府', chapter: '第一单元 诗的国度（中华传统文化经典研习）', difficulty: '较难',
+    { id: 'xb3-u1-l3',    cover: 'assets/cover/chinese/xb3-u1-l3.svg',
+    name: '《孔雀东南飞并序》', author: '汉乐府', chapter: '第一单元 诗的国度（中华传统文化经典研习）', difficulty: '较难',
       content: [
         { type: 'heading', text: '一、体裁与背景' },
         { type: 'paragraph', text: '《孔雀东南飞》是汉乐府民歌中最杰出的长篇叙事诗，与《木兰诗》并称“乐府双璧”。诗前有小序，交代了故事发生于“建安中”的庐江府，男女主角因封建家长干涉而双双殉情。' },
@@ -104,7 +107,8 @@
       ]
     },
 
-    { id: 'xb3-u1-l4', name: '《蜀道难》', author: '李白', chapter: '第一单元 诗的国度（中华传统文化经典研习）', difficulty: '中等',
+    { id: 'xb3-u1-l4',    cover: 'assets/cover/chinese/xb3-u1-l4.svg',
+    name: '《蜀道难》', author: '李白', chapter: '第一单元 诗的国度（中华传统文化经典研习）', difficulty: '中等',
       content: [
         { type: 'heading', text: '一、作者与诗体' },
         { type: 'paragraph', text: '李白（701—762），字太白，号青莲居士，唐代伟大的浪漫主义诗人，被誉为“诗仙”。《蜀道难》是乐府旧题，李白借之抒写蜀地山川的奇险，并寄寓对时局的隐忧。' },
@@ -137,7 +141,8 @@
       ]
     },
 
-    { id: 'xb3-u1-l5', name: '《蜀相》', author: '杜甫', chapter: '第一单元 诗的国度（中华传统文化经典研习）', difficulty: '中等',
+    { id: 'xb3-u1-l5',    cover: 'assets/cover/chinese/xb3-u1-l5.svg',
+    name: '《蜀相》', author: '杜甫', chapter: '第一单元 诗的国度（中华传统文化经典研习）', difficulty: '中等',
       content: [
         { type: 'heading', text: '一、作者与背景' },
         { type: 'paragraph', text: '杜甫（712—770），字子美，唐代现实主义诗人，被誉为“诗圣”，其诗称“诗史”。《蜀相》作于诗人流寓成都、访武侯祠时，借凭吊诸葛亮抒发感时忧国、壮志难酬之慨。' },
@@ -170,7 +175,8 @@
       ]
     },
 
-    { id: 'xb3-u1-l6', name: '《望海潮（东南形胜）》', author: '柳永', chapter: '第一单元 诗的国度（中华传统文化经典研习）', difficulty: '中等',
+    { id: 'xb3-u1-l6',    cover: 'assets/cover/chinese/xb3-u1-l6.svg',
+    name: '《望海潮（东南形胜）》', author: '柳永', chapter: '第一单元 诗的国度（中华传统文化经典研习）', difficulty: '中等',
       content: [
         { type: 'heading', text: '一、作者与词体' },
         { type: 'paragraph', text: '柳永（约987—约1053），原名三变，字耆卿，北宋婉约派代表人物。他大量创制慢词，以市井语言写都市繁华与羁旅愁情。《望海潮》是其即席赠予两浙转运使孙何的投赠之作。' },
@@ -203,7 +209,8 @@
       ]
     },
 
-    { id: 'xb3-u1-l7', name: '《扬州慢（淮左名都）》', author: '姜夔', chapter: '第一单元 诗的国度（中华传统文化经典研习）', difficulty: '中等',
+    { id: 'xb3-u1-l7',    cover: 'assets/cover/chinese/xb3-u1-l7.svg',
+    name: '《扬州慢（淮左名都）》', author: '姜夔', chapter: '第一单元 诗的国度（中华传统文化经典研习）', difficulty: '中等',
       content: [
         { type: 'heading', text: '一、作者与词风' },
         { type: 'paragraph', text: '姜夔（约1155—约1221），字尧章，号白石道人，南宋格律派词人。《扬州慢》是其自度曲（自制新调），写于扬州陷落、满目疮痍之后，抒发深沉的黍离之悲。' },

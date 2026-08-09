@@ -5,7 +5,8 @@
 
     /* ===================== 附录 重点积累 ===================== */
 
-    { id: 'xb3-u6-l1', name: '《本册重点积累》', author: '教材附录', chapter: '附录 重点积累', difficulty: '简单',
+    { id: 'xb3-u6-l1',    cover: 'assets/cover/chinese/xb3-u6-l1.svg',
+    name: '《本册重点积累》', author: '教材附录', chapter: '附录 重点积累', difficulty: '简单',
       content: [
         { type: 'heading', text: '一、本册知识框架' },
         { type: 'paragraph', text: '选择性必修下册涵盖古诗文与现当代作品，本归纳板聚焦于需要长期积累的文言基础与背诵内容，按“字音字形—实词虚词—成语典故—文化常识—背诵默写”五大模块系统梳理，便于复习时查漏补缺。' },
