@@ -1,29 +1,34 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 875" preserveAspectRatio="xMidYMid slice">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 875" width="1280" height="875">
+
 <defs>
-<linearGradient id="bgbx1-u2-l3" x1="0" y1="0" x2="0" y2="1">
-<stop offset="0" stop-color="rgb(240,235,226)"/><stop offset="1" stop-color="rgb(236,243,246)"/>
-</linearGradient>
-<filter id="fbx1-u2-l3-wc" x="-50%" y="-50%" width="200%" height="200%">
-<feTurbulence type="fractalNoise" baseFrequency="0.0187" numOctaves="4" seed="1084" result="noise"/>
-<feDisplacementMap in="SourceGraphic" in2="noise" scale="44" xChannelSelector="R" yChannelSelector="G"/>
-<feGaussianBlur stdDeviation="33"/>
-</filter>
-<filter id="fbx1-u2-l3-blur" x="-30%" y="-30%" width="160%" height="160%">
-<feGaussianBlur stdDeviation="36"/>
-</filter>
-<filter id="paper-bx1-u2-l3" x="0" y="0" width="100%" height="100%">
-<feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" result="noise"/>
-<feColorMatrix type="saturate" values="0" in="noise" result="gray"/>
-<feComponentTransfer in="gray" result="alpha"><feFuncA type="linear" slope="0.12"/></feComponentTransfer>
-</filter>
-<radialGradient id="vigbx1-u2-l3" cx="50%" cy="45%" r="70%">
-<stop offset="0" stop-color="rgba(255,255,255,0.45)"/>
-<stop offset="1" stop-color="rgba(255,255,255,0)"/>
-</radialGradient>
+  <!-- paper grain -->
+  <filter id="paper_bx1-u2-l3" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="4" result="noise"/>
+    <feColorMatrix type="matrix" values="0.3 0 0 0 0.7  0 0.3 0 0 0.7  0 0 0.3 0 0.7  0 0 0 0.25 0" in="noise" result="grain"/>
+    <feBlend mode="multiply" in="SourceGraphic" in2="grain"/>
+  </filter>
+  <!-- watercolor bloom edge -->
+  <filter id="bloom_bx1-u2-l3" x="-20%" y="-20%" width="140%" height="140%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" result="noise"/>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="18" xChannelSelector="R" yChannelSelector="G"/>
+    <feGaussianBlur stdDeviation="2.5"/>
+  </filter>
+  <!-- soft wash blur -->
+  <filter id="wash_bx1-u2-l3" x="-10%" y="-10%" width="120%" height="120%">
+    <feGaussianBlur stdDeviation="4"/>
+  </filter>
+  <!-- distant mist -->
+  <filter id="mist_bx1-u2-l3" x="0" y="0" width="100%" height="100%">
+    <feGaussianBlur stdDeviation="7"/>
+  </filter>
+  <!-- hard watercolor (medium) -->
+  <filter id="water_bx1-u2-l3" x="-15%" y="-15%" width="130%" height="130%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="8" xChannelSelector="R" yChannelSelector="G"/>
+    <feGaussianBlur stdDeviation="1.2"/>
+  </filter>
 </defs>
-<rect width="1280" height="875" fill="url(#bgbx1-u2-l3)"/>
-<g filter="url(#fbx1-u2-l3-blur)" opacity="0.85"><ellipse cx="192" cy="180" rx="251" ry="122" fill="#8ab88e" opacity="0.22" filter="url(#fbx1-u2-l3-wc)"/><ellipse cx="981" cy="362" rx="326" ry="199" fill="#d4c86e" opacity="0.23" filter="url(#fbx1-u2-l3-wc)"/><ellipse cx="81" cy="226" rx="316" ry="230" fill="#a7c9d6" opacity="0.38" filter="url(#fbx1-u2-l3-wc)"/><ellipse cx="275" cy="64" rx="160" ry="200" fill="#4a6b4d" opacity="0.28" filter="url(#fbx1-u2-l3-wc)"/></g>
-<path d="M0 540 Q220.1221001221001 480 400 520 T800 500 T1280 540 L1280 875 L0 875 Z" fill="rgba(138,184,142,0.22)" filter="url(#fbx1-u2-l3-blur)"/><path d="M0 620 Q314.98168498168496 560 600 600 T1280 580 L1280 875 L0 875 Z" fill="rgba(212,200,110,0.2)" filter="url(#fbx1-u2-l3-blur)"/><path d="M0 875 L0 426 L213 426 L427 401 L640 410 L853 400 L1067 414 L1280 438 L1280 875 Z" fill="rgba(201,184,150,0.18)" filter="url(#fbx1-u2-l3-blur)"/><g transform="translate(307.3748473748474,547.8974358974359)" opacity="0.55"><rect x="0" y="20" width="70" height="50" fill="rgba(74,107,77,0.5)"/><path d="M-10 20 L35 -15 L80 20 Z" fill="rgba(74,107,77,0.65)"/><rect x="90" y="35" width="55" height="35" fill="rgba(74,107,77,0.4)"/><path d="M85 35 L117 10 L150 35 Z" fill="rgba(74,107,77,0.55)"/></g><line x1="1098" y1="701" x2="1098" y2="643" stroke="rgba(60,55,45,0.35)" stroke-width="3.5999999999999996" stroke-linecap="round"/><line x1="1098" y1="643" x2="1075" y2="613" stroke="rgba(60,55,45,0.35)" stroke-width="2.4" stroke-linecap="round"/><line x1="1075" y1="613" x2="1052" y2="606" stroke="rgba(60,55,45,0.35)" stroke-width="1.2" stroke-linecap="round"/><line x1="1075" y1="613" x2="1075" y2="590" stroke="rgba(60,55,45,0.35)" stroke-width="1.2" stroke-linecap="round"/><line x1="1098" y1="643" x2="1119" y2="615" stroke="rgba(60,55,45,0.35)" stroke-width="2.4" stroke-linecap="round"/><line x1="1119" y1="615" x2="1119" y2="593" stroke="rgba(60,55,45,0.35)" stroke-width="1.2" stroke-linecap="round"/><line x1="1119" y1="615" x2="1139" y2="609" stroke="rgba(60,55,45,0.35)" stroke-width="1.2" stroke-linecap="round"/>
-<rect width="1280" height="875" fill="url(#vigbx1-u2-l3)"/>
-<rect width="1280" height="875" fill="rgba(253,251,245,0.18)" filter="url(#paper-bx1-u2-l3)"/>
+<rect x="0" y="0" width="1280" height="875" fill="url(#sky_bx1-u2-l3)" opacity="1" filter="url(#paper_bx1-u2-l3)"/><linearGradient id="sky_bx1-u2-l3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E1F5FE"/><stop offset="1" stop-color="#B3E5FC"/></linearGradient><path d="M -60,875 L -60.0,551.0 L 56.7,552.8 L 173.3,523.3 L 290.0,521.6 L 406.7,446.0 L 523.3,522.7 L 640.0,549.1 L 756.7,546.8 L 873.3,528.8 L 990.0,459.9 L 1106.7,520.7 L 1223.3,468.2 L 1340.0,547.5 L 1340,875 Z" fill="#CFD8DC" opacity="0.5" filter="url(#mist_bx1-u2-l3)"/><path d="M -50,875 L 256,595 L 576,695 L 896,615 L 1330,875 Z" fill="#ECEFF1" opacity="0.85" filter="url(#mist_bx1-u2-l3)"/><path d="M 192,595 L 320,535 L 448,590 Z" fill="#FFFFFF" opacity="0.9" filter="url(#wash_bx1-u2-l3)"/><path d="M -50,542.5 Q 384,481.25000000000006 640,507.49999999999994 T 1330,568.75 L 1330,875 L -50,875 Z" fill="#7CB342" opacity="0.8" filter="url(#wash_bx1-u2-l3)"/><path d="M 704,507.49999999999994 l -20,-75 a 17,17 0 1 1 34,0 l -14,75 z" fill="#5E35B1" opacity="0.9" filter="url(#bloom_bx1-u2-l3)"/><ellipse cx="704" cy="419.49999999999994" rx="20" ry="18" fill="#FFCCBC" opacity="0.95" filter="url(#bloom_bx1-u2-l3)"/><rect x="692" y="472.49999999999994" width="24" height="28" fill="#8D6E63" opacity="0.9" filter="url(#water_bx1-u2-l3)"/><ellipse cx="726" cy="477.49999999999994" rx="14" ry="14" fill="#B3E5FC" opacity="0.7" filter="url(#water_bx1-u2-l3)"/><path d="M 736,487.49999999999994 L 749,502.49999999999994" fill="#F9A825" opacity="0.9" stroke="#F9A825" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#water_bx1-u2-l3)"/><ellipse cx="166.6624797154218" cy="636.2452781014144" rx="8" ry="12" fill="#F9A825" opacity="0.7" filter="url(#water_bx1-u2-l3)"/><path d="M 166.6624797154218,644.2452781014144 q 1.8196009192615747,-20 0,-25" fill="#7CB342" opacity="0.5" filter="url(#water_bx1-u2-l3)"/><ellipse cx="250.86198222078383" cy="649.0939099621028" rx="8" ry="12" fill="#F9A825" opacity="0.7" filter="url(#water_bx1-u2-l3)"/><path d="M 250.86198222078383,657.0939099621028 q -1.6283986531198025,-20 0,-25" fill="#7CB342" opacity="0.5" filter="url(#water_bx1-u2-l3)"/><ellipse cx="365.8904924262315" cy="644.4239599769935" rx="8" ry="12" fill="#F9A825" opacity="0.7" filter="url(#water_bx1-u2-l3)"/><path d="M 365.8904924262315,652.4239599769935 q 3.930594944395125,-20 0,-25" fill="#7CB342" opacity="0.5" filter="url(#water_bx1-u2-l3)"/><ellipse cx="462.39841545186937" cy="670.9235026873648" rx="8" ry="12" fill="#F9A825" opacity="0.7" filter="url(#water_bx1-u2-l3)"/><path d="M 462.39841545186937,678.9235026873648 q -4.5049234689213336,-20 0,-25" fill="#7CB342" opacity="0.5" filter="url(#water_bx1-u2-l3)"/><ellipse cx="600.0699914265424" cy="653.7978460360318" rx="8" ry="12" fill="#F9A825" opacity="0.7" filter="url(#water_bx1-u2-l3)"/><path d="M 600.0699914265424,661.7978460360318 q -1.3512071687728167,-20 0,-25" fill="#7CB342" opacity="0.5" filter="url(#water_bx1-u2-l3)"/><ellipse cx="714.8194476887584" cy="659.2442311579362" rx="8" ry="12" fill="#F9A825" opacity="0.7" filter="url(#water_bx1-u2-l3)"/><path d="M 714.8194476887584,667.2442311579362 q -3.549003091175109,-20 0,-25" fill="#7CB342" opacity="0.5" filter="url(#water_bx1-u2-l3)"/><ellipse cx="800.313484903425" cy="672.1417582500726" rx="8" ry="12" fill="#F9A825" opacity="0.7" filter="url(#water_bx1-u2-l3)"/><path d="M 800.313484903425,680.1417582500726 q -2.2770606935955584,-20 0,-25" fill="#7CB342" opacity="0.5" filter="url(#water_bx1-u2-l3)"/><ellipse cx="901.7427462078631" cy="667.0568235358223" rx="8" ry="12" fill="#F9A825" opacity="0.7" filter="url(#water_bx1-u2-l3)"/><path d="M 901.7427462078631,675.0568235358223 q -1.7892423341982067,-20 0,-25" fill="#7CB342" opacity="0.5" filter="url(#water_bx1-u2-l3)"/><ellipse cx="1017.4436754193157" cy="630.5456734355539" rx="8" ry="12" fill="#F9A825" opacity="0.7" filter="url(#water_bx1-u2-l3)"/><path d="M 1017.4436754193157,638.5456734355539 q -1.0155764198862016,-20 0,-25" fill="#7CB342" opacity="0.5" filter="url(#water_bx1-u2-l3)"/><ellipse cx="1156.1064695026726" cy="689.9689141055569" rx="8" ry="12" fill="#F9A825" opacity="0.7" filter="url(#water_bx1-u2-l3)"/><path d="M 1156.1064695026726,697.9689141055569 q 2.7653643861413,-20 0,-25" fill="#7CB342" opacity="0.5" filter="url(#water_bx1-u2-l3)"/>
+<rect x="0" y="542.5" width="1280" height="332.5" fill="url(#fade_bx1-u2-l3)" opacity="0.55"/><linearGradient id="fade_bx1-u2-l3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#3E2723" stop-opacity="0.7"/></linearGradient><text x="640" y="755" text-anchor="middle" font-family="'SimSun','Songti SC','Noto Serif SC',serif" font-size="58" font-weight="bold" fill="#FFFFFF" opacity="0.95" filter="url(#bloom_bx1-u2-l3)">探界者钟扬</text><text x="640" y="837" text-anchor="middle" font-family="'KaiTi','STKaiti','Kaiti SC',serif" font-size="26" fill="#FFF8E1" opacity="0.9">叶雨婷</text>
 </svg>

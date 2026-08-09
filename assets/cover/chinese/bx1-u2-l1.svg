@@ -1,29 +1,34 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 875" preserveAspectRatio="xMidYMid slice">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 875" width="1280" height="875">
+
 <defs>
-<linearGradient id="bgbx1-u2-l1" x1="0" y1="0" x2="0" y2="1">
-<stop offset="0" stop-color="rgb(240,235,226)"/><stop offset="1" stop-color="rgb(236,243,246)"/>
-</linearGradient>
-<filter id="fbx1-u2-l1-wc" x="-50%" y="-50%" width="200%" height="200%">
-<feTurbulence type="fractalNoise" baseFrequency="0.0190" numOctaves="4" seed="7150" result="noise"/>
-<feDisplacementMap in="SourceGraphic" in2="noise" scale="44" xChannelSelector="R" yChannelSelector="G"/>
-<feGaussianBlur stdDeviation="33"/>
-</filter>
-<filter id="fbx1-u2-l1-blur" x="-30%" y="-30%" width="160%" height="160%">
-<feGaussianBlur stdDeviation="37"/>
-</filter>
-<filter id="paper-bx1-u2-l1" x="0" y="0" width="100%" height="100%">
-<feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" result="noise"/>
-<feColorMatrix type="saturate" values="0" in="noise" result="gray"/>
-<feComponentTransfer in="gray" result="alpha"><feFuncA type="linear" slope="0.12"/></feComponentTransfer>
-</filter>
-<radialGradient id="vigbx1-u2-l1" cx="50%" cy="45%" r="70%">
-<stop offset="0" stop-color="rgba(255,255,255,0.45)"/>
-<stop offset="1" stop-color="rgba(255,255,255,0)"/>
-</radialGradient>
+  <!-- paper grain -->
+  <filter id="paper_bx1-u2-l1" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="4" result="noise"/>
+    <feColorMatrix type="matrix" values="0.3 0 0 0 0.7  0 0.3 0 0 0.7  0 0 0.3 0 0.7  0 0 0 0.25 0" in="noise" result="grain"/>
+    <feBlend mode="multiply" in="SourceGraphic" in2="grain"/>
+  </filter>
+  <!-- watercolor bloom edge -->
+  <filter id="bloom_bx1-u2-l1" x="-20%" y="-20%" width="140%" height="140%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" result="noise"/>
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="18" xChannelSelector="R" yChannelSelector="G"/>
+    <feGaussianBlur stdDeviation="2.5"/>
+  </filter>
+  <!-- soft wash blur -->
+  <filter id="wash_bx1-u2-l1" x="-10%" y="-10%" width="120%" height="120%">
+    <feGaussianBlur stdDeviation="4"/>
+  </filter>
+  <!-- distant mist -->
+  <filter id="mist_bx1-u2-l1" x="0" y="0" width="100%" height="100%">
+    <feGaussianBlur stdDeviation="7"/>
+  </filter>
+  <!-- hard watercolor (medium) -->
+  <filter id="water_bx1-u2-l1" x="-15%" y="-15%" width="130%" height="130%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="8" xChannelSelector="R" yChannelSelector="G"/>
+    <feGaussianBlur stdDeviation="1.2"/>
+  </filter>
 </defs>
-<rect width="1280" height="875" fill="url(#bgbx1-u2-l1)"/>
-<g filter="url(#fbx1-u2-l1-blur)" opacity="0.85"><ellipse cx="192" cy="369" rx="253" ry="122" fill="#8ab88e" opacity="0.22" filter="url(#fbx1-u2-l1-wc)"/><ellipse cx="1009" cy="363" rx="326" ry="205" fill="#d4c86e" opacity="0.23" filter="url(#fbx1-u2-l1-wc)"/><ellipse cx="81" cy="300" rx="317" ry="230" fill="#a7c9d6" opacity="0.42" filter="url(#fbx1-u2-l1-wc)"/><ellipse cx="280" cy="64" rx="160" ry="203" fill="#4a6b4d" opacity="0.28" filter="url(#fbx1-u2-l1-wc)"/></g>
-<path d="M0 540 Q220.73260073260073 480 400 520 T800 500 T1280 540 L1280 875 L0 875 Z" fill="rgba(138,184,142,0.22)" filter="url(#fbx1-u2-l1-blur)"/><path d="M0 620 Q315.01831501831504 560 600 600 T1280 580 L1280 875 L0 875 Z" fill="rgba(212,200,110,0.2)" filter="url(#fbx1-u2-l1-blur)"/><path d="M0 875 L0 425 L213 420 L427 399 L640 408 L853 390 L1067 407 L1280 429 L1280 875 Z" fill="rgba(201,184,150,0.18)" filter="url(#fbx1-u2-l1-blur)"/><g transform="translate(507.4236874236874,548.5225885225885)" opacity="0.55"><rect x="0" y="20" width="70" height="50" fill="rgba(74,107,77,0.5)"/><path d="M-10 20 L35 -15 L80 20 Z" fill="rgba(74,107,77,0.65)"/><rect x="90" y="35" width="55" height="35" fill="rgba(74,107,77,0.4)"/><path d="M85 35 L117 10 L150 35 Z" fill="rgba(74,107,77,0.55)"/></g><line x1="1098" y1="701" x2="1098" y2="642" stroke="rgba(60,55,45,0.35)" stroke-width="3.5999999999999996" stroke-linecap="round"/><line x1="1098" y1="642" x2="1075" y2="612" stroke="rgba(60,55,45,0.35)" stroke-width="2.4" stroke-linecap="round"/><line x1="1075" y1="612" x2="1052" y2="605" stroke="rgba(60,55,45,0.35)" stroke-width="1.2" stroke-linecap="round"/><line x1="1075" y1="612" x2="1075" y2="589" stroke="rgba(60,55,45,0.35)" stroke-width="1.2" stroke-linecap="round"/><line x1="1098" y1="642" x2="1119" y2="614" stroke="rgba(60,55,45,0.35)" stroke-width="2.4" stroke-linecap="round"/><line x1="1119" y1="614" x2="1119" y2="592" stroke="rgba(60,55,45,0.35)" stroke-width="1.2" stroke-linecap="round"/><line x1="1119" y1="614" x2="1139" y2="608" stroke="rgba(60,55,45,0.35)" stroke-width="1.2" stroke-linecap="round"/>
-<rect width="1280" height="875" fill="url(#vigbx1-u2-l1)"/>
-<rect width="1280" height="875" fill="rgba(253,251,245,0.18)" filter="url(#paper-bx1-u2-l1)"/>
+<rect x="0" y="0" width="1280" height="875" fill="url(#sky_bx1-u2-l1)" opacity="1" filter="url(#paper_bx1-u2-l1)"/><linearGradient id="sky_bx1-u2-l1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE8C9"/><stop offset="0.55" stop-color="#FDBD7B"/><stop offset="1" stop-color="#E87A5D"/></linearGradient><ellipse cx="998.4000000000001" cy="192.5" rx="90" ry="70" fill="#FFD9A0" opacity="0.7" filter="url(#wash_bx1-u2-l1)"/><path d="M -50,875 L -50.0,635.0 L 65.0,579.3 L 180.0,616.4 L 295.0,632.2 L 410.0,631.4 L 525.0,621.6 L 640.0,615.3 L 755.0,630.4 L 870.0,626.5 L 985.0,559.0 L 1100.0,577.5 L 1215.0,613.1 L 1330.0,617.2 L 1330,875 Z" fill="#B8A88A" opacity="0.55" filter="url(#mist_bx1-u2-l1)"/><path d="M -20,875 L -20.0,693.1 L 91.7,699.0 L 203.3,654.3 L 315.0,695.9 L 426.7,687.1 L 538.3,650.6 L 650.0,656.8 L 761.7,648.6 L 873.3,689.4 L 985.0,692.4 L 1096.7,680.2 L 1208.3,657.7 L 1320.0,694.4 L 1320,875 Z" fill="#C4B072" opacity="0.7" filter="url(#mist_bx1-u2-l1)"/><path d="M -50,795 Q 320,775 640,795 T 1330,805 L 1330,875 L -50,875 Z" fill="#E3C35D" opacity="0.75" filter="url(#water_bx1-u2-l1)"/><path d="M -50,750 Q 320,726 640,750 T 1330,760 L 1330,875 L -50,875 Z" fill="#8AA84A" opacity="0.75" filter="url(#water_bx1-u2-l1)"/><path d="M -50,705 Q 320,677 640,705 T 1330,715 L 1330,875 L -50,875 Z" fill="#E3C35D" opacity="0.75" filter="url(#water_bx1-u2-l1)"/><path d="M -50,660 Q 320,628 640,660 T 1330,670 L 1330,875 L -50,875 Z" fill="#8AA84A" opacity="0.75" filter="url(#water_bx1-u2-l1)"/><path d="M -50,615 Q 320,579 640,615 T 1330,625 L 1330,875 L -50,875 Z" fill="#E3C35D" opacity="0.75" filter="url(#water_bx1-u2-l1)"/><path d="M 704,695 Q 896,745 1088,725 L 1152,875 L 640,875 Z" fill="#A8D4C8" opacity="0.35" filter="url(#wash_bx1-u2-l1)"/><path d="M 793.6,660 l -12,-45 a 14,14 0 1 1 28,0 l -12,45 z" fill="#6D4C35" opacity="0.85" filter="url(#bloom_bx1-u2-l1)"/><ellipse cx="793.6" cy="608" rx="16" ry="14" fill="#E8C8A0" opacity="0.9" filter="url(#bloom_bx1-u2-l1)"/><path d="M 133.92729983851314,875 q 3.1627552420832217,-39.72116795461625 0,-66.20194659102708" fill="#E3C35D" opacity="0.6" filter="url(#water_bx1-u2-l1)"/><path d="M 172.08316045533866,875 q 1.1556332395412028,-37.34185119951144 0,-62.2364186658524" fill="#E3C35D" opacity="0.6" filter="url(#water_bx1-u2-l1)"/><path d="M 215.19981958623976,875 q 4.5795683562755585,-38.79010851820931 0,-64.65018086368218" fill="#E3C35D" opacity="0.6" filter="url(#water_bx1-u2-l1)"/><path d="M 250.06602204125375,875 q -3.430850834120065,-34.74163036420941 0,-57.902717273682356" fill="#E3C35D" opacity="0.6" filter="url(#water_bx1-u2-l1)"/><path d="M 270.1891112951562,875 q 1.1799556016921997,-53.0983163472265 0,-88.49719391204417" fill="#E3C35D" opacity="0.6" filter="url(#water_bx1-u2-l1)"/><path d="M 322.9855859251693,875 q 0.35279523814097047,-39.95550286816433 0,-66.59250478027388" fill="#E3C35D" opacity="0.6" filter="url(#water_bx1-u2-l1)"/><path d="M 357.43727808073163,875 q 2.438885944429785,-26.624907384160906 0,-44.37484564026818" fill="#E3C35D" opacity="0.6" filter="url(#water_bx1-u2-l1)"/><path d="M 389.8038868624717,875 q -0.18774820026010275,-31.957413846161216 0,-53.262356410268694" fill="#E3C35D" opacity="0.6" filter="url(#water_bx1-u2-l1)"/><path d="M 423.25109068490565,875 q 3.0000256607308984,-29.500178863294423 0,-49.16696477215737" fill="#E3C35D" opacity="0.6" filter="url(#water_bx1-u2-l1)"/><path d="M 462.4240807322785,875 q -1.812468443531543,-42.48137020133436 0,-70.8022836688906" fill="#E3C35D" opacity="0.6" filter="url(#water_bx1-u2-l1)"/><path d="M 490.0173653541133,875 q 4.347906946204603,-27.658676587510854 0,-46.09779431251809" fill="#E3C35D" opacity="0.6" filter="url(#water_bx1-u2-l1)"/><path d="M 522.1942850314081,875 q -1.2098319176584482,-26.571136015467346 0,-44.285226692445576" fill="#E3C35D" opacity="0.6" filter="url(#water_bx1-u2-l1)"/><path d="M 553.3930842038244,875 q -0.34363086335361004,-37.624354815110564 0,-62.707258025184274" fill="#E3C35D" opacity="0.6" filter="url(#water_bx1-u2-l1)"/><path d="M 587.2392029426992,875 q -1.5644183079712093,-47.49320534616709 0,-79.15534224361181" fill="#E3C35D" opacity="0.6" filter="url(#water_bx1-u2-l1)"/><path d="M 631.8552633253857,875 q 2.1226967219263315,-45.95302509935573 0,-76.58837516559288" fill="#E3C35D" opacity="0.6" filter="url(#water_bx1-u2-l1)"/><path d="M 672.7545081470162,875 q 3.2710693893022835,-42.59033641638234 0,-70.9838940273039" fill="#E3C35D" opacity="0.6" filter="url(#water_bx1-u2-l1)"/><path d="M 693.6596459820867,875 q -3.1729035498574376,-46.02561541227624 0,-76.7093590204604" fill="#E3C35D" opacity="0.6" filter="url(#water_bx1-u2-l1)"/><path d="M 723.744566260837,875 q -1.9242861168459058,-47.66335086291656 0,-79.43891810486093" fill="#E3C35D" opacity="0.6" filter="url(#water_bx1-u2-l1)"/>
+<rect x="0" y="542.5" width="1280" height="332.5" fill="url(#fade_bx1-u2-l1)" opacity="0.55"/><linearGradient id="fade_bx1-u2-l1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#3E2723" stop-opacity="0.7"/></linearGradient><text x="640" y="705" text-anchor="middle" font-family="'SimSun','Songti SC','Noto Serif SC',serif" font-size="48" font-weight="bold" fill="#FFFFFF" opacity="0.95" filter="url(#bloom_bx1-u2-l1)">喜看稻菽千重浪——记首届国家最高科技</text><text x="640" y="765" text-anchor="middle" font-family="'SimSun','Songti SC','Noto Serif SC',serif" font-size="48" font-weight="bold" fill="#FFFFFF" opacity="0.95" filter="url(#bloom_bx1-u2-l1)">奖获得者袁隆平</text><text x="640" y="837" text-anchor="middle" font-family="'KaiTi','STKaiti','Kaiti SC',serif" font-size="26" fill="#FFF8E1" opacity="0.9">沈英甲</text>
 </svg>
