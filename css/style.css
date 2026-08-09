@@ -4955,6 +4955,19 @@ body.theme-dark .lg-sub { background: var(--bg-2); }
 .lg-info-tag { font-size: 12px; padding: 3px 9px; border-radius: 6px; background: var(--bg-2); color: var(--text-2); border: 1px solid var(--line); }
 .lg-info-discuss { display: inline-block; font-size: 13.5px; color: var(--primary); text-decoration: none; font-weight: 600; }
 .lg-info-discuss:hover { text-decoration: underline; }
+/* 侧栏「相关讨论」洛谷式列表 */
+.lg-info-label-row { display: flex; align-items: center; justify-content: space-between; }
+.lg-info-count { display: inline-block; min-width: 18px; text-align: center; padding: 0 6px; margin-left: 2px; border-radius: 10px; background: var(--primary); color: #fff; font-size: 11px; font-weight: 700; }
+.lg-info-ask { color: var(--primary); font-size: 12.5px; font-weight: 600; cursor: pointer; }
+.lg-info-ask:hover { text-decoration: underline; }
+.lg-disc-list { display: flex; flex-direction: column; gap: 7px; }
+.lg-disc-item { padding: 8px 10px; border-radius: 8px; background: var(--bg-2); border: 1px solid var(--line); cursor: pointer; transition: all .15s; }
+.lg-disc-item:hover { border-color: var(--primary); background: color-mix(in srgb, var(--primary) 8%, var(--bg-2)); }
+.lg-disc-title { font-size: 13px; color: var(--text-1); font-weight: 600; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.lg-disc-meta { font-size: 11.5px; color: var(--text-3); margin-top: 3px; }
+/* 讨论区帖子上的「📌 题目编号」跳转标记 */
+.ds-qtag { display: inline-flex; align-items: center; gap: 2px; padding: 1px 7px; border-radius: 10px; background: rgba(74,125,224,.14); color: var(--primary); font-size: 11.5px; font-weight: 600; cursor: pointer; }
+.ds-qtag:hover { background: rgba(74,125,224,.24); }
 .lg-info-rec { display: flex; flex-direction: column; gap: 6px; }
 .lg-info-rec-item { display: flex; align-items: center; gap: 8px; padding: 7px 9px; border-radius: 7px; cursor: pointer; background: var(--bg-2); border: 1px solid var(--line); transition: all .15s; }
 .lg-info-rec-item:hover { border-color: var(--primary); background: color-mix(in srgb, var(--primary) 8%, var(--bg-2)); }

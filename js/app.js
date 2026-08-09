@@ -6421,6 +6421,8 @@
     }
     function buildBankInfoPanel(entry) {
       var q = entry.q;
+      var recTopics = getDiscuss().topics.filter(function (t) { return t.qid === q._bid; })
+        .sort(function (a, b) { return b.ts - a.ts; }).slice(0, 4);
       var stats = bankEntryStats(entry);
       var rate = stats.rate;
       var rateTxt = (rate === null) ? '—' : (rate + '%');
@@ -6471,8 +6473,16 @@
             '<div class="lg-info-tags">' + tagsHtml + '</div>' +
           '</div>' +
           '<div class="lg-info-sec">' +
-            '<div class="lg-info-label">相关讨论</div>' +
-            '<a class="lg-info-discuss" href="index.html#/comments" target="_blank" rel="noopener">💬 前往讨论区 ›</a>' +
+            '<div class="lg-info-label lg-info-label-row"><span>相关讨论 <span class="lg-info-count">' + recTopics.length + '</span></span>' +
+              '<span class="lg-info-ask" onclick="window.__askQuestion(\'' + esc(q._bid) + '\')">提问 ›</span></div>' +
+            (recTopics.length
+              ? '<div class="lg-disc-list">' + recTopics.map(function (t) {
+                  return '<div class="lg-disc-item" onclick="navigate(\'comments\',\'' + esc(t.board) + '\',\'' + esc(t.id) + '\')">' +
+                    '<div class="lg-disc-title">' + esc(t.title) + '</div>' +
+                    '<div class="lg-disc-meta">' + esc(t.authorName || '匿名') + ' · ' + (t.replies ? t.replies.length : 0) + ' 回复 · ' + esc(relativeTime(t.ts)) + '</div>' +
+                  '</div>';
+                }).join('') + '</div>'
+              : '<div class="lg-info-empty">还没有讨论，来抢沙发 ✨</div>') +
           '</div>' +
           '<div class="lg-info-sec">' +
             '<div class="lg-info-label">推荐题目</div>' +
@@ -7321,6 +7331,13 @@
   }
   window.deleteReply = deleteReply;
 
+  /* 从题库详情页「提问」按钮进入：关联本题并自动展开发帖框 */
+  window.__askQuestion = function (bid) {
+    window.__pendingQid = bid;
+    window.__pendingCompose = true;
+    navigate('comments', '题目总版');
+  };
+
   function renderComments(r) {
     if (!r) r = parseHash();
     if (!r.param) return renderDiscussHome();
@@ -7372,12 +7389,14 @@
       var cfg = discussBoardCfg(t.board);
       var tag = showBoard ? '<span class="ds-tag" style="--bc:' + cfg.color + '">' + cfg.icon + ' ' + esc(t.board) + '</span>' : '';
       var canDel = discussCanDelete(t.authorId, t.guestId);
+      var qchip = t.qid ? '<span class="ds-qtag" onclick="event.stopPropagation();navigate(\'bank\',\'q\',\'' + esc(t.qid) + '\')">📌 ' + esc(t.qid) + '</span>' : '';
       return '<li class="ds-topic' + (canDel ? ' has-del' : '') + '" onclick="navigate(\'comments\',\'' + esc(t.board) + '\',\'' + esc(t.id) + '\')">' +
         '<div class="ds-topic-main">' +
           '<div class="ds-topic-title">' + esc(t.title) + '</div>' +
           '<div class="ds-topic-meta">' + tag +
             '<span class="ds-dot">·</span>' +
             authorChip(t.authorId, t.authorName, 'ds-topic-author') +
+            (t.qid ? '<span class="ds-dot">·</span>' + qchip : '') +
             '<span class="ds-dot">·</span>' +
             '<span class="ds-topic-time">' + esc(relativeTime(t.ts)) + '</span>' +
           '</div>' +
@@ -7420,6 +7439,7 @@
     var show = el.style.display === 'none';
     el.style.display = show ? 'block' : 'none';
     if (show) { var ta = document.getElementById('cmText'); if (ta) ta.focus(); }
+    else { window.__pendingQid = null; window.__pendingCompose = false; }
   }
   window.dsToggleCompose = dsToggleCompose;
 
@@ -7444,6 +7464,7 @@
 
   function renderDiscussBoard(board) {
     if (!view) return;
+    if (!window.__pendingCompose) window.__pendingQid = null; // 清掉非本题来源的残留关联
     var cfg = discussBoardCfg(board);
     var topics = discussTopicsOf(board);
     var right = '<div class="ds-board-head" style="--bc:' + cfg.color + '">' +
@@ -7463,6 +7484,12 @@
         '</div>' +
       '</div>';
     bindDiscussForm('topic', board, null);
+    if (window.__pendingCompose) {
+      window.__pendingCompose = false;
+      dsToggleCompose();
+      var ti = document.getElementById('cmTitle');
+      if (ti && window.__pendingQid) ti.value = '[' + window.__pendingQid + '] ';
+    }
   }
 
   function renderDiscussTopic(board, topicId) {
@@ -7510,6 +7537,7 @@
         '<div class="ds-topic-title-lg">' + esc(t.title) + '</div>' +
         '<div class="ds-topic-by"><span class="ds-tag" style="--bc:' + cfg.color + '">' + cfg.icon + ' ' + esc(t.board) + '</span>' +
           authorChip(t.authorId, t.authorName, 'ds-topic-author') +
+          (t.qid ? '<span class="ds-qtag" onclick="navigate(\'bank\',\'q\',\'' + esc(t.qid) + '\')">📌 ' + esc(t.qid) + '</span>' : '') +
           '<span class="ds-dot">·</span><span>' + esc(relativeTime(t.ts)) + '</span>' +
           (canDelT ? '<button class="ds-del" onclick="deleteTopic(\'' + esc(board) + '\',\'' + esc(t.id) + '\')">删除</button>' : '') +
         '</div>' +
@@ -7559,9 +7587,11 @@
           board: board, ts: Date.now(),
           authorId: id.authorId, authorName: id.authorName, avatar: id.avatar,
           guestId: id.isAnon ? currentGuestId() : null,
+          qid: window.__pendingQid || null,
           title: title, content: content, replies: []
         });
         saveDiscuss(d);
+        window.__pendingQid = null;
         renderComments(); // 重新渲染当前板块，立即显示新帖子（hash 未变不会触发 hashchange）
       } else {
         var t = d.topics.filter(function (x) { return x.id === topicId; })[0];
