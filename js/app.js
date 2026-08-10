@@ -2539,7 +2539,7 @@
     } else {
       favs.push({
         key: key, qi: qi, sid: sid, vid: vid, idx: idx,
-        sName: f.subject.name, vName: f.volume.name, pName: f.point.name,
+        sName: f.subject.name, vName: f.vol.name, pName: f.point.name,
         type: q.type, question: q.question, options: q.options || [],
         answer: q.answer, explanation: q.explanation || '',
         addedAt: Date.now()
