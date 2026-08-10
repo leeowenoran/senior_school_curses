@@ -1,0 +1,177 @@
+/* ============================================================
+ * 错题本内嵌重做 + 详细解析 样式
+ * （独立文件，避免改动巨型 style.css）
+ * ============================================================ */
+
+/* 重做按钮（错题卡片内联） */
+.wrong-redo-inline,
+.wrong-redo-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  background: var(--bg-2);
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  transition: all .2s;
+}
+.wrong-redo-inline:hover,
+.wrong-redo-btn:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* 重做模式下的容器 */
+.wrong-item.wrong-redo-mode,
+.wrong-card-new.wrong-redo-mode {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(74, 125, 224, 0.12);
+}
+
+.wrong-redo-box {
+  margin-top: 12px;
+  padding: 14px 16px;
+  background: var(--bg);
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+}
+.wrong-redo-prompt {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-2);
+  margin-bottom: 10px;
+}
+.wrong-redo-input {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.wrong-redo-fill {
+  width: 100%;
+  max-width: 360px;
+  padding: 10px 12px;
+  font-size: 14px;
+  color: var(--text);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+.wrong-redo-fill:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(74, 125, 224, 0.12);
+}
+.wrong-redo-solve {
+  width: 100%;
+  min-height: 90px;
+  padding: 10px 12px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  resize: vertical;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+.wrong-redo-solve:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(74, 125, 224, 0.12);
+}
+/* 选择题选项（复用 .opt 基础，这里只做兜底） */
+.wrong-redo-input .opt.wropt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  margin: 0;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+}
+.wrong-redo-input .opt.wropt:hover {
+  border-color: var(--primary);
+}
+.wrong-redo-input .opt.wropt input {
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.wrong-redo-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+/* 批改结果 */
+.wrong-redo-result {
+  margin-top: 14px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.wrong-redo-result.correct {
+  background: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+.wrong-redo-result.wrong {
+  background: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+.wrong-redo-result.submitted {
+  background: rgba(74, 125, 224, 0.12);
+  color: var(--primary);
+  border: 1px solid rgba(74, 125, 224, 0.3);
+}
+.wrong-std {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--text);
+}
+.wrong-std b, .wrong-std {
+  /* 参考答案前缀 */
+}
+.wrong-exp {
+  margin-top: 8px;
+  padding: 10px 14px;
+  background: var(--card);
+  border-left: 3px solid var(--primary);
+  border-radius: 6px;
+  font-size: 13.5px;
+  line-height: 1.8;
+  color: var(--text-2);
+}
+.wrong-exp b { color: var(--text); }
+
+/* 错题操作区 */
+.wrong-actions,
+.wcn-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+  align-items: center;
+}
+
+/* 暗色模式 */
+body.theme-dark .wrong-redo-box { background: var(--bg-2); border-color: var(--line); }
+body.theme-dark .wrong-redo-fill,
+body.theme-dark .wrong-redo-solve { background: #15171f; border-color: var(--line); color: var(--text); }
+body.theme-dark .wrong-redo-input .opt.wropt { background: #15171f; border-color: var(--line); color: var(--text); }
+body.theme-dark .wrong-exp { background: #15171f; color: var(--text-2); }

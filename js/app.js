@@ -1092,7 +1092,8 @@
           : '<button class="read-toggle" onclick="window.__markLessonRead(\'' + esc(sid) + '\',\'' + esc(vid) + '\',' + idx + ')">我已读完，标记为完成</button>';
       } else {
         var doneN = lessonAnsweredCount(sid, vid, idx, exCount);
-        readBtn = (doneN >= exCount)
+        var allDone = isDone || doneN >= exCount;   // 完成标记持久化（gz_progress），会话内已提交数仅用于进度提示
+        readBtn = (allDone)
           ? '<span class="read-toggle is-done">✓ 已学完（' + exCount + '/' + exCount + ' 题已完成）</span>'
           : '<span class="read-toggle in-progress">📝 已完成 ' + doneN + ' / ' + exCount + ' 题，做完全部即标记学完</span>';
       }
@@ -1206,7 +1207,7 @@
                  '<span class="opt-txt">' + escRich(o) + '</span></button>';
       }).join('');
     } else {
-      opts = '<input class="fill-input" id="fill-' + i + '" placeholder="请输入答案" value="' + esc(ans ? ans.myAnswer : '') + '"' + (ans ? ' disabled' : '') + ' />';
+      opts = '<input class="fill-input" id="fill-' + i + '" placeholder="请输入答案（多空答案用分号隔开）" value="' + esc(ans ? ans.myAnswer : '') + '"' + (ans ? ' disabled' : '') + ' />';
     }
     var status = ans
       ? (ans.correct ? '<span class="quiz-status ok" title="已答对">✓</span>' : '<span class="quiz-status no" title="答错已入错题本">✗</span>')
@@ -1252,26 +1253,70 @@
       if (!sel) { toast('请先选择一个选项'); return; }
       myAnswer = sel.getAttribute('data-val');
       correct = (myAnswer === String(q.answer));
-    } else {
-      var inp = document.getElementById('fill-' + qi);
-      var val = (inp.value || '').trim();
-      if (!val) { toast('请先填写答案'); return; }
-      myAnswer = val;
-      var ans = String(q.answer).trim();
-      correct = (val === ans || (ans.indexOf('|') >= 0 && ans.split('|').map(function (x) { return x.trim(); }).indexOf(val) >= 0));
+      finishQuizSubmit(sid, vid, idx, qi, q, box, myAnswer, correct);
+      return;
     }
-    // 记录每题作答（用于“做完全部题目才算学完”）
+    // 填空题 / 主观题（fill、solve 等）：收集作答
+    var inp = document.getElementById('fill-' + qi);
+    var val = (inp && inp.value || '').trim();
+    if (!val) { toast('请先填写答案'); return; }
+    myAnswer = val;
+    if (q.type === 'solve') {
+      aiGradeLesson(sid, vid, idx, qi, q, box, myAnswer);   // 解答/主观题：AI 智能批改
+      return;
+    }
+    // 填空题：先精确匹配（含“|”多答案），未命中交给 AI 判“等价作答”
+    var ans = String(q.answer || '').trim();
+    if (ans && (val === ans || (ans.indexOf('|') >= 0 && ans.split('|').map(function (x) { return x.trim(); }).indexOf(val) >= 0))) {
+      finishQuizSubmit(sid, vid, idx, qi, q, box, myAnswer, true);
+      return;
+    }
+    if (!ans) { finishQuizSubmit(sid, vid, idx, qi, q, box, myAnswer, null); return; } // 无标准答案，仅记录
+    aiGradeLesson(sid, vid, idx, qi, q, box, myAnswer);   // 填空未精确命中：AI 等价批改
+  };
+
+  // 课时主观题：调 gradeAnswer -> 展示结果（异步）
+  async function aiGradeLesson(sid, vid, idx, qi, q, box, myAnswer) {
+    var f = findLesson(sid, vid, idx);
+    showQuizGradeLoading(box);
+    var res;
+    try {
+      if (typeof window.cbApi !== 'function') throw new Error('云端能力不可用');
+      res = await window.cbApi('gradeAnswer', {
+        question: q.question, standardAnswer: q.answer, userAnswer: myAnswer,
+        explanation: q.explanation || '', subject: f ? f.subject.name : '', type: q.type
+      });
+    } catch (e) {
+      finishQuizSubmit(sid, vid, idx, qi, q, box, myAnswer, null, { aiError: (e && e.message) || '网络异常' });
+      return;
+    }
+    if (!res || !res.ok) { finishQuizSubmit(sid, vid, idx, qi, q, box, myAnswer, null, { aiError: (res && res.msg) || '批改失败' }); return; }
+    finishQuizSubmit(sid, vid, idx, qi, q, box, myAnswer, res.correct === true, {
+      aiScore: res.score, aiFeedback: res.feedback, aiKeyPoints: res.keyPoints,
+      standardAnswer: q.answer, explanation: q.explanation || ''
+    });
+  }
+
+  function showQuizGradeLoading(box) {
+    if (!box) return;
+    var fb = box.querySelector('.quiz-feedback');
+    if (fb) { fb.textContent = '⏳ AI 批改中…'; fb.className = 'quiz-feedback grading'; }
+  }
+
+  // 供课时提交复用：记录作答、错题本、重建展示、追加 AI 批改详情
+  function finishQuizSubmit(sid, vid, idx, qi, q, box, myAnswer, correct, extra) {
+    extra = extra || {};
+    var f = findLesson(sid, vid, idx);
     var rec = { correct: correct, myAnswer: myAnswer, ts: Date.now() };
     setLessonAnswer(sid, vid, idx, qi, rec);
-    // 记录做题日志（用于 7 天节奏图）
     logQuiz(sid, vid, idx, qi, correct);
     // 答错自动收录错题本
-    if (!correct) {
+    if (correct === false) {
       var wrong = lsGet('gz_wrongbook', []);
       var key = lessonKey(sid, vid, idx);
       var dup = wrong.some(function (w) { return w.key === key && w.qi === qi; });
       if (!dup) {
-        wrong.push({ key: key, qi: qi, sid: sid, question: q.question, answer: q.answer, myAnswer: myAnswer, subjectName: f.subject.name, lessonName: f.point.name, type: q.type, options: q.options || [], ts: Date.now() });
+        wrong.push({ key: key, qi: qi, sid: sid, question: q.question, answer: q.answer, myAnswer: myAnswer, subjectName: f ? f.subject.name : sid, lessonName: f ? f.point.name : '', type: q.type, options: q.options || [], ts: Date.now() });
         lsSet('gz_wrongbook', wrong);
       }
       toast('已加入错题本');
@@ -1283,12 +1328,27 @@
     if (newBox) {
       box.replaceWith(newBox);
       try { newBox.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) {}
+      // 追加 AI 批改详情
+      if (extra.aiFeedback || extra.aiError || extra.aiScore != null) {
+        var ai = document.createElement('div');
+        ai.className = 'quiz-ai-result ' + (extra.aiError ? 'submitted' : (correct === true ? 'correct' : 'wrong'));
+        var h = '';
+        if (extra.aiError) h = '⏳ 已记录作答（AI 批改暂不可用：' + esc(extra.aiError) + '）';
+        else {
+          h = (correct === true ? '✓ AI 批改：正确' : '✗ AI 批改：还需改进') + (extra.aiScore != null ? '（得分 ' + extra.aiScore + '）' : '');
+          if (extra.aiFeedback) h += '<div class="ai-fb">批改意见：' + esc(extra.aiFeedback) + '</div>';
+          if (extra.standardAnswer) h += '<div class="ai-std">参考答案：' + esc(extra.standardAnswer) + '</div>';
+          if (extra.explanation) h += '<div class="ai-exp">解析：' + esc(extra.explanation) + '</div>';
+        }
+        ai.innerHTML = h;
+        newBox.appendChild(ai);
+      }
     }
     // 重新判定课时是否学完（需做完全部题目）
     var total = (f.point.exercises || []).length;
     recomputeLessonDone(sid, vid, idx, total);
     updateLessonCompletionUI(sid, vid, idx, total);
-  };
+  }
 
   function markProgress(sid, vid, idx) {
     var prog = lsGet('gz_progress', {});
@@ -1296,17 +1356,15 @@
     lsSet('gz_progress', prog);
   }
 
-  /* ---------- 每题作答记录（用于“做完全部题目才算学完”） ---------- */
+  /* ---------- 每题作答记录（用于“做完全部题目才算学完”，仅当前会话内有效，不落盘保存） ---------- */
+  var __lessonSubmitted = {};   // 仅会话内的“已提交”标记：刷新页面后不保留，故课时做题记录不会持久化
   function getLessonAnswers(sid, vid, idx) {
-    var all = lsGet('gz_lesson_answers', {});
-    return all[lessonKey(sid, vid, idx)] || {};
+    return __lessonSubmitted[lessonKey(sid, vid, idx)] || {};
   }
   function setLessonAnswer(sid, vid, idx, qi, rec) {
-    var all = lsGet('gz_lesson_answers', {});
     var k = lessonKey(sid, vid, idx);
-    if (!all[k]) all[k] = {};
-    all[k][qi] = rec;
-    lsSet('gz_lesson_answers', all);
+    if (!__lessonSubmitted[k]) __lessonSubmitted[k] = {};
+    __lessonSubmitted[k][qi] = rec;   // 仅会话内使用，不写入 localStorage
   }
   function lessonAnsweredCount(sid, vid, idx, total) {
     var ans = getLessonAnswers(sid, vid, idx);
@@ -5853,7 +5911,7 @@
       }).join('') + '</div>';
       inputHtml = '<div class="cc-q-actions"><button class="cc-q-submit" onclick="window.__qSubmit(\'' + esc(submitKey) + '\', \'choice\', \'' + esc(q.a) + '\', this)">提交答案</button></div>';
     } else if (qType === 'fill') {
-      inputHtml = '<div class="cc-q-fill"><input type="text" placeholder="请输入答案..." value="' + esc(myAns) + '"><button class="cc-q-submit" onclick="window.__qSubmit(\'' + esc(submitKey) + '\', \'fill\', \'' + esc(q.a) + '\', this)">提交答案</button></div>';
+      inputHtml = '<div class="cc-q-fill"><input type="text" placeholder="请输入答案（多空答案用分号隔开）..." value="' + esc(myAns) + '"><button class="cc-q-submit" onclick="window.__qSubmit(\'' + esc(submitKey) + '\', \'fill\', \'' + esc(q.a) + '\', this)">提交答案</button></div>';
     } else {
       inputHtml = '<div class="cc-q-solve"><textarea placeholder="请写下你的解题过程..." rows="4">' + esc(myAns) + '</textarea><button class="cc-q-submit" onclick="window.__qSubmit(\'' + esc(submitKey) + '\', \'solve\', \'' + esc(q.a) + '\', this)">提交答案</button></div>';
     }
@@ -6135,42 +6193,103 @@
       if (!inp || !inp.value.trim()) { toast('请先填写答案'); return; }
       myAnswer = inp.value.trim();
     } else {
+      // 解答 / 主观题：交给 AI 智能批改
       var ta = item.querySelector('.cc-q-solve textarea');
       if (!ta || !ta.value.trim()) { toast('请先作答'); return; }
       myAnswer = ta.value.trim();
+      aiGradeBank(item, key, type, myAnswer);
+      return;
     }
 
-    var correct = null;
+    // 选择题：精确匹配即时判分
     if (type === 'choice') {
-      correct = (myAnswer === String(correctAnswer).trim());
-    } else if (type === 'fill') {
-      var ca = String(correctAnswer).trim();
-      correct = (myAnswer === ca) || (ca.indexOf(myAnswer) >= 0 && myAnswer.length >= 1) || (myAnswer.indexOf(ca) >= 0);
-    } else {
-      correct = null; // 解答题不自动判分
+      finishQSubmit(item, key, type, (myAnswer === String(correctAnswer).trim()), myAnswer);
+      return;
     }
+    // 填空题：先精确匹配（含“|”多答案），未命中再交给 AI 判“等价作答”
+    var ca = String(correctAnswer || '').trim();
+    if (ca && (myAnswer === ca || (ca.indexOf('|') >= 0 && ca.split('|').map(function (x) { return x.trim(); }).indexOf(myAnswer) >= 0))) {
+      finishQSubmit(item, key, type, true, myAnswer);
+      return;
+    }
+    if (!ca) { finishQSubmit(item, key, type, null, myAnswer); return; } // 无标准答案，仅记录作答
+    aiGradeBank(item, key, 'fill', myAnswer);
+  };
 
+  // 题库主观题：收集上下文 -> 调 gradeAnswer -> 展示结果
+  async function aiGradeBank(item, key, type, myAnswer) {
+    var bp = String(key).split('#');
+    var bSid = bp[0].split('::')[0];
+    var bSubj = (window.GZ_SUBJECTS || []).filter(function (s) { return s.id === bSid; })[0];
+    var qsArr = (window.GZ_COMMON_QUESTIONS || {})[bp[0]];
+    var qObj = (qsArr && qsArr[parseInt(bp[1], 10)]) ? qsArr[parseInt(bp[1], 10)] : null;
+    var question = qObj ? qObj.q : (item.querySelector('.cc-q-body') ? item.querySelector('.cc-q-body').textContent : '');
+    var standardAnswer = qObj ? qObj.a : '';
+    var explanation = qObj ? qObj.exp : '';
+    showQGradeLoading(item);
+    var res;
+    try {
+      if (typeof window.cbApi !== 'function') throw new Error('云端能力不可用');
+      res = await window.cbApi('gradeAnswer', {
+        question: question, standardAnswer: standardAnswer, userAnswer: myAnswer,
+        explanation: explanation, subject: bSubj ? bSubj.name : '', type: type
+      });
+    } catch (e) {
+      finishQSubmit(item, key, type, null, myAnswer, { aiError: (e && e.message) || '网络异常' });
+      return;
+    }
+    if (!res || !res.ok) { finishQSubmit(item, key, type, null, myAnswer, { aiError: (res && res.msg) || '批改失败' }); return; }
+    finishQSubmit(item, key, type, res.correct === true, myAnswer, {
+      aiScore: res.score, aiFeedback: res.feedback, aiKeyPoints: res.keyPoints,
+      standardAnswer: standardAnswer, explanation: explanation
+    });
+  }
+
+  function showQGradeLoading(item) {
+    var ex = item.querySelector('.cc-q-result'); if (ex) ex.remove();
+    var el = document.createElement('div');
+    el.className = 'cc-q-result grading';
+    el.textContent = '⏳ AI 正在批改中…';
+    var ansEl = item.querySelector('.cc-q-ans');
+    if (ansEl && ansEl.parentNode) ansEl.parentNode.insertBefore(el, ansEl);
+    else item.appendChild(el);
+  }
+
+  // 统一的提交结果处理（含 AI 批改结果渲染与错题收录）
+  function finishQSubmit(item, key, type, correct, myAnswer, extra) {
+    extra = extra || {};
     var _bid = (item.getAttribute && item.getAttribute('data-bid')) || key;
     saveQAnswer(_bid, myAnswer, correct);
+    if (type === 'choice' || type === 'fill' || (extra.aiScore != null)) recordQStat(_bid, correct === true);
 
-    // 记录单题统计（通过率 / 作答状态）；解答题不自动判分，不计入通过率
-    if (type === 'choice' || type === 'fill') recordQStat(_bid, correct === true);
-
-    // 更新结果反馈
-    var existing = item.querySelector('.cc-q-result');
-    if (existing) existing.remove();
+    var ex = item.querySelector('.cc-q-result'); if (ex) ex.remove();
     var resultEl = document.createElement('div');
-    resultEl.className = 'cc-q-result ' + (correct === true ? 'correct' : (correct === false ? 'wrong' : 'submitted'));
-    resultEl.textContent = correct === true ? '✓ 回答正确' : (correct === false ? '✗ 回答错误，已展开答案解析' : '✓ 已记录你的解答（解答题不自动判分）');
+    var cls = (correct === true) ? 'correct' : (correct === false ? 'wrong' : 'submitted');
+    resultEl.className = 'cc-q-result ' + cls;
+    var html = '';
+    if (extra.aiError) {
+      html = '⏳ 已记录你的解答（AI 批改暂不可用：' + esc(extra.aiError) + '）';
+    } else if (correct === true) {
+      html = '✓ AI 批改：回答正确' + (extra.aiScore != null ? '（得分 ' + extra.aiScore + '）' : '');
+      if (extra.aiFeedback) html += '<div class="ai-fb">批改意见：' + esc(extra.aiFeedback) + '</div>';
+    } else if (correct === false) {
+      html = '✗ AI 批改：还需改进' + (extra.aiScore != null ? '（得分 ' + extra.aiScore + '）' : '');
+      if (extra.aiFeedback) html += '<div class="ai-fb">批改意见：' + esc(extra.aiFeedback) + '</div>';
+      if (extra.standardAnswer) html += '<div class="ai-std">参考答案：' + esc(extra.standardAnswer) + '</div>';
+      if (extra.explanation) html += '<div class="ai-exp">解析：' + esc(extra.explanation) + '</div>';
+    } else {
+      html = '✓ 已记录你的解答';
+    }
+    resultEl.innerHTML = html;
     var ansEl = item.querySelector('.cc-q-ans');
     if (ansEl && ansEl.parentNode) ansEl.parentNode.insertBefore(resultEl, ansEl);
-    else if (item.lastChild) item.appendChild(resultEl);
+    else item.appendChild(resultEl);
 
     // 答错自动展开答案
     if (correct === false && ansEl) {
       ansEl.removeAttribute('hidden');
-      var toggleBtn = item.querySelector('.cc-q-toggle');
-      if (toggleBtn) toggleBtn.textContent = '隐藏答案';
+      var tBtn = item.querySelector('.cc-q-toggle');
+      if (tBtn) tBtn.textContent = '隐藏答案';
     }
 
     // 答错自动收录题库错题到错题本（与课时练习统一进“错题本”）
@@ -6185,19 +6304,14 @@
       var wrong = lsGet('gz_wrongbook', []);
       var dup = wrong.some(function (w) { return w.kind === 'bank' && w.key === key; });
       if (!dup) {
-        wrong.push({
-          kind: 'bank', key: key, qi: -1, sid: bSid,
-          subjectName: bSubj ? bSubj.name : bSid,
-          question: wq, answer: wa, myAnswer: myAnswer, type: type,
-          options: (qObj && qObj.opts) ? qObj.opts : [], ts: Date.now()
-        });
+        wrong.push({ kind: 'bank', key: key, qi: -1, sid: bSid, subjectName: bSubj ? bSubj.name : bSid, question: wq, answer: wa, myAnswer: myAnswer, type: type, options: (qObj && qObj.opts) ? qObj.opts : [], ts: Date.now() });
         lsSet('gz_wrongbook', wrong);
       }
       toast('✗ 错误，已加入错题本');
     } else {
       toast(correct === true ? '✓ 正确' : '✓ 已记录');
     }
-  };
+  }
 
   function __typeHasMatchSearch(k, q) {
     var qs = (window.GZ_COMMON_QUESTIONS || {})[k] || [];
@@ -6616,19 +6730,26 @@
     } else {
       body = '<div class="wrong-list-new">' + filtered.map(function (w) {
         var realIdx = wrong.indexOf(w);
+        if (realIdx === window.__wrongRedo) {
+          return '<div class="wrong-card-new wrong-redo-mode">' +
+            '<div class="wcn-question">' + esc(w.question || '（题目内容已丢失）') + '</div>' +
+            wrongRedoInnerHtml(w, realIdx) +
+          '</div>';
+        }
         var parts = w.key ? w.key.split('/') : null;
         var isBank = w.kind === 'bank';
         var redo = '';
         if (isBank) {
           redo = '<button class="wrong-redo-btn" onclick="navigate(\'bank\')">去题库重做 →</button>';
         } else if (parts) {
-          redo = '<button class="wrong-redo-btn" onclick="navigate(\'lesson\',\'' + esc(parts[0]) + '\',\'' + esc(parts[1]) + '\',' + esc(parts[2]) + ')">去重做 →</button>';
+          redo = '<button class="wrong-redo-btn" onclick="navigate(\'lesson\',\'' + esc(parts[0]) + '\',\'' + esc(parts[1]) + '\',' + esc(parts[2]) + ')">去原处重做 →</button>';
         }
         var favBtn = '';
         if (!isBank && parts) {
           var faved = isFav(w.key, w.qi);
           favBtn = '<button class="wcn-fav-btn' + (faved ? ' is-fav' : '') + '" title="' + (faved ? '取消收藏' : '加入收藏') + '" onclick="window.__toggleFav(\'' + esc(parts[0]) + '\',\'' + esc(parts[1]) + '\',' + parseInt(parts[2], 10) + ',' + (w.qi != null ? w.qi : -1) + ')">' + (faved ? '★ 已收藏' : '☆ 加入收藏') + '</button>';
         }
+        var redoInline = '<button class="wrong-redo-inline" onclick="window.__wrongRedoEnter(' + realIdx + ')">✍️ 重做本题</button>';
         return '<div class="wrong-card-new">' +
           '<button class="wcn-remove" title="从错题本移除" onclick="window.__removeWrong(' + realIdx + ')">✕</button>' +
           '<div class="wcn-question">' + esc(w.question || '（题目内容已丢失，请到对应课时页重做）') + '</div>' +
@@ -6644,7 +6765,7 @@
             '<span class="wcn-label">你的答案：</span>' +
             '<span class="wcn-value wrong">' + esc(w.myAnswer) + '</span>' +
           '</div>' : '') +
-          '<div class="wcn-actions">' + redo + favBtn + '</div>' +
+          '<div class="wcn-actions">' + redoInline + redo + favBtn + '</div>' +
         '</div>';
       }).join('') + '</div>';
     }
@@ -6666,8 +6787,15 @@
     if (idx < 0 || idx >= wrong.length) return;
     wrong.splice(idx, 1);
     lsSet('gz_wrongbook', wrong);
+    if (window.__wrongRedo === idx) {
+      // 重做模式下移除当前题：下标因删除前移，恰好仍是 idx，自动切到下一道
+      window.__wrongRedoResult = null;
+      window.__wrongRedo = (idx < wrong.length) ? idx : -1;
+    } else if (window.__wrongRedo !== -1) {
+      window.__wrongRedo = -1; window.__wrongRedoResult = null;
+    }
     toast('已从错题本移除');
-    renderWrongbook();
+    refreshWrongViews();
   }
   window.__removeWrong = removeWrong;
 
@@ -6718,19 +6846,26 @@
     } else {
       body = filtered.map(function (w) {
         var realIdx = wrong.indexOf(w);
+        if (realIdx === window.__wrongRedo) {
+          return '<div class="wrong-item wrong-redo-mode">' +
+            '<div class="wrong-q">' + esc(w.question || '（题目内容已丢失）') + '</div>' +
+            wrongRedoInnerHtml(w, realIdx) +
+          '</div>';
+        }
         var redo = '';
         if (w.kind === 'bank') {
           redo = '<button class="wrong-go" onclick="navigate(\'bank\')">去题库重做 →</button>';
         } else if (w.key) {
           var parts = w.key.split('/');
-          redo = '<button class="wrong-go" onclick="navigate(\'lesson\',\'' + esc(parts[0]) + '\',\'' + esc(parts[1]) + '\',' + esc(parts[2]) + ')">去重做 →</button>';
+          redo = '<button class="wrong-go" onclick="navigate(\'lesson\',\'' + esc(parts[0]) + '\',\'' + esc(parts[1]) + '\',' + esc(parts[2]) + ')">去原处重做 →</button>';
         }
+        var redoInline = '<button class="wrong-redo-inline" onclick="window.__wrongRedoEnter(' + realIdx + ')">✍️ 重做本题</button>';
         return '<div class="wrong-item">' +
           '<button class="wrong-remove" title="从错题本移除" onclick="window.__removeWrong(' + realIdx + ')">✕</button>' +
           '<div class="wrong-q">' + esc(w.question || '（题目内容已丢失，请到对应课时页重做）') + '</div>' +
           '<div class="wrong-meta">' + esc(w.subjectName || w.key || '') + (w.lessonName ? ' · ' + esc(w.lessonName) : '') + ' · 答案：' + esc(w.answer || '—') + '</div>' +
           (w.myAnswer ? '<div class="wrong-mine">你的答案：' + esc(w.myAnswer) + '</div>' : '') +
-          redo +
+          '<div class="wrong-actions">' + redoInline + redo + '</div>' +
         '</div>';
       }).join('');
     }
@@ -6752,19 +6887,116 @@
   window.__redoAllWrong = function () {
     var wrong = lsGet('gz_wrongbook', []);
     if (!wrong.length) return;
-    // 取第一道去重做（连续点会一道道做）
-    var first = wrong[0];
-    if (first.kind === 'bank') { toast('正在前往题库重做…'); navigate('bank'); return; }
-    if (!first.key) { toast('无有效错题可重做'); return; }
-    var p = first.key.split('/');
-    toast('正在重做第 1 / ' + wrong.length + ' 题…');
-    navigate('lesson', p[0], p[1], p[2]);
+    window.__wrongRedo = 0; window.__wrongRedoResult = null;
+    refreshWrongViews();
+    toast('已开始重做第 1 / ' + wrong.length + ' 题，做完可“移出错题本”自动进入下一道');
   };
   window.__clearAllWrong = function () {
     if (!confirm('确定清空错题本？此操作不可恢复。')) return;
     lsSet('gz_wrongbook', []);
-    renderWrongbook();
+    window.__wrongRedo = -1; window.__wrongRedoResult = null;
+    refreshWrongViews();
     toast('错题本已清空');
+  };
+
+  /* ---------- 错题本内嵌重做 + 详细解析 ---------- */
+  window.__wrongRedo = -1;        // 当前处于“重做”模式的错题下标（gz_wrongbook 数组下标）
+  window.__wrongRedoResult = null;
+
+  // 获取错题的详细解析：课时题从 findLesson 取 explanation，题库题从 GZ_COMMON_QUESTIONS 取 exp
+  function getWrongExplanation(w) {
+    try {
+      if (w.kind === 'bank') {
+        var bp = String(w.key || '').split('#');
+        var qs = (window.GZ_COMMON_QUESTIONS || {})[bp[0]];
+        var q = qs && qs[parseInt(bp[1], 10)];
+        return q ? q.exp : '';
+      }
+      var parts = (w.key || '').split('/');
+      if (parts.length === 3) {
+        var f = findLesson(parts[0], parts[1], parseInt(parts[2], 10));
+        var q2 = f && (f.point.exercises || [])[w.qi];
+        return q2 ? q2.explanation : '';
+      }
+    } catch (e) {}
+    return '';
+  }
+
+  // 错题内嵌重做控件 HTML（choice / fill / solve）
+  function wrongRedoInnerHtml(w, realIdx) {
+    var inputHtml = '';
+    if (w.type === 'choice') {
+      inputHtml = (w.options || []).map(function (o) {
+        return '<label class="opt wropt"><input type="radio" name="wropt' + realIdx + '" value="' + esc(o) + '"> ' + esc(o) + '</label>';
+      }).join('');
+    } else if (w.type === 'fill') {
+      inputHtml = '<input class="wrong-redo-fill" id="wrf' + realIdx + '" placeholder="输入你的答案（多空答案用分号隔开）…">';
+    } else {
+      inputHtml = '<textarea class="wrong-redo-solve" id="wrs' + realIdx + '" placeholder="输入你的解答…"></textarea>';
+    }
+    var res = window.__wrongRedoResult;
+    var resHtml = '';
+    if (res) {
+      var cls = (res.correct === true) ? 'correct' : (res.correct === false ? 'wrong' : 'submitted');
+      var title = (res.correct === true) ? '✓ 答对了！' : (res.correct === false ? '✗ 答错了' : '✓ 已提交，请对照下方解析自查');
+      resHtml =
+        '<div class="wrong-redo-result ' + cls + '">' + title + '</div>' +
+        '<div class="wrong-std">参考答案：' + esc(w.answer || '—') + '</div>' +
+        (function () { var ex = getWrongExplanation(w); return ex ? '<div class="wrong-exp">详细解析：' + esc(ex) + '</div>' : ''; })() +
+        '<button class="btn-primary" onclick="window.__removeWrong(' + realIdx + ')">✓ 已掌握，移出错题本</button>' +
+        (res.correct === false ? '<button class="btn-plain" onclick="window.__wrongRedoRetry(' + realIdx + ')">再试一次</button>' : '');
+    }
+    return '<div class="wrong-redo-box">' +
+        '<div class="wrong-redo-prompt">请重做本题：</div>' +
+        '<div class="wrong-redo-input">' + inputHtml + '</div>' +
+        '<div class="wrong-redo-actions">' +
+          (res ? '' : '<button class="btn-primary" onclick="window.__wrongRedoSubmit(' + realIdx + ')">提交答案</button>') +
+          '<button class="btn-plain" onclick="window.__wrongRedoCancel()">取消</button>' +
+        '</div>' +
+        resHtml +
+      '</div>';
+  }
+
+  // 只刷新当前正在显示的错题本视图（独立页 / 题库内错题页），避免误刷新其它页面
+  function refreshWrongViews() {
+    var h = location.hash || '';
+    try { if (h.indexOf('#/bank') === 0) renderBankWrong(); else if (h.indexOf('#/wrongbook') === 0) renderWrongbook(); } catch (e) {}
+  }
+
+  window.__wrongRedoEnter = function (realIdx) {
+    window.__wrongRedo = realIdx; window.__wrongRedoResult = null; refreshWrongViews();
+  };
+  window.__wrongRedoCancel = function () {
+    window.__wrongRedo = -1; window.__wrongRedoResult = null; refreshWrongViews();
+  };
+  window.__wrongRedoRetry = function (realIdx) {
+    window.__wrongRedoResult = null; refreshWrongViews();
+  };
+  window.__wrongRedoSubmit = function (realIdx) {
+    var wrong = lsGet('gz_wrongbook', []);
+    var w = wrong[realIdx];
+    if (!w) return;
+    var myAnswer = '';
+    var correct = null;
+    if (w.type === 'choice') {
+      var el = document.querySelector('input[name="wropt' + realIdx + '"]:checked');
+      if (!el) { toast('请先选择一个选项'); return; }
+      myAnswer = el.value;
+      correct = (myAnswer === String(w.answer));
+    } else if (w.type === 'fill') {
+      var inp = document.getElementById('wrf' + realIdx);
+      if (!inp || !inp.value.trim()) { toast('请先填写答案'); return; }
+      myAnswer = inp.value.trim();
+      var ca = String(w.answer || '').trim();
+      correct = (myAnswer === ca) || (ca.indexOf('|') >= 0 && ca.split('|').map(function (x) { return x.trim(); }).indexOf(myAnswer) >= 0);
+    } else {
+      var ta = document.getElementById('wrs' + realIdx);
+      if (!ta || !ta.value.trim()) { toast('请先作答'); return; }
+      myAnswer = ta.value.trim();
+      correct = null; // 主观题：展示参考答案与解析，自行核对
+    }
+    window.__wrongRedoResult = { correct: correct, myAnswer: myAnswer };
+    refreshWrongViews();
   };
 
   /* ---------- 勋章系统 ---------- */

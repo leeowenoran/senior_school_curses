@@ -544,6 +544,88 @@ async function handleAdminContent(payload) {
   };
 }
 
+/**
+ * AI 智能批改（主观题 / 解答题）。
+ * 通过 DeepSeek 的 OpenAI 兼容接口，根据「题目 + 参考答案 + 学生作答」判定作答是否正确，
+ * 并返回 0-100 分数与简要批改意见。密钥走环境变量（不进代码）：
+ *   DEEPSEEK_API_KEY  （必填）DeepSeek API Key
+ *   DEEPSEEK_MODEL    （可选）默认 deepseek-chat
+ *   DEEPSEEK_BASE     （可选）默认 https://api.deepseek.com
+ * payload: { question, standardAnswer, userAnswer, explanation?, subject?, type? }
+ */
+async function handleGrade(payload) {
+  const apiKey = process.env.DEEPSEEK_API_KEY;
+  if (!apiKey) return { ok: false, msg: '服务端未配置大模型密钥（DEEPSEEK_API_KEY）' };
+  const p = payload || {};
+  const question = (p.question || '').toString().trim();
+  const userAnswer = (p.userAnswer || '').toString().trim();
+  const standardAnswer = (p.standardAnswer || '').toString().trim();
+  const explanation = (p.explanation || '').toString().trim();
+  if (!question || !userAnswer) return { ok: false, msg: '缺少题目或学生作答内容' };
+
+  const model = process.env.DEEPSEEK_MODEL || 'deepseek-chat';
+  const base = (process.env.DEEPSEEK_BASE || 'https://api.deepseek.com').replace(/\/+$/, '');
+  const subject = (p.subject || '').toString().trim();
+  const type = (p.type || '').toString().trim();
+
+  const systemPrompt =
+    '你是严谨而公正的高中学科阅卷老师。根据「题目、参考答案、学生作答」判定学生答案是否基本正确，' +
+    '并给出 0-100 的分数与简要批改意见。要求：仅输出 JSON，不要任何额外解释文字。' +
+    'JSON 结构：{"correct": boolean, "score": integer(0-100), "feedback": string(中文，指出作答亮点与不足), ' +
+    '"keyPoints": string[](该答案应覆盖的得分要点)}。' +
+    '规则：数学/物理允许等价表达与合理中间计算误差；语文/英语/政治等开放性题目按内容是否正确、完整评判，不要求字字对应。' +
+    '填空题（题型含 fill）允许同义表达、等价数值、顺序差异或略有遗漏，只要核心意思与参考答案一致即判为正确；' +
+    '若完全答错或关键信息缺失则判为不正确。';
+
+  const userContent =
+    '【学科】' + (subject || '未指定') + '\n' +
+    '【题型】' + (type || '未指定') + '\n' +
+    '【题目】' + question + '\n' +
+    '【参考答案】' + (standardAnswer || '（无标准答案，请根据常识与题意判断学生作答是否合理、正确）') + '\n' +
+    '【学生作答】' + userAnswer + '\n' +
+    (explanation ? ('【参考解析】' + explanation + '\n') : '') +
+    '请仅输出评判 JSON。';
+
+  const ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+  const timer = ctrl ? setTimeout(function () { try { ctrl.abort(); } catch (e) {} }, 25000) : null;
+  try {
+    const r = await fetch(base + '/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
+      body: JSON.stringify({
+        model: model,
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userContent }
+        ],
+        response_format: { type: 'json_object' },
+        temperature: 0.2
+      }),
+      signal: ctrl ? ctrl.signal : undefined
+    });
+    if (timer) clearTimeout(timer);
+    if (!r.ok) {
+      let detail = '';
+      try { detail = (await r.text()).slice(0, 200); } catch (e) {}
+      return { ok: false, msg: '大模型调用失败(' + r.status + ')：' + detail };
+    }
+    const j = await r.json();
+    const content = (j && j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content) || '{}';
+    let parsed;
+    try { parsed = JSON.parse(content); } catch (e) { return { ok: false, msg: '模型返回格式异常，无法解析' }; }
+    return {
+      ok: true,
+      correct: parsed.correct === true,
+      score: (typeof parsed.score === 'number') ? Math.max(0, Math.min(100, Math.round(parsed.score))) : (parsed.correct === true ? 100 : 0),
+      feedback: (typeof parsed.feedback === 'string') ? parsed.feedback : '',
+      keyPoints: Array.isArray(parsed.keyPoints) ? parsed.keyPoints : []
+    };
+  } catch (e) {
+    if (timer) clearTimeout(timer);
+    return { ok: false, msg: '批改服务异常：' + ((e && e.message) || e) };
+  }
+}
+
 // 兼容两种调用方式：
 //   1) 控制台 / CLI 直接调用：event = { action, payload }
 //   2) HTTP 访问（API 网关）：event = { httpMethod, body(字符串), headers, ... }
@@ -904,6 +986,7 @@ exports.main = async (event, context) => {
       case 'adminContent': return apiResponse(await handleAdminContent(payload), isHttp);
       case 'logVisit': return apiResponse(await handleLogVisit(payload, getClientIp(event)), isHttp);
       case 'visitStats': return apiResponse(await handleVisitStats(payload), isHttp);
+      case 'gradeAnswer': return apiResponse(await handleGrade(payload), isHttp);
       default: return apiResponse({ ok: false, msg: '未知操作: ' + action }, isHttp);
     }
   } catch (e) {

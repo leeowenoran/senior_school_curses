@@ -95,6 +95,7 @@
   }
 
   // 导出到全局，供 app.js 使用
+  window.cbApi = cbApi;            // 统一调用云函数（gradeAnswer 等 action 直接复用）
   window.cbAvailable = true;            // 标记云端能力可用（实际失败会在调用时回退）
   window.cbGetToken = _getToken;
   window.cbGetPhone = _getPhone;
